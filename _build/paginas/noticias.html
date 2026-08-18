@@ -18,7 +18,7 @@
         <div class="bd">
           <span class="label label-verde" data-va="Transparència">Transparencia</span>
           <h3 data-va="Com es calcula el descompte de resident (i per què és real)">Cómo se calcula el descuento de residente (y por qué es real)</h3>
-          <p class="body-sm" data-va="El compromís de la Km0 Week és que el preu de la setmana siga el més baix del trimestre. Expliquem com es comprova.">El compromiso de la Km0 Week es que el precio de la semana sea el más bajo del trimestre. Explicamos cómo se comprueba.</p>
+          <p class="body-sm" data-va="El compromís de la Km0 Week és que el preu d'aqueixos dies siga el més baix del trimestre. Expliquem com es comprova.">El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba.</p>
           <span class="dato-fecha">28 · 07 · 2026 · <span data-va="4 min de lectura">4 min de lectura</span></span>
         </div>
       </a>
@@ -28,7 +28,7 @@
         <div class="bd">
           <span class="label" data-va="Territori">Territorio</span>
           <h3 data-va="Dotze ajuntaments se sumen amb activitats obertes">Doce ayuntamientos se suman con actividades abiertas</h3>
-          <p class="body-sm" data-va="Visites a espais normalment tancats, rutes guiades i tallers que s'obrin només durant la setmana.">Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la semana.</p>
+          <p class="body-sm" data-va="Visites a espais normalment tancats, rutes guiades i tallers que s'obrin només durant la Km0 Week.">Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week.</p>
           <span class="dato-fecha">09 · 07 · 2026 · <span data-va="2 min de lectura">2 min de lectura</span></span>
         </div>
       </a>
@@ -48,14 +48,13 @@
         <div class="bd">
           <span class="label" style="color:var(--suave)" data-va="Pròximament">Próximamente</span>
           <h3 data-va="El programa complet, dia a dia">El programa completo, día a día</h3>
-          <p class="body-sm" data-va="Publicarem l'agenda tancada de les set jornades quan es confirmen les últimes activitats.">Publicaremos la agenda cerrada de las siete jornadas cuando se confirmen las últimas actividades.</p>
+          <p class="body-sm" data-va="Publicarem l'agenda tancada dels dèsset dies quan es confirmen les últimes activitats.">Publicaremos la agenda cerrada de los diecisiete días cuando se confirmen las últimas actividades.</p>
           <span class="dato-fecha" data-va="Setembre de 2026">Septiembre de 2026</span>
         </div>
       </article>
 
     </div>
 
-    <p class="body-sm centrar mt-2" style="color:var(--suave)" data-va="Els textos d'aquestes entrades són d'exemple. Substitueix-los quan tingueu les notícies reals.">Los textos de estas entradas son de ejemplo. Sustitúyelos cuando tengáis las noticias reales.</p>
   </div>
 </section>
 
@@ -65,8 +64,14 @@
     <span class="label label-verde" data-va="No et perdes res">No te pierdas nada</span>
     <h2 class="d2 mt-1" data-va="T'avisem quan s'òbriguen les reserves">Te avisamos cuando se abran las reservas</h2>
     <p class="lede" style="margin-inline:auto" data-va="Un correu quan la web es faça pública i un altre amb el programa tancat. Res més.">Un correo cuando la web se haga pública y otro con el programa cerrado. Nada más.</p>
-    <form class="subscribe mt-2" style="justify-content:center;max-width:440px;margin-inline:auto" onsubmit="event.preventDefault();this.reset();window.Km0.toast(window.Km0.lang==='va'?'Gràcies! T\'avisarem.':'¡Gracias! Te avisaremos.');">
-      <input type="email" required placeholder="tu@correo.com" aria-label="Correo">
+    <form class="subscribe mt-2" style="justify-content:center;max-width:440px;margin-inline:auto"
+          action="https://formsubmit.co/km0week@hosbec.com" method="POST">
+      <input type="hidden" name="_subject" value="[Km0 Week] Boletín · nueva alta">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="@@DOMINIO@@/noticias.html?boletin=1">
+      <input type="hidden" name="_autoresponse" value="Gracias por apuntarte al aviso de la HOSBEC Km0 Week. Te escribiremos cuando se abran las reservas y otra vez con el programa cerrado de los tres fines de semana (13 - 29 de noviembre de 2026). Nada mas: ni promociones de terceros, ni listas compartidas. Para darte de baja, responde a este correo. -- Gracies per apuntar-te a l'avis de la HOSBEC Km0 Week. -- HOSBEC, Associacio Empresarial Hotelera i Turistica de la Comunitat Valenciana.">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="email" name="email" required placeholder="tu@correo.com" aria-label="Correo">
       <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
     </form>
   </div>

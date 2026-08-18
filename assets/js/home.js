@@ -33,7 +33,9 @@ window.Km0 = (function () {
       },
       dias: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
       meses: ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
-      semana: "Toda la semana", gratis: "Gratis", verTodo: "Ver la semana entera",
+      semana: "Todos los días", gratis: "Gratis", verTodo: "Ver los 17 días",
+      soloFinde: "Solo fines de semana", enviando: "Enviando…", sinActos: "sin actividades",
+      boletinOk: "¡Listo! Te avisaremos por correo.",
       actos: "actividades", acto: "actividad",
       ordenados: "Ordenados desde {m}", sinOrigen: "Todos los alojamientos, del más cerca al más lejos",
       enviado: "¡Recibido! Te escribimos en 48 h.", faltan: "Revisa los campos obligatorios."
@@ -59,7 +61,9 @@ window.Km0 = (function () {
       },
       dias: ["Dl", "Dt", "Dc", "Dj", "Dv", "Ds", "Dg"],
       meses: ["gener","febrer","març","abril","maig","juny","juliol","agost","setembre","octubre","novembre","desembre"],
-      semana: "Tota la setmana", gratis: "Gratis", verTodo: "Veure la setmana sencera",
+      semana: "Tots els dies", gratis: "Gratis", verTodo: "Veure els 17 dies",
+      soloFinde: "Només caps de setmana", enviando: "Enviant…", sinActos: "sense activitats",
+      boletinOk: "Fet! T'avisarem per correu.",
       actos: "activitats", acto: "activitat",
       ordenados: "Ordenats des de {m}", sinOrigen: "Tots els allotjaments, del més a prop al més lluny",
       enviado: "Rebut! T'escrivim en 48 h.", faltan: "Revisa els camps obligatoris."
@@ -370,6 +374,11 @@ window.Km0 = (function () {
         b.setAttribute("aria-pressed", String(Array.isArray(FILTRO[grupo]) ? FILTRO[grupo].includes(v) : FILTRO[grupo] === v));
       });
     });
+    // contador del botón «Filtros» de móvil
+    const act = (FILTRO.provincia ? 1 : 0) + FILTRO.tipo.length + FILTRO.experiencia.length;
+    const ba = $("#f-activos");
+    if (ba) { ba.textContent = act; ba.hidden = !act; }
+
     document.dispatchEvent(new CustomEvent("km0:fichas"));
     document.dispatchEvent(new CustomEvent("km0:render"));
   }
@@ -390,6 +399,18 @@ window.Km0 = (function () {
         `<option value="${k}"${k === FILTRO.orden ? " selected" : ""}>${t("ordenar." + k)}</option>`).join("");
       sel.onchange = () => { FILTRO.orden = sel.value; pintarListado(); };
     }
+    // En móvil los tres grupos se pliegan tras un botón «Filtros».
+    // (montarFiltros() se llama más de una vez, de ahí el pestillo dataset.listo:
+    //  sin él el listener se registraría dos veces y el toggle se anularía solo)
+    const tg = $("#f-toggle"), grupos = $("#f-grupos");
+    if (tg && grupos && !tg.dataset.listo) {
+      tg.dataset.listo = "1";
+      tg.addEventListener("click", () => {
+        const abierto = grupos.classList.toggle("abierto");
+        tg.setAttribute("aria-expanded", String(abierto));
+      });
+    }
+
     const limpiar = () => {
       FILTRO.provincia = ""; FILTRO.tipo = []; FILTRO.experiencia = [];
       FILTRO.orden = "destacados";
@@ -426,11 +447,30 @@ window.Km0 = (function () {
   }
 
   /* ------------------------------- agenda -------------------------------- */
-  const AG = { dia: 0, gratis: false };     // dia 0 = toda la semana
+  const AG = { dia: 0, gratis: false, finde: false };   // dia 0 = todos los días
 
-  function fechaDia(n) {                     // n = 1..7 → Date local, sin líos de UTC
+  function fechaDia(n) {                     // n = 1..N → Date local, sin líos de UTC
     const [Y, M, DD] = CFG.fechaInicio.slice(0, 10).split("-").map(Number);
     return new Date(Y, M - 1, DD + n - 1);
+  }
+
+  // Cuántos días dura la edición: se deduce de fechaInicio y fechaFin.
+  function totalDias() {
+    const a = new Date(CFG.fechaInicio.slice(0, 10) + "T00:00:00");
+    const b = new Date((CFG.fechaFin || CFG.fechaInicio).slice(0, 10) + "T00:00:00");
+    return Math.max(1, Math.round((b - a) / 864e5) + 1);
+  }
+
+  // viernes, sábado y domingo: los tres findes de la edición son 13-15, 20-22 y 27-29
+  const esFinde = n => [5, 6, 0].includes(fechaDia(n).getDay());
+
+  // Adónde lleva «Quiero ir»: primero el enlace propio de la actividad;
+  // si no lo tiene, la web del alojamiento adherido de ese destino; y si
+  // tampoco, la de HOSBEC. Nunca queda un botón muerto.
+  function enlaceActo(a) {
+    if (a.enlace) return a.enlace;
+    const casa = D.find(x => x.destino === a.lugar && x.web);
+    return (casa && casa.web) || CFG.webHosbec || "https://hosbec.com";
   }
 
   function esGratis(a) {
@@ -442,10 +482,15 @@ window.Km0 = (function () {
     const cd = $("#ag-dias"), ca = $("#ag-actos"); if (!cd || !ca) return;
     const AGENDA = window.KM0.AGENDA || [];
 
-    cd.innerHTML = [0, 1, 2, 3, 4, 5, 6, 7].map(n => {
-      if (!n) return "";
-      const f = fechaDia(n);
-      return `<button class="dia" type="button" data-d="${n}" aria-pressed="${AG.dia === n}">
+    const N = totalDias();
+    const conActos = n => AGENDA.some(a => a.dia === n && (!AG.gratis || esGratis(a)));
+    const dias = [];
+    for (let n = 1; n <= N; n++) if (!AG.finde || esFinde(n)) dias.push(n);
+
+    cd.innerHTML = dias.map(n => {
+      const f = fechaDia(n), hay = conActos(n);
+      const cls = ["dia", esFinde(n) ? "fds" : "", hay ? "" : "sin"].filter(Boolean).join(" ");
+      return `<button class="${cls}" type="button" data-d="${n}" aria-pressed="${AG.dia === n}"${hay ? "" : ' disabled aria-disabled="true" title="' + t("sinActos") + '"'}>
         <span class="s">${t("dias")[(f.getDay() + 6) % 7]}</span>
         <span class="n">${f.getDate()}</span>
         <span class="s">${t("meses")[f.getMonth()].slice(0, 3)}</span>
@@ -457,7 +502,7 @@ window.Km0 = (function () {
     }));
 
     const lista = AGENDA
-      .filter(a => (!AG.dia || a.dia === AG.dia) && (!AG.gratis || esGratis(a)))
+      .filter(a => (!AG.dia || a.dia === AG.dia) && (!AG.gratis || esGratis(a)) && (!AG.finde || esFinde(a.dia)))
       .sort((x, y) => x.dia - y.dia || x.hora.localeCompare(y.hora));
 
     ca.innerHTML = lista.map(a => {
@@ -475,7 +520,7 @@ window.Km0 = (function () {
             <span class="pill ${esGratis(a) ? "pill-arena" : "pill-terra"}">${esGratis(a) ? t("gratis") : L(a.precio)}</span>
           </div>
         </div>
-        <a class="btn btn-mar btn-sm" href="mailto:${CFG.emailContacto}?subject=${encodeURIComponent(L(a.titulo))}" data-va="Vull anar-hi">Quiero ir</a>
+        <a class="btn btn-mar btn-sm" href="${enlaceActo(a)}" target="_blank" rel="noopener" data-va="Vull anar-hi">Quiero ir</a>
       </article>`;
     }).join("");
 
@@ -484,6 +529,8 @@ window.Km0 = (function () {
     if (bt) bt.setAttribute("aria-pressed", String(!AG.dia));
     const bg = $("#ag-gratis");
     if (bg) bg.setAttribute("aria-pressed", String(AG.gratis));
+    const bf = $("#ag-finde");
+    if (bf) bf.setAttribute("aria-pressed", String(AG.finde));
     document.dispatchEvent(new CustomEvent("km0:render"));
   }
 
@@ -491,17 +538,59 @@ window.Km0 = (function () {
     if (!$("#ag-dias")) return;
     const bt = $("#ag-todo"); if (bt) bt.addEventListener("click", () => { AG.dia = 0; pintarAgenda(); });
     const bg = $("#ag-gratis"); if (bg) bg.addEventListener("click", () => { AG.gratis = !AG.gratis; pintarAgenda(); });
+    const bf = $("#ag-finde"); if (bf) bf.addEventListener("click", () => {
+      AG.finde = !AG.finde;
+      if (AG.finde && AG.dia && !esFinde(AG.dia)) AG.dia = 0;
+      pintarAgenda();
+    });
     pintarAgenda();
+  }
+
+  /* ------------------------- boletín «Te avisamos» ------------------------
+     Va por AJAX contra FormSubmit para no sacar al visitante de la página.
+     Si algo falla, se abre el correo del visitante como plan B. */
+  function montarBoletin() {
+    // hay uno en el pie de todas las páginas y otro en Noticias
+    $$("form.subscribe").forEach(montarUnBoletin);
+  }
+
+  function montarUnBoletin(f) {
+    if (!f || f.dataset.listo) return;
+    f.dataset.listo = "1";
+    f.addEventListener("submit", e => {
+      if (!f.checkValidity()) { e.preventDefault(); f.reportValidity(); return; }
+      const btn = f.querySelector("button");
+      if (btn) { btn.disabled = true; btn.textContent = t("enviando"); }
+      // sin preventDefault: lo envía el navegador a FormSubmit, que nos manda
+      // el correo, envía el acuse de recibo y devuelve aquí con ?boletin=1
+    });
   }
 
   /* --------------------------- formulario de alta ------------------------ */
   function montarFormulario() {
+    montarBoletin();
+
+    // vuelta de FormSubmit después de apuntarse al boletín
+    if (new URLSearchParams(location.search).has("boletin")) {
+      toast(t("boletinOk"));
+      history.replaceState(null, "", location.pathname + location.hash);
+    }
     const f = $("#form-suma"); if (!f) return;
-    f.addEventListener("submit", e => {
-      e.preventDefault();
-      if (!f.checkValidity()) { toast(t("faltan")); f.reportValidity(); return; }
+
+    // Al volver de FormSubmit (?enviado=1) confirmamos y limpiamos la URL.
+    if (new URLSearchParams(location.search).has("enviado")) {
+      const ok = $("#form-ok"); if (ok) ok.hidden = false;
       toast(t("enviado"));
-      f.reset();
+      history.replaceState(null, "", location.pathname + location.hash);
+      if (ok) ok.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    f.addEventListener("submit", e => {
+      if (!f.checkValidity()) { e.preventDefault(); toast(t("faltan")); f.reportValidity(); return; }
+      const b = f.querySelector('button[type="submit"]');
+      if (b) { b.disabled = true; b.textContent = t("enviando"); }
+      // sin preventDefault: el navegador envía el formulario a FormSubmit,
+      // que reenvía el contenido por correo a km0week@hosbec.com
     });
   }
 
@@ -523,6 +612,11 @@ window.Km0 = (function () {
     $$("[data-va]").forEach(el => {
       if (!el.hasAttribute("data-es")) el.setAttribute("data-es", el.textContent.trim());
       el.textContent = LANG === "va" ? el.getAttribute("data-va") : el.getAttribute("data-es");
+    });
+    // marcadores de campo bilingües:  <input data-va-ph="…" placeholder="…">
+    $$("[data-va-ph]").forEach(el => {
+      if (!el.hasAttribute("data-es-ph")) el.setAttribute("data-es-ph", el.getAttribute("placeholder") || "");
+      el.setAttribute("placeholder", LANG === "va" ? el.getAttribute("data-va-ph") : el.getAttribute("data-es-ph"));
     });
     $$("[data-va-html]").forEach(el => {
       if (!el.hasAttribute("data-es-html")) el.setAttribute("data-es-html", el.innerHTML.trim());

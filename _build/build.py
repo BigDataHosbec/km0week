@@ -27,8 +27,16 @@ PAGS = os.path.join(RAIZ, "_build", "paginas")
 # Cámbialo y vuelve a ejecutar:  python3 _build/build.py
 # ---------------------------------------------------------------------------
 DOMINIO = "https://bigdatahosbec.github.io/km0week"
-FECHAS_ES = "13 – 19 de noviembre de 2026"
-FECHAS_VA = "13 – 19 de novembre de 2026"
+EMAIL_KM0 = "km0week@hosbec.com"
+
+# Texto del acuse de recibo automático que FormSubmit envía a quien se
+# apunta al boletín. Sin acentos raros ni HTML: va como texto plano.
+ACUSE_BOLETIN = (
+    "Gracias por apuntarte al aviso de la HOSBEC Km0 Week. Te escribiremos cuando se abran las reservas y otra vez con el programa cerrado de los tres fines de semana (13 - 29 de noviembre de 2026). Nada mas: ni promociones de terceros, ni listas compartidas. Para darte de baja, responde a este correo. -- Gracies per apuntar-te a l'avis de la HOSBEC Km0 Week. -- HOSBEC, Associacio Empresarial Hotelera i Turistica de la Comunitat Valenciana."
+)
+
+FECHAS_ES = "13 – 29 de noviembre de 2026"
+FECHAS_VA = "13 – 29 de novembre de 2026"
 
 # ---------------------------------------------------------------- navegación --
 MENU = [
@@ -41,7 +49,7 @@ MENU = [
 ]
 
 PIE_COLS = [
-    ("La semana", "La setmana", [
+    ("La edición", "L'edició", [
         ("iniciativa.html", "La iniciativa", "La iniciativa"),
         ("alojamientos.html", "Alojamientos", "Allotjaments"),
         ("mapa.html", "Mapa y cercanía", "Mapa i proximitat"),
@@ -154,7 +162,10 @@ def nav(activo):
 """
 
 
-def pie():
+def pie(p):
+    # a dónde vuelve el visitante después de apuntarse al boletín: a la misma
+    # página en la que estaba, con ?boletin=1 para que salga la confirmación
+    vuelta = DOMINIO + "/" + ("" if p["archivo"] == "index.html" else p["archivo"]) + "?boletin=1"
     cols = ""
     for es, va, enl in PIE_COLS:
         items = "".join(
@@ -184,16 +195,42 @@ def pie():
       <div>
         <h5 data-va="T'avisem">Te avisamos</h5>
         <p class="body-sm foot-lema" data-va="Deixa el teu correu i t'escrivim quan s'òbriguen les reserves.">Deja tu correo y te escribimos cuando se abran las reservas.</p>
-        <form class="subscribe" onsubmit="event.preventDefault();this.reset();window.Km0.toast(window.Km0.lang==='va'?'Gràcies! T\\'avisarem.':'¡Gracias! Te avisaremos.');">
-          <input type="email" required placeholder="tu@correo.com" aria-label="Correo">
+        <form class="subscribe" id="form-boletin" action="https://formsubmit.co/{EMAIL_KM0}" method="POST">
+          <input type="hidden" name="_subject" value="[Km0 Week] Boletín · nueva alta">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="{vuelta}">
+          <input type="hidden" name="_autoresponse" value="{ACUSE_BOLETIN}">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="email" name="email" required placeholder="tu@correo.com" aria-label="Correo">
           <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
         </form>
       </div>
     </div>
     <div class="foot-bot">
-      <span>© <span data-year>2026</span> HOSBEC · Asociación Empresarial Hostelera de Benidorm, Costa Blanca y Comunidad Valenciana</span>
+      <span>© <span data-year>2026</span> HOSBEC · <span data-va="Associació Empresarial Hotelera i Turística de la Comunitat Valenciana">Asociación Empresarial Hotelera y Turística de la Comunidad Valenciana</span></span>
       <span class="foot-legal">{legal}</span>
-      <span>km0week@hosbec.com · 965 85 51 12</span>
+      <span class="foot-contacto">
+        <a href="mailto:km0week@hosbec.com">km0week@hosbec.com</a>
+        <a href="tel:+34965855516">965 85 55 16</a>
+      </span>
+    </div>
+    <div class="foot-redes">
+      <span class="body-sm" data-va="Segueix HOSBEC">Sigue a HOSBEC</span>
+      <a href="https://www.instagram.com/hosbeconline/" target="_blank" rel="noopener" aria-label="Instagram de HOSBEC" title="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/hosbeconline/" target="_blank" rel="noopener" aria-label="LinkedIn de HOSBEC" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5v6M7.5 7.6v.1M11.5 16.5v-6M11.5 13.2c0-1.5.9-2.4 2.2-2.4s2.3.9 2.3 2.6v3.1"/></svg>
+      </a>
+      <a href="https://www.facebook.com/Hosbeconline/" target="_blank" rel="noopener" aria-label="Facebook de HOSBEC" title="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.4 20.5v-6.9h2.3l.35-2.7h-2.65V9.2c0-.78.22-1.31 1.34-1.31h1.43V5.47c-.25-.03-1.1-.11-2.09-.11-2.07 0-3.48 1.26-3.48 3.58v2h-2.34v2.7h2.34v6.86z"/></svg>
+      </a>
+      <a href="https://x.com/hosbeconline" target="_blank" rel="noopener" aria-label="X de HOSBEC" title="X">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@hosbeconline" target="_blank" rel="noopener" aria-label="YouTube de HOSBEC" title="YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5.6" width="18.8" height="12.8" rx="4"/><path d="M10.4 9.6l4.4 2.4-4.4 2.4z"/></svg>
+      </a>
     </div>
   </div>
 </footer>
@@ -237,9 +274,11 @@ def cabecera(p):
 
 def construir(p):
     cuerpo = open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read()
+    # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
+    cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
     html = (cabeza(p) + cinta() + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
-            pie() + scripts(p))
+            pie(p) + scripts(p))
     destino = os.path.join(RAIZ, p["archivo"])
     open(destino, "w", encoding="utf-8").write(html)
     return destino
@@ -253,7 +292,7 @@ def C(foto, ante, titulo, lede=None):
 PAGINAS = [
     dict(archivo="index.html", cuerpo="portada.html",
          titulo="HOSBEC Km0 Week · Descubre lo cerca, vive lo nuestro",
-         desc="Del 13 al 19 de noviembre de 2026. Una semana para que quienes vivimos en la Comunitat Valenciana redescubramos nuestros alojamientos. Ofertas para residentes y reserva directa.",
+         desc="Del 13 al 29 de noviembre de 2026. Tres fines de semana para que quienes vivimos en la Comunitat Valenciana redescubramos nuestros alojamientos. Ofertas para residentes y reserva directa.",
          og="assets/img/foto/cab-iniciativa.webp"),
 
     dict(archivo="iniciativa.html", cuerpo="iniciativa.html",
@@ -261,10 +300,10 @@ PAGINAS = [
          desc="Qué es la Km0 Week, por qué la hacemos, quién está detrás y qué compromisos asume cada alojamiento adherido.",
          og="assets/img/foto/cab-iniciativa.webp",
          cab=C("cab-iniciativa", ("La iniciativa", "La iniciativa"),
-               ("Una semana para mirar de otra forma lo que tenemos al lado",
-                "Una setmana per a mirar d'una altra manera el que tenim al costat"),
-               ("Km0 Week nace de una idea simple: quien vive en un destino turístico casi nunca lo disfruta como tal. Del 13 al 19 de noviembre le damos la vuelta.",
-                "Km0 Week naix d'una idea simple: qui viu en un destí turístic quasi mai el gaudeix com a tal. Del 13 al 19 de novembre li donem la volta."))),
+               ("Tres fines de semana para mirar de otra forma lo que tenemos al lado",
+                "Tres caps de setmana per a mirar d'una altra manera el que tenim al costat"),
+               ("Km0 Week nace de una idea simple: quien vive en un destino turístico casi nunca lo disfruta como tal. Del 13 al 29 de noviembre le damos la vuelta.",
+                "Km0 Week naix d'una idea simple: qui viu en un destí turístic quasi mai el gaudeix com a tal. Del 13 al 29 de novembre li donem la volta."))),
 
     dict(archivo="alojamientos.html", cuerpo="alojamientos.html",
          titulo="Alojamientos y ofertas · HOSBEC Km0 Week",
@@ -285,11 +324,11 @@ PAGINAS = [
                 "Tria el teu municipi i el mapa t'ordena tots els allotjaments per temps de viatge. Sense instal·lar res i sense donar la teua ubicació si no vols."))),
 
     dict(archivo="agenda.html", cuerpo="agenda.html",
-         titulo="Agenda de la semana · HOSBEC Km0 Week",
-         desc="Programa día a día de la Km0 Week: visitas, talleres, rutas y actividades abiertas a todo el mundo, del 13 al 19 de noviembre de 2026.",
+         titulo="Agenda de la edición · HOSBEC Km0 Week",
+         desc="Programa día a día de la Km0 Week: visitas, talleres, rutas y actividades abiertas a todo el mundo, del 13 al 29 de noviembre de 2026.",
          og="assets/img/foto/cab-agenda.webp",
          cab=C("cab-agenda", ("Programa", "Programa"),
-               ("Siete días, algo que hacer cada día", "Set dies, alguna cosa a fer cada dia"),
+               ("Diecisiete días, algo que hacer cada fin de semana", "Dèsset dies, alguna cosa a fer cada cap de setmana"),
                ("Actividades abiertas: no hace falta alojarse para venir. Algunas son gratuitas y otras tienen una aportación simbólica.",
                 "Activitats obertes: no cal allotjar-se per a vindre. Algunes són gratuïtes i altres tenen una aportació simbòlica."))),
 
@@ -371,11 +410,11 @@ NOTICIAS = [
     ("noticia-2", "not-2", ("Noticias", "Notícies"),
      ("Cómo se calcula el descuento de residente (y por qué es real)",
       "Com es calcula el descompte de resident (i per què és real)"),
-     "El compromiso de la Km0 Week es que el precio de la semana sea el más bajo del trimestre. Explicamos cómo se comprueba."),
+     "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba."),
     ("noticia-3", "not-3", ("Noticias", "Notícies"),
      ("Doce ayuntamientos se suman con actividades abiertas",
       "Dotze ajuntaments se sumen amb activitats obertes"),
-     "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la semana."),
+     "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week."),
     ("noticia-4", "not-4", ("Noticias", "Notícies"),
      ("El pasaporte Km0: cómo funciona el sorteo de diez estancias",
       "El passaport Km0: com funciona el sorteig de deu estades"),

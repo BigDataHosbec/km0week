@@ -1,26 +1,33 @@
 <!-- =============================== FILTROS =============================== -->
 <div class="filtros" id="filtros">
   <div class="wrap">
-    <div class="filtros-fila">
-      <div class="grp" id="f-provincia" data-grupo="provincia">
-        <span class="label" data-va="Província">Provincia</span>
-      </div>
-      <label class="grp" style="gap:.4rem">
-        <span class="label" data-va="Ordenar">Ordenar</span>
+    <div class="filtros-top">
+      <span class="res"><b id="f-total">0</b> <span id="f-total-txt" data-va="allotjaments">alojamientos</span></span>
+      <button class="btn-limpiar" type="button" id="f-limpiar" data-va="Netejar filtres">Limpiar filtros</button>
+      <label class="f-orden">
+        <span data-va="Ordenar">Ordenar</span>
         <select id="f-orden" aria-label="Ordenar los resultados"></select>
       </label>
-      <span class="res"><b id="f-total">0</b> <span id="f-total-txt" data-va="allotjaments">alojamientos</span></span>
+      <button class="f-toggle" type="button" id="f-toggle" aria-expanded="false" aria-controls="f-grupos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+        <span data-va="Filtres">Filtros</span>
+        <b id="f-activos" hidden>0</b>
+      </button>
     </div>
-    <div class="filtros-fila">
-      <div class="grp" id="f-tipo" data-grupo="tipo">
-        <span class="label" data-va="Tipus">Tipo</span>
-      </div>
+
+    <div class="filtros-grupos" id="f-grupos">
+    <div class="f-row" data-c="provincia">
+      <span class="f-tit" data-va="Província">Provincia</span>
+      <div class="grp" id="f-provincia" data-grupo="provincia" role="group" aria-label="Filtrar por provincia"></div>
     </div>
-    <div class="filtros-fila">
-      <div class="grp" id="f-exp" data-grupo="experiencia">
-        <span class="label" data-va="Experiència">Experiencia</span>
-      </div>
-      <button class="btn-limpiar" type="button" id="f-limpiar" data-va="Netejar filtres">Limpiar filtros</button>
+    <div class="f-row" data-c="tipo">
+      <span class="f-tit" data-va="Tipus d'allotjament">Tipo de alojamiento</span>
+      <div class="grp" id="f-tipo" data-grupo="tipo" role="group" aria-label="Filtrar por tipo"></div>
+    </div>
+    <div class="f-row" data-c="experiencia">
+      <span class="f-tit" data-va="Experiència">Experiencia</span>
+      <div class="grp" id="f-exp" data-grupo="experiencia" role="group" aria-label="Filtrar por experiencia"></div>
+    </div>
     </div>
   </div>
 </div>
@@ -31,7 +38,7 @@
     <div class="fichas" id="lista-alojamientos"></div>
     <div class="vacio" id="lista-vacia" hidden>
       <b data-va="Cap allotjament amb aquests filtres">Ningún alojamiento con estos filtros</b>
-      <p data-va="Prova a llevar-ne algun: encara estem sumant cases i cada setmana n'entren de noves.">Prueba a quitar alguno: seguimos sumando casas y cada semana entran nuevas.</p>
+      <p data-va="Prova a llevar-ne algun: encara estem sumant cases i cada setmana n'entren de noves.">Prueba a quitar alguno: seguimos sumando casas y entran nuevas cada semana.</p>
       <button class="btn btn-mar mt-1" type="button" data-limpiar data-va="Veure-ho tot">Verlo todo</button>
     </div>
     <p class="body-sm mt-2" style="color:var(--suave);max-width:70ch" data-va="HOSBEC no gestiona reserves ni cobra cap comissió. El preu, la disponibilitat i les condicions són responsabilitat de cada allotjament; en polsar «Veure oferta» vas a la seua web.">HOSBEC no gestiona reservas ni cobra comisión alguna. El precio, la disponibilidad y las condiciones son responsabilidad de cada alojamiento; al pulsar «Ver oferta» vas a su web.</p>

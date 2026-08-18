@@ -53,7 +53,7 @@
           </tr>
           <tr>
             <td data-va="Cupo publicat">Cupo publicado</td>
-            <td data-va="Un mínim de 5 places o habitacions per a residents durant la setmana. El nombre es publica a la fitxa.">Un mínimo de 5 plazas o habitaciones para residentes durante la semana. El número se publica en la ficha.</td>
+            <td data-va="Un mínim de 5 places o habitacions per a residents durant els dèsset dies. El nombre es publica a la fitxa.">Un mínimo de 5 plazas o habitaciones para residentes durante los diecisiete días. El número se publica en la ficha.</td>
           </tr>
           <tr>
             <td data-va="Reserva directa">Reserva directa</td>
@@ -66,7 +66,7 @@
         </tbody>
       </table>
     </div>
-    <p class="body-sm mt-2" style="color:var(--suave)" data-va="HOSBEC comprova els preus amb una mostra aleatòria durant la setmana. Qui no complisca queda fora de l'edició següent.">HOSBEC comprueba los precios con una muestra aleatoria durante la semana. Quien no cumpla queda fuera de la siguiente edición.</p>
+    <p class="body-sm mt-2" style="color:var(--suave)" data-va="HOSBEC comprova els preus amb una mostra aleatòria durant l'edició. Qui no complisca queda fora de l'edició següent.">HOSBEC comprueba los precios con una muestra aleatoria durante la edición. Quien no cumpla queda fuera de la siguiente edición.</p>
   </div>
 </section>
 
@@ -94,9 +94,9 @@
         <p class="body-sm" data-va="Arranca la campanya i s'obrin les reserves. La teua fitxa ja és visible.">Arranca la campaña y se abren las reservas. Tu ficha ya es visible.</p>
       </div>
       <div class="tarjeta plana">
-        <span class="label" data-fechas>13 – 19 de noviembre de 2026</span>
-        <h3 class="mt-1" data-va="La setmana">La semana</h3>
-        <p class="body-sm" data-va="Set dies. Després t'enviem l'informe amb els números de la teua fitxa.">Siete días. Después te enviamos el informe con los números de tu ficha.</p>
+        <span class="label" data-fechas>13 – 29 de noviembre de 2026</span>
+        <h3 class="mt-1" data-va="Els tres caps de setmana">Los tres fines de semana</h3>
+        <p class="body-sm" data-va="Dèsset dies i tres caps de setmana. Després t'enviem l'informe amb els números de la teua fitxa.">Diecisiete días y tres fines de semana. Después te enviamos el informe con los números de tu ficha.</p>
       </div>
     </div>
   </div>
@@ -111,7 +111,20 @@
       <p class="lede" data-va="Cinc minuts. Et responem en 48 hores laborables amb el pas següent.">Cinco minutos. Te respondemos en 48 horas laborables con el siguiente paso.</p>
     </div>
 
-    <form class="form-grid" id="form-suma" novalidate>
+    <div class="aviso-ok" id="form-ok" hidden>
+      <b data-va="Sol·licitud rebuda">Solicitud recibida</b>
+      <p data-va="Ja ens ha arribat el correu. Et responem en 48 hores laborables amb el pas següent.">Ya nos ha llegado el correo. Te respondemos en 48 horas laborables con el siguiente paso.</p>
+    </div>
+
+    <!-- El envío lo hace FormSubmit: reenvía el contenido por correo a
+         km0week@hosbec.com. No guarda nada ni requiere servidor propio. -->
+    <form class="form-grid" id="form-suma" novalidate
+          action="https://formsubmit.co/km0week@hosbec.com" method="POST">
+      <input type="hidden" name="_subject" value="[Km0 Week] Alojamiento · nueva solicitud">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_autoresponse" value="Hemos recibido tu solicitud para sumar tu alojamiento a la HOSBEC Km0 Week (13 - 29 de noviembre de 2026). Le echamos un vistazo y te respondemos en 48 horas laborables con el siguiente paso. Si necesitas algo antes, escribe a km0week@hosbec.com o llama al 965 85 55 16. -- Hem rebut la teua sol.licitud per a sumar el teu allotjament a la HOSBEC Km0 Week. Et responem en 48 hores laborables. -- HOSBEC, Associacio Empresarial Hotelera i Turistica de la Comunitat Valenciana.">
+      <input type="hidden" name="_next" value="@@DOMINIO@@/suma.html?enviado=1#formulario">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="campo">
         <span data-va="Nom de l'allotjament *">Nombre del alojamiento *</span>
         <input type="text" name="nombre" required autocomplete="organization">
@@ -154,7 +167,7 @@
       </label>
       <label class="campo ancho">
         <span data-va="Quina oferta teniu al cap?">¿Qué oferta tenéis en mente?</span>
-        <textarea name="oferta" placeholder="Nit + sopar per a dos, circuit termal, check-out tardà..."></textarea>
+        <textarea name="oferta" placeholder="Noche + cena para dos, circuito termal, salida tardía..." data-va-ph="Nit + sopar per a dos, circuit termal, check-out tardà..."></textarea>
         <span class="ayuda" data-va="No cal que estiga tancada. Ho acabem de perfilar junts.">No hace falta que esté cerrada. Lo acabamos de perfilar juntos.</span>
       </label>
       <label class="campo check ancho">
@@ -163,7 +176,7 @@
       </label>
       <div class="campo ancho">
         <button class="btn btn-terra btn-lg" type="submit" data-va="Enviar la sol·licitud">Enviar la solicitud</button>
-        <p class="ayuda mt-1" data-va="Aquest formulari és una demostració: encara no envia res. Connecta'l al correu o al CRM d'HOSBEC abans de publicar.">Este formulario es una demostración: todavía no envía nada. Conéctalo al correo o al CRM de HOSBEC antes de publicar.</p>
+        <p class="ayuda mt-1" data-va="En enviar-lo ens arriba un correu a km0week@hosbec.com amb aquestes dades. No es guarden en cap altre lloc.">Al enviarlo nos llega un correo a km0week@hosbec.com con estos datos. No se guardan en ningún otro sitio.</p>
       </div>
     </form>
   </div>
@@ -173,7 +186,7 @@
 <section class="sec">
   <div class="wrap centrar">
     <h2 class="d3" data-va="Tens dubtes abans de decidir?">¿Tienes dudas antes de decidir?</h2>
-    <p class="lede" style="margin-inline:auto" data-va="Truca'ns i ho veiem en cinc minuts: 965 85 51 12, de dilluns a divendres.">Llámanos y lo vemos en cinco minutos: 965 85 51 12, de lunes a viernes.</p>
+    <p class="lede" style="margin-inline:auto" data-va="Truca'ns i ho veiem en cinc minuts: 965 85 55 16, de dilluns a divendres.">Llámanos y lo vemos en cinco minutos: 965 85 55 16, de lunes a viernes.</p>
     <div class="mt-2" style="display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap">
       <a class="btn btn-mar" href="faq.html" data-va="Preguntes freqüents">Preguntas frecuentes</a>
       <a class="btn btn-linea" href="mailto:km0week@hosbec.com">km0week@hosbec.com</a>

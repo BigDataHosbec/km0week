@@ -5,19 +5,21 @@
       <div>
         <span class="label label-mar" data-va="Dia a dia">Día a día</span>
         <h2 class="d2" data-va="Tria un dia">Elige un día</h2>
+        <p class="body-sm" style="color:var(--suave);margin-top:.4rem" data-va="Del 13 al 29 de novembre. Els dies destacats en color són caps de setmana.">Del 13 al 29 de noviembre. Los días destacados en color son fines de semana.</p>
       </div>
       <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
-        <button class="chip" type="button" id="ag-todo" aria-pressed="true" data-va="Veure la setmana sencera">Ver la semana entera</button>
+        <button class="chip" type="button" id="ag-todo" aria-pressed="true" data-va="Veure els 17 dies">Ver los 17 días</button>
+        <button class="chip terra" type="button" id="ag-finde" aria-pressed="false" data-va="Només caps de setmana">Solo fines de semana</button>
         <button class="chip verde" type="button" id="ag-gratis" aria-pressed="false" data-va="Només gratuïtes">Solo gratuitas</button>
       </div>
     </div>
 
-    <div class="dias" id="ag-dias" role="group" aria-label="Días de la semana"></div>
+    <div class="dias" id="ag-dias" role="group" aria-label="Días de la edición"></div>
     <div class="actos" id="ag-actos"></div>
 
     <div class="vacio" id="ag-vacio" hidden>
       <b data-va="No hi ha activitats amb aquest filtre">No hay actividades con este filtro</b>
-      <p data-va="Prova amb un altre dia o mira la setmana sencera.">Prueba con otro día o mira la semana entera.</p>
+      <p data-va="Prova amb un altre dia o mira els 17 dies.">Prueba con otro día o mira los 17 días.</p>
     </div>
   </div>
 </section>
