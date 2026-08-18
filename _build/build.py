@@ -26,7 +26,7 @@ PAGS = os.path.join(RAIZ, "_build", "paginas")
 #   Dominio propio           : https://km0week.hosbec.com
 # Cámbialo y vuelve a ejecutar:  python3 _build/build.py
 # ---------------------------------------------------------------------------
-DOMINIO = "https://km0week.hosbec.com"
+DOMINIO = "https://bigdatahosbec.github.io/km0week"
 FECHAS_ES = "13 – 19 de noviembre de 2026"
 FECHAS_VA = "13 – 19 de novembre de 2026"
 
@@ -68,7 +68,8 @@ PIE_LEGAL = [
 # ------------------------------------------------------------------- plantilla --
 def cabeza(p):
     css_extra = "".join('\n<link rel="stylesheet" href="%s">' % c for c in p.get("css", []))
-    canon = DOMINIO + "/" + p["archivo"]
+    # la portada canoniza a la carpeta, no a /index.html
+    canon = DOMINIO + "/" + ("" if p["archivo"] == "index.html" else p["archivo"])
     noindex = '\n<meta name="robots" content="noindex">' if p.get("noindex") else ""
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -395,7 +396,8 @@ def sitemap(paginas):
     hoy = "2026-08-17"
     urls = "".join(
         "\n  <url><loc>%s/%s</loc><lastmod>%s</lastmod><changefreq>weekly</changefreq><priority>%s</priority></url>"
-        % (DOMINIO, p["archivo"], hoy, "1.0" if p["archivo"] == "index.html" else "0.7")
+        % (DOMINIO, "" if p["archivo"] == "index.html" else p["archivo"], hoy,
+           "1.0" if p["archivo"] == "index.html" else "0.7")
         for p in paginas if not p.get("noindex"))
     open(os.path.join(RAIZ, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s\n</urlset>\n' % urls)

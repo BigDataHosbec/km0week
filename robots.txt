@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://km0week.hosbec.com/sitemap.xml
+Sitemap: https://bigdatahosbec.github.io/km0week/sitemap.xml

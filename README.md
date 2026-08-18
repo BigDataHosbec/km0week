@@ -8,8 +8,7 @@ y sin peticiones a terceros (tipografías, scripts e imágenes están autoalojad
 
 ## Publicado en
 
-<!-- Cambia esta línea por la URL real cuando actives GitHub Pages -->
-https://USUARIO.github.io/km0week/
+https://bigdatahosbec.github.io/km0week/
 
 ## Para añadir un alojamiento
 
