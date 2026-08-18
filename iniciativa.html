@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La iniciativa · HOSBEC Km0 Week</title>
+<meta name="description" content="Qué es la Km0 Week, por qué la hacemos, quién está detrás y qué compromisos asume cada alojamiento adherido.">
+<link rel="canonical" href="https://km0week.hosbec.com/iniciativa.html">
+<meta name="theme-color" content="#1EA4C6">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:site_name" content="HOSBEC Km0 Week">
+<meta property="og:title" content="La iniciativa · HOSBEC Km0 Week">
+<meta property="og:description" content="Qué es la Km0 Week, por qué la hacemos, quién está detrás y qué compromisos asume cada alojamiento adherido.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://km0week.hosbec.com/iniciativa.html">
+<meta property="og:image" content="https://km0week.hosbec.com/assets/img/foto/cab-iniciativa.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/css/km0.css">
+<!-- En un servidor normal precargamos las dos tipografías principales.
+     Si la web se abre directamente desde el disco (file://) el navegador
+     bloquea los .woff2 sueltos por CORS: en ese caso, y solo en ese caso,
+     cargamos las mismas tipografías embebidas en base64. -->
+<script>
+  document.write(location.protocol === "file:"
+    ? '<link rel="stylesheet" href="assets/css/fuentes-local.css">'
+    : '<link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>'
+    + '<link rel="preload" href="assets/fonts/lora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>');
+</script>
+</head>
+<body>
+<a class="skip" href="#main" data-va="Anar al contingut">Ir al contenido</a>
+
+<!-- ============================== CINTA ================================= -->
+<div class="ribbon">
+  <div class="wrap">
+    <span class="r-left" data-va="Una iniciativa de HOSBEC per als veïns i veïnes de la Comunitat Valenciana">Una iniciativa de HOSBEC para los vecinos y vecinas de la Comunitat Valenciana</span>
+    <span class="r-right">
+      <span data-fechas>13 – 19 de noviembre de 2026</span>
+      <span><span data-va="Queden">Quedan</span> <b id="cuenta">—</b></span>
+    </span>
+  </div>
+</div>
+
+<!-- ============================ NAVEGACIÓN ============================== -->
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Km0 Week — inicio">
+      <img class="emblema" src="assets/img/emblema.svg" alt="" width="38" height="38">
+      <span class="brand-txt">
+        <span><span class="k">KM0</span><span class="w">week</span></span>
+        <small>Hosbec · Comunitat Valenciana</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Principal">
+      <a href="iniciativa.html" class="on" aria-current="page" data-va="La iniciativa">La iniciativa</a>
+      <a href="alojamientos.html" data-va="Allotjaments">Alojamientos</a>
+      <a href="mapa.html" data-va="Mapa">Mapa</a>
+      <a href="agenda.html" data-va="Agenda">Agenda</a>
+      <a href="noticias.html" data-va="Notícies">Noticias</a>
+      <a href="faq.html" data-va="Preguntes">Preguntas</a>
+      <span class="nav-cta-mobile"><a href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a></span>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="va" aria-pressed="false">VA</button>
+      </div>
+      <a class="btn btn-terra btn-sm" href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a>
+      <button class="burger" aria-label="Menú" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="cabecera">
+  <img class="cabecera-foto" src="assets/img/foto/cab-iniciativa.webp" alt="" width="2000" height="900" fetchpriority="high">
+  <div class="wrap cabecera-in">
+    <nav class="migas" aria-label="Ruta"><a href="index.html" data-va="Inici">Inicio</a> <i>/</i> <span data-va="Una setmana per a mirar d'una altra manera el que tenim al costat">Una semana para mirar de otra forma lo que tenemos al lado</span></nav>
+    <span class="label label-arena" data-va="La iniciativa">La iniciativa</span>
+    <h1 class="d1" data-va="Una setmana per a mirar d'una altra manera el que tenim al costat">Una semana para mirar de otra forma lo que tenemos al lado</h1>
+      <p class="lede" data-va="Km0 Week naix d'una idea simple: qui viu en un destí turístic quasi mai el gaudeix com a tal. Del 13 al 19 de novembre li donem la volta.">Km0 Week nace de una idea simple: quien vive en un destino turístico casi nunca lo disfruta como tal. Del 13 al 19 de noviembre le damos la vuelta.</p>
+  </div>
+</section>
+<!-- ============================== QUÉ ES ================================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="parte">
+      <div>
+        <span class="label label-mar" data-va="Què és">Qué es</span>
+        <h2 class="d2" data-va="Set dies perquè els de casa tornen a ser hostes">Siete días para que los de casa vuelvan a ser huéspedes</h2>
+        <p class="lede" data-va="La Comunitat Valenciana rep milions de visitants cada any. La paradoxa és que qui viu ací quasi mai dorm en els seus propis hotels, ni reserva una taula amb vistes, ni fa la ruta que fan els que vénen de fora.">La Comunitat Valenciana recibe millones de visitantes cada año. La paradoja es que quien vive aquí casi nunca duerme en sus propios hoteles, ni reserva una mesa con vistas, ni hace la ruta que hacen los que vienen de fuera.</p>
+        <p data-va="La Km0 Week és una setmana de novembre —del 13 al 19 de 2026— en què els allotjaments adherits obrin les portes als seus veïns amb una oferta pensada per a ells. Ni temporada alta, ni cues, ni avió. Dormir a vint minuts de casa i tornar l'endemà.">La Km0 Week es una semana de noviembre —del 13 al 19 de 2026— en la que los alojamientos adheridos abren las puertas a sus vecinos con una oferta pensada para ellos. Ni temporada alta, ni colas, ni avión. Dormir a veinte minutos de casa y volver al día siguiente.</p>
+        <p data-va="Està inspirada en el que ja funciona a altres capitals europees, com la Madrid Hotel Week, però amb una diferència important: ací el protagonista no és una ciutat, sinó tot un territori i la gent que hi viu.">Está inspirada en lo que ya funciona en otras capitales europeas, como la Madrid Hotel Week, pero con una diferencia importante: aquí el protagonista no es una ciudad, sino todo un territorio y la gente que vive en él.</p>
+      </div>
+      <div class="parte-foto">
+        <img src="assets/img/foto/idea-1.webp" alt="" width="1200" height="800" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== POR QUÉ ================================= -->
+<section class="sec bg-arena">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label label-verde" data-va="Per què ho fem">Por qué lo hacemos</span>
+      <h2 class="d2" data-va="Tres motius, i cap d'ells és omplir habitacions">Tres motivos, y ninguno de ellos es llenar habitaciones</h2>
+      <p class="lede" data-va="Novembre no és temporada alta. Precisament per això funciona: hi ha espai per a rebre bé, i temps per a parlar amb qui entra per la porta.">Noviembre no es temporada alta. Precisamente por eso funciona: hay espacio para recibir bien, y tiempo para hablar con quien entra por la puerta.</p>
+    </div>
+    <div class="cols cols-3">
+      <div class="tarjeta">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.4" cy="7.4" r="2.9"/><circle cx="17" cy="8.6" r="2.2"/><path d="M3 20.5c0-3.2 2.4-5.5 5.4-5.5s5.4 2.3 5.4 5.5M15.4 20.5c0-2.3.8-4 2.3-4.8"/></svg></span>
+        <h3 data-va="Acostar el sector als seus veïns">Acercar el sector a sus vecinos</h3>
+        <p class="body-sm" data-va="Un hotel és molt més que una façana per la qual passes cada dia. Quan el veí hi entra, entén qui hi treballa, què aporta i per què importa cuidar-lo.">Un hotel es mucho más que una fachada por la que pasas cada día. Cuando el vecino entra, entiende quién trabaja dentro, qué aporta y por qué importa cuidarlo.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="ico t-verde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20c-4.7 0-7.6-3.3-7.6-7.6 0-4.7 3.8-8 9.4-8 2.8 0 5.6.9 7.6 2.4-1 8.4-5.2 13.2-9.4 13.2z"/><path d="M4.4 20.4c2.8-5.6 6.6-8.4 11.2-10.3"/></svg></span>
+        <h3 data-va="Repartir millor l'any">Repartir mejor el año</h3>
+        <p class="body-sm" data-va="Moure viatge de proximitat en temporada baixa sosté l'ocupació i els llocs de treball quan més falta fa, i sense afegir pressió a l'estiu.">Mover viaje de proximidad en temporada baja sostiene la ocupación y el empleo cuando más falta hace, y sin añadir presión al verano.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="ico t-terra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18"/><path d="M5 20.5v-8l4-3 4 3v8"/><path d="M13 20.5v-6l3-2.2 3 2.2v6"/><path d="M9 5.5v2M8 6.5h2"/></svg></span>
+        <h3 data-va="Mirar el nostre amb uns altres ulls">Mirar lo nuestro con otros ojos</h3>
+        <p class="body-sm" data-va="El millor ambaixador d'un destí és qui hi viu. Difícilment recomanaràs el que no has trepitjat mai.">El mejor embajador de un destino es quien vive en él. Difícilmente vas a recomendar lo que nunca has pisado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ COMPROMISOS ============================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="parte">
+      <div class="parte-foto">
+        <img src="assets/img/foto/idea-2.webp" alt="" width="1200" height="800" loading="lazy">
+      </div>
+      <div>
+        <span class="label label-mar" data-va="El compromís">El compromiso</span>
+        <h2 class="d2" data-va="Cinc coses que accepta cada allotjament adherit">Cinco cosas que acepta cada alojamiento adherido</h2>
+        <p data-va="No és un segell decoratiu. Per a aparéixer en aquesta web hi ha unes regles, i qui no les complisca queda fora de l'edició següent.">No es un sello decorativo. Para aparecer en esta web hay unas reglas, y quien no las cumpla queda fuera de la siguiente edición.</p>
+        <ul class="puntos mt-1">
+          <li data-va="El preu de la Km0 Week és el més baix que ha tingut l'allotjament en els tres mesos anteriors per a la mateixa nit i tipus d'habitació."><strong>El precio no se maquilla.</strong> El de la Km0 Week es el más bajo que ha tenido el alojamiento en los tres meses anteriores para la misma noche y tipo de habitación.</li>
+          <li data-va="Es reserva directament amb l'allotjament. Ni comissions, ni intermediaris, ni cap plataforma pel mig."><strong>Reserva directa.</strong> Se reserva directamente con el alojamiento. Ni comisiones, ni intermediarios, ni ninguna plataforma por medio.</li>
+          <li data-va="Cada allotjament compromet un nombre concret de places per a residents i el publica. Si es diu 30, són 30."><strong>Cupo publicado.</strong> Cada alojamiento compromete un número concreto de plazas para residentes y lo publica. Si dice 30, son 30.</li>
+          <li data-va="La lletra menuda està sencera a la fitxa: què entra, què no i fins quan es pot cancel·lar."><strong>Condiciones a la vista.</strong> La letra pequeña está entera en la ficha: qué entra, qué no y hasta cuándo se puede cancelar.</li>
+          <li data-va="Almenys una experiència de la casa oberta a tot el món, encara que no s'hi allotgen."><strong>Algo abierto al barrio.</strong> Al menos una experiencia de la casa abierta a todo el mundo, aunque no se alojen.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== QUIÉN ================================== -->
+<section class="sec bg-arena">
+  <div class="wrap">
+    <div class="sec-head centro">
+      <span class="label" data-va="Qui hi ha darrere">Quién hay detrás</span>
+      <h2 class="d2" data-va="Una iniciativa d'HOSBEC amb els ajuntaments del territori">Una iniciativa de HOSBEC con los ayuntamientos del territorio</h2>
+      <p class="lede" data-va="HOSBEC és l'associació empresarial hotelera de Benidorm, la Costa Blanca i la Comunitat Valenciana. La Km0 Week l'organitza HOSBEC i la fan possible els allotjaments adherits, els ajuntaments que obrin espais i les empreses que posen activitats.">HOSBEC es la asociación empresarial hotelera de Benidorm, la Costa Blanca y la Comunitat Valenciana. La Km0 Week la organiza HOSBEC y la hacen posible los alojamientos adheridos, los ayuntamientos que abren espacios y las empresas que ponen actividades.</p>
+    </div>
+    <div class="figs">
+      <div class="fig"><b data-auto="alojamientos" data-count="20">20</b><span class="u" data-va="allotjaments sumats">alojamientos sumados</span></div>
+      <div class="fig"><b data-auto="destinos" data-count="20">20</b><span class="u" data-va="destins">destinos</span></div>
+      <div class="fig"><b data-auto="cupo" data-count="504">504</b><span class="u" data-va="places reservades per a residents">plazas reservadas para residentes</span></div>
+      <div class="fig"><b data-auto="actividades" data-count="14">14</b><span class="u" data-va="activitats obertes a tot el món">actividades abiertas a todo el mundo</span></div>
+    </div>
+    <p class="body-sm centrar mt-2" style="color:var(--suave)" data-va="Xifres de l'edició 2026, actualitzades automàticament des de la llista d'allotjaments adherits.">Cifras de la edición 2026, actualizadas automáticamente desde la lista de alojamientos adheridos.</p>
+  </div>
+</section>
+
+<!-- ============================== CÓMO VA ================================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label label-mar" data-va="Com funciona">Cómo funciona</span>
+      <h2 class="d2" data-va="De la idea a dormir fora de casa sense eixir de casa">De la idea a dormir fuera de casa sin salir de casa</h2>
+    </div>
+    <div class="pasos cols cols-2">
+      <div class="paso">
+        <h3 data-va="Mira què tens a prop">Mira qué tienes cerca</h3>
+        <p class="body-sm" data-va="Al mapa dius on vius i t'ordenem tots els allotjaments per temps de viatge: mitja hora, una hora, dues hores.">En el mapa dices dónde vives y te ordenamos todos los alojamientos por tiempo de viaje: media hora, una hora, dos horas.</p>
+      </div>
+      <div class="paso">
+        <h3 data-va="Tria el pla, no sols l'hotel">Elige el plan, no solo el hotel</h3>
+        <p class="body-sm" data-va="Cada oferta porta alguna cosa més que la nit: un sopar, un circuit termal, una visita, un lloguer de bicicletes.">Cada oferta lleva algo más que la noche: una cena, un circuito termal, una visita, un alquiler de bicicletas.</p>
+      </div>
+      <div class="paso">
+        <h3 data-va="Reserva directament">Reserva directamente</h3>
+        <p class="body-sm" data-va="El botó et porta a la web o al telèfon de l'allotjament. Digues que véns per la Km0 Week i ja està.">El botón te lleva a la web o al teléfono del alojamiento. Di que vienes por la Km0 Week y ya está.</p>
+      </div>
+      <div class="paso">
+        <h3 data-va="Segella el passaport">Sella el pasaporte</h3>
+        <p class="body-sm" data-va="Amb tres segells entres en el sorteig de deu estades; amb cinc, et convidem al sopar de clausura.">Con tres sellos entras en el sorteo de diez estancias; con cinco, te invitamos a la cena de clausura.</p>
+      </div>
+    </div>
+    <div class="mt-2" style="display:flex;flex-wrap:wrap;gap:.8rem">
+      <a class="btn btn-terra btn-lg" href="alojamientos.html" data-va="Veure els allotjaments">Ver los alojamientos</a>
+      <a class="btn btn-linea btn-lg" href="mapa.html" data-va="Què tinc a prop?">¿Qué tengo cerca?</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PARA HOTELES ============================== -->
+<section class="sec bg-arena">
+  <div class="wrap">
+    <div class="parte">
+      <div>
+        <span class="label" data-va="Per a allotjaments">Para alojamientos</span>
+        <h2 class="d2" data-va="Encara ets a temps d'entrar en aquesta edició">Todavía estás a tiempo de entrar en esta edición</h2>
+        <p data-va="Sumar-se és gratuït per als associats d'HOSBEC. Tu poses l'oferta i el cupo; nosaltres posem la campanya, el trànsit, la premsa i els materials.">Sumarse es gratuito para los asociados de HOSBEC. Tú pones la oferta y el cupo; nosotros ponemos la campaña, el tráfico, la prensa y los materiales.</p>
+        <div class="mt-1" style="display:flex;flex-wrap:wrap;gap:.8rem">
+          <a class="btn btn-terra" href="suma.html" data-va="Sumar el meu allotjament">Sumar mi alojamiento</a>
+          <a class="btn btn-linea" href="descargas.html" data-va="Veure els materials">Ver los materiales</a>
+        </div>
+      </div>
+      <div class="parte-foto">
+        <img src="assets/img/foto/idea-3.webp" alt="" width="1200" height="800" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- =============================== PIE ================================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-marca">
+          <img src="assets/img/emblema.svg" alt="" width="38" height="38">
+          <span><span class="k">KM0</span><span class="w">week</span></span>
+        </div>
+        <p class="body-sm foot-lema" data-va="Descobreix el que és a prop, viu el que és nostre.">Descubre lo cerca, vive lo nuestro.</p>
+        <p class="body-sm foot-lema" data-fechas>13 – 19 de noviembre de 2026</p>
+      </div>
+      <div>
+        <h5 data-va="La setmana">La semana</h5>
+        <ul>
+          <li><a href="iniciativa.html" data-va="La iniciativa">La iniciativa</a></li>
+          <li><a href="alojamientos.html" data-va="Allotjaments">Alojamientos</a></li>
+          <li><a href="mapa.html" data-va="Mapa i proximitat">Mapa y cercanía</a></li>
+          <li><a href="agenda.html" data-va="Agenda">Agenda</a></li>
+          <li><a href="noticias.html" data-va="Notícies">Noticias</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-va="Allotjaments">Alojamientos</h5>
+        <ul>
+          <li><a href="suma.html" data-va="Suma el teu allotjament">Suma tu alojamiento</a></li>
+          <li><a href="suma.html#requisitos" data-va="Requisits">Requisitos</a></li>
+          <li><a href="descargas.html" data-va="Materials i kit">Materiales y kit</a></li>
+          <li><a href="prensa.html" data-va="Sala de premsa">Sala de prensa</a></li>
+          <li><a href="https://hosbec.com" target="_blank" rel="noopener" data-va="hosbec.com">hosbec.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-va="T'avisem">Te avisamos</h5>
+        <p class="body-sm foot-lema" data-va="Deixa el teu correu i t'escrivim quan s'òbriguen les reserves.">Deja tu correo y te escribimos cuando se abran las reservas.</p>
+        <form class="subscribe" onsubmit="event.preventDefault();this.reset();window.Km0.toast(window.Km0.lang==='va'?'Gràcies! T\'avisarem.':'¡Gracias! Te avisaremos.');">
+          <input type="email" required placeholder="tu@correo.com" aria-label="Correo">
+          <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© <span data-year>2026</span> HOSBEC · Asociación Empresarial Hostelera de Benidorm, Costa Blanca y Comunidad Valenciana</span>
+      <span class="foot-legal"><a href="aviso-legal.html" data-va="Avís legal">Aviso legal</a> · <a href="privacidad.html" data-va="Privacitat">Privacidad</a> · <a href="cookies.html" data-va="Galetes">Cookies</a> · <a href="faq.html" data-va="Preguntes freqüents">Preguntas frecuentes</a></span>
+      <span>km0week@hosbec.com · 965 85 51 12</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data-alojamientos.js"></script>
+<script src="assets/js/isocrona.js"></script>
+<script src="assets/js/home.js"></script>
+<script src="assets/vendor/anime.global.js"></script>
+<script src="assets/js/motion.js"></script>
+</body>
+</html>

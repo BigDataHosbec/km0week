@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noticias · HOSBEC Km0 Week</title>
+<meta name="description" content="Cómo avanza la Km0 Week: adhesiones, acuerdos con ayuntamientos, novedades del programa y balance de la edición.">
+<link rel="canonical" href="https://km0week.hosbec.com/noticias.html">
+<meta name="theme-color" content="#1EA4C6">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:site_name" content="HOSBEC Km0 Week">
+<meta property="og:title" content="Noticias · HOSBEC Km0 Week">
+<meta property="og:description" content="Cómo avanza la Km0 Week: adhesiones, acuerdos con ayuntamientos, novedades del programa y balance de la edición.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://km0week.hosbec.com/noticias.html">
+<meta property="og:image" content="https://km0week.hosbec.com/assets/img/foto/cab-noticias.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/css/km0.css">
+<!-- En un servidor normal precargamos las dos tipografías principales.
+     Si la web se abre directamente desde el disco (file://) el navegador
+     bloquea los .woff2 sueltos por CORS: en ese caso, y solo en ese caso,
+     cargamos las mismas tipografías embebidas en base64. -->
+<script>
+  document.write(location.protocol === "file:"
+    ? '<link rel="stylesheet" href="assets/css/fuentes-local.css">'
+    : '<link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>'
+    + '<link rel="preload" href="assets/fonts/lora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>');
+</script>
+</head>
+<body>
+<a class="skip" href="#main" data-va="Anar al contingut">Ir al contenido</a>
+
+<!-- ============================== CINTA ================================= -->
+<div class="ribbon">
+  <div class="wrap">
+    <span class="r-left" data-va="Una iniciativa de HOSBEC per als veïns i veïnes de la Comunitat Valenciana">Una iniciativa de HOSBEC para los vecinos y vecinas de la Comunitat Valenciana</span>
+    <span class="r-right">
+      <span data-fechas>13 – 19 de noviembre de 2026</span>
+      <span><span data-va="Queden">Quedan</span> <b id="cuenta">—</b></span>
+    </span>
+  </div>
+</div>
+
+<!-- ============================ NAVEGACIÓN ============================== -->
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Km0 Week — inicio">
+      <img class="emblema" src="assets/img/emblema.svg" alt="" width="38" height="38">
+      <span class="brand-txt">
+        <span><span class="k">KM0</span><span class="w">week</span></span>
+        <small>Hosbec · Comunitat Valenciana</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Principal">
+      <a href="iniciativa.html" data-va="La iniciativa">La iniciativa</a>
+      <a href="alojamientos.html" data-va="Allotjaments">Alojamientos</a>
+      <a href="mapa.html" data-va="Mapa">Mapa</a>
+      <a href="agenda.html" data-va="Agenda">Agenda</a>
+      <a href="noticias.html" class="on" aria-current="page" data-va="Notícies">Noticias</a>
+      <a href="faq.html" data-va="Preguntes">Preguntas</a>
+      <span class="nav-cta-mobile"><a href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a></span>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="va" aria-pressed="false">VA</button>
+      </div>
+      <a class="btn btn-terra btn-sm" href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a>
+      <button class="burger" aria-label="Menú" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="cabecera">
+  <img class="cabecera-foto" src="assets/img/foto/cab-noticias.webp" alt="" width="2000" height="900" fetchpriority="high">
+  <div class="wrap cabecera-in">
+    <nav class="migas" aria-label="Ruta"><a href="index.html" data-va="Inici">Inicio</a> <i>/</i> <span data-va="Com va la Km0 Week">Cómo va la Km0 Week</span></nav>
+    <span class="label label-arena" data-va="Notícies">Noticias</span>
+    <h1 class="d1" data-va="Com va la Km0 Week">Cómo va la Km0 Week</h1>
+      <p class="lede" data-va="Anem contant ací el que es mou: adhesions, acords, programa i tot el que us puga interessar.">Vamos contando aquí lo que se mueve: adhesiones, acuerdos, programa y todo lo que os pueda interesar.</p>
+  </div>
+</section>
+<!-- ============================== NOTICIAS =============================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="notas">
+
+      <a class="nota grande" href="noticia-1.html">
+        <img src="assets/img/foto/not-1.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label label-mar" data-va="Adhesions">Adhesiones</span>
+          <h3 class="d3" data-va="20 allotjaments ja s'han sumat a la primera Km0 Week">20 alojamientos ya se han sumado a la primera Km0 Week</h3>
+          <p class="body-sm" data-va="Tanquem la primera tanda d'adhesions amb presència a les tres províncies i 504 places reservades per a residents.">Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes.</p>
+          <span class="dato-fecha">14 · 08 · 2026 · <span data-va="3 min de lectura">3 min de lectura</span></span>
+        </div>
+      </a>
+
+      <a class="nota" href="noticia-2.html">
+        <img src="assets/img/foto/not-2.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label label-verde" data-va="Transparència">Transparencia</span>
+          <h3 data-va="Com es calcula el descompte de resident (i per què és real)">Cómo se calcula el descuento de residente (y por qué es real)</h3>
+          <p class="body-sm" data-va="El compromís de la Km0 Week és que el preu de la setmana siga el més baix del trimestre. Expliquem com es comprova.">El compromiso de la Km0 Week es que el precio de la semana sea el más bajo del trimestre. Explicamos cómo se comprueba.</p>
+          <span class="dato-fecha">28 · 07 · 2026 · <span data-va="4 min de lectura">4 min de lectura</span></span>
+        </div>
+      </a>
+
+      <a class="nota" href="noticia-3.html">
+        <img src="assets/img/foto/not-3.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label" data-va="Territori">Territorio</span>
+          <h3 data-va="Dotze ajuntaments se sumen amb activitats obertes">Doce ayuntamientos se suman con actividades abiertas</h3>
+          <p class="body-sm" data-va="Visites a espais normalment tancats, rutes guiades i tallers que s'obrin només durant la setmana.">Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la semana.</p>
+          <span class="dato-fecha">09 · 07 · 2026 · <span data-va="2 min de lectura">2 min de lectura</span></span>
+        </div>
+      </a>
+
+      <a class="nota" href="noticia-4.html">
+        <img src="assets/img/foto/not-4.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label label-mar" data-va="Passaport">Pasaporte</span>
+          <h3 data-va="El passaport Km0: com funciona el sorteig de deu estades">El pasaporte Km0: cómo funciona el sorteo de diez estancias</h3>
+          <p class="body-sm" data-va="Tres segells per a entrar en el sorteig, cinc per al sopar de clausura. Bases i calendari.">Tres sellos para entrar en el sorteo, cinco para la cena de clausura. Bases y calendario.</p>
+          <span class="dato-fecha">21 · 06 · 2026 · <span data-va="3 min de lectura">3 min de lectura</span></span>
+        </div>
+      </a>
+
+      <article class="nota" aria-label="Próxima entrada">
+        <img src="assets/img/foto/not-5.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label" style="color:var(--suave)" data-va="Pròximament">Próximamente</span>
+          <h3 data-va="El programa complet, dia a dia">El programa completo, día a día</h3>
+          <p class="body-sm" data-va="Publicarem l'agenda tancada de les set jornades quan es confirmen les últimes activitats.">Publicaremos la agenda cerrada de las siete jornadas cuando se confirmen las últimas actividades.</p>
+          <span class="dato-fecha" data-va="Setembre de 2026">Septiembre de 2026</span>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="body-sm centrar mt-2" style="color:var(--suave)" data-va="Els textos d'aquestes entrades són d'exemple. Substitueix-los quan tingueu les notícies reals.">Los textos de estas entradas son de ejemplo. Sustitúyelos cuando tengáis las noticias reales.</p>
+  </div>
+</section>
+
+<!-- =============================== BOLETÍN =============================== -->
+<section class="sec bg-arena">
+  <div class="wrap centrar">
+    <span class="label label-verde" data-va="No et perdes res">No te pierdas nada</span>
+    <h2 class="d2 mt-1" data-va="T'avisem quan s'òbriguen les reserves">Te avisamos cuando se abran las reservas</h2>
+    <p class="lede" style="margin-inline:auto" data-va="Un correu quan la web es faça pública i un altre amb el programa tancat. Res més.">Un correo cuando la web se haga pública y otro con el programa cerrado. Nada más.</p>
+    <form class="subscribe mt-2" style="justify-content:center;max-width:440px;margin-inline:auto" onsubmit="event.preventDefault();this.reset();window.Km0.toast(window.Km0.lang==='va'?'Gràcies! T\'avisarem.':'¡Gracias! Te avisaremos.');">
+      <input type="email" required placeholder="tu@correo.com" aria-label="Correo">
+      <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- =============================== PIE ================================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-marca">
+          <img src="assets/img/emblema.svg" alt="" width="38" height="38">
+          <span><span class="k">KM0</span><span class="w">week</span></span>
+        </div>
+        <p class="body-sm foot-lema" data-va="Descobreix el que és a prop, viu el que és nostre.">Descubre lo cerca, vive lo nuestro.</p>
+        <p class="body-sm foot-lema" data-fechas>13 – 19 de noviembre de 2026</p>
+      </div>
+      <div>
+        <h5 data-va="La setmana">La semana</h5>
+        <ul>
+          <li><a href="iniciativa.html" data-va="La iniciativa">La iniciativa</a></li>
+          <li><a href="alojamientos.html" data-va="Allotjaments">Alojamientos</a></li>
+          <li><a href="mapa.html" data-va="Mapa i proximitat">Mapa y cercanía</a></li>
+          <li><a href="agenda.html" data-va="Agenda">Agenda</a></li>
+          <li><a href="noticias.html" data-va="Notícies">Noticias</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-va="Allotjaments">Alojamientos</h5>
+        <ul>
+          <li><a href="suma.html" data-va="Suma el teu allotjament">Suma tu alojamiento</a></li>
+          <li><a href="suma.html#requisitos" data-va="Requisits">Requisitos</a></li>
+          <li><a href="descargas.html" data-va="Materials i kit">Materiales y kit</a></li>
+          <li><a href="prensa.html" data-va="Sala de premsa">Sala de prensa</a></li>
+          <li><a href="https://hosbec.com" target="_blank" rel="noopener" data-va="hosbec.com">hosbec.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-va="T'avisem">Te avisamos</h5>
+        <p class="body-sm foot-lema" data-va="Deixa el teu correu i t'escrivim quan s'òbriguen les reserves.">Deja tu correo y te escribimos cuando se abran las reservas.</p>
+        <form class="subscribe" onsubmit="event.preventDefault();this.reset();window.Km0.toast(window.Km0.lang==='va'?'Gràcies! T\'avisarem.':'¡Gracias! Te avisaremos.');">
+          <input type="email" required placeholder="tu@correo.com" aria-label="Correo">
+          <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© <span data-year>2026</span> HOSBEC · Asociación Empresarial Hostelera de Benidorm, Costa Blanca y Comunidad Valenciana</span>
+      <span class="foot-legal"><a href="aviso-legal.html" data-va="Avís legal">Aviso legal</a> · <a href="privacidad.html" data-va="Privacitat">Privacidad</a> · <a href="cookies.html" data-va="Galetes">Cookies</a> · <a href="faq.html" data-va="Preguntes freqüents">Preguntas frecuentes</a></span>
+      <span>km0week@hosbec.com · 965 85 51 12</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data-alojamientos.js"></script>
+<script src="assets/js/isocrona.js"></script>
+<script src="assets/js/home.js"></script>
+<script src="assets/vendor/anime.global.js"></script>
+<script src="assets/js/motion.js"></script>
+</body>
+</html>

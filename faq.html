@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preguntas frecuentes · HOSBEC Km0 Week</title>
+<meta name="description" content="Dudas resueltas sobre la Km0 Week: quién puede reservar, cómo funcionan los descuentos, el pasaporte, el sorteo y las condiciones.">
+<link rel="canonical" href="https://km0week.hosbec.com/faq.html">
+<meta name="theme-color" content="#1EA4C6">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:site_name" content="HOSBEC Km0 Week">
+<meta property="og:title" content="Preguntas frecuentes · HOSBEC Km0 Week">
+<meta property="og:description" content="Dudas resueltas sobre la Km0 Week: quién puede reservar, cómo funcionan los descuentos, el pasaporte, el sorteo y las condiciones.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://km0week.hosbec.com/faq.html">
+<meta property="og:image" content="https://km0week.hosbec.com/assets/img/foto/cab-faq.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/css/km0.css">
+<!-- En un servidor normal precargamos las dos tipografías principales.
+     Si la web se abre directamente desde el disco (file://) el navegador
+     bloquea los .woff2 sueltos por CORS: en ese caso, y solo en ese caso,
+     cargamos las mismas tipografías embebidas en base64. -->
+<script>
+  document.write(location.protocol === "file:"
+    ? '<link rel="stylesheet" href="assets/css/fuentes-local.css">'
+    : '<link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>'
+    + '<link rel="preload" href="assets/fonts/lora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>');
+</script>
+</head>
+<body>
+<a class="skip" href="#main" data-va="Anar al contingut">Ir al contenido</a>
+
+<!-- ============================== CINTA ================================= -->
+<div class="ribbon">
+  <div class="wrap">
+    <span class="r-left" data-va="Una iniciativa de HOSBEC per als veïns i veïnes de la Comunitat Valenciana">Una iniciativa de HOSBEC para los vecinos y vecinas de la Comunitat Valenciana</span>
+    <span class="r-right">
+      <span data-fechas>13 – 19 de noviembre de 2026</span>
+      <span><span data-va="Queden">Quedan</span> <b id="cuenta">—</b></span>
+    </span>
+  </div>
+</div>
+
+<!-- ============================ NAVEGACIÓN ============================== -->
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Km0 Week — inicio">
+      <img class="emblema" src="assets/img/emblema.svg" alt="" width="38" height="38">
+      <span class="brand-txt">
+        <span><span class="k">KM0</span><span class="w">week</span></span>
+        <small>Hosbec · Comunitat Valenciana</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Principal">
+      <a href="iniciativa.html" data-va="La iniciativa">La iniciativa</a>
+      <a href="alojamientos.html" data-va="Allotjaments">Alojamientos</a>
+      <a href="mapa.html" data-va="Mapa">Mapa</a>
+      <a href="agenda.html" data-va="Agenda">Agenda</a>
+      <a href="noticias.html" data-va="Notícies">Noticias</a>
+      <a href="faq.html" class="on" aria-current="page" data-va="Preguntes">Preguntas</a>
+      <span class="nav-cta-mobile"><a href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a></span>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="va" aria-pressed="false">VA</button>
+      </div>
+      <a class="btn btn-terra btn-sm" href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a>
+      <button class="burger" aria-label="Menú" aria-expanded="false"><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="cabecera">
+  <img class="cabecera-foto" src="assets/img/foto/cab-faq.webp" alt="" width="2000" height="900" fetchpriority="high">
+  <div class="wrap cabecera-in">
+    <nav class="migas" aria-label="Ruta"><a href="index.html" data-va="Inici">Inicio</a> <i>/</i> <span data-va="El que més ens pregunteu">Lo que más nos preguntáis</span></nav>
+    <span class="label label-arena" data-va="Preguntes freqüents">Preguntas frecuentes</span>
+    <h1 class="d1" data-va="El que més ens pregunteu">Lo que más nos preguntáis</h1>
+      <p class="lede" data-va="Si no trobes la teua resposta, escriu-nos a km0week@hosbec.com i l'afegim ací.">Si no encuentras tu respuesta, escríbenos a km0week@hosbec.com y la añadimos aquí.</p>
+  </div>
+</section>
+<!-- ================================ FAQ ================================== -->
+<section class="sec">
+  <div class="wrap">
+
+    <h2 class="d3" data-va="Per a qui vulga reservar">Para quien quiera reservar</h2>
+    <div class="acordeon mt-1">
+      <details class="faq" open>
+        <summary data-va="Cal viure a la Comunitat Valenciana per a reservar?">¿Hace falta vivir en la Comunitat Valenciana para reservar?</summary>
+        <div class="cuerpo">
+          <p data-va="Les ofertes estan pensades per a residents, però cap allotjament et demanarà el padró. La idea és convidar el veí, no muntar un control. Si vius fora i t'agrada el pla, també pots reservar-lo.">Las ofertas están pensadas para residentes, pero ningún alojamiento te va a pedir el padrón. La idea es invitar al vecino, no montar un control. Si vives fuera y te gusta el plan, también puedes reservarlo.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="Com reserve? Es paga alguna cosa en aquesta web?">¿Cómo reservo? ¿Se paga algo en esta web?</summary>
+        <div class="cuerpo">
+          <p data-va="Ací no es paga res ni es gestiona cap reserva. Cada fitxa té un botó que et porta a la web o al telèfon de l'allotjament, i tot passa allí, directament amb ells.">Aquí no se paga nada ni se gestiona ninguna reserva. Cada ficha tiene un botón que te lleva a la web o al teléfono del alojamiento, y todo pasa allí, directamente con ellos.</p>
+          <p data-va="Digues que véns per la Km0 Week: és la manera que tenen d'aplicar-te el preu i comptar-te dins del cupo.">Di que vienes por la Km0 Week: es la forma que tienen de aplicarte el precio y contarte dentro del cupo.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="El descompte és de veritat o és el preu de sempre inflat?">¿El descuento es de verdad o es el precio de siempre inflado?</summary>
+        <div class="cuerpo">
+          <p data-va="Cada allotjament adherit es compromet que el preu de la Km0 Week siga igual o inferior al més baix que ha tingut en els tres mesos anteriors per a la mateixa nit i tipus d'habitació. HOSBEC ho comprova amb una mostra aleatòria durant la setmana.">Cada alojamiento adherido se compromete a que el precio de la Km0 Week sea igual o inferior al más bajo que ha tenido en los tres meses anteriores para la misma noche y tipo de habitación. HOSBEC lo comprueba con una muestra aleatoria durante la semana.</p>
+          <p data-va="Qui no complisca queda fora de l'edició següent. Si detectes alguna cosa estranya, escriu-nos i ho mirem.">Quien no cumpla queda fuera de la siguiente edición. Si detectas algo raro, escríbenos y lo miramos.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="Puc anar-hi amb xiquets? I amb gos?">¿Puedo ir con niños? ¿Y con perro?</summary>
+        <div class="cuerpo">
+          <p data-va="Depén de cada casa. A la llista d'allotjaments tens filtres d'«En família», «Amb mascota» i «Accessible» per a veure només els que ho admeten. Les condicions concretes estan a la fitxa de cadascun.">Depende de cada casa. En la lista de alojamientos tienes filtros de «En familia», «Con mascota» y «Accesible» para ver solo los que lo admiten. Las condiciones concretas están en la ficha de cada uno.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="Què passa si he de cancel·lar?">¿Qué pasa si tengo que cancelar?</summary>
+        <div class="cuerpo">
+          <p data-va="Val la política de l'allotjament amb qui hages reservat, que apareix a la lletra menuda de la seua fitxa. HOSBEC no intervé en les reserves.">Vale la política del alojamiento con el que hayas reservado, que aparece en la letra pequeña de su ficha. HOSBEC no interviene en las reservas.</p>
+        </div>
+      </details>
+    </div>
+
+    <h2 class="d3 mt-2" style="margin-top:clamp(2.4rem,5vw,3.6rem)" data-va="Sobre les activitats i el passaport">Sobre las actividades y el pasaporte</h2>
+    <div class="acordeon mt-1">
+      <details class="faq">
+        <summary data-va="Puc anar a les activitats sense allotjar-me?">¿Puedo ir a las actividades sin alojarme?</summary>
+        <div class="cuerpo">
+          <p data-va="Sí. Totes les de l'agenda són obertes a tot el món. Algunes són gratuïtes i altres tenen una aportació que cobreix material, guia o menjar.">Sí. Todas las de la agenda son abiertas a todo el mundo. Algunas son gratuitas y otras tienen una aportación que cubre material, guía o comida.</p>
+        </div>
+      </details>
+      <details class="faq" id="sorteo">
+        <summary data-va="Com funciona el sorteig del passaport?">¿Cómo funciona el sorteo del pasaporte?</summary>
+        <div class="cuerpo">
+          <p data-va="Descarregues el passaport, el portes a cada allotjament o activitat i et posen el segell. Amb tres segells entres en el sorteig de deu estades per a l'any següent; amb cinc, entres a més al sopar de clausura.">Descargas el pasaporte, lo llevas a cada alojamiento o actividad y te ponen el sello. Con tres sellos entras en el sorteo de diez estancias para el año siguiente; con cinco, entras además a la cena de clausura.</p>
+          <p data-va="El sorteig es fa el diumenge 19 de novembre a les 18:00 davant de notari. Les bases completes es publiquen a la pàgina de descàrregues.">El sorteo se celebra el domingo 19 de noviembre a las 18:00 ante notario. Las bases completas se publican en la página de descargas.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="He perdut el passaport a la meitat. Puc continuar?">He perdido el pasaporte a la mitad. ¿Puedo seguir?</summary>
+        <div class="cuerpo">
+          <p data-va="Sí: en qualsevol allotjament adherit et donen un de nou. Els segells anteriors, això sí, es perden, així que guarda'l bé.">Sí: en cualquier alojamiento adherido te dan uno nuevo. Los sellos anteriores, eso sí, se pierden, así que guárdalo bien.</p>
+        </div>
+      </details>
+    </div>
+
+    <h2 class="d3" style="margin-top:clamp(2.4rem,5vw,3.6rem)" data-va="Per a allotjaments">Para alojamientos</h2>
+    <div class="acordeon mt-1">
+      <details class="faq">
+        <summary data-va="Quant costa sumar-se?">¿Cuánto cuesta sumarse?</summary>
+        <div class="cuerpo">
+          <p data-va="Res per als associats d'HOSBEC. Si no ets associat, hi ha una quota d'alta reduïda per a l'edició; escriu-nos i te la detallem.">Nada para los asociados de HOSBEC. Si no eres asociado, hay una cuota de alta reducida para la edición; escríbenos y te la detallamos.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="Tinc una casa rural de sis places. Encaixe?">Tengo una casa rural de seis plazas. ¿Encajo?</summary>
+        <div class="cuerpo">
+          <p data-va="Perfectament. Hi ha hotels de 300 habitacions i cases de sis places, i les regles són les mateixes per a tots. El cupo mínim són 5 places durant la setmana.">Perfectamente. Hay hoteles de 300 habitaciones y casas de seis plazas, y las reglas son las mismas para todos. El cupo mínimo son 5 plazas durante la semana.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="Puc canviar la meua oferta una vegada publicada?">¿Puedo cambiar mi oferta una vez publicada?</summary>
+        <div class="cuerpo">
+          <p data-va="Es pot corregir un error o ampliar el cupo en qualsevol moment. El que no es pot és pujar el preu ni reduir el que inclou una vegada la fitxa és pública.">Se puede corregir un error o ampliar el cupo en cualquier momento. Lo que no se puede es subir el precio ni reducir lo que incluye una vez la ficha es pública.</p>
+        </div>
+      </details>
+      <details class="faq">
+        <summary data-va="Rebré algun informe després?">¿Recibiré algún informe después?</summary>
+        <div class="cuerpo">
+          <p data-va="Sí: visites a la teua fitxa, clics al teu botó de reserva, procedència del trànsit i repercussió en premsa. T'arriba durant les dues setmanes següents.">Sí: visitas a tu ficha, clics en tu botón de reserva, procedencia del tráfico y repercusión en prensa. Te llega durante las dos semanas siguientes.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="tarjeta mt-2" style="margin-top:clamp(2.4rem,5vw,3.6rem);text-align:center">
+      <h3 data-va="No has trobat la teua pregunta?">¿No has encontrado tu pregunta?</h3>
+      <p class="body-sm" data-va="Escriu-nos a km0week@hosbec.com o telefona al 965 85 51 12. Les respostes útils acaben ací.">Escríbenos a km0week@hosbec.com o llama al 965 85 51 12. Las respuestas útiles acaban aquí.</p>
+      <div class="mt-1"><a class="btn btn-mar" href="mailto:km0week@hosbec.com">km0week@hosbec.com</a></div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- =============================== PIE ================================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-marca">
+          <img src="assets/img/emblema.svg" alt="" width="38" height="38">
+          <span><span class="k">KM0</span><span class="w">week</span></span>
+        </div>
+        <p class="body-sm foot-lema" data-va="Descobreix el que és a prop, viu el que és nostre.">Descubre lo cerca, vive lo nuestro.</p>
+        <p class="body-sm foot-lema" data-fechas>13 – 19 de noviembre de 2026</p>
+      </div>
+      <div>
+        <h5 data-va="La setmana">La semana</h5>
+        <ul>
+          <li><a href="iniciativa.html" data-va="La iniciativa">La iniciativa</a></li>
+          <li><a href="alojamientos.html" data-va="Allotjaments">Alojamientos</a></li>
+          <li><a href="mapa.html" data-va="Mapa i proximitat">Mapa y cercanía</a></li>
+          <li><a href="agenda.html" data-va="Agenda">Agenda</a></li>
+          <li><a href="noticias.html" data-va="Notícies">Noticias</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-va="Allotjaments">Alojamientos</h5>
+        <ul>
+          <li><a href="suma.html" data-va="Suma el teu allotjament">Suma tu alojamiento</a></li>
+          <li><a href="suma.html#requisitos" data-va="Requisits">Requisitos</a></li>
+          <li><a href="descargas.html" data-va="Materials i kit">Materiales y kit</a></li>
+          <li><a href="prensa.html" data-va="Sala de premsa">Sala de prensa</a></li>
+          <li><a href="https://hosbec.com" target="_blank" rel="noopener" data-va="hosbec.com">hosbec.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-va="T'avisem">Te avisamos</h5>
+        <p class="body-sm foot-lema" data-va="Deixa el teu correu i t'escrivim quan s'òbriguen les reserves.">Deja tu correo y te escribimos cuando se abran las reservas.</p>
+        <form class="subscribe" onsubmit="event.preventDefault();this.reset();window.Km0.toast(window.Km0.lang==='va'?'Gràcies! T\'avisarem.':'¡Gracias! Te avisaremos.');">
+          <input type="email" required placeholder="tu@correo.com" aria-label="Correo">
+          <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© <span data-year>2026</span> HOSBEC · Asociación Empresarial Hostelera de Benidorm, Costa Blanca y Comunidad Valenciana</span>
+      <span class="foot-legal"><a href="aviso-legal.html" data-va="Avís legal">Aviso legal</a> · <a href="privacidad.html" data-va="Privacitat">Privacidad</a> · <a href="cookies.html" data-va="Galetes">Cookies</a> · <a href="faq.html" data-va="Preguntes freqüents">Preguntas frecuentes</a></span>
+      <span>km0week@hosbec.com · 965 85 51 12</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data-alojamientos.js"></script>
+<script src="assets/js/isocrona.js"></script>
+<script src="assets/js/home.js"></script>
+<script src="assets/vendor/anime.global.js"></script>
+<script src="assets/js/motion.js"></script>
+</body>
+</html>
