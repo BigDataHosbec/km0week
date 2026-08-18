@@ -40,4 +40,4 @@ assets/                          CSS, JS, tipografías e imágenes
 LEEME.md                         Documentación completa en castellano
 ```
 
-© HOSBEC · Asociación Empresarial Hostelera de Benidorm, Costa Blanca y Comunitat Valenciana
+© HOSBEC · Asociación Empresarial Hotelera y Turística de la Comunidad Valenciana
