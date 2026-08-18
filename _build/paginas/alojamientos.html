@@ -1,0 +1,73 @@
+<!-- =============================== FILTROS =============================== -->
+<div class="filtros" id="filtros">
+  <div class="wrap">
+    <div class="filtros-fila">
+      <div class="grp" id="f-provincia" data-grupo="provincia">
+        <span class="label" data-va="Província">Provincia</span>
+      </div>
+      <label class="grp" style="gap:.4rem">
+        <span class="label" data-va="Ordenar">Ordenar</span>
+        <select id="f-orden" aria-label="Ordenar los resultados"></select>
+      </label>
+      <span class="res"><b id="f-total">0</b> <span id="f-total-txt" data-va="allotjaments">alojamientos</span></span>
+    </div>
+    <div class="filtros-fila">
+      <div class="grp" id="f-tipo" data-grupo="tipo">
+        <span class="label" data-va="Tipus">Tipo</span>
+      </div>
+    </div>
+    <div class="filtros-fila">
+      <div class="grp" id="f-exp" data-grupo="experiencia">
+        <span class="label" data-va="Experiència">Experiencia</span>
+      </div>
+      <button class="btn-limpiar" type="button" id="f-limpiar" data-va="Netejar filtres">Limpiar filtros</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== RESULTADOS ============================== -->
+<section class="sec" style="padding-top:clamp(1.6rem,3.4vw,2.6rem)">
+  <div class="wrap">
+    <div class="fichas" id="lista-alojamientos"></div>
+    <div class="vacio" id="lista-vacia" hidden>
+      <b data-va="Cap allotjament amb aquests filtres">Ningún alojamiento con estos filtros</b>
+      <p data-va="Prova a llevar-ne algun: encara estem sumant cases i cada setmana n'entren de noves.">Prueba a quitar alguno: seguimos sumando casas y cada semana entran nuevas.</p>
+      <button class="btn btn-mar mt-1" type="button" data-limpiar data-va="Veure-ho tot">Verlo todo</button>
+    </div>
+    <p class="body-sm mt-2" style="color:var(--suave);max-width:70ch" data-va="HOSBEC no gestiona reserves ni cobra cap comissió. El preu, la disponibilitat i les condicions són responsabilitat de cada allotjament; en polsar «Veure oferta» vas a la seua web.">HOSBEC no gestiona reservas ni cobra comisión alguna. El precio, la disponibilidad y las condiciones son responsabilidad de cada alojamiento; al pulsar «Ver oferta» vas a su web.</p>
+  </div>
+</section>
+
+<!-- ============================== POR DESTINO ============================= -->
+<section class="sec bg-arena">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label label-verde" data-va="Per destí">Por destino</span>
+      <h2 class="d2" data-va="De Vinaròs a Torrevieja, passant per l'interior">De Vinaròs a Torrevieja, pasando por el interior</h2>
+      <p class="lede" data-va="Costa i interior, ciutat i poble. Polsa un destí per a filtrar la llista de dalt.">Costa e interior, ciudad y pueblo. Pulsa un destino para filtrar la lista de arriba.</p>
+    </div>
+    <div class="provs" id="provincias"></div>
+  </div>
+</section>
+
+<!-- ================================ CTA ================================== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="cta-grid">
+        <div>
+          <span class="label" data-va="Per a allotjaments">Para alojamientos</span>
+          <h2 class="d2" data-va="El teu allotjament també pot ser Km 0">Tu alojamiento también puede ser Km 0</h2>
+          <span class="hand hand-mar" data-va="Viatjar a prop també pot sentir-se especial.">Viajar cerca también puede sentirse especial.</span>
+        </div>
+        <div>
+          <p data-va="Sumar-se és gratuït per als associats d'HOSBEC. Tu poses l'oferta; nosaltres posem la campanya, el trànsit i la comunicació. Sense comissions ni intermediaris.">Sumarse es gratuito para los asociados de HOSBEC. Tú pones la oferta; nosotros ponemos la campaña, el tráfico y la comunicación. Sin comisiones ni intermediarios.</p>
+          <div class="mt-1" style="display:flex;flex-wrap:wrap;gap:.7rem">
+            <a class="btn btn-terra" href="suma.html" data-va="Vull participar">Quiero participar</a>
+            <a class="btn btn-linea" href="suma.html#requisitos" data-va="Veure requisits">Ver requisitos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
