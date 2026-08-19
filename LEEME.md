@@ -4,6 +4,11 @@ Abre `index.html` en el navegador: funciona tal cual, sin servidor.
 Misma piel que aprobaste en la v4, ahora con **18 páginas**, fotos en todos los
 huecos y contenido de ejemplo en todas partes.
 
+> **¿Vas a cambiar algo?** Lee antes `MANUAL-DE-ACTUALIZACION.md`: está
+> todo por recetas (añadir un hotel, cambiar una foto, publicar una noticia,
+> regenerar los PDF) y avisa de las trampas.
+
+
 ---
 
 ## 1 · Qué hay
@@ -14,13 +19,13 @@ huecos y contenido de ejemplo en todas partes.
 | La iniciativa | `iniciativa.html` | Qué es, por qué se hace, los cinco compromisos, quién hay detrás, cómo funciona |
 | Alojamientos | `alojamientos.html` | **Listado completo con filtros** por provincia, tipo y experiencia, y cinco criterios de orden |
 | Mapa | `mapa.html` | El mapa grande con los tres círculos y la lista de todos los alojamientos ordenada por distancia |
-| Agenda | `agenda.html` | Programa día a día del 13 al 19, con filtro por día y por «solo gratuitas» |
+| Agenda | `agenda.html` | Programa día a día del 13 al 29, con filtro por día, por fin de semana y por «solo gratuitas» |
 | Suma tu alojamiento | `suma.html` | Qué pone cada parte, requisitos, calendario y formulario de solicitud |
 | Preguntas | `faq.html` | Doce preguntas en tres bloques, en acordeón |
 | Noticias | `noticias.html` + `noticia-1..4.html` | Listado y cuatro entradas escritas enteras |
 | Sala de prensa | `prensa.html` | Cifras verificables, material para medios, contacto y tabla de repercusión |
-| Descargas | `descargas.html` | Pasaporte, programa, bases, cartelería, kit de redes, manual de marca |
-| Legales | `aviso-legal.html` · `privacidad.html` · `cookies.html` | Plantillas de trabajo, para que las revise vuestro jurídico |
+| Descargas | `descargas.html` | Nueve piezas descargables: pasaporte, programa, bases, cartelería, kit de redes, textos, manual, sello y guía de recepción |
+| Legales | `aviso-legal.html` · `privacidad.html` · `cookies.html` | Con los datos reales de HOSBEC. Pendientes de revisión jurídica |
 | Error | `404.html` | Con accesos a las secciones principales |
 
 Además: `sitemap.xml` y `robots.txt`, generados solos.

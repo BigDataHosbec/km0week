@@ -34,6 +34,7 @@ FECHAS_VA = "13 – 29 de novembre de 2026"
 
 # ---------------------------------------------------------------- navegación --
 MENU = [
+    ("index.html",        "Inicio",         "Inici"),
     ("iniciativa.html",   "La iniciativa",  "La iniciativa"),
     ("alojamientos.html", "Alojamientos",   "Allotjaments"),
     ("mapa.html",         "Mapa",           "Mapa"),

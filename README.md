@@ -1,7 +1,13 @@
 # HOSBEC Km0 Week
 
-Web de la **Km0 Week**: una semana para que quienes viven en la Comunitat Valenciana
-redescubran los alojamientos de su propio territorio. Del **13 al 19 de noviembre de 2026**.
+Web de la **Km0 Week**: tres fines de semana para que quienes viven en la Comunitat
+Valenciana redescubran los alojamientos de su propio territorio. Del **13 al 29 de
+noviembre de 2026**.
+
+> **¿Vas a cambiar algo?** Lee antes `MANUAL-DE-ACTUALIZACION.md`: está
+> todo por recetas (añadir un hotel, cambiar una foto, publicar una noticia,
+> regenerar los PDF) y avisa de las trampas.
+
 
 Sitio estático: HTML, CSS y JavaScript. Sin build obligatorio, sin dependencias externas
 y sin peticiones a terceros (tipografías, scripts e imágenes están autoalojados).
