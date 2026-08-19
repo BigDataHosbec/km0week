@@ -242,6 +242,21 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .nav-links a:hover { background: var(--mar-p); color: var(--mar-d); }
 
+/* Ni un enlace del menú ni el logotipo se parten por la mitad. */
+.nav-links a, .nav-right .btn, .brand-txt > span { white-space: nowrap; }
+.brand { flex-shrink: 0; }
+
+/* Franja justa antes de que salga el hamburguesa (1060 px): con siete enlaces
+   no cabía y la barra se iba a dos filas. */
+@media (min-width: 1061px) and (max-width: 1240px) {
+  .nav .wrap { gap: .55rem; }
+  .brand-txt small { display: none; }
+  .nav-links { gap: 0; }
+  .nav-links a { font-size: .82rem; padding: 9px 8px; }
+  .nav-right { gap: 7px; }
+  .lang button { padding: 7px 9px; }
+}
+
 .nav-right { display: flex; align-items: center; gap: 10px; }
 
 .lang { display: inline-flex; border: 1.5px solid var(--linea); border-radius: var(--r-full); overflow: hidden; background: #fff; }
