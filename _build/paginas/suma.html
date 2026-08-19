@@ -116,14 +116,9 @@
       <p data-va="Ja ens ha arribat el correu. Et responem en 48 hores laborables amb el pas següent.">Ya nos ha llegado el correo. Te respondemos en 48 horas laborables con el siguiente paso.</p>
     </div>
 
-    <!-- El envío lo hace FormSubmit: reenvía el contenido por correo a
-         km0week@hosbec.com. No guarda nada ni requiere servidor propio. -->
-    <form class="form-grid" id="form-suma" novalidate
-          action="https://formsubmit.co/km0week@hosbec.com" method="POST">
-      <input type="hidden" name="_subject" value="[Km0 Week] Alojamiento · nueva solicitud">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_autoresponse" value="Hemos recibido tu solicitud para sumar tu alojamiento a la HOSBEC Km0 Week (13 - 29 de noviembre de 2026). Le echamos un vistazo y te respondemos en 48 horas laborables con el siguiente paso. Si necesitas algo antes, escribe a km0week@hosbec.com o llama al 965 85 55 16. -- Hem rebut la teua sol.licitud per a sumar el teu allotjament a la HOSBEC Km0 Week. Et responem en 48 hores laborables. -- HOSBEC, Associacio Empresarial Hotelera i Turistica de la Comunitat Valenciana.">
-      <input type="hidden" name="_next" value="@@DOMINIO@@/suma.html?enviado=1#formulario">
+    <!-- El envío lo recoge assets/js/home.js y lo manda al Apps Script, que
+         escribe la fila en la hoja de registros y manda los dos correos. -->
+    <form class="form-grid" id="form-suma" novalidate>
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="campo">
         <span data-va="Nom de l'allotjament *">Nombre del alojamiento *</span>
@@ -156,6 +151,7 @@
       <label class="campo">
         <span data-va="Correu *">Correo *</span>
         <input type="email" name="email" required autocomplete="email">
+        <span class="ayuda" data-va="Format: correu@exemple.com">Formato: correo@ejemplo.com</span>
       </label>
       <label class="campo">
         <span data-va="Telèfon">Teléfono</span>
@@ -164,6 +160,7 @@
       <label class="campo">
         <span data-va="Web o motor de reserves">Web o motor de reservas</span>
         <input type="url" name="web" placeholder="https://">
+        <span class="ayuda" data-va="Ha de començar per https:// — per exemple https://web.com">Debe empezar por https:// — por ejemplo https://web.com</span>
       </label>
       <label class="campo ancho">
         <span data-va="Quina oferta teniu al cap?">¿Qué oferta tenéis en mente?</span>
@@ -176,7 +173,7 @@
       </label>
       <div class="campo ancho">
         <button class="btn btn-terra btn-lg" type="submit" data-va="Enviar la sol·licitud">Enviar la solicitud</button>
-        <p class="ayuda mt-1" data-va="En enviar-lo ens arriba un correu a km0week@hosbec.com amb aquestes dades. No es guarden en cap altre lloc.">Al enviarlo nos llega un correo a km0week@hosbec.com con estos datos. No se guardan en ningún otro sitio.</p>
+        <p class="ayuda mt-1" data-va="En enviar-lo, les teues dades queden registrades i ens arriba un avís a km0week@hosbec.com. Tu reps a l'instant un acusament de recepció.">Al enviarlo, tus datos quedan registrados y nos llega un aviso a km0week@hosbec.com. Tú recibes al instante un acuse de recibo.</p>
       </div>
     </form>
   </div>

@@ -964,6 +964,19 @@ table.tabla td { color: var(--texto); }
 }
 .desc .peso { font-size: .78rem; color: var(--suave); }
 .desc h3 { font-size: 1.06rem; }
+/* La descripción ocupa el hueco sobrante para que el botón de descarga quede
+   a la misma altura en todas las tarjetas de una fila. */
+.desc { grid-template-rows: auto auto 1fr auto; align-content: stretch; }
+.desc-bajar { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .8rem; margin-top: .2rem; }
+.bajar {
+  display: inline-flex; align-items: center; gap: .45rem; text-decoration: none;
+  font-weight: 700; font-size: .9rem; line-height: 1; color: #fff;
+  background: var(--mar); border-radius: var(--r-s); padding: .62rem .95rem;
+  transition: background .16s ease, transform .16s ease;
+}
+.bajar:hover, .bajar:focus-visible { background: var(--tinta); color: #fff; transform: translateY(-1px); }
+.bajar svg { width: 1.05rem; height: 1.05rem; flex: 0 0 auto; }
+@media (prefers-reduced-motion: reduce) { .bajar { transition: none; } .bajar:hover { transform: none; } }
 
 /* ------------------------------- mapa a página ----------------------------- */
 .mapa-grid { display: grid; gap: clamp(1.2rem, 3vw, 2.2rem); align-items: start; }

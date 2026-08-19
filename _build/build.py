@@ -29,12 +29,6 @@ PAGS = os.path.join(RAIZ, "_build", "paginas")
 DOMINIO = "https://bigdatahosbec.github.io/km0week"
 EMAIL_KM0 = "km0week@hosbec.com"
 
-# Texto del acuse de recibo automático que FormSubmit envía a quien se
-# apunta al boletín. Sin acentos raros ni HTML: va como texto plano.
-ACUSE_BOLETIN = (
-    "Gracias por apuntarte al aviso de la HOSBEC Km0 Week. Te escribiremos cuando se abran las reservas y otra vez con el programa cerrado de los tres fines de semana (13 - 29 de noviembre de 2026). Nada mas: ni promociones de terceros, ni listas compartidas. Para darte de baja, responde a este correo. -- Gracies per apuntar-te a l'avis de la HOSBEC Km0 Week. -- HOSBEC, Associacio Empresarial Hotelera i Turistica de la Comunitat Valenciana."
-)
-
 FECHAS_ES = "13 – 29 de noviembre de 2026"
 FECHAS_VA = "13 – 29 de novembre de 2026"
 
@@ -163,9 +157,6 @@ def nav(activo):
 
 
 def pie(p):
-    # a dónde vuelve el visitante después de apuntarse al boletín: a la misma
-    # página en la que estaba, con ?boletin=1 para que salga la confirmación
-    vuelta = DOMINIO + "/" + ("" if p["archivo"] == "index.html" else p["archivo"]) + "?boletin=1"
     cols = ""
     for es, va, enl in PIE_COLS:
         items = "".join(
@@ -195,11 +186,7 @@ def pie(p):
       <div>
         <h5 data-va="T'avisem">Te avisamos</h5>
         <p class="body-sm foot-lema" data-va="Deixa el teu correu i t'escrivim quan s'òbriguen les reserves.">Deja tu correo y te escribimos cuando se abran las reservas.</p>
-        <form class="subscribe" id="form-boletin" action="https://formsubmit.co/{EMAIL_KM0}" method="POST">
-          <input type="hidden" name="_subject" value="[Km0 Week] Boletín · nueva alta">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_next" value="{vuelta}">
-          <input type="hidden" name="_autoresponse" value="{ACUSE_BOLETIN}">
+        <form class="subscribe" id="form-boletin" novalidate>
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
           <input type="email" name="email" required placeholder="tu@correo.com" aria-label="Correo">
           <button class="btn btn-terra btn-sm" type="submit" data-va="Avisa'm">Avísame</button>
