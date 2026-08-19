@@ -1,0 +1,77 @@
+<!-- ================================ MAPA ================================= -->
+<section class="sec">
+  <div class="wrap">
+    <div class="mapa-grid">
+
+      <div>
+        <div class="km-card" style="margin-bottom:1.2rem">
+          <div class="km-pick">
+            <span class="lbl">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              <span data-va="Visc a">Vivo en</span>
+            </span>
+            <select id="origen-select" aria-label="Tu municipio"></select>
+            <button id="origen-geo" type="button" data-va="Ubica'm">Ubicarme</button>
+          </div>
+          <div class="km-nums">
+            <div><b data-ring="0">6</b><span class="u" data-va="a menys de mitja hora">a menos de media hora</span></div>
+            <div><b data-ring="1">11</b><span class="u" data-va="a menys d'una hora">a menos de una hora</span></div>
+            <div><b data-ring="2">17</b><span class="u" data-va="a menys de dues hores">a menos de dos horas</span></div>
+          </div>
+          <div class="km-near">
+            <span class="label" data-va="El que tens més a prop">Lo que tienes más cerca</span>
+            <b id="cerca-nombre" data-va="Dis-nos on vius i t'ho calculem">Dinos dónde vives y te lo calculamos</b>
+          </div>
+        </div>
+
+        <div class="mapa-lienzo hero-mapa">
+          <canvas id="isocrona" aria-label="Mapa de la Comunitat Valenciana con los alojamientos participantes"></canvas>
+          <div class="tip" id="radar-tip"></div>
+        </div>
+        <ul class="leyenda leyenda-fila">
+          <li><i style="background:#8CB26F"></i><span data-va="A menys de mitja hora">A menos de media hora</span></li>
+          <li><i style="background:#D9794D"></i><span data-va="A menys d'una hora">A menos de una hora</span></li>
+          <li><i style="background:#1EA4C6"></i><span data-va="A menys de dues hores">A menos de dos horas</span></li>
+        </ul>
+        <p class="body-sm mt-1" style="color:var(--suave)" data-va="Les distàncies són en línia recta i orientatives: serveixen per a fer-se una idea, no per a calcular el trajecte. Pots polsar directament sobre el mapa.">Las distancias son en línea recta y orientativas: sirven para hacerse una idea, no para calcular el trayecto. Puedes pulsar directamente sobre el mapa.</p>
+      </div>
+
+      <div>
+        <div class="sec-head" style="margin-bottom:1.1rem">
+          <span class="label label-mar" data-va="Ordenats des de tu">Ordenados desde ti</span>
+          <h2 class="d3" id="cercanos-titulo" data-va="Tots els allotjaments, del més a prop al més lluny">Todos los alojamientos, del más cerca al más lejos</h2>
+        </div>
+        <div class="cercanos" id="cercanos"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== EXPLICACIÓN ============================= -->
+<section class="sec bg-arena">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label label-verde" data-va="Com llegir el mapa">Cómo leer el mapa</span>
+      <h2 class="d2" data-va="Tres cercles, tres maneres d'escapar-se">Tres círculos, tres maneras de escaparse</h2>
+    </div>
+    <div class="cols cols-3">
+      <div class="tarjeta">
+        <span class="ico t-verde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.4V12l3 1.8"/></svg></span>
+        <h3 data-va="Mitja hora">Media hora</h3>
+        <p class="body-sm" data-va="El pla de dissabte per la vesprada. Ixes després de dinar i encara et dóna temps a passejar abans de sopar.">El plan de sábado por la tarde. Sales después de comer y todavía te da tiempo a pasear antes de cenar.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="ico t-terra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.4V12l4.4 2.2"/></svg></span>
+        <h3 data-va="Una hora">Una hora</h3>
+        <p class="body-sm" data-va="Canvi de paisatge sense canviar de província: de la costa a l'interior, o al revés.">Cambio de paisaje sin cambiar de provincia: de la costa al interior, o al revés.</p>
+      </div>
+      <div class="tarjeta">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.4V12l5.6 2.8"/></svg></span>
+        <h3 data-va="Dues hores">Dos horas</h3>
+        <p class="body-sm" data-va="Cap de setmana sencer. A dues hores tens des dels ports de Castelló fins a les salines del sud.">Fin de semana entero. A dos horas tienes desde los puertos de Castelló hasta las salinas del sur.</p>
+      </div>
+    </div>
+    <p class="body-sm mt-2" style="color:var(--suave);max-width:74ch" data-va="Res del que tries ací s'envia enlloc: el càlcul es fa al teu navegador. Si polses «Ubica'm», la posició la dóna el teu dispositiu i tampoc s'emmagatzema.">Nada de lo que elijas aquí se envía a ninguna parte: el cálculo se hace en tu navegador. Si pulsas «Ubicarme», la posición la da tu dispositivo y tampoco se almacena.</p>
+  </div>
+</section>

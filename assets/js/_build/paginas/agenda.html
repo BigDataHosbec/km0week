@@ -1,0 +1,68 @@
+<!-- =============================== AGENDA ================================ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head fila" style="margin-bottom:1.4rem">
+      <div>
+        <span class="label label-mar" data-va="Dia a dia">Día a día</span>
+        <h2 class="d2" data-va="Tria un dia">Elige un día</h2>
+        <p class="body-sm" style="color:var(--suave);margin-top:.4rem" data-va="Del 13 al 29 de novembre. Els dies destacats en color són caps de setmana.">Del 13 al 29 de noviembre. Los días destacados en color son fines de semana.</p>
+      </div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+        <button class="chip" type="button" id="ag-todo" aria-pressed="true" data-va="Veure els 17 dies">Ver los 17 días</button>
+        <button class="chip terra" type="button" id="ag-finde" aria-pressed="false" data-va="Només caps de setmana">Solo fines de semana</button>
+        <button class="chip verde" type="button" id="ag-gratis" aria-pressed="false" data-va="Només gratuïtes">Solo gratuitas</button>
+      </div>
+    </div>
+
+    <div class="dias" id="ag-dias" role="group" aria-label="Días de la edición"></div>
+    <div class="actos" id="ag-actos"></div>
+
+    <div class="vacio" id="ag-vacio" hidden>
+      <b data-va="No hi ha activitats amb aquest filtre">No hay actividades con este filtro</b>
+      <p data-va="Prova amb un altre dia o mira els 17 dies.">Prueba con otro día o mira los 17 días.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONDICIONES ============================= -->
+<section class="sec bg-arena">
+  <div class="wrap">
+    <div class="parte">
+      <div>
+        <span class="label label-verde" data-va="Abans de vindre">Antes de venir</span>
+        <h2 class="d2" data-va="Quatre coses que convé saber">Cuatro cosas que conviene saber</h2>
+        <ul class="puntos mt-1">
+          <li data-va="Les activitats són obertes: no cal allotjar-se enlloc per a apuntar-s'hi."><strong>No hace falta alojarse.</strong> Las actividades son abiertas: puedes venir aunque duermas en tu casa.</li>
+          <li data-va="Les places són limitades i moltes requereixen reserva prèvia. L'enllaç d'inscripció s'obri quinze dies abans."><strong>Reserva previa.</strong> Las plazas son limitadas y muchas la requieren. El enlace de inscripción se abre quince días antes.</li>
+          <li data-va="Les que porten preu són a cost: cobreixen material, guia o menjar. Ni HOSBEC ni els allotjaments hi guanyen res."><strong>Los precios son a coste.</strong> Cubren material, guía o comida. Ni HOSBEC ni los alojamientos ganan nada con ellas.</li>
+          <li data-va="Si plou molt, algunes es traslladen o es cancel·len. T'avisem pel mateix canal on t'hages inscrit."><strong>Meteorología.</strong> Si llueve mucho, algunas se trasladan o se cancelan. Te avisamos por el mismo canal donde te hayas inscrito.</li>
+        </ul>
+      </div>
+      <div class="parte-foto">
+        <img src="assets/img/foto/tema-cultura.webp" alt="" width="1200" height="800" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== PASAPORTE ============================== -->
+<section class="sec bg-mar" id="pasaporte">
+  <div class="wrap">
+    <div class="sec-head fila">
+      <div>
+        <span class="label label-arena" data-va="Passaport Km0">Pasaporte Km0</span>
+        <h2 class="d2" data-va="Tres segells i entres en el sorteig">Tres sellos y entras en el sorteo</h2>
+        <p class="lede" data-va="Descarrega el passaport, porta'l a cada activitat i demana el segell. Amb tres entres en el sorteig de deu estades per a l'any que ve; amb cinc, et convidem al sopar de clausura.">Descarga el pasaporte, llévalo a cada actividad y pide el sello. Con tres entras en el sorteo de diez estancias para el año que viene; con cinco, te invitamos a la cena de clausura.</p>
+        <div class="mt-1" style="display:flex;flex-wrap:wrap;gap:.7rem">
+          <a class="btn btn-arena" href="descargas.html" data-va="Descarregar el passaport">Descargar el pasaporte</a>
+          <a class="btn btn-linea" href="faq.html#sorteo" data-va="Bases del sorteig">Bases del sorteo</a>
+        </div>
+      </div>
+      <div class="sellos">
+        <span class="sello s1" data-rot="-7"><strong>1</strong><span class="hand hand-sm" data-va="primer segell">primer sello</span></span>
+        <span class="sello s2" data-rot="5"><strong>2</strong><span class="hand hand-sm" data-va="segon segell">segundo sello</span></span>
+        <span class="sello s3" data-rot="-4"><strong>3</strong><span class="hand hand-sm" data-va="al sorteig!">¡al sorteo!</span></span>
+      </div>
+    </div>
+  </div>
+</section>
