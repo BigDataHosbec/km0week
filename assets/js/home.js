@@ -569,29 +569,56 @@ window.Km0 = (function () {
     };
   }
 
+  // Cuánto espera el navegador la respuesta de Google antes de dar el envío
+  // por bueno y devolverle el control al visitante. El Apps Script escribe la
+  // fila ANTES de mandar los correos, así que pasado este tiempo el registro
+  // ya está guardado: lo que queda pendiente son los correos, que no tiene
+  // sentido hacer esperar a nadie (y en la primera llamada del día el script
+  // arranca en frío y puede tardar medio minuto).
+  const ESPERA_MAX = 3500;
+
+  function conTope(promesa, ms) {
+    return Promise.race([
+      promesa,
+      new Promise(r => setTimeout(() => r("tarda"), ms))
+    ]);
+  }
+
   async function enviarRegistro(datos) {
     const url = CFG.endpointFormularios;
     if (!url) return "correo";
 
     const cuerpo = JSON.stringify(Object.assign(datosComunes(), datos));
 
-    try {
-      const r = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: cuerpo,
-        redirect: "follow"
-      });
-      const j = await r.json();
-      return j && j.ok ? "ok" : "error";
-    } catch (_) { /* seguimos con el plan B */ }
+    const intento = (async () => {
+      try {
+        const r = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: cuerpo,
+          redirect: "follow"
+        });
+        const j = await r.json();
+        return j && j.ok ? "ok" : "error";
+      } catch (_) { /* seguimos con el plan B */ }
 
-    try {
-      await fetch(url, { method: "POST", mode: "no-cors", body: cuerpo });
-      return "ok";                      // no podemos leer la respuesta, pero sale
-    } catch (_) { /* plan C */ }
+      try {
+        await fetch(url, { method: "POST", mode: "no-cors", body: cuerpo });
+        return "ok";                    // no podemos leer la respuesta, pero sale
+      } catch (_) { /* plan C */ }
 
-    return "correo";
+      return "correo";
+    })();
+
+    // Si tarda más de la cuenta, soltamos al visitante pero no abandonamos la
+    // petición: si acaba mal de verdad, se le avisa entonces.
+    const r = await conTope(intento, ESPERA_MAX);
+    if (r !== "tarda") return r;
+
+    intento.then(final => {
+      if (final !== "ok") toast(t("falloEnvio"));
+    });
+    return "ok";
   }
 
   // Plan C: abrir el gestor de correo con todo escrito
