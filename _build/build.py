@@ -449,7 +449,7 @@ def sitemap(paginas):
     open(os.path.join(RAIZ, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s\n</urlset>\n' % urls)
     open(os.path.join(RAIZ, "robots.txt"), "w", encoding="utf-8").write(
-        "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % DOMINIO)
+        "User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: %s/sitemap.xml\n" % DOMINIO)
 
 
 def main():

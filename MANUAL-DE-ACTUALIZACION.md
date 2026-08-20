@@ -1,5 +1,25 @@
 # Km0 Week — Manual de actualización
 
+> ## ⚠ Este manual está a medio actualizar (20/08/2026)
+>
+> La web ha cambiado por dentro y **algunas recetas de aquí abajo ya no valen**.
+> Lo que ha cambiado:
+>
+> | Antes decía | Ahora |
+> |---|---|
+> | Edita `assets/js/data-alojamientos.js` | **No.** Ese archivo se genera solo. Los datos están en `contenido/*.json`, y lo normal es tocarlos desde el panel |
+> | Ejecuta `python3 _build/build.py` | **No hace falta.** Lo hace GitHub en cada cambio |
+> | Pídele a Claude que regenere los descargables | **No hace falta.** Se rehacen solos |
+> | Cambia las fechas en dos sitios | **Solo en uno**: `contenido/configuracion.json` |
+> | Nunca edites los HTML de la raíz | Ya no están en el repositorio: se generan al publicar |
+>
+> **Para cambiar alojamientos y agenda, usa el panel:**
+> **https://bigdatahosbec.github.io/km0week/admin/**
+>
+> Lo que sigue siendo verdad: el apartado 2 (fotos), el 4 (textos de página),
+> el 5 (noticias) y el 9 (dónde llegan los registros). Esas tres primeras
+> entrarán en el panel en la siguiente tanda.
+
 Cómo cambiar cualquier cosa de la web sin romper nada. Cada apartado es una
 receta cerrada: qué archivo tocas, qué haces después y cómo compruebas que ha
 salido bien.

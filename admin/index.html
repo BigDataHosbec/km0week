@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel · Km0 Week</title>
+<link rel="icon" href="data:,">
+<style>
+/* ==========================================================================
+   Panel de administración — Km0 Week
+   Una sola página, sin dependencias. Los colores y la tipografía salen del
+   manual de marca, pero esto es una herramienta: densa, clara y sin adornos.
+   ========================================================================== */
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:300 900;font-display:swap;
+  src:url("../assets/fonts/montserrat-latin-wght-normal.woff2") format("woff2");}
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:300 900;font-display:swap;
+  src:url("../assets/fonts/montserrat-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+
+:root{
+  --mar:#1EA4C6; --mar-h:#1789A8; --mar-d:#14647D; --mar-p:#E2F3F8;
+  --verde:#8CB26F; --verde-d:#5F8446; --verde-p:#EDF3E4;
+  --arena:#EED8AE; --arena-p:#FBF2DE;
+  --terra:#D9794D; --terra-h:#B4542B; --terra-p:#FBE7DB;
+  --roto:#FAF5EC; --tinta:#123C4C; --texto:#425A66; --suave:#6B7F89;
+  --linea:#DFE6E9; --linea-2:#EFF3F4; --fondo:#F5F8F9;
+  --r-s:7px; --r-m:12px;
+  --sh:0 1px 2px rgba(18,60,76,.05), 0 10px 26px -18px rgba(18,60,76,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"Montserrat",system-ui,-apple-system,sans-serif;
+  font-size:15px;line-height:1.5;color:var(--texto);background:var(--fondo)}
+h1,h2,h3{color:var(--tinta);margin:0;line-height:1.25;font-weight:700}
+p{margin:0 0 .8em}
+a{color:var(--mar-d)}
+:focus-visible{outline:3px solid var(--mar);outline-offset:2px;border-radius:4px}
+.oculto{display:none !important}
+.vo{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ------------------------------------------------------------- controles -- */
+button{font:inherit;cursor:pointer;border-radius:var(--r-s);border:1px solid transparent;
+  padding:.5rem .9rem;transition:background .12s, border-color .12s, color .12s}
+button:disabled{opacity:.45;cursor:not-allowed}
+.b-1{background:var(--mar);color:#fff;font-weight:600}
+.b-1:hover:not(:disabled){background:var(--mar-h)}
+.b-2{background:#fff;color:var(--tinta);border-color:var(--linea);font-weight:600}
+.b-2:hover:not(:disabled){border-color:var(--mar);color:var(--mar-d)}
+.b-3{background:none;color:var(--suave);padding:.35rem .5rem}
+.b-3:hover:not(:disabled){color:var(--tinta);background:var(--linea-2)}
+.b-mal{background:#fff;color:var(--terra-h);border-color:#EBC4B2;font-weight:600}
+.b-mal:hover:not(:disabled){background:var(--terra-p)}
+.b-min{padding:.25rem .45rem;font-size:13px;line-height:1}
+
+label,.et{display:block;font-size:12.5px;font-weight:600;color:var(--tinta);
+  margin:0 0 .25rem;letter-spacing:.01em}
+input[type=text],input[type=url],input[type=tel],input[type=number],
+input[type=password],input[type=time],select,textarea{
+  width:100%;font:inherit;font-size:14.5px;color:var(--tinta);background:#fff;
+  border:1px solid var(--linea);border-radius:var(--r-s);padding:.45rem .6rem}
+textarea{resize:vertical;min-height:4.5em;line-height:1.45}
+input:hover,select:hover,textarea:hover{border-color:#C6D2D7}
+input[aria-invalid=true],textarea[aria-invalid=true],select[aria-invalid=true]{
+  border-color:var(--terra);background:#FFFBFA}
+.campo{margin-bottom:.9rem}
+.pista{font-size:12.5px;color:var(--suave);margin:.25rem 0 0}
+.mal{font-size:12.5px;color:var(--terra-h);margin:.25rem 0 0;font-weight:600}
+.fila{display:grid;gap:.9rem}
+@media(min-width:700px){
+  .fila-2{grid-template-columns:1fr 1fr}
+  .fila-3{grid-template-columns:1fr 1fr 1fr}
+  .fila-4{grid-template-columns:repeat(4,1fr)}
+}
+.check{display:flex;align-items:center;gap:.45rem;font-size:14px;font-weight:500;
+  color:var(--texto);cursor:pointer;padding:.3rem .55rem;border:1px solid var(--linea);
+  border-radius:99px;background:#fff}
+.check:hover{border-color:var(--mar)}
+.check input{margin:0;accent-color:var(--mar)}
+.check:has(input:checked){background:var(--mar-p);border-color:var(--mar);color:var(--mar-d);font-weight:600}
+.pastillas{display:flex;flex-wrap:wrap;gap:.4rem}
+
+/* --------------------------------------------------------------- bilingüe -- */
+.bi{display:grid;gap:.5rem;grid-template-columns:1fr}
+@media(min-width:820px){.bi{grid-template-columns:1fr 1fr}}
+.bi .idi{position:relative}
+.bi .idi>span{position:absolute;top:.3rem;right:.5rem;font-size:10.5px;font-weight:700;
+  letter-spacing:.06em;color:var(--suave);pointer-events:none;text-transform:uppercase}
+.bi .idi input,.bi .idi textarea{padding-right:2.6rem}
+.bi .idi.falta input,.bi .idi.falta textarea{background:#FFFDF4;border-color:var(--arena)}
+
+/* ---------------------------------------------------------------- armazón -- */
+.barra{position:sticky;top:0;z-index:30;background:var(--tinta);color:#fff;
+  display:flex;align-items:center;gap:1rem;padding:.55rem clamp(.8rem,3vw,1.6rem);flex-wrap:wrap}
+.marca{font-weight:800;letter-spacing:.02em;font-size:15px}
+.marca em{font-style:normal;color:var(--arena)}
+.barra .sep{flex:1}
+.barra button{color:#fff}
+.barra .b-3{color:#B9CBD3}
+.barra .b-3:hover{color:#fff;background:rgba(255,255,255,.12)}
+
+.pestanas{display:flex;gap:.15rem;overflow-x:auto;background:#fff;
+  border-bottom:1px solid var(--linea);padding:0 clamp(.4rem,3vw,1.2rem);position:sticky;top:47px;z-index:20}
+.pestanas button{border-radius:0;background:none;color:var(--suave);font-weight:600;
+  border-bottom:3px solid transparent;padding:.75rem .85rem;white-space:nowrap}
+.pestanas button:hover{color:var(--tinta)}
+.pestanas button[aria-current=page]{color:var(--tinta);border-bottom-color:var(--mar)}
+.pestanas .marcador{background:var(--terra);color:#fff;border-radius:99px;
+  font-size:11px;padding:.05rem .35rem;margin-left:.35rem;font-weight:700}
+
+main{max-width:1180px;margin:0 auto;padding:clamp(1rem,3vw,1.8rem)}
+.tarjeta{background:#fff;border:1px solid var(--linea);border-radius:var(--r-m);
+  padding:clamp(.9rem,2.5vw,1.4rem);box-shadow:var(--sh);margin-bottom:1rem}
+.cabecera-seccion{display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.cabecera-seccion h2{font-size:20px}
+.cabecera-seccion .sep{flex:1}
+.sub{color:var(--suave);font-size:13.5px;margin:.2rem 0 0}
+
+/* ----------------------------------------------------------------- avisos -- */
+.nota{border-radius:var(--r-s);padding:.7rem .9rem;font-size:14px;margin:0 0 1rem;
+  border:1px solid;display:flex;gap:.6rem;align-items:flex-start}
+.nota b{display:block}
+.nota-ok{background:var(--verde-p);border-color:#C4D9AF;color:#3F5C29}
+.nota-mal{background:var(--terra-p);border-color:#EBC4B2;color:#8F3D18}
+.nota-avi{background:var(--arena-p);border-color:var(--arena);color:#7A5A16}
+.nota-inf{background:var(--mar-p);border-color:#B9E0EC;color:var(--mar-d)}
+.nota ul{margin:.35rem 0 0;padding-left:1.1rem}
+.nota li{margin:.15rem 0}
+
+/* ------------------------------------------------------------- publicación -- */
+.estado{display:flex;align-items:center;gap:.45rem;font-size:13px;font-weight:600;
+  background:rgba(255,255,255,.1);padding:.3rem .7rem;border-radius:99px;color:#fff}
+.punto{width:9px;height:9px;border-radius:50%;background:#8DA4AE;flex:none}
+.punto.ok{background:#8CB26F}
+.punto.va{background:var(--arena);animation:late 1.1s ease-in-out infinite}
+.punto.mal{background:#E8916B}
+@keyframes late{0%,100%{opacity:1}50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.punto.va{animation:none}}
+
+/* ------------------------------------------------------------------ lista -- */
+.buscador{position:relative;flex:1;min-width:200px;max-width:340px}
+.lista{border:1px solid var(--linea);border-radius:var(--r-m);overflow:hidden;background:#fff}
+.item{display:grid;grid-template-columns:1fr auto;gap:.6rem 1rem;align-items:center;
+  width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid var(--linea-2);
+  padding:.7rem .9rem;border-radius:0}
+.item:last-child{border-bottom:0}
+.item:hover{background:var(--mar-p)}
+.item .nom{font-weight:700;color:var(--tinta);font-size:15px}
+.item .det{display:block;font-size:13px;color:var(--suave);margin-top:.15rem}
+.item .nom{display:inline-block}
+.item .cifra{font-size:13px;color:var(--texto);white-space:nowrap;text-align:right}
+.item .cifra b{display:block;color:var(--tinta);font-size:16px}
+.etiq{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.04em;padding:.1rem .4rem;border-radius:4px;margin-left:.4rem;vertical-align:2px}
+.etiq-des{background:var(--arena-p);color:#7A5A16}
+.etiq-nue{background:var(--verde-p);color:#3F5C29}
+.etiq-mal{background:var(--terra-p);color:#8F3D18}
+.vacio{padding:2.2rem 1rem;text-align:center;color:var(--suave)}
+
+/* ------------------------------------------------------------------ hojas -- */
+dialog{border:0;border-radius:var(--r-m);padding:0;width:min(900px,96vw);
+  max-height:92vh;box-shadow:0 30px 70px -20px rgba(18,60,76,.5)}
+dialog::backdrop{background:rgba(18,60,76,.45)}
+.hoja{display:flex;flex-direction:column;max-height:92vh}
+.hoja-cab{display:flex;align-items:center;gap:.8rem;padding:.9rem 1.2rem;
+  border-bottom:1px solid var(--linea);position:sticky;top:0;background:#fff;z-index:2}
+.hoja-cab h3{font-size:17px;flex:1}
+.hoja-cue{overflow-y:auto;padding:1.2rem;flex:1}
+.hoja-pie{display:flex;gap:.6rem;align-items:center;padding:.85rem 1.2rem;
+  border-top:1px solid var(--linea);background:var(--roto);flex-wrap:wrap}
+.hoja-pie .sep{flex:1}
+fieldset{border:0;border-top:1px solid var(--linea);margin:1.4rem 0 0;padding:1rem 0 0}
+fieldset:first-of-type{border-top:0;margin-top:0;padding-top:0}
+legend{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mar-d);padding:0}
+
+/* ----------------------------------------------------------------- agenda -- */
+.dias{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.dia{border:1px solid var(--linea);border-radius:var(--r-m);background:#fff;
+  padding:.6rem;min-height:110px;display:flex;flex-direction:column}
+.dia.finde{background:var(--arena-p);border-color:var(--arena)}
+.dia.sobre{border-color:var(--mar);box-shadow:0 0 0 3px var(--mar-p)}
+.dia h4{margin:0 0 .45rem;font-size:12.5px;color:var(--tinta);font-weight:800;
+  display:flex;justify-content:space-between;align-items:baseline;gap:.4rem}
+.dia h4 span{font-weight:600;color:var(--suave);font-size:11.5px;text-transform:capitalize}
+.acto{width:100%;text-align:left;background:#fff;border:1px solid var(--linea);
+  border-radius:var(--r-s);padding:.45rem .55rem;margin-bottom:.35rem;cursor:grab}
+.acto:hover{border-color:var(--mar);background:var(--mar-p)}
+.acto .h{display:block;font-size:11.5px;font-weight:800;color:var(--mar-d);letter-spacing:.02em}
+.acto .t{display:block;font-size:13px;font-weight:600;color:var(--tinta);line-height:1.3;margin-top:.1rem}
+.acto .l{display:block;font-size:11.5px;color:var(--suave);margin-top:.15rem}
+.acto.arrastrando{opacity:.4}
+.dia .nada{font-size:12px;color:var(--suave);font-style:italic;padding:.2rem 0}
+.dia .mas{margin-top:auto;font-size:12px;color:var(--mar-d);background:none;
+  border:1px dashed var(--linea);width:100%;padding:.3rem;border-radius:var(--r-s)}
+.dia .mas:hover{border-color:var(--mar);background:var(--mar-p)}
+
+/* ---------------------------------------------------------------- entrada -- */
+.entrada{max-width:560px;margin:6vh auto;padding:0 1rem}
+.entrada .tarjeta{padding:1.6rem}
+.entrada h1{font-size:24px;margin-bottom:.3rem}
+.pasos{counter-reset:p;list-style:none;padding:0;margin:.6rem 0 0;font-size:14px}
+.pasos li{counter-increment:p;position:relative;padding-left:1.9rem;margin-bottom:.5rem}
+.pasos li::before{content:counter(p);position:absolute;left:0;top:.05rem;width:1.3rem;height:1.3rem;
+  border-radius:50%;background:var(--mar-p);color:var(--mar-d);font-size:11.5px;font-weight:800;
+  display:grid;place-items:center}
+details{margin-top:1rem;font-size:14px}
+summary{cursor:pointer;font-weight:600;color:var(--mar-d)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
+  background:var(--linea-2);padding:.1rem .3rem;border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ====================================================== PANTALLA DE ENTRADA -->
+<div id="entrada" class="entrada">
+  <div class="tarjeta">
+    <h1>Panel de la Km0 Week</h1>
+    <p class="sub">Para cambiar alojamientos, agenda y contenido de la web sin tocar código.</p>
+
+    <div id="entrada-error" class="nota nota-mal oculto" role="alert" style="margin-top:1rem"></div>
+
+    <form id="form-entrada" style="margin-top:1.2rem">
+      <div class="campo">
+        <label for="e-quien">Tu nombre</label>
+        <input type="text" id="e-quien" autocomplete="name" required placeholder="Jorge">
+        <p class="pista">Se guarda junto a cada cambio, para saber quién hizo qué.</p>
+      </div>
+      <div class="campo">
+        <label for="e-clave">Clave de acceso</label>
+        <input type="password" id="e-clave" autocomplete="current-password" required
+               placeholder="github_pat_…" spellcheck="false">
+        <p class="pista">Se queda guardada en este navegador. No hace falta volver a escribirla.</p>
+      </div>
+      <button type="submit" class="b-1" id="e-boton" style="width:100%;padding:.65rem">Entrar</button>
+    </form>
+
+    <details>
+      <summary>No tengo la clave</summary>
+      <p style="margin-top:.6rem">Pídesela a Jorge. Si eres Jorge y la has perdido, se crea otra en
+      cuatro minutos:</p>
+      <ol class="pasos">
+        <li>En GitHub: foto de perfil → <b>Settings</b> → abajo del todo <b>Developer settings</b>.</li>
+        <li><b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li>
+        <li>En <b>Repository access</b>, marca <b>Only select repositories</b> y elige
+            <code>BigDataHosbec/km0week</code>.</li>
+        <li>En <b>Repository permissions</b>, pon <b>Contents</b> en <i>Read and write</i>.
+            Si además pones <b>Actions</b> en <i>Read-only</i>, el panel te enseña arriba
+            si la web ha terminado de publicarse. Nada más.</li>
+        <li>Genera, copia la tira que empieza por <code>github_pat_</code> y pégala arriba.</li>
+      </ol>
+    </details>
+  </div>
+</div>
+
+<!-- ============================================================== EL PANEL -->
+<div id="panel" class="oculto">
+
+  <header class="barra">
+    <span class="marca">KM0 <em>week</em> · panel</span>
+    <span class="sep"></span>
+    <button type="button" class="estado" id="estado" aria-live="polite">
+      <span class="punto" id="estado-punto"></span><span id="estado-txt">comprobando…</span>
+    </button>
+    <button type="button" class="b-3" id="salir">Salir</button>
+  </header>
+
+  <nav class="pestanas" aria-label="Secciones del panel">
+    <button type="button" data-seccion="alojamientos" aria-current="page">Alojamientos
+      <span class="marcador oculto" id="m-alojamientos"></span></button>
+    <button type="button" data-seccion="agenda">Agenda
+      <span class="marcador oculto" id="m-agenda"></span></button>
+    <button type="button" data-seccion="revision">Revisión
+      <span class="marcador oculto" id="m-revision"></span></button>
+  </nav>
+
+  <main>
+    <div id="cargando" class="tarjeta" style="text-align:center;color:var(--suave)">
+      Cargando el contenido…
+    </div>
+
+    <div id="aviso-guardar" class="nota nota-inf oculto" role="status"></div>
+
+    <!-- ------------------------------------------------------ ALOJAMIENTOS -->
+    <section id="s-alojamientos" class="oculto" aria-labelledby="t-alojamientos">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-alojamientos">Alojamientos</h2>
+          <p class="sub" id="resumen-alojamientos"></p>
+        </div>
+        <span class="sep"></span>
+        <div class="buscador">
+          <label class="vo" for="buscar-alo">Buscar alojamiento</label>
+          <input type="text" id="buscar-alo" placeholder="Buscar por nombre o municipio…">
+        </div>
+        <button type="button" class="b-1" id="nuevo-alo">Añadir alojamiento</button>
+      </div>
+      <div class="lista" id="lista-alo"></div>
+    </section>
+
+    <!-- ------------------------------------------------------------ AGENDA -->
+    <section id="s-agenda" class="oculto" aria-labelledby="t-agenda">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-agenda">Agenda de actividades</h2>
+          <p class="sub" id="resumen-agenda"></p>
+        </div>
+        <span class="sep"></span>
+        <button type="button" class="b-1" id="nueva-act">Añadir actividad</button>
+      </div>
+      <p class="pista" style="margin:-.4rem 0 .8rem">
+        Arrastra una actividad a otro día para moverla. También puedes cambiarle el día desde su ficha.
+      </p>
+      <div class="dias" id="dias"></div>
+    </section>
+
+    <!-- ---------------------------------------------------------- REVISIÓN -->
+    <section id="s-revision" class="oculto" aria-labelledby="t-revision">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-revision">Revisión del contenido</h2>
+          <p class="sub">Las mismas comprobaciones que hace la web antes de publicar.</p>
+        </div>
+      </div>
+      <div id="revision"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ================================================================ HOJAS -->
+<dialog id="hoja"><form method="dialog" class="hoja" id="hoja-form">
+  <div class="hoja-cab">
+    <h3 id="hoja-titulo"></h3>
+    <button type="button" class="b-3 b-min" id="hoja-cerrar" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="hoja-cue" id="hoja-cuerpo"></div>
+  <div class="hoja-pie">
+    <button type="button" class="b-mal" id="hoja-borrar">Eliminar</button>
+    <span class="sep"></span>
+    <button type="button" class="b-2" id="hoja-cancelar">Cancelar</button>
+    <button type="button" class="b-1" id="hoja-aceptar">Guardar y publicar</button>
+  </div>
+</form></dialog>
+
+<script>
+"use strict";
+/* ==========================================================================
+   1 · Conexión con GitHub
+   ========================================================================== */
+const REPO = "BigDataHosbec/km0week";
+const API  = "https://api.github.com/repos/" + REPO;
+const RUTAS = {
+  alojamientos: "contenido/alojamientos.json",
+  agenda:       "contenido/agenda.json",
+  configuracion:"contenido/configuracion.json"
+};
+
+let clave = localStorage.getItem("km0.clave") || "";
+let quien = localStorage.getItem("km0.quien") || "";
+const D = {};      // datos cargados, por clave de RUTAS
+const SHA = {};    // versión de cada archivo, para no pisar a nadie
+
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+function b64(txt){
+  const bytes = new TextEncoder().encode(txt);
+  let s = ""; bytes.forEach(b => s += String.fromCharCode(b));
+  return btoa(s);
+}
+function deB64(t){
+  const s = atob(t.replace(/\s/g, ""));
+  return new TextDecoder().decode(Uint8Array.from(s, c => c.charCodeAt(0)));
+}
+
+async function api(ruta, opciones){
+  const r = await fetch(API + ruta, Object.assign({}, opciones, {
+    headers: Object.assign({
+      "Authorization": "Bearer " + clave,
+      "Accept": "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28"
+    }, (opciones || {}).headers)
+  }));
+  if (!r.ok) {
+    let msg = "";
+    try { msg = (await r.json()).message || ""; } catch (e) {}
+    const err = new Error(msg || ("Error " + r.status));
+    err.estado = r.status;
+    throw err;
+  }
+  return r.json();
+}
+
+async function leerArchivo(nombre){
+  const j = await api("/contents/" + RUTAS[nombre] + "?ref=main&t=" + Date.now());
+  SHA[nombre] = j.sha;
+  D[nombre] = JSON.parse(deB64(j.content));
+}
+
+async function guardarArchivo(nombre, mensaje){
+  const texto = JSON.stringify(D[nombre], null, 2) + "\n";
+  const j = await api("/contents/" + RUTAS[nombre], {
+    method: "PUT",
+    body: JSON.stringify({
+      message: mensaje + "\n\nGuardado desde el panel por " + quien + ".",
+      content: b64(texto),
+      sha: SHA[nombre],
+      branch: "main"
+    })
+  });
+  SHA[nombre] = j.content.sha;
+}
+
+/* ==========================================================================
+   2 · Estado de la publicación
+   ========================================================================== */
+let vigilando = null, ultimaPublicacion = "", sinEstado = false;
+
+function pintarEstado(clase, texto, titulo){
+  $("#estado-punto").className = "punto " + clase;
+  $("#estado-txt").textContent = texto;
+  $("#estado").title = titulo || "";
+}
+
+async function mirarPublicacion(){
+  if (sinEstado) return null;
+  try {
+    const j = await api("/actions/runs?per_page=1&branch=main");
+    const r = (j.workflow_runs || [])[0];
+    if (!r) { pintarEstado("", "sin publicaciones"); return null; }
+    ultimaPublicacion = r.html_url;
+    if (r.status !== "completed") {
+      pintarEstado("va", "publicando…", "Empezó a las " +
+        new Date(r.run_started_at).toLocaleTimeString("es-ES"));
+      return "va";
+    }
+    if (r.conclusion === "success") {
+      pintarEstado("ok", "web al día", "Última publicación: " +
+        new Date(r.updated_at).toLocaleString("es-ES") + ". Pulsa para ver el detalle.");
+      return "ok";
+    }
+    pintarEstado("mal", "falló al publicar", "Pulsa para ver qué ha pasado.");
+    return "mal";
+  } catch (e) {
+    // La clave del panel solo necesita permiso de contenido. Si no llega a ver
+    // las publicaciones, el panel funciona igual: se quita el indicador.
+    if (e.estado === 403 || e.estado === 404) {
+      sinEstado = true;
+      $("#estado").classList.add("oculto");
+      clearInterval(vigilando);
+      return null;
+    }
+    pintarEstado("", "sin conexión", e.message);
+    return null;
+  }
+}
+
+$("#estado").addEventListener("click", () => {
+  window.open(ultimaPublicacion ||
+    ("https://github.com/" + REPO + "/actions"), "_blank", "noopener");
+});
+
+function vigilarPublicacion(){
+  clearInterval(vigilando);
+  let vueltas = 0;
+  vigilando = setInterval(async () => {
+    const e = await mirarPublicacion();
+    if (++vueltas > 40 || (e !== "va" && vueltas > 2)) clearInterval(vigilando);
+  }, 6000);
+}
+
+/* ==========================================================================
+   3 · Guardar
+   ========================================================================== */
+let guardando = false;
+
+function avisar(clase, html, segundos){
+  const n = $("#aviso-guardar");
+  n.className = "nota nota-" + clase;
+  n.innerHTML = html;
+  if (segundos) setTimeout(() => {
+    if (n.innerHTML === html) n.className = "nota oculto";
+  }, segundos * 1000);
+}
+
+async function guardar(nombre, mensaje){
+  if (guardando) return false;
+  guardando = true;
+  const boton = $("#hoja-aceptar"), rotulo = boton.textContent;
+  boton.disabled = true; boton.textContent = "Guardando…";
+  $("#hoja-borrar").disabled = true;
+  avisar("inf", "<span>Guardando…</span>");
+  try {
+    await guardarArchivo(nombre, mensaje);
+    avisar("ok", "<span><b>" + escapar(mensaje) + "</b>" +
+      "La web se está recompilando: en un minuto y medio estará publicado.</span>", 25);
+    pintarEstado("va", "publicando…");
+    vigilarPublicacion();
+    return true;
+  } catch (e) {
+    if (e.estado === 409) {
+      avisar("mal", "<span><b>Alguien ha guardado antes que tú</b>" +
+        "Tu cambio no se ha guardado para no pisar el suyo. " +
+        "<button type='button' class='b-2 b-min' onclick='location.reload()'>Recargar el panel</button></span>");
+    } else if (e.estado === 401 || e.estado === 403) {
+      avisar("mal", "<span><b>La clave no vale o ha caducado</b>" +
+        "Sal y vuelve a entrar con una clave nueva.</span>");
+    } else {
+      avisar("mal", "<span><b>No se ha podido guardar</b>" + escapar(e.message) + "</span>");
+    }
+    return false;
+  } finally {
+    guardando = false;
+    boton.disabled = false; boton.textContent = rotulo;
+    $("#hoja-borrar").disabled = false;
+  }
+}
+
+function escapar(t){
+  return String(t == null ? "" : t)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/* ==========================================================================
+   4 · Entrada y salida
+   ========================================================================== */
+$("#form-entrada").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const boton = $("#e-boton");
+  const err = $("#entrada-error");
+  quien = $("#e-quien").value.trim();
+  clave = $("#e-clave").value.trim();
+  if (!quien || !clave) return;
+  boton.disabled = true; boton.textContent = "Comprobando…";
+  err.classList.add("oculto");
+  try {
+    await api("");                       // ¿la clave abre el repositorio?
+    localStorage.setItem("km0.clave", clave);
+    localStorage.setItem("km0.quien", quien);
+    arrancar();
+  } catch (e) {
+    err.classList.remove("oculto");
+    err.innerHTML = e.estado === 401
+      ? "<span><b>Esa clave no vale</b>Comprueba que la has pegado entera, sin espacios delante ni detrás.</span>"
+      : e.estado === 404
+      ? "<span><b>La clave no llega a este repositorio</b>Al crearla hay que marcar <code>BigDataHosbec/km0week</code> y dar permiso de <b>Contents</b>.</span>"
+      : "<span><b>No se ha podido comprobar</b>" + escapar(e.message) + "</span>";
+    boton.disabled = false; boton.textContent = "Entrar";
+  }
+});
+
+$("#salir").addEventListener("click", () => {
+  if (!confirm("¿Salir del panel? Habrá que volver a escribir la clave.")) return;
+  localStorage.removeItem("km0.clave");
+  location.reload();
+});
+
+/* ==========================================================================
+   5 · Navegación
+   ========================================================================== */
+const SECCIONES = ["alojamientos", "agenda", "revision"];
+let seccionActual = "alojamientos";
+
+function irA(nombre){
+  seccionActual = nombre;
+  SECCIONES.forEach(s => $("#s-" + s).classList.toggle("oculto", s !== nombre));
+  $$(".pestanas button").forEach(b =>
+    b.setAttribute("aria-current", b.dataset.seccion === nombre ? "page" : "false"));
+  if (nombre === "revision") pintarRevision();
+  location.hash = nombre;
+}
+$$(".pestanas button").forEach(b =>
+  b.addEventListener("click", () => irA(b.dataset.seccion)));
+
+/* ==========================================================================
+   6 · Arranque
+   ========================================================================== */
+async function arrancar(){
+  $("#entrada").classList.add("oculto");
+  $("#panel").classList.remove("oculto");
+  try {
+    await Promise.all(Object.keys(RUTAS).map(leerArchivo));
+  } catch (e) {
+    $("#cargando").innerHTML =
+      "<div class='nota nota-mal'><span><b>No se ha podido cargar el contenido</b>" +
+      escapar(e.message) + "</span></div>";
+    return;
+  }
+  $("#cargando").classList.add("oculto");
+  prepararEdicion();
+  pintarAlojamientos();
+  pintarAgenda();
+  contarAvisos();
+  mirarPublicacion();
+  setInterval(mirarPublicacion, 60000);
+  const h = (location.hash || "").replace("#", "");
+  irA(SECCIONES.indexOf(h) >= 0 ? h : "alojamientos");
+}
+
+/* el arranque va al final del todo, cuando ya están definidas las secciones */
+</script>
+
+<script>
+"use strict";
+/* ==========================================================================
+   7 · Las reglas del contenido
+   Son exactamente las de _build/verificar.py. Si cambian allí, cambian aquí.
+   ========================================================================== */
+const TIPOS = {
+  hotel: "Hotel", apartamentos: "Apartamentos", camping: "Camping",
+  rural: "Casa rural", hostal: "Hostal", balneario: "Balneario"
+};
+const PROVINCIAS = ["Alicante", "València", "Castelló"];
+const EXPERIENCIAS = {
+  gastronomia:"Gastronomía", bienestar:"Bienestar", familia:"Familia", cultura:"Cultura",
+  mar:"Mar", deporte:"Deporte", romantico:"Romántico", mascotas:"Mascotas",
+  accesible:"Accesible", sostenible:"Sostenible", noche:"Noche"
+};
+const SERVICIOS = {
+  piscina:"Piscina", spa:"Spa", parking:"Parking", wifi:"Wifi", restaurante:"Restaurante",
+  gimnasio:"Gimnasio", playa:"Playa", mascotas:"Mascotas", accesible:"Accesible",
+  familiar:"Familiar", vistas:"Vistas", terraza:"Terraza"
+};
+const LAT = [37.7, 40.9], LNG = [-1.7, 0.9];
+const DIAS_SEM = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
+               "septiembre","octubre","noviembre","diciembre"];
+
+let INICIO = null, TOTAL_DIAS = 17;
+
+/* Solo el día, sin hora ni zona horaria. Hay dos razones para no usar
+   new Date(cadena) tal cual: la fecha de fin lleva las 23:59:59 y redondearía
+   un día de más, y el navegador de alguien en otra zona horaria vería la
+   edición empezar el día anterior. */
+function soloFecha(iso){
+  const p = String(iso).slice(0, 10).split("-").map(Number);
+  return new Date(p[0], p[1] - 1, p[2]);
+}
+
+function prepararEdicion(){
+  INICIO = soloFecha(D.configuracion.fechaInicio);
+  const fin = soloFecha(D.configuracion.fechaFin);
+  TOTAL_DIAS = Math.round((fin - INICIO) / 86400000) + 1;
+}
+
+function fechaDelDia(n){
+  const f = new Date(INICIO.getTime());
+  f.setDate(f.getDate() + (n - 1));
+  return f;
+}
+function esFinde(n){ const d = fechaDelDia(n).getDay(); return d === 0 || d === 5 || d === 6; }
+
+function vacio(t){ return !String(t == null ? "" : t).trim(); }
+
+function revisarAlojamiento(a, todos){
+  const err = [], avi = [];
+  const nom = a.nombre || a.id || "sin nombre";
+  if (vacio(a.nombre)) err.push("Falta el nombre.");
+  if (vacio(a.id)) err.push("Falta el identificador.");
+  else {
+    if (!/^[a-z0-9-]+$/.test(a.id))
+      err.push("El identificador solo admite minúsculas, números y guiones, sin acentos ni espacios.");
+    if (todos && todos.filter(x => x !== a && x.id === a.id).length)
+      err.push("Ya hay otro alojamiento con el identificador «" + a.id + "».");
+  }
+  if (!TIPOS[a.tipo]) err.push("El tipo no es uno de los admitidos.");
+  if (PROVINCIAS.indexOf(a.provincia) < 0) err.push("La provincia no es una de las tres.");
+  if (vacio(a.destino)) err.push("Falta el municipio.");
+  const c = a.coords;
+  if (!Array.isArray(c) || c.length !== 2 || c.some(n => typeof n !== "number" || isNaN(n))) {
+    err.push("Faltan las coordenadas.");
+  } else if (!(c[0] >= LAT[0] && c[0] <= LAT[1] && c[1] >= LNG[0] && c[1] <= LNG[1])) {
+    if (c[1] >= LAT[0] && c[1] <= LAT[1] && c[0] >= LNG[0] && c[0] <= LNG[1])
+      err.push("Las coordenadas están del revés: deberían ser " + c[1] + ", " + c[0] + ".");
+    else err.push("Las coordenadas caen fuera de la Comunitat Valenciana.");
+  }
+  if (!/^https:\/\//.test(a.web || "")) err.push("La web debe empezar por https://");
+  if (!Number.isInteger(a.cupo) || a.cupo < 0) err.push("El cupo debe ser un número entero.");
+  (a.experiencias || []).forEach(e => { if (!EXPERIENCIAS[e])
+    avi.push("La experiencia «" + e + "» no existe: no saldrá en ese filtro."); });
+  if (vacio((a.claim || {}).es)) err.push("Falta el claim en castellano.");
+  else if (vacio((a.claim || {}).va)) avi.push("El claim no tiene valenciano.");
+  if (vacio((a.descripcion || {}).es)) err.push("Falta la descripción en castellano.");
+  else if (vacio((a.descripcion || {}).va)) avi.push("La descripción no tiene valenciano.");
+  if (vacio(((a.oferta || {}).titulo || {}).va) && !vacio(((a.oferta || {}).titulo || {}).es))
+    avi.push("El título de la oferta no tiene valenciano.");
+  return { nombre: nom, errores: err, avisos: avi };
+}
+
+function revisarActividad(act){
+  const err = [], avi = [];
+  const nom = ((act.titulo || {}).es) || "actividad sin título";
+  if (vacio((act.titulo || {}).es)) err.push("Falta el título en castellano.");
+  else if (vacio((act.titulo || {}).va)) avi.push("El título no tiene valenciano.");
+  if (vacio((act.desc || {}).es)) err.push("Falta la descripción en castellano.");
+  else if (vacio((act.desc || {}).va)) avi.push("La descripción no tiene valenciano.");
+  if (!Number.isInteger(act.dia) || act.dia < 1 || act.dia > TOTAL_DIAS)
+    err.push("El día está fuera de la edición: no aparecería en la web.");
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(act.hora || "")) err.push("La hora debe ir como HH:MM.");
+  if (vacio(act.lugar)) err.push("Falta el lugar.");
+  const e = (act.enlace || "").replace(/\/$/, "");
+  if (e && !/^https:\/\//.test(e)) err.push("El enlace debe empezar por https://");
+  if (e === "https://hosbec.com" || e === "https://www.hosbec.com")
+    avi.push("El botón «Quiero ir» todavía lleva a hosbec.com, no a la actividad.");
+  if (vacio((act.precio || {}).es)) avi.push("Sin precio: pon «Gratis» si lo es.");
+  return { nombre: nom, errores: err, avisos: avi };
+}
+
+function revisarTodo(){
+  const r = { errores: [], avisos: [] };
+  D.alojamientos.forEach(a => {
+    const v = revisarAlojamiento(a, D.alojamientos);
+    v.errores.forEach(e => r.errores.push(["Alojamiento «" + v.nombre + "»", e]));
+    v.avisos.forEach(e => r.avisos.push(["Alojamiento «" + v.nombre + "»", e]));
+  });
+  D.agenda.forEach(a => {
+    const v = revisarActividad(a);
+    v.errores.forEach(e => r.errores.push(["Agenda · «" + v.nombre + "»", e]));
+    v.avisos.forEach(e => r.avisos.push(["Agenda · «" + v.nombre + "»", e]));
+  });
+  return r;
+}
+
+function marcador(id, errores, avisos){
+  const m = $("#m-" + id);
+  const n = errores + avisos;
+  m.classList.toggle("oculto", n === 0);
+  m.textContent = n;
+  m.style.background = errores ? "var(--terra)" : "var(--suave)";
+  m.title = errores ? errores + " sin resolver" : avisos + " por revisar";
+}
+
+function contarAvisos(){
+  let ae = 0, aa = 0, ge = 0, ga = 0;
+  D.alojamientos.forEach(a => {
+    const v = revisarAlojamiento(a, D.alojamientos);
+    ae += v.errores.length; aa += v.avisos.length;
+  });
+  D.agenda.forEach(a => {
+    const v = revisarActividad(a);
+    ge += v.errores.length; ga += v.avisos.length;
+  });
+  marcador("alojamientos", ae, aa);
+  marcador("agenda", ge, ga);
+  marcador("revision", ae + ge, aa + ga);
+}
+
+function pintarRevision(){
+  const r = revisarTodo();
+  const bloque = (titulo, lista, clase) => !lista.length ? "" :
+    "<div class='nota nota-" + clase + "'><span><b>" + titulo + "</b><ul>" +
+    lista.map(x => "<li><b>" + escapar(x[0]) + "</b> · " + escapar(x[1]) + "</li>").join("") +
+    "</ul></span></div>";
+  $("#revision").innerHTML =
+    (!r.errores.length && !r.avisos.length
+      ? "<div class='nota nota-ok'><span><b>Todo correcto</b>No hay nada que arreglar.</span></div>"
+      : "") +
+    bloque(r.errores.length + " cosa(s) que rompen algo y no dejan publicar",
+           r.errores, "mal") +
+    bloque(r.avisos.length + " cosa(s) que conviene arreglar, pero la web funciona",
+           r.avisos, "avi");
+}
+
+/* ==========================================================================
+   8 · Piezas de formulario
+   ========================================================================== */
+function campo(id, etiqueta, valor, opciones){
+  const o = opciones || {};
+  const tipo = o.tipo || "text";
+  const attrs = [
+    'id="' + id + '"', 'name="' + id + '"',
+    o.min != null ? 'min="' + o.min + '"' : "",
+    o.paso ? 'step="' + o.paso + '"' : "",
+    o.placeholder ? 'placeholder="' + escapar(o.placeholder) + '"' : "",
+    o.lista ? 'list="' + o.lista + '"' : ""
+  ].filter(Boolean).join(" ");
+  let control;
+  if (o.opciones) {
+    control = '<select ' + attrs + '>' + o.opciones.map(op =>
+      '<option value="' + escapar(op[0]) + '"' + (String(op[0]) === String(valor) ? " selected" : "") +
+      '>' + escapar(op[1]) + '</option>').join("") + '</select>';
+  } else if (o.filas) {
+    control = '<textarea ' + attrs + ' rows="' + o.filas + '">' + escapar(valor) + '</textarea>';
+  } else {
+    control = '<input type="' + tipo + '" ' + attrs + ' value="' + escapar(valor) + '">';
+  }
+  return '<div class="campo"><label for="' + id + '">' + escapar(etiqueta) + '</label>' +
+    control + (o.pista ? '<p class="pista">' + o.pista + '</p>' : '') + '</div>';
+}
+
+/* Un par castellano / valenciano, siempre juntos y con el mismo tamaño. */
+function campoBi(id, etiqueta, obj, opciones){
+  const o = opciones || {};
+  const v = obj || {};
+  const uno = (sufijo, idioma, valor) => {
+    const falta = !String(valor || "").trim() ? " falta" : "";
+    const attrs = 'id="' + id + "-" + sufijo + '" name="' + id + "-" + sufijo + '"' +
+      (o.placeholder ? ' placeholder="' + escapar(o.placeholder) + '"' : "");
+    const control = o.filas
+      ? '<textarea ' + attrs + ' rows="' + o.filas + '">' + escapar(valor) + '</textarea>'
+      : '<input type="text" ' + attrs + ' value="' + escapar(valor) + '">';
+    return '<div class="idi' + falta + '"><label class="vo" for="' + id + "-" + sufijo + '">' +
+      escapar(etiqueta) + " en " + idioma + '</label>' + control +
+      '<span aria-hidden="true">' + sufijo + '</span></div>';
+  };
+  return '<div class="campo" role="group" aria-label="' + escapar(etiqueta) + '">' +
+    '<span class="et">' + escapar(etiqueta) + '</span>' +
+    '<div class="bi">' + uno("es", "castellano", v.es) + uno("va", "valenciano", v.va) + '</div>' +
+    (o.pista ? '<p class="pista">' + o.pista + '</p>' : '') + '</div>';
+}
+
+function pastillas(nombre, catalogo, marcadas){
+  const puestas = marcadas || [];
+  return '<div class="pastillas">' + Object.keys(catalogo).map(k =>
+    '<label class="check"><input type="checkbox" name="' + nombre + '" value="' + k + '"' +
+    (puestas.indexOf(k) >= 0 ? " checked" : "") + '> ' + escapar(catalogo[k]) + '</label>'
+  ).join("") + '</div>';
+}
+
+const val = id => { const e = $("#" + id); return e ? e.value.trim() : ""; };
+const num = id => { const v = val(id); return v === "" ? 0 : Number(v); };
+const bi  = id => ({ es: val(id + "-es"), va: val(id + "-va") });
+const marcadas = nombre => $$('input[name="' + nombre + '"]:checked', $("#hoja-cuerpo"))
+  .map(e => e.value);
+
+function resbalar(t){
+  return String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+}
+
+/* Acepta «38.53, -0.13», un enlace de Google Maps o el texto que sale al
+   hacer clic derecho sobre el mapa. Devuelve [lat, lng] o null. */
+function sacarCoords(txt){
+  const t = String(txt || "");
+  let m = t.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
+  if (m) return [parseFloat(m[1]), parseFloat(m[2])];
+  m = t.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+  if (m) return [parseFloat(m[1]), parseFloat(m[2])];
+  m = t.match(/(-?\d+[.,]\d+)\s*[,;]\s*(-?\d+[.,]\d+)/);
+  if (m) return [parseFloat(m[1].replace(",", ".")), parseFloat(m[2].replace(",", "."))];
+  return null;
+}
+
+/* ==========================================================================
+   9 · La hoja de edición
+   ========================================================================== */
+const hoja = $("#hoja");
+let alGuardar = null, alBorrar = null, sucia = false;
+
+function abrirHoja(titulo, cuerpo, opciones){
+  const o = opciones || {};
+  $("#hoja-titulo").textContent = titulo;
+  $("#hoja-cuerpo").innerHTML = cuerpo;
+  $("#hoja-borrar").classList.toggle("oculto", !o.borrar);
+  $("#hoja-aceptar").textContent = o.aceptar || "Guardar y publicar";
+  alGuardar = o.guardar; alBorrar = o.borrar;
+  sucia = false;
+  hoja.showModal();
+  $("#hoja-cuerpo").scrollTop = 0;
+  const primero = $("#hoja-cuerpo input, #hoja-cuerpo select, #hoja-cuerpo textarea");
+  if (primero) primero.focus();
+}
+
+$("#hoja-cuerpo").addEventListener("input", ev => {
+  sucia = true;
+  const idi = ev.target.closest(".idi");
+  if (idi) idi.classList.toggle("falta", !ev.target.value.trim());
+});
+
+function cerrarHoja(){
+  if (sucia && !confirm("Has cambiado cosas y no se han guardado. ¿Cerrar y perderlas?")) return;
+  hoja.close();
+}
+$("#hoja-cerrar").addEventListener("click", cerrarHoja);
+$("#hoja-cancelar").addEventListener("click", cerrarHoja);
+hoja.addEventListener("cancel", ev => { ev.preventDefault(); cerrarHoja(); });
+$("#hoja-aceptar").addEventListener("click", () => { if (alGuardar) alGuardar(); });
+$("#hoja-borrar").addEventListener("click", () => { if (alBorrar) alBorrar(); });
+
+function pintarFallos(v){
+  const viejo = $("#fallos"); if (viejo) viejo.remove();
+  if (!v.errores.length && !v.avisos.length) return false;
+  const html =
+    (v.errores.length ? "<div class='nota nota-mal'><span><b>Hay que arreglar esto antes de guardar</b><ul>" +
+      v.errores.map(e => "<li>" + escapar(e) + "</li>").join("") + "</ul></span></div>" : "") +
+    (v.avisos.length ? "<div class='nota nota-avi'><span><b>Se puede guardar, pero fíjate</b><ul>" +
+      v.avisos.map(e => "<li>" + escapar(e) + "</li>").join("") + "</ul></span></div>" : "");
+  const caja = document.createElement("div");
+  caja.id = "fallos"; caja.innerHTML = html;
+  $("#hoja-cuerpo").prepend(caja);
+  $("#hoja-cuerpo").scrollTop = 0;
+  return v.errores.length > 0;
+}
+
+/* ==========================================================================
+   10 · Alojamientos
+   ========================================================================== */
+function pintarAlojamientos(){
+  const q = resbalar($("#buscar-alo").value);
+  const lista = D.alojamientos
+    .map((a, i) => ({ a: a, i: i }))
+    .filter(x => !q || resbalar(x.a.nombre + " " + x.a.destino + " " + x.a.id).indexOf(q) >= 0);
+
+  const total = D.alojamientos.reduce((s, a) => s + (a.cupo || 0), 0);
+  const destinos = new Set(D.alojamientos.map(a => a.destino)).size;
+  $("#resumen-alojamientos").textContent =
+    D.alojamientos.length + " alojamientos · " + destinos + " destinos · " + total + " plazas";
+
+  $("#lista-alo").innerHTML = !lista.length
+    ? "<p class='vacio'>" + (q ? "Ningún alojamiento coincide con «" + escapar($("#buscar-alo").value) + "»."
+                               : "Todavía no hay alojamientos.") + "</p>"
+    : lista.map(x => {
+        const a = x.a, v = revisarAlojamiento(a, D.alojamientos);
+        return '<button type="button" class="item" data-i="' + x.i + '">' +
+          '<span><span class="nom">' + escapar(a.nombre) +
+            (a.destacado ? '<span class="etiq etiq-des">Portada</span>' : '') +
+            (a.nuevo ? '<span class="etiq etiq-nue">Nuevo</span>' : '') +
+            (v.errores.length ? '<span class="etiq etiq-mal">' + v.errores.length + ' error' +
+              (v.errores.length > 1 ? 'es' : '') + '</span>' : '') +
+          '</span><span class="det">' + escapar(TIPOS[a.tipo] || a.tipo) + " · " +
+            escapar(a.destino) + " (" + escapar(a.provincia) + ")</span></span>" +
+          '<span class="cifra"><b>' + (a.cupo || 0) + '</b>plazas</span></button>';
+      }).join("");
+
+  $$("#lista-alo .item").forEach(b =>
+    b.addEventListener("click", () => editarAlojamiento(Number(b.dataset.i))));
+}
+
+$("#buscar-alo").addEventListener("input", pintarAlojamientos);
+$("#nuevo-alo").addEventListener("click", () => editarAlojamiento(-1));
+
+function alojamientoEnBlanco(){
+  return {
+    id: "", nombre: "", tipo: "hotel", categoria: 4, destino: "", provincia: "Alicante",
+    coords: null, web: "https://", telefono: "",
+    imagen: "", claim: { es: "", va: "" }, descripcion: { es: "", va: "" },
+    oferta: { titulo: { es: "", va: "" }, incluye: { es: [], va: [] },
+              precioDesde: 0, precioOriginal: 0, unidad: { es: "por noche", va: "per nit" },
+              dto: 0, condiciones: { es: "", va: "" } },
+    experiencias: [], servicios: [], destacado: false, nuevo: true, cupo: 0,
+    plazas: { es: "", va: "" }
+  };
+}
+
+function editarAlojamiento(indice){
+  const nuevo = indice < 0;
+  const a = nuevo ? alojamientoEnBlanco() : JSON.parse(JSON.stringify(D.alojamientos[indice]));
+  const of = a.oferta || {};
+  const municipios = Array.from(new Set(D.alojamientos.map(x => x.destino))).sort();
+
+  const cuerpo =
+    '<datalist id="municipios">' + municipios.map(m =>
+      '<option value="' + escapar(m) + '">').join("") + '</datalist>' +
+
+    '<fieldset><legend>Identificación</legend>' +
+      campo("f-nombre", "Nombre comercial", a.nombre, { placeholder: "Hotel Mar de Poniente" }) +
+      '<div class="fila fila-3">' +
+        campo("f-tipo", "Tipo", a.tipo,
+              { opciones: Object.keys(TIPOS).map(k => [k, TIPOS[k]]) }) +
+        campo("f-categoria", "Estrellas o llaves", a.categoria,
+              { tipo: "number", min: 0, paso: 1, pista: "0 si no aplica." }) +
+        campo("f-cupo", "Plazas para vecinos", a.cupo,
+              { tipo: "number", min: 0, paso: 1, pista: "Se suma al contador de portada." }) +
+      '</div>' +
+      '<div class="fila fila-2">' +
+        campo("f-destino", "Municipio", a.destino, { lista: "municipios" }) +
+        campo("f-provincia", "Provincia", a.provincia,
+              { opciones: PROVINCIAS.map(p => [p, p]) }) +
+      '</div>' +
+      campo("f-id", "Identificador", a.id, {
+        placeholder: "se rellena solo desde el nombre",
+        pista: "Solo minúsculas, números y guiones. Es también el nombre de su foto: " +
+               "<code>alo-&lt;identificador&gt;.webp</code>. Mejor no cambiarlo una vez publicado." }) +
+    '</fieldset>' +
+
+    '<fieldset><legend>Dónde está</legend>' +
+      campo("f-coords", "Coordenadas", a.coords ? a.coords.join(", ") : "", {
+        placeholder: "38.5342, -0.1314",
+        pista: "En Google Maps, clic derecho sobre el hotel: los dos números salen arriba del menú. " +
+               "También puedes pegar el enlace entero del mapa." }) +
+      '<div id="coords-eco" class="pista"></div>' +
+    '</fieldset>' +
+
+    '<fieldset><legend>Contacto</legend>' +
+      '<div class="fila fila-2">' +
+        campo("f-web", "Web a la que lleva el botón", a.web,
+              { tipo: "url", placeholder: "https://…", pista: "Completa, con https://" }) +
+        campo("f-telefono", "Teléfono", a.telefono, { tipo: "tel" }) +
+      '</div>' +
+      campo("f-imagen", "Foto de la ficha", a.imagen, {
+        placeholder: "assets/img/foto/alo-" + (a.id || "identificador") + ".webp",
+        pista: "1200×800. Si lo dejas vacío, la web dibuja una portada ilustrada." }) +
+    '</fieldset>' +
+
+    '<fieldset><legend>Cómo se cuenta</legend>' +
+      campoBi("f-claim", "Frase de gancho", a.claim,
+              { placeholder: "Una línea que enganche" }) +
+      campoBi("f-descripcion", "Descripción", a.descripcion, { filas: 3 }) +
+    '</fieldset>' +
+
+    '<fieldset><legend>La oferta Km0</legend>' +
+      campoBi("f-oferta-titulo", "Título de la oferta", of.titulo) +
+      campoBi("f-incluye", "Qué incluye", {
+        es: (of.incluye && of.incluye.es || []).join("\n"),
+        va: (of.incluye && of.incluye.va || []).join("\n")
+      }, { filas: 4, pista: "Una cosa por línea." }) +
+      '<div class="fila fila-4">' +
+        campo("f-precio", "Precio Km0 (€)", of.precioDesde || 0,
+              { tipo: "number", min: 0, pista: "0 = «consultar»" }) +
+        campo("f-precio-orig", "Precio habitual (€)", of.precioOriginal || 0,
+              { tipo: "number", min: 0, pista: "0 = no mostrar" }) +
+        campo("f-dto", "Descuento (%)", of.dto || 0,
+              { tipo: "number", min: 0, pista: "0 = sin etiqueta" }) +
+        campo("f-unidad-es", "Unidad", (of.unidad || {}).es || "",
+              { placeholder: "por noche" }) +
+      '</div>' +
+      campo("f-unidad-va", "Unidad en valenciano", (of.unidad || {}).va || "",
+            { placeholder: "per nit" }) +
+      campoBi("f-condiciones", "Letra pequeña", of.condiciones, { filas: 2 }) +
+    '</fieldset>' +
+
+    '<fieldset><legend>Filtros y etiquetas</legend>' +
+      '<div class="campo" role="group" aria-label="Experiencias"><span class="et">Experiencias</span>' +
+        pastillas("exp", EXPERIENCIAS, a.experiencias) +
+        '<p class="pista">Es por lo que la gente filtra en el listado.</p></div>' +
+      '<div class="campo" role="group" aria-label="Servicios"><span class="et">Servicios</span>' +
+        pastillas("srv", SERVICIOS, a.servicios) + '</div>' +
+      '<div class="pastillas" style="margin-top:.6rem">' +
+        '<label class="check"><input type="checkbox" id="f-destacado"' +
+          (a.destacado ? " checked" : "") + '> Sale en la portada</label>' +
+        '<label class="check"><input type="checkbox" id="f-nuevo"' +
+          (a.nuevo ? " checked" : "") + '> Lleva la etiqueta «Nuevo»</label>' +
+      '</div>' +
+      campoBi("f-plazas", "Nota sobre disponibilidad", a.plazas,
+              { pista: "Opcional. Ej.: «Últimas 3 habitaciones»." }) +
+    '</fieldset>';
+
+  abrirHoja(nuevo ? "Nuevo alojamiento" : a.nombre, cuerpo, {
+    borrar: nuevo ? null : () => borrarAlojamiento(indice, a.nombre),
+    guardar: () => guardarAlojamiento(indice, a)
+  });
+
+  // El identificador se rellena solo mientras no se toque a mano
+  const fId = $("#f-id"), fNombre = $("#f-nombre");
+  let idAutomatico = nuevo;
+  fId.addEventListener("input", () => { idAutomatico = false; });
+  fNombre.addEventListener("input", () => {
+    if (idAutomatico) fId.value = resbalar(fNombre.value);
+  });
+
+  const eco = $("#coords-eco"), fCoords = $("#f-coords");
+  function mirarCoords(){
+    const c = sacarCoords(fCoords.value);
+    if (!fCoords.value.trim()) { eco.textContent = ""; return; }
+    if (!c) { eco.innerHTML = "<span style='color:var(--terra-h)'>No encuentro dos números aquí.</span>"; return; }
+    const dentro = c[0] >= LAT[0] && c[0] <= LAT[1] && c[1] >= LNG[0] && c[1] <= LNG[1];
+    const alReves = !dentro && c[1] >= LAT[0] && c[1] <= LAT[1] && c[0] >= LNG[0] && c[0] <= LNG[1];
+    eco.innerHTML = dentro
+      ? "✓ Latitud <b>" + c[0] + "</b>, longitud <b>" + c[1] + "</b>. " +
+        "<a href='https://www.google.com/maps?q=" + c[0] + "," + c[1] +
+        "' target='_blank' rel='noopener'>Ver en el mapa</a>"
+      : alReves
+      ? "<span style='color:var(--terra-h)'>Están del revés. Debería ser <b>" +
+        c[1] + ", " + c[0] + "</b>.</span>"
+      : "<span style='color:var(--terra-h)'>Ese punto cae fuera de la Comunitat Valenciana.</span>";
+  }
+  fCoords.addEventListener("input", mirarCoords);
+  mirarCoords();
+}
+
+function recogerAlojamiento(base){
+  const a = JSON.parse(JSON.stringify(base));
+  a.nombre = val("f-nombre");
+  a.id = val("f-id") || resbalar(a.nombre);
+  a.tipo = val("f-tipo");
+  a.categoria = num("f-categoria");
+  a.destino = val("f-destino");
+  a.provincia = val("f-provincia");
+  a.coords = sacarCoords(val("f-coords"));
+  a.web = val("f-web");
+  a.telefono = val("f-telefono");
+  a.imagen = val("f-imagen") || ("assets/img/foto/alo-" + a.id + ".webp");
+  a.claim = bi("f-claim");
+  a.descripcion = bi("f-descripcion");
+  const inc = bi("f-incluye");
+  a.oferta = {
+    titulo: bi("f-oferta-titulo"),
+    incluye: {
+      es: inc.es.split("\n").map(s => s.trim()).filter(Boolean),
+      va: inc.va.split("\n").map(s => s.trim()).filter(Boolean)
+    },
+    precioDesde: num("f-precio"),
+    precioOriginal: num("f-precio-orig"),
+    unidad: { es: val("f-unidad-es"), va: val("f-unidad-va") },
+    dto: num("f-dto"),
+    condiciones: bi("f-condiciones")
+  };
+  a.experiencias = marcadas("exp");
+  a.servicios = marcadas("srv");
+  a.destacado = $("#f-destacado").checked;
+  a.nuevo = $("#f-nuevo").checked;
+  a.cupo = num("f-cupo");
+  a.plazas = bi("f-plazas");
+  return a;
+}
+
+async function guardarAlojamiento(indice, base){
+  const a = recogerAlojamiento(base);
+  const otros = D.alojamientos.filter((x, i) => i !== indice);
+  const v = revisarAlojamiento(a, otros.concat([a]));
+  if (pintarFallos(v)) return;
+
+  const antes = indice < 0 ? null : D.alojamientos[indice];
+  if (indice < 0) D.alojamientos.push(a); else D.alojamientos[indice] = a;
+
+  const ok = await guardar("alojamientos",
+    (indice < 0 ? "Alta de «" : "Cambios en «") + a.nombre + "»");
+  if (!ok) { if (indice < 0) D.alojamientos.pop(); else D.alojamientos[indice] = antes; }
+  else hoja.close();
+  pintarAlojamientos(); contarAvisos();
+}
+
+async function borrarAlojamiento(indice, nombre){
+  if (!confirm("¿Quitar «" + nombre + "» de la web?\n\nDesaparecerá del listado, del mapa y de " +
+               "los contadores. Se puede recuperar desde el historial de GitHub.")) return;
+  const antes = D.alojamientos.splice(indice, 1)[0];
+  const ok = await guardar("alojamientos", "Baja de «" + nombre + "»");
+  if (!ok) D.alojamientos.splice(indice, 0, antes); else hoja.close();
+  pintarAlojamientos(); contarAvisos();
+}
+
+/* ==========================================================================
+   11 · Agenda
+   ========================================================================== */
+function pintarAgenda(){
+  const gratis = D.agenda.filter(a =>
+    /^gratis/i.test(((a.precio || {}).es) || "")).length;
+  $("#resumen-agenda").textContent =
+    D.agenda.length + " actividades · " + gratis + " gratuitas · " +
+    TOTAL_DIAS + " días de edición (" + D.configuracion.fechasTexto.es + ")";
+
+  let html = "";
+  for (let n = 1; n <= TOTAL_DIAS; n++) {
+    const f = fechaDelDia(n);
+    const actos = D.agenda.map((a, i) => ({ a: a, i: i }))
+      .filter(x => x.a.dia === n)
+      .sort((p, q) => String(p.a.hora).localeCompare(String(q.a.hora)));
+    html += '<div class="dia' + (esFinde(n) ? " finde" : "") + '" data-dia="' + n + '">' +
+      '<h4>' + f.getDate() + " de " + MESES[f.getMonth()] +
+        '<span>' + DIAS_SEM[f.getDay()] + '</span></h4>' +
+      (actos.length ? actos.map(x =>
+        '<button type="button" class="acto" draggable="true" data-i="' + x.i + '">' +
+          '<span class="h">' + escapar(x.a.hora) + '</span>' +
+          '<span class="t">' + escapar((x.a.titulo || {}).es) + '</span>' +
+          '<span class="l">' + escapar(x.a.lugar) +
+            (/hosbec\.com\/?$/.test(x.a.enlace || "") ? ' · <b style="color:var(--terra-h)">sin enlace propio</b>' : '') +
+          '</span></button>').join("")
+        : '<p class="nada">Sin actividades</p>') +
+      '<button type="button" class="mas" data-nueva="' + n + '">+ Añadir aquí</button>' +
+      '</div>';
+  }
+  $("#dias").innerHTML = html;
+
+  $$("#dias .acto").forEach(b => {
+    b.addEventListener("click", () => editarActividad(Number(b.dataset.i)));
+    b.addEventListener("dragstart", ev => {
+      ev.dataTransfer.setData("text/plain", b.dataset.i);
+      ev.dataTransfer.effectAllowed = "move";
+      b.classList.add("arrastrando");
+    });
+    b.addEventListener("dragend", () => b.classList.remove("arrastrando"));
+  });
+  $$("#dias .mas").forEach(b =>
+    b.addEventListener("click", () => editarActividad(-1, Number(b.dataset.nueva))));
+  $$("#dias .dia").forEach(d => {
+    d.addEventListener("dragover", ev => { ev.preventDefault(); d.classList.add("sobre"); });
+    d.addEventListener("dragleave", () => d.classList.remove("sobre"));
+    d.addEventListener("drop", async ev => {
+      ev.preventDefault(); d.classList.remove("sobre");
+      const i = Number(ev.dataTransfer.getData("text/plain"));
+      const destino = Number(d.dataset.dia);
+      if (!D.agenda[i] || D.agenda[i].dia === destino) return;
+      const antes = D.agenda[i].dia;
+      D.agenda[i].dia = destino;
+      pintarAgenda();
+      const f = fechaDelDia(destino);
+      const ok = await guardar("agenda", "«" + (D.agenda[i].titulo || {}).es +
+        "» pasa al " + f.getDate() + " de " + MESES[f.getMonth()]);
+      if (!ok) { D.agenda[i].dia = antes; pintarAgenda(); }
+      contarAvisos();
+    });
+  });
+}
+
+$("#nueva-act").addEventListener("click", () => editarActividad(-1, 1));
+
+function editarActividad(indice, diaSugerido){
+  const nueva = indice < 0;
+  const a = nueva
+    ? { dia: diaSugerido || 1, hora: "10:00", lugar: "", enlace: "",
+        titulo: { es: "", va: "" }, desc: { es: "", va: "" },
+        tipo: "cultura", precio: { es: "Gratis", va: "Gratis" } }
+    : JSON.parse(JSON.stringify(D.agenda[indice]));
+
+  const dias = [];
+  for (let n = 1; n <= TOTAL_DIAS; n++) {
+    const f = fechaDelDia(n);
+    dias.push([n, DIAS_SEM[f.getDay()] + " " + f.getDate() + " de " + MESES[f.getMonth()] +
+      (esFinde(n) ? "  ·  fin de semana" : "")]);
+  }
+  const tipos = ["gastronomia","cultura","naturaleza","musica","artesania","institucional",
+                 "deporte","familia"];
+  const lugares = Array.from(new Set(D.alojamientos.map(x => x.destino)
+    .concat(D.agenda.map(x => x.lugar)))).filter(Boolean).sort();
+
+  const cuerpo =
+    '<datalist id="lugares">' + lugares.map(m =>
+      '<option value="' + escapar(m) + '">').join("") + '</datalist>' +
+    '<fieldset><legend>Cuándo y dónde</legend>' +
+      '<div class="fila fila-3">' +
+        campo("a-dia", "Día", a.dia, { opciones: dias }) +
+        campo("a-hora", "Hora", a.hora, { tipo: "time" }) +
+        campo("a-lugar", "Lugar", a.lugar, { lista: "lugares", placeholder: "Benidorm" }) +
+      '</div>' +
+    '</fieldset>' +
+    '<fieldset><legend>Qué es</legend>' +
+      campoBi("a-titulo", "Título", a.titulo) +
+      campoBi("a-desc", "Descripción", a.desc,
+              { filas: 3, pista: "Dos líneas. Sale en la tarjeta de la agenda." }) +
+    '</fieldset>' +
+    '<fieldset><legend>Detalles</legend>' +
+      '<div class="fila fila-2">' +
+        campo("a-tipo", "Tipo", a.tipo, { opciones: tipos.map(t =>
+          [t, t.charAt(0).toUpperCase() + t.slice(1)]) }) +
+        campo("a-enlace", "Enlace del botón «Quiero ir»", a.enlace, {
+          tipo: "url", placeholder: "https://…",
+          pista: "A dónde manda el botón. Si lo dejas vacío, la web lleva al alojamiento " +
+                 "adherido de ese mismo destino." }) +
+      '</div>' +
+      campoBi("a-precio", "Precio", a.precio,
+              { pista: "Texto libre. Si pones exactamente <b>Gratis</b>, entra en el filtro " +
+                       "«solo gratuitas»." }) +
+    '</fieldset>';
+
+  abrirHoja(nueva ? "Nueva actividad" : (a.titulo.es || "Actividad"), cuerpo, {
+    borrar: nueva ? null : () => borrarActividad(indice),
+    guardar: () => guardarActividad(indice, a)
+  });
+}
+
+function recogerActividad(base){
+  const a = JSON.parse(JSON.stringify(base));
+  a.dia = Number(val("a-dia"));
+  a.hora = val("a-hora");
+  a.lugar = val("a-lugar");
+  a.enlace = val("a-enlace");
+  a.titulo = bi("a-titulo");
+  a.desc = bi("a-desc");
+  a.tipo = val("a-tipo");
+  a.precio = bi("a-precio");
+  return a;
+}
+
+async function guardarActividad(indice, base){
+  const a = recogerActividad(base);
+  if (pintarFallos(revisarActividad(a))) return;
+  const antes = indice < 0 ? null : D.agenda[indice];
+  if (indice < 0) D.agenda.push(a); else D.agenda[indice] = a;
+  const ok = await guardar("agenda",
+    (indice < 0 ? "Nueva actividad: «" : "Cambios en «") + a.titulo.es + "»");
+  if (!ok) { if (indice < 0) D.agenda.pop(); else D.agenda[indice] = antes; }
+  else hoja.close();
+  pintarAgenda(); contarAvisos();
+}
+
+async function borrarActividad(indice){
+  const t = (D.agenda[indice].titulo || {}).es || "esta actividad";
+  if (!confirm("¿Quitar «" + t + "» de la agenda?")) return;
+  const antes = D.agenda.splice(indice, 1)[0];
+  const ok = await guardar("agenda", "Se quita «" + t + "» de la agenda");
+  if (!ok) D.agenda.splice(indice, 0, antes); else hoja.close();
+  pintarAgenda(); contarAvisos();
+}
+
+/* ==========================================================================
+   12 · Arranque
+   ========================================================================== */
+if (clave && quien) {
+  $("#e-quien").value = quien;
+  arrancar();
+} else {
+  if (quien) $("#e-quien").value = quien;
+  $("#e-quien").focus();
+}
+</script>
+</body>
+</html>
