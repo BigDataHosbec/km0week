@@ -303,6 +303,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
       <span class="marcador oculto" id="m-alojamientos"></span></button>
     <button type="button" data-seccion="agenda">Agenda
       <span class="marcador oculto" id="m-agenda"></span></button>
+    <button type="button" data-seccion="noticias">Noticias
+      <span class="marcador oculto" id="m-noticias"></span></button>
+    <button type="button" data-seccion="textos">Textos y FAQ</button>
     <button type="button" data-seccion="traducciones">Traducciones
       <span class="marcador oculto" id="m-traducciones"></span></button>
     <button type="button" data-seccion="filtros">Filtros</button>
@@ -348,6 +351,42 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
         Arrastra una actividad a otro día para moverla. También puedes cambiarle el día desde su ficha.
       </p>
       <div class="dias" id="dias"></div>
+    </section>
+
+    <!-- ---------------------------------------------------------- NOTICIAS -->
+    <section id="s-noticias" class="oculto" aria-labelledby="t-noticias">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-noticias">Noticias</h2>
+          <p class="sub" id="resumen-noticias"></p>
+        </div>
+        <span class="sep"></span>
+        <button type="button" class="b-1" id="nueva-not">Escribir una noticia</button>
+      </div>
+      <div class="lista" id="lista-not"></div>
+    </section>
+
+    <!-- ------------------------------------------------------------ TEXTOS -->
+    <section id="s-textos" class="oculto" aria-labelledby="t-textos">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-textos">Textos de la web</h2>
+          <p class="sub" id="resumen-textos"></p>
+        </div>
+        <span class="sep"></span>
+        <div class="campo" style="margin:0;min-width:240px">
+          <label for="pagina-elegida">Página</label>
+          <select id="pagina-elegida"></select>
+        </div>
+        <button type="button" class="b-1" id="guardar-textos">Guardar y publicar</button>
+      </div>
+      <div class="nota nota-inf">
+        <span><b>Qué se puede cambiar aquí</b>Las frases sueltas de cada página,
+        con su valenciano al lado. Si dejas el valenciano vacío se traduce solo
+        al publicar. Los bloques con enlaces o negritas dentro no salen en esta
+        lista: esos se piden en Cowork.</span>
+      </div>
+      <div id="lista-textos"></div>
     </section>
 
     <!-- ------------------------------------------------------ TRADUCCIONES -->
@@ -421,7 +460,8 @@ const RUTAS = {
   alojamientos: "contenido/alojamientos.json",
   agenda:       "contenido/agenda.json",
   configuracion:"contenido/configuracion.json",
-  filtros:      "contenido/filtros.json"
+  filtros:      "contenido/filtros.json",
+  noticias:     "contenido/noticias.json"
 };
 
 /* Lo que Apertium tradujo en la última publicación: {castellano: valencià}.
@@ -644,7 +684,8 @@ $("#salir").addEventListener("click", () => {
 /* ==========================================================================
    5 · Navegación
    ========================================================================== */
-const SECCIONES = ["alojamientos", "agenda", "traducciones", "filtros", "revision"];
+const SECCIONES = ["alojamientos", "agenda", "noticias", "textos", "traducciones",
+                   "filtros", "revision"];
 let seccionActual = "alojamientos";
 
 function irA(nombre){
@@ -653,6 +694,8 @@ function irA(nombre){
   $$(".pestanas button").forEach(b =>
     b.setAttribute("aria-current", b.dataset.seccion === nombre ? "page" : "false"));
   if (nombre === "revision") pintarRevision();
+  if (nombre === "noticias") pintarNoticias();
+  if (nombre === "textos") pintarTextos();
   if (nombre === "traducciones") pintarTraducciones();
   if (nombre === "filtros") pintarFiltros();
   location.hash = nombre;
@@ -678,6 +721,7 @@ async function arrancar(){
   prepararEdicion();
   pintarAlojamientos();
   pintarAgenda();
+  pintarNoticias();
   contarAvisos();
   mirarPublicacion();
   setInterval(mirarPublicacion, 60000);
@@ -802,6 +846,11 @@ function revisarTodo(){
     v.errores.forEach(e => r.errores.push(["Agenda · «" + v.nombre + "»", e]));
     v.avisos.forEach(e => r.avisos.push(["Agenda · «" + v.nombre + "»", e]));
   });
+  D.noticias.forEach(n => {
+    const v = revisarNoticia(n, D.noticias);
+    v.errores.forEach(e => r.errores.push(["Noticia «" + v.nombre + "»", e]));
+    v.avisos.forEach(e => r.avisos.push(["Noticia «" + v.nombre + "»", e]));
+  });
   return r;
 }
 
@@ -824,10 +873,18 @@ function contarAvisos(){
     const v = revisarActividad(a);
     ge += v.errores.length; ga += v.avisos.length;
   });
+  let ne = 0, na = 0;
+  D.noticias.forEach(n => {
+    const v = revisarNoticia(n, D.noticias);
+    ne += v.errores.length; na += v.avisos.length;
+  });
   marcador("alojamientos", ae, aa);
   marcador("agenda", ge, ga);
-  marcador("revision", ae + ge, aa + ga);
-  marcador("traducciones", 0, textosAutomaticos().length);
+  marcador("noticias", ne, na);
+  marcador("revision", ae + ge + ne, aa + ga + na);
+  const dePaginas = Object.values(AUTO.paginas || {})
+    .reduce((s, v) => s + v.length, 0);
+  marcador("traducciones", 0, textosAutomaticos().length + dePaginas);
 }
 
 function pintarRevision(){
@@ -1175,7 +1232,7 @@ function editarAlojamiento(indice){
     if (idAutomatico) fId.value = resbalar(fNombre.value);
   });
 
-  montarFoto(a);
+  montarFoto(a.imagen);
 
   const eco = $("#coords-eco"), fCoords = $("#f-coords");
   function mirarCoords(){
@@ -1433,7 +1490,417 @@ async function borrarActividad(indice){
 }
 
 /* ==========================================================================
-   12 · Traducciones sin revisar
+   12 · Noticias
+   ========================================================================== */
+const COLORES = [["", "Gris"], ["mar", "Azul"], ["verde", "Verde"], ["terra", "Terracota"]];
+
+const AYUDA_CUERPO =
+  "Una línea en blanco separa párrafos. Además puedes usar: " +
+  "<code>## Subtítulo</code> · <code>&gt; Una cita destacada</code> · " +
+  "<code>- viñeta</code> · <code>1. numerada</code> · " +
+  "<code>[texto del enlace](adonde.html)</code> · y tablas con " +
+  "<code>| Columna | Columna |</code> y una fila de <code>|---|---|</code> debajo. " +
+  "Nada más: no hace falta saber HTML.";
+
+function revisarNoticia(n, todas){
+  const err = [], avi = [];
+  if (vacio((n.titulo || {}).es)) err.push("Falta el titular en castellano.");
+  if (vacio((n.resumen || {}).es))
+    err.push("Falta la frase de resumen: sale en el listado y en Google.");
+  if (vacio((n.entradilla || {}).es)) err.push("Falta la entradilla.");
+  if (vacio(n.slug)) err.push("Falta el identificador.");
+  else if (!/^[a-z0-9-]+$/.test(n.slug))
+    err.push("El identificador solo admite minúsculas, números y guiones.");
+  else if (todas && todas.filter(x => x !== n && x.slug === n.slug).length)
+    err.push("Ya hay otra noticia con el identificador «" + n.slug + "».");
+  if (!n.proxima) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(n.fecha || "")) err.push("Falta la fecha.");
+    if (vacio((n.cuerpo || {}).es)) err.push("La noticia no tiene cuerpo.");
+  }
+  if (vacio(n.imagen)) err.push("Falta la imagen destacada.");
+  if (todas && todas.filter(x => x.destacada && !x.proxima).length > 1)
+    avi.push("Hay más de una noticia marcada como destacada: solo la primera saldrá grande.");
+  return { nombre: (n.titulo || {}).es || n.slug, errores: err, avisos: avi };
+}
+
+function pintarNoticias(){
+  const pub = D.noticias.filter(n => !n.proxima).length;
+  $("#resumen-noticias").textContent =
+    pub + " publicada(s)" + (D.noticias.length - pub ? " · " +
+    (D.noticias.length - pub) + " anunciada(s) como «Próximamente»" : "");
+
+  $("#lista-not").innerHTML = !D.noticias.length
+    ? "<p class='vacio'>Todavía no hay noticias.</p>"
+    : D.noticias.map((n, i) => {
+        const v = revisarNoticia(n, D.noticias);
+        return '<button type="button" class="item" data-i="' + i + '">' +
+          '<span><span class="nom">' + escapar(n.titulo.es) +
+            (n.destacada ? '<span class="etiq etiq-des">Destacada</span>' : '') +
+            (n.proxima ? '<span class="etiq etiq-nue">Próximamente</span>' : '') +
+            (v.errores.length ? '<span class="etiq etiq-mal">' + v.errores.length +
+              ' error' + (v.errores.length > 1 ? 'es' : '') + '</span>' : '') +
+          '</span><span class="det">' + escapar((n.etiqueta || {}).es || "") +
+            (n.fecha ? " · " + n.fecha.split("-").reverse().join("/") : "") + '</span></span>' +
+          '<span class="cifra"><b>' + (n.lectura || 0) + '</b>min</span></button>';
+      }).join("");
+  $$("#lista-not .item").forEach(b =>
+    b.addEventListener("click", () => editarNoticia(Number(b.dataset.i))));
+}
+
+$("#nueva-not").addEventListener("click", () => editarNoticia(-1));
+
+function noticiaEnBlanco(){
+  const hoy = new Date();
+  const dos = x => String(x).padStart(2, "0");
+  return {
+    slug: "", imagen: "",
+    seccion: { es: "Noticias", va: "Notícies" },
+    etiqueta: { es: "Noticias", va: "Notícies" },
+    color: "mar",
+    fecha: hoy.getFullYear() + "-" + dos(hoy.getMonth() + 1) + "-" + dos(hoy.getDate()),
+    lectura: 3, destacada: false, proxima: false,
+    titulo: { es: "", va: "" }, resumen: { es: "", va: "" },
+    entradilla: { es: "", va: "" }, cuerpo: { es: "", va: "" },
+    boton: { url: "alojamientos.html", es: "Ver los alojamientos",
+             va: "Veure els allotjaments" }
+  };
+}
+
+function editarNoticia(indice){
+  const nueva = indice < 0;
+  const n = nueva ? noticiaEnBlanco() : JSON.parse(JSON.stringify(D.noticias[indice]));
+  const bot = n.boton || {};
+
+  const cuerpo =
+    '<fieldset><legend>Portada de la noticia</legend>' +
+      campoBi("n-titulo", "Titular", n.titulo) +
+      campoBi("n-resumen", "Frase de resumen", n.resumen,
+              { filas: 2, pista: "La que sale en el listado y en Google. Una o dos líneas." }) +
+      '<div class="campo"><span class="et">Imagen destacada</span>' +
+        '<div class="foto">' +
+          '<canvas id="foto-lienzo" width="480" height="320" ' +
+            'aria-label="Vista previa del recorte"></canvas>' +
+          '<div class="foto-lado">' +
+            '<p class="pista" id="foto-estado">' + (n.imagen
+              ? "Ahora: " + escapar(n.imagen) + ".webp"
+              : "Sin imagen. Hace falta una para poder publicarla.") + '</p>' +
+            '<label class="b-2" for="foto-archivo" style="display:inline-block;' +
+              'padding:.5rem .9rem;cursor:pointer">Elegir una imagen…</label>' +
+            '<input type="file" id="foto-archivo" accept="image/*" class="vo">' +
+            '<p class="pista">Se recorta sola a 1200×800. Arrastra sobre la vista ' +
+              'previa para elegir qué parte se ve.</p>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</fieldset>' +
+
+    '<fieldset><legend>El texto</legend>' +
+      campoBi("n-entradilla", "Entradilla", n.entradilla,
+              { filas: 3, pista: "El primer párrafo destacado del artículo." }) +
+      campoBi("n-cuerpo", "Cuerpo", n.cuerpo, { filas: 14, pista: AYUDA_CUERPO }) +
+    '</fieldset>' +
+
+    '<fieldset><legend>Ficha</legend>' +
+      '<div class="fila fila-3">' +
+        campo("n-fecha", "Fecha", n.fecha, { tipo: "date" }) +
+        campo("n-lectura", "Minutos de lectura", n.lectura, { tipo: "number", min: 0 }) +
+        campo("n-color", "Color de la etiqueta", n.color,
+              { opciones: COLORES }) +
+      '</div>' +
+      campoBi("n-etiqueta", "Etiqueta", n.etiqueta,
+              { pista: "La palabra de color de la tarjeta: Adhesiones, Territorio, Pasaporte…" }) +
+      campo("n-slug", "Identificador", n.slug, {
+        placeholder: "se rellena solo desde el titular",
+        pista: "Es la dirección de la noticia: <code>&lt;identificador&gt;.html</code>. " +
+               "Mejor no cambiarlo una vez publicada." }) +
+      '<div class="pastillas" style="margin:.6rem 0">' +
+        '<label class="check"><input type="checkbox" id="n-destacada"' +
+          (n.destacada ? " checked" : "") + '> Sale grande en el listado</label>' +
+        '<label class="check"><input type="checkbox" id="n-proxima"' +
+          (n.proxima ? " checked" : "") + '> Solo se anuncia («Próximamente»), sin página</label>' +
+      '</div>' +
+    '</fieldset>' +
+
+    '<fieldset><legend>Botón del final del artículo</legend>' +
+      '<div class="fila fila-2">' +
+        campo("n-boton-url", "A dónde lleva", bot.url || "",
+              { placeholder: "agenda.html" }) +
+        campo("n-boton-es", "Qué dice", bot.es || "") +
+      '</div>' +
+      campo("n-boton-va", "Qué dice en valencià", bot.va || "") +
+    '</fieldset>';
+
+  abrirHoja(nueva ? "Nueva noticia" : n.titulo.es, cuerpo, {
+    borrar: nueva ? null : () => borrarNoticia(indice, n.titulo.es),
+    guardar: () => guardarNoticia(indice, n)
+  });
+
+  montarFoto(n.imagen);
+
+  const fSlug = $("#n-slug"), fTit = $("#n-titulo-es");
+  let automatico = nueva;
+  fSlug.addEventListener("input", () => { automatico = false; });
+  fTit.addEventListener("input", () => {
+    if (automatico) fSlug.value = resbalar(fTit.value);
+  });
+}
+
+function recogerNoticia(base){
+  const n = JSON.parse(JSON.stringify(base));
+  n.titulo = bi("n-titulo");
+  n.resumen = bi("n-resumen");
+  n.entradilla = bi("n-entradilla");
+  n.cuerpo = { es: $("#n-cuerpo-es").value.trim(), va: $("#n-cuerpo-va").value.trim() };
+  n.etiqueta = bi("n-etiqueta");
+  n.seccion = n.seccion || { es: "Noticias", va: "Notícies" };
+  n.fecha = val("n-fecha");
+  n.lectura = num("n-lectura");
+  n.color = val("n-color");
+  n.slug = val("n-slug") || resbalar(n.titulo.es);
+  n.destacada = $("#n-destacada").checked;
+  n.proxima = $("#n-proxima").checked;
+  n.imagen = n.imagen || n.slug;
+  n.boton = { url: val("n-boton-url"), es: val("n-boton-es"), va: val("n-boton-va") };
+  return n;
+}
+
+async function guardarNoticia(indice, base){
+  const n = recogerNoticia(base);
+
+  if (foto) {
+    const fmt = formatoFoto();
+    if (fmt.ext !== "webp") {
+      pintarFallos({ errores: ["Este navegador no sabe guardar imágenes en webp, " +
+        "que es lo que necesitan las noticias. Sube la imagen desde Chrome o Edge."],
+        avisos: [] });
+      return;
+    }
+    const boton = $("#hoja-aceptar");
+    boton.disabled = true; boton.textContent = "Subiendo la imagen…";
+    try {
+      n.imagen = n.imagen || n.slug;
+      const blob = await aBlob(recortar(foto.img, 1200, 800, foto.foco), fmt);
+      await subirFoto("assets/img/foto/" + n.imagen + ".webp", blob,
+                      "Imagen de la noticia «" + n.titulo.es + "»");
+      foto = null;
+    } catch (e) {
+      boton.disabled = false; boton.textContent = "Guardar y publicar";
+      pintarFallos({ errores: ["No se ha podido subir la imagen: " + e.message], avisos: [] });
+      return;
+    }
+    boton.disabled = false; boton.textContent = "Guardar y publicar";
+  }
+
+  const otras = D.noticias.filter((x, i) => i !== indice);
+  if (pintarFallos(revisarNoticia(n, otras.concat([n])))) return;
+
+  const antes = indice < 0 ? null : D.noticias[indice];
+  if (indice < 0) D.noticias.unshift(n); else D.noticias[indice] = n;
+  const ok = await guardar("noticias",
+    (indice < 0 ? "Nueva noticia: «" : "Cambios en «") + n.titulo.es + "»");
+  if (!ok) { if (indice < 0) D.noticias.shift(); else D.noticias[indice] = antes; }
+  else hoja.close();
+  pintarNoticias(); contarAvisos();
+}
+
+async function borrarNoticia(indice, titulo){
+  if (!confirm("¿Quitar «" + titulo + "» de la web?\n\nDesaparecerá del listado y su " +
+               "página dejará de existir. Se puede recuperar desde el historial.")) return;
+  const antes = D.noticias.splice(indice, 1)[0];
+  const ok = await guardar("noticias", "Se retira la noticia «" + titulo + "»");
+  if (!ok) D.noticias.splice(indice, 0, antes); else hoja.close();
+  pintarNoticias(); contarAvisos();
+}
+
+/* ==========================================================================
+   13 · Textos de las páginas y preguntas frecuentes
+   --------------------------------------------------------------------------
+   Estos textos no viven en contenido/*.json sino dentro del HTML de cada
+   página, en _build/paginas/. Aquí no se toca el HTML: se localiza cada
+   trozo de texto por su posición exacta en el archivo y se cambia solo eso,
+   dejando la maquetación intacta.
+   ========================================================================== */
+const PAGINAS = [
+  ["portada.html", "Portada"],
+  ["iniciativa.html", "La iniciativa"],
+  ["alojamientos.html", "Alojamientos (encabezados y filtros)"],
+  ["mapa.html", "Mapa"],
+  ["agenda.html", "Agenda (encabezados)"],
+  ["noticias.html", "Noticias (encabezados y boletín)"],
+  ["faq.html", "Preguntas frecuentes"],
+  ["suma.html", "Suma tu alojamiento"],
+  ["descargas.html", "Materiales y kit"],
+  ["prensa.html", "Sala de prensa"],
+  ["aviso-legal.html", "Aviso legal"],
+  ["privacidad.html", "Privacidad"],
+  ["cookies.html", "Cookies"],
+  ["404.html", "Página no encontrada"]
+];
+
+let paginaActual = null;   // { nombre, texto, sha, trozos }
+
+async function leerPagina(nombre){
+  const j = await api("/contents/_build/paginas/" + nombre + "?ref=main&t=" + Date.now());
+  return { nombre: nombre, sha: j.sha, texto: deB64(j.content) };
+}
+
+/* Localiza cada texto editable con su posición exacta dentro del archivo. */
+function trozosDe(texto){
+  const fuera = [];
+  // Sin alternancias solapadas: una expresión con "..."|[^>] se dispara en
+  // retroceso exponencial y cuelga el navegador. Aquí no hace falta: ningún
+  // atributo de estas páginas lleva un > literal dentro.
+  const re = /<([a-z0-9]+)([^>]*)>([^<>]*)<\/\1>/gi;
+  let m;
+  while ((m = re.exec(texto)) !== null) {
+    const etiqueta = m[1], attrs = m[2], dentro = m[3];
+    if (/^(script|style)$/i.test(etiqueta)) continue;
+    if (!dentro.trim() || !/[a-záéíóúñüçA-ZÁÉÍÓÚÑÜÇ]/.test(dentro)) continue;
+    const av = /\sdata-va="([^"]*)"/.exec(attrs);
+    fuera.push({
+      inicio: m.index, largo: m[0].length,
+      etiqueta: etiqueta, attrs: attrs,
+      es: dentro, va: av ? av[1] : "",
+      tieneAttr: !!av
+    });
+  }
+  return fuera;
+}
+
+function desescapar(t){
+  const d = document.createElement("textarea");
+  d.innerHTML = t;
+  return d.value;
+}
+function escapaAttr(t){
+  return String(t).replace(/&/g, "&amp;").replace(/"/g, "&quot;")
+                  .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function escapaTexto(t){
+  return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function pintarTextos(){
+  const sel = $("#pagina-elegida");
+  if (!sel.options.length) {
+    sel.innerHTML = PAGINAS.map(p =>
+      '<option value="' + p[0] + '">' + escapar(p[1]) + '</option>').join("");
+  }
+  if (!paginaActual) cargarPagina(sel.value);
+  else dibujarTrozos();
+}
+
+async function cargarPagina(nombre){
+  $("#lista-textos").innerHTML = "<p class='vacio'>Cargando…</p>";
+  try {
+    paginaActual = await leerPagina(nombre);
+    paginaActual.trozos = trozosDe(paginaActual.texto);
+    dibujarTrozos();
+  } catch (e) {
+    $("#lista-textos").innerHTML =
+      "<div class='nota nota-mal'><span><b>No se ha podido abrir</b>" +
+      escapar(e.message) + "</span></div>";
+  }
+}
+
+function dibujarTrozos(){
+  const t = paginaActual.trozos;
+  const sinVa = t.filter(x => !x.va.trim()).length;
+  $("#resumen-textos").textContent =
+    t.length + " texto(s) en esta página" +
+    (sinVa ? " · " + sinVa + " sin valenciano escrito a mano" : "");
+  const filas = s => Math.min(9, Math.max(2, Math.ceil(s.length / 62)));
+  $("#lista-textos").innerHTML = !t.length
+    ? "<p class='vacio'>Esta página no tiene textos sueltos que editar aquí.</p>"
+    : t.map((x, i) =>
+        '<div class="tarjeta trad">' +
+          '<p class="sub" style="margin:0 0 .5rem">&lt;' + x.etiqueta + '&gt;</p>' +
+          '<div class="bi">' +
+            '<div class="idi"><span aria-hidden="true">es</span>' +
+              '<textarea id="tx-' + i + '-es" rows="' +
+                filas(desescapar(x.es)) + '">' +
+                escapar(desescapar(x.es).trim()) + '</textarea></div>' +
+            '<div class="idi' + (x.va.trim() ? "" : " falta") + '">' +
+              '<span aria-hidden="true">va</span>' +
+              '<textarea id="tx-' + i + '-va" rows="' +
+                filas(desescapar(x.es)) + '" placeholder="' +
+                (autoDe(desescapar(x.es).trim())
+                  ? escapar("Se publicará: " + autoDe(desescapar(x.es).trim()))
+                  : "Se traducirá sola al publicar") + '">' +
+                escapar(desescapar(x.va)) + '</textarea></div>' +
+          '</div>' +
+        '</div>').join("");
+}
+
+$("#pagina-elegida").addEventListener("change", ev => {
+  paginaActual = null;
+  cargarPagina(ev.target.value);
+});
+
+$("#guardar-textos").addEventListener("click", async () => {
+  if (!paginaActual) return;
+  const cambios = [];
+  paginaActual.trozos.forEach((x, i) => {
+    const es = ($("#tx-" + i + "-es") || {}).value;
+    const va = ($("#tx-" + i + "-va") || {}).value;
+    if (es == null) return;
+    const esOrig = desescapar(x.es).trim(), vaOrig = desescapar(x.va);
+    if (es.trim() === esOrig && va === vaOrig) return;
+    let attrs = x.attrs;
+    const nuevoVa = va.trim();
+    if (x.tieneAttr) {
+      attrs = nuevoVa
+        ? attrs.replace(/\sdata-va="[^"]*"/, ' data-va="' + escapaAttr(nuevoVa) + '"')
+        : attrs.replace(/\sdata-va="[^"]*"/, "");
+    } else if (nuevoVa) {
+      attrs = attrs + ' data-va="' + escapaAttr(nuevoVa) + '"';
+    }
+    cambios.push({
+      inicio: x.inicio, largo: x.largo,
+      nuevo: "<" + x.etiqueta + attrs + ">" + escapaTexto(es.trim()) +
+             "</" + x.etiqueta + ">"
+    });
+  });
+
+  if (!cambios.length) { avisar("inf", "<span>No has cambiado nada.</span>", 4); return; }
+
+  let texto = paginaActual.texto;
+  cambios.sort((a, b) => b.inicio - a.inicio).forEach(c => {
+    texto = texto.slice(0, c.inicio) + c.nuevo + texto.slice(c.inicio + c.largo);
+  });
+
+  const boton = $("#guardar-textos");
+  boton.disabled = true; boton.textContent = "Guardando…";
+  avisar("inf", "<span>Guardando…</span>");
+  try {
+    const j = await api("/contents/_build/paginas/" + paginaActual.nombre, {
+      method: "PUT",
+      body: JSON.stringify({
+        message: "Textos de «" + paginaActual.nombre + "» (" + cambios.length +
+                 " cambio" + (cambios.length > 1 ? "s" : "") + ")" +
+                 "\n\nGuardado desde el panel por " + quien + ".",
+        content: b64(texto), sha: paginaActual.sha, branch: "main"
+      })
+    });
+    paginaActual.sha = j.content.sha;
+    paginaActual.texto = texto;
+    paginaActual.trozos = trozosDe(texto);
+    dibujarTrozos();
+    avisar("ok", "<span><b>" + cambios.length + " texto(s) cambiados</b>" +
+      "La web se está recompilando: en un minuto y medio estará publicado.</span>", 25);
+    pintarEstado("va", "publicando…");
+    vigilarPublicacion();
+  } catch (e) {
+    avisar("mal", e.estado === 409
+      ? "<span><b>Alguien ha guardado antes que tú</b>Vuelve a abrir la página.</span>"
+      : "<span><b>No se ha podido guardar</b>" + escapar(e.message) + "</span>");
+  } finally {
+    boton.disabled = false; boton.textContent = "Guardar y publicar";
+  }
+});
+
+/* ==========================================================================
+   14 · Traducciones sin revisar
    ========================================================================== */
 
 /* Recorre el contenido y devuelve cada pareja {es, va} que hoy se publica
@@ -1462,6 +1929,7 @@ function textosAutomaticos(){
   };
   D.alojamientos.forEach(a => mirar(a, a.nombre || "Alojamiento", "alojamientos"));
   D.agenda.forEach(a => mirar(a, (a.titulo || {}).es || "Actividad", "agenda"));
+  D.noticias.forEach(n => mirar(n, "Noticia: " + ((n.titulo || {}).es || n.slug), "noticias"));
   mirar(D.configuracion, "Configuración de la edición", "configuracion");
   return fuera;
 }
@@ -1471,8 +1939,10 @@ let pendientesTrad = [];
 function pintarTraducciones(){
   pendientesTrad = textosAutomaticos();
   const n = pendientesTrad.length;
-  $("#resumen-traducciones").textContent = n
-    ? n + " texto(s) se publican traducidos a máquina, sin que nadie los haya mirado"
+  const dePag = Object.values(AUTO.paginas || {}).reduce((s, v) => s + v.length, 0);
+  $("#resumen-traducciones").textContent = (n + dePag)
+    ? (n + dePag) + " texto(s) se publican traducidos a máquina, sin que nadie los " +
+      "haya mirado" + (dePag ? " (" + dePag + " de ellos en las páginas)" : "")
     : "Todo el valenciano de la web está revisado o escrito a mano.";
 
   $("#lista-traducciones").innerHTML = !n
@@ -1492,6 +1962,30 @@ function pintarTraducciones(){
             '<button type="button" class="b-3" data-editar="' + i + '">Corregir</button>' +
           '</div>' +
         '</div>').join("");
+
+  // Los textos sueltos de cada página se repasan en la pestaña Textos, que es
+  // donde se pueden guardar. Aquí solo se dice dónde están.
+  const porPagina = AUTO.paginas || {};
+  const paginas = Object.keys(porPagina).filter(k => porPagina[k].length).sort();
+  if (paginas.length) {
+    const nombre = a => (PAGINAS.find(p => p[0] === a) || [a, a])[1];
+    $("#lista-traducciones").insertAdjacentHTML("beforeend",
+      '<div class="tarjeta"><h3 style="font-size:16px">Textos de las páginas</h3>' +
+      '<p class="sub" style="margin:.2rem 0 .8rem">Estos se repasan en la pestaña ' +
+      '<b>Textos y FAQ</b>, que es donde se guardan.</p>' +
+      '<ol class="orden">' + paginas.map(a =>
+        '<li><span>' + escapar(nombre(a)) + '</span>' +
+        '<span class="n">' + porPagina[a].length + '</span><span class="sep"></span>' +
+        '<button type="button" class="b-2 b-min" data-pagina="' + a + '">Repasar</button></li>'
+      ).join("") + '</ol></div>');
+    $$("#lista-traducciones [data-pagina]").forEach(b =>
+      b.addEventListener("click", () => {
+        paginaActual = null;
+        irA("textos");
+        $("#pagina-elegida").value = b.dataset.pagina;
+        cargarPagina(b.dataset.pagina);
+      }));
+  }
 
   $$("#lista-traducciones [data-buena]").forEach(b =>
     b.addEventListener("click", () => confirmarTraduccion(Number(b.dataset.buena))));
@@ -1681,7 +2175,7 @@ function aBlob(lienzo, formato){
 /* La foto elegida en la ficha abierta, aún sin subir. */
 let foto = null;
 
-function montarFoto(a){
+function montarFoto(actual){
   foto = null;
   const lienzo = $("#foto-lienzo"); if (!lienzo) return;
   const ctx = lienzo.getContext("2d");
@@ -1694,8 +2188,8 @@ function montarFoto(a){
       ctx.fillStyle = "#EFF3F4"; ctx.fillRect(0, 0, lienzo.width, lienzo.height);
       ctx.fillStyle = "#7D8F98"; ctx.font = "14px Montserrat, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(a.imagen ? "La foto actual no se puede previsualizar aquí"
-                            : "Sin foto", lienzo.width / 2, lienzo.height / 2);
+      ctx.fillText(actual ? "La foto actual no se puede previsualizar aquí"
+                          : "Sin foto", lienzo.width / 2, lienzo.height / 2);
       return;
     }
     const esc = Math.max(lienzo.width / img.naturalWidth, lienzo.height / img.naturalHeight);

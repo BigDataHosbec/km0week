@@ -288,10 +288,69 @@ def cifras_al_dia(cuerpo):
     return _RE_AUTO.sub(sust, cuerpo)
 
 
+# Textos de las páginas que no llevan su valenciano escrito: se rellenan con
+# Apertium igual que los de contenido/. La fuente en _build/paginas/ no se
+# toca; el data-va se añade solo en el HTML que se publica.
+_RE_TEXTO = re.compile(r"<([a-z0-9]+)([^>]*)>([^<>]*)</\1>", re.I)
+_MEMORIA_PAGINAS = {}
+
+
+def _traducibles(cuerpo):
+    for m in _RE_TEXTO.finditer(cuerpo):
+        etiqueta, attrs, dentro = m.group(1), m.group(2), m.group(3)
+        if etiqueta.lower() in ("script", "style", "option"):
+            continue
+        if "data-va" in attrs or not dentro.strip():
+            continue
+        if not re.search(r"[a-záéíóúñüçA-ZÁÉÍÓÚÑÜÇ]", dentro):
+            continue
+        yield m, dentro.strip()
+
+
+POR_PAGINA = {}
+
+
+def preparar_paginas():
+    """Recoge de todas las páginas lo que hay que traducir, y lo traduce de una vez."""
+    import traducir
+    pendientes = set()
+    for p in PAGINAS:
+        ruta = os.path.join(PAGS, p["cuerpo"])
+        if not os.path.isfile(ruta):
+            continue
+        for _, texto in _traducibles(open(ruta, encoding="utf-8").read()):
+            pendientes.add(texto)
+            POR_PAGINA.setdefault(p["cuerpo"], []).append(texto)
+    if not pendientes:
+        return {}
+    _MEMORIA_PAGINAS.update(traducir.memoria(sorted(pendientes), "va"))
+    return _MEMORIA_PAGINAS
+
+
+def rellenar_valenciano(cuerpo):
+    if not _MEMORIA_PAGINAS:
+        return cuerpo
+    trozos, ultimo = [], 0
+    for m, texto in _traducibles(cuerpo):
+        va = _MEMORIA_PAGINAS.get(texto)
+        if not va or va == texto:
+            continue
+        trozos.append(cuerpo[ultimo:m.start()])
+        trozos.append("<%s%s data-va=\"%s\">%s</%s>"
+                      % (m.group(1), m.group(2), esc(va), m.group(3), m.group(1)))
+        ultimo = m.end()
+    trozos.append(cuerpo[ultimo:])
+    return "".join(trozos)
+
+
 def construir(p):
-    cuerpo = open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read()
+    cuerpo = (p["html"] if "html" in p
+              else open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read())
+    cuerpo = rellenar_valenciano(cuerpo)
     # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
+    if "@@NOTICIAS@@" in cuerpo:
+        cuerpo = cuerpo.replace("@@NOTICIAS@@", tarjetas_noticias())
     cuerpo = cifras_al_dia(cuerpo)
     html = (cabeza(p) + cinta() + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
@@ -418,24 +477,192 @@ PAGINAS = [
                 "No hem trobat el que buscaves. Et deixem per on continuar."))),
 ]
 
+# ================================================================== noticias ==
+# El cuerpo de cada noticia se escribe en el panel con un marcado mínimo y de
+# aquí sale el HTML. Las cinco cosas que se pueden usar:
+#
+#   ## Un subtítulo
+#   > Una cita destacada
+#   - viñeta          (varias líneas seguidas hacen una lista)
+#   1. numerada
+#   | Col A | Col B | ... con su fila de |---|---| debajo
+#   [el texto del enlace](adonde.html)
+#
+# Una línea en blanco separa bloques. Nada más: no hay que saber HTML.
+
+def esc(t):
+    return (str(t).replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+_RE_ENLACE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
+
+
+def _linea(t):
+    """Texto de una línea → HTML, resolviendo los enlaces."""
+    salida, resto = [], t
+    while True:
+        m = _RE_ENLACE.search(resto)
+        if not m:
+            salida.append(esc(resto)); break
+        salida.append(esc(resto[:m.start()]))
+        salida.append('<a href="%s">%s</a>' % (esc(m.group(2)), esc(m.group(1))))
+        resto = resto[m.end():]
+    return "".join(salida)
+
+
+def _bloque(b, va):
+    """Un bloque de texto → su etiqueta HTML, con la traducción si la hay."""
+    lineas = [l.strip() for l in b.split("\n") if l.strip()]
+    lva = [l.strip() for l in (va or "").split("\n") if l.strip()]
+    def attr(texto, html=False):
+        if not texto:
+            return ""
+        return ' data-va%s="%s"' % ("-html" if html else "", esc(texto))
+
+    if b.startswith("## "):
+        return "<h2%s>%s</h2>" % (attr((va or "")[3:].strip()), esc(b[3:].strip()))
+    if b.startswith("> "):
+        return '<blockquote class="cita"%s>%s</blockquote>' % (
+            attr((va or "")[2:].strip()), esc(b[2:].strip()))
+    if lineas[0].startswith("|"):
+        filas = [l for l in lineas if not re.fullmatch(r"\|[\s\-|:]+\|", l)]
+        fva = [l for l in lva if not re.fullmatch(r"\|[\s\-|:]+\|", l)]
+        def celdas(l):
+            return [c.strip() for c in l.strip().strip("|").split("|")]
+        out = ['<div class="tabla-envolt mt-1"><table class="tabla">']
+        for i, f in enumerate(filas):
+            tag = "th" if i == 0 else "td"
+            trad = celdas(fva[i]) if i < len(fva) else []
+            if i == 0:
+                out.append("<thead>")
+            elif i == 1:
+                out.append("<tbody>")
+            out.append("<tr>")
+            for j, c in enumerate(celdas(f)):
+                tv = trad[j] if j < len(trad) else ""
+                out.append("<%s%s>%s</%s>" % (
+                    tag, attr(tv if tv != c else ""), esc(c), tag))
+            out.append("</tr>")
+            if i == 0:
+                out.append("</thead>")
+        if len(filas) > 1:
+            out.append("</tbody>")
+        out.append("</table></div>")
+        return "".join(out)
+    if all(l.startswith("- ") for l in lineas) or all(re.match(r"\d+\. ", l) for l in lineas):
+        ol = not lineas[0].startswith("- ")
+        quita = (lambda l: re.sub(r"^\d+\.\s*", "", l)) if ol else (lambda l: l[2:])
+        items = []
+        for i, l in enumerate(lineas):
+            t = quita(l).strip()
+            tv = quita(lva[i]).strip() if i < len(lva) else ""
+            items.append("<li%s>%s</li>" % (attr(tv), _linea(t)))
+        return "<%s>%s</%s>" % ("ol" if ol else "ul", "".join(items), "ol" if ol else "ul")
+
+    texto = " ".join(lineas)
+    tv = " ".join(lva)
+    if _RE_ENLACE.search(texto):
+        return "<p%s>%s</p>" % (attr(_linea(tv), html=True) if tv else "", _linea(texto))
+    return "<p%s>%s</p>" % (attr(tv), esc(texto))
+
+
+def prosa(cuerpo):
+    """El cuerpo entero de una noticia."""
+    partes = [b for b in re.split(r"\n\s*\n", (cuerpo.get("es") or "").strip()) if b.strip()]
+    tra = [b for b in re.split(r"\n\s*\n", (cuerpo.get("va") or "").strip()) if b.strip()]
+    if len(tra) != len(partes):
+        tra = [""] * len(partes)      # si no casan, mejor sin traducir que mal emparejado
+    return "\n      ".join(_bloque(b, t) for b, t in zip(partes, tra))
+
+
+def fecha_larga(iso):
+    if not iso:
+        return ""
+    a, m, d = iso.split("-")
+    return "%d de %s de %s" % (int(d), MESES[int(m) - 1], a)
+
+
+MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+         "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def cuerpo_noticia(n):
+    """La página completa de una noticia."""
+    fecha = fecha_larga(n.get("fecha"))
+    boton = n.get("boton") or {}
+    return """<section class="sec">
+  <div class="wrap">
+    <article class="prosa">
+      <p class="dato-fecha">%s · HOSBEC</p>
+      <p class="lede" data-va="%s">%s</p>
+
+      %s
+    </article>
+
+    <div class="mt-2" style="display:flex;gap:.8rem;flex-wrap:wrap">
+      <a class="btn btn-linea" href="noticias.html" data-va="← Totes les notícies">← Todas las noticias</a>
+      <a class="btn btn-mar" href="%s" data-va="%s">%s</a>
+    </div>
+  </div>
+</section>
+""" % (esc(fecha), esc(n["entradilla"].get("va", "")), esc(n["entradilla"]["es"]),
+       prosa(n.get("cuerpo") or {}),
+       esc(boton.get("url", "alojamientos.html")), esc(boton.get("va", "")),
+       esc(boton.get("es", "Ver los alojamientos")))
+
+
+def tarjetas_noticias():
+    """La rejilla del listado de noticias."""
+    out = []
+    for n in contenido.NOTICIAS:
+        img = '<img src="assets/img/foto/%s.webp" alt="" width="1200" height="800" loading="lazy">' % n["imagen"]
+        etq = n.get("etiqueta") or n.get("seccion") or {}
+        clase = "label label-" + n["color"] if n.get("color") else "label"
+        estilo = ' style="color:var(--suave)"' if n.get("proxima") else ""
+        pie = (('<span class="dato-fecha" data-va="%s">%s</span>'
+                % (esc((n.get("cuando") or {}).get("va", "")),
+                   esc((n.get("cuando") or {}).get("es", ""))))
+               if n.get("proxima") else
+               ('<span class="dato-fecha">%s · <span data-va="%d min de lectura">'
+                '%d min de lectura</span></span>'
+                % (n["fecha"].split("-")[2] + " · " + n["fecha"].split("-")[1] +
+                   " · " + n["fecha"].split("-")[0], n.get("lectura", 3),
+                   n.get("lectura", 3))))
+        dentro = ("""%s
+        <div class="bd">
+          <span class="%s"%s data-va="%s">%s</span>
+          <h3%s data-va="%s">%s</h3>
+          <p class="body-sm" data-va="%s">%s</p>
+          %s
+        </div>""" % (img, clase, estilo, esc(etq.get("va", "")), esc(etq.get("es", "")),
+                     ' class="d3"' if n.get("destacada") else "",
+                     esc(n["titulo"]["va"]), esc(n["titulo"]["es"]),
+                     esc(n["resumen"].get("va", "")), esc(n["resumen"]["es"]), pie))
+        if n.get("proxima"):
+            out.append('<article class="nota" aria-label="Próxima entrada">%s</article>' % dentro)
+        else:
+            out.append('<a class="nota%s" href="%s.html">%s</a>'
+                       % (" grande" if n.get("destacada") else "", n["slug"], dentro))
+    return "\n\n      ".join(out)
+
+
 # ------------------------------------------------------------------ noticias --
 # Vienen de contenido/noticias.json. Para publicar una nueva basta con añadirla
 # ahí (lo hace el panel) y crear su _build/paginas/<slug>.html.
-NOTICIAS = [
-    (n["slug"], n["imagen"],
-     (n["seccion"]["es"], n["seccion"]["va"]),
-     (n["titulo"]["es"], n["titulo"]["va"]),
-     n["resumen"])
-    for n in contenido.NOTICIAS
-]
+PUBLICADAS = [n for n in contenido.NOTICIAS if not n.get("proxima")]
 
 
 def paginas_noticia():
-    return [dict(archivo=slug + ".html", cuerpo=slug + ".html",
-                 titulo=tit[0] + " · HOSBEC Km0 Week", desc=sub,
-                 og="assets/img/foto/%s.webp" % foto,
-                 cab=C(foto, ante, tit))
-            for slug, foto, ante, tit, sub in NOTICIAS]
+    return [dict(archivo=n["slug"] + ".html",
+                 html=cuerpo_noticia(n),
+                 titulo=n["titulo"]["es"] + " · HOSBEC Km0 Week",
+                 desc=n["resumen"]["es"],
+                 og="assets/img/foto/%s.webp" % n["imagen"],
+                 cab=C(n["imagen"],
+                       (n["seccion"]["es"], n["seccion"]["va"]),
+                       (n["titulo"]["es"], n["titulo"]["va"])))
+            for n in PUBLICADAS]
 
 
 # ------------------------------------------------------------------ auxiliares --
@@ -462,8 +689,8 @@ def traducciones(memoria):
     import json
     ruta = os.path.join(RAIZ, "assets", "traducciones.json")
     open(ruta, "w", encoding="utf-8").write(
-        json.dumps({"va": memoria}, ensure_ascii=False, indent=1,
-                   sort_keys=True) + "\n")
+        json.dumps({"va": memoria, "paginas": POR_PAGINA}, ensure_ascii=False,
+                   indent=1, sort_keys=True) + "\n")
 
 
 def main():
@@ -478,7 +705,14 @@ def main():
               "(sudo apt-get install -y %s)" % traducir.PAQUETES)
     traducciones(memoria)
 
-    # 2 · Los datos que consume el navegador, ya completos
+    # 2 · Lo mismo con los textos sueltos de las páginas
+    dePaginas = preparar_paginas()
+    if dePaginas:
+        print("traducidos textos de página: %d" % len(dePaginas))
+        memoria.update(dePaginas)
+        traducciones(memoria)
+
+    # 3 · Los datos que consume el navegador, ya completos
     contenido.escribir_js()
 
     todas = PAGINAS + paginas_noticia()

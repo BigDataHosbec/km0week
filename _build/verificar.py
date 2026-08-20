@@ -227,20 +227,33 @@ def revisar_configuracion():
 
 def revisar_noticias():
     vistos = set()
+    grandes = 0
     for n in contenido.NOTICIAS:
         slug = n.get("slug") or "?"
         donde = "Noticia «%s»" % ((n.get("titulo") or {}).get("es") or slug)
         if slug in vistos:
             error(donde, "repite el identificador «%s»" % slug)
         vistos.add(slug)
-        if not os.path.isfile(os.path.join(RAIZ, "_build", "paginas", slug + ".html")):
-            error(donde, "falta su página en _build/paginas/%s.html" % slug)
+        if not re.fullmatch(r"[a-z0-9-]+", slug):
+            error(donde, "el identificador «%s» debe ser minúsculas, números y "
+                         "guiones" % slug)
         img = "assets/img/foto/%s.webp" % n.get("imagen", "")
         if not existe_imagen(img):
             error(donde, "falta su imagen destacada «%s»" % img)
         bilingue(donde, "titulo", n.get("titulo"))
-        if not (n.get("resumen") or "").strip():
-            error(donde, "no tiene frase de resumen (sale en el listado y en Google)")
+        bilingue(donde, "resumen", n.get("resumen"))
+        bilingue(donde, "entradilla", n.get("entradilla"))
+        if n.get("destacada") and not n.get("proxima"):
+            grandes += 1
+        if n.get("proxima"):
+            continue
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", n.get("fecha") or ""):
+            error(donde, "la fecha «%s» debe ir como AAAA-MM-DD" % n.get("fecha"))
+        if not (n.get("cuerpo") or {}).get("es", "").strip():
+            error(donde, "no tiene cuerpo: la página saldría vacía")
+    if grandes > 1:
+        aviso("Noticias", "hay %d marcadas como destacadas y solo la primera "
+                          "sale grande" % grandes)
 
 
 # ---------------------------------------------------------------------------

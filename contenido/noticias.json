@@ -2,41 +2,195 @@
   {
     "slug": "noticia-1",
     "imagen": "not-1",
-    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "seccion": {
+      "es": "Noticias",
+      "va": "Notícies"
+    },
     "titulo": {
       "es": "20 alojamientos ya se han sumado a la primera Km0 Week",
       "va": "20 allotjaments ja s'han sumat a la primera Km0 Week"
     },
-    "resumen": "Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes."
+    "resumen": {
+      "es": "Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes.",
+      "va": "Tanquem la primera tanda d'adhesions amb presència a les tres províncies i 504 places reservades per a residents."
+    },
+    "etiqueta": {
+      "es": "Adhesiones",
+      "va": "Adhesions"
+    },
+    "color": "mar",
+    "fecha": "2026-08-14",
+    "lectura": 3,
+    "destacada": true,
+    "entradilla": {
+      "es": "La primera tanda de adhesiones a la Km0 Week se cierra con 20 alojamientos de las tres provincias y 504 plazas comprometidas para residentes del 13 al 29 de noviembre.",
+      "va": "La primera tanda d'adhesions a la Km0 Week es tanca amb 20 allotjaments de les tres províncies i 504 places compromeses per a residents del 13 al 29 de novembre."
+    },
+    "boton": {
+      "url": "alojamientos.html",
+      "es": "Ver los alojamientos",
+      "va": "Veure els allotjaments"
+    },
+    "cuerpo": {
+      "es": "El reparto territorial era una de las condiciones que nos habíamos puesto: no queríamos una campaña de costa. De las 20 casas adheridas, seis son de interior —Morella, Requena, Alcoi, Segorbe, Ontinyent y Xàtiva— y el resto se sitúan entre Vinaròs y Torrevieja.\n\n## Qué quiere decir «504 plazas»\n\nCada alojamiento adherido publica un cupo: el número de habitaciones o plazas que reserva para residentes durante los diecisiete días. No es una estimación ni un objetivo comercial, es un compromiso que aparece en su ficha y que cualquiera puede comprobar llamando.\n\nLa suma de esos cupos es la cifra que veis en la portada, y se recalcula sola cada vez que entra una casa nueva.\n\n> «Queríamos que la cifra fuese auditable. Un descuento medio no lo puede comprobar nadie; un cupo publicado, sí.»\n\n## Segunda tanda abierta hasta el 15 de septiembre\n\nLas adhesiones siguen abiertas. Los alojamientos que quieran entrar en esta primera edición tienen hasta el 15 de septiembre para enviar la solicitud; a partir del 1 de octubre la web se hace pública y se abren las reservas.\n\n[Cómo sumar tu alojamiento →](suma.html)",
+      "va": "El repartiment territorial era una de les condicions que ens havíem posat: no volíem una campanya de costa. De les 20 cases adherides, sis són d'interior —Morella, Requena, Alcoi, Segorbe, Ontinyent i Xàtiva— i la resta se situen entre Vinaròs i Torrevieja.\n\n## Què vol dir «504 places»\n\nCada allotjament adherit publica un cupo: el nombre d'habitacions o places que reserva per a residents durant els dèsset dies. No és una estimació ni un objectiu comercial, és un compromís que apareix a la seua fitxa i que qualsevol pot comprovar telefonant.\n\nLa suma d'aquests cupos és la xifra que veieu a la portada, i es recalcula sola cada vegada que entra una casa nova.\n\n> «Volíem que la xifra fóra auditable. Un descompte mitjà no el pot comprovar ningú; un cupo publicat, sí.»\n\n## Segona tanda oberta fins al 15 de setembre\n\nLes adhesions continuen obertes. Els allotjaments que vulguen entrar en aquesta primera edició tenen fins al 15 de setembre per a enviar la sol·licitud; a partir de l'1 d'octubre la web es fa pública i s'obrin les reserves.\n\n[Com sumar el teu allotjament →](suma.html)"
+    },
+    "proxima": false
   },
   {
     "slug": "noticia-2",
     "imagen": "not-2",
-    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "seccion": {
+      "es": "Noticias",
+      "va": "Notícies"
+    },
     "titulo": {
       "es": "Cómo se calcula el descuento de residente (y por qué es real)",
       "va": "Com es calcula el descompte de resident (i per què és real)"
     },
-    "resumen": "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba."
+    "resumen": {
+      "es": "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba.",
+      "va": "El compromís de la Km0 Week és que el preu d'aqueixos dies siga el més baix del trimestre. Expliquem com es comprova."
+    },
+    "etiqueta": {
+      "es": "Transparencia",
+      "va": "Transparència"
+    },
+    "color": "verde",
+    "fecha": "2026-07-28",
+    "lectura": 4,
+    "destacada": false,
+    "entradilla": {
+      "es": "«Descuento» es una palabra gastada. Por eso la Km0 Week no promete porcentajes: promete algo comprobable.",
+      "va": "«Descompte» és una paraula gastada. Per això la Km0 Week no promet percentatges: promet una cosa comprovable."
+    },
+    "boton": {
+      "url": "faq.html",
+      "es": "Preguntas frecuentes",
+      "va": "Preguntes freqüents"
+    },
+    "cuerpo": {
+      "es": "## La regla\n\nEl precio de la Km0 Week debe ser igual o inferior al más bajo que ha tenido ese alojamiento en los tres meses anteriores, para el mismo día de la semana y el mismo tipo de habitación.\n\nDicho de otra forma: no vale subir el precio en octubre para poder bajarlo en noviembre.\n\n## Cómo se comprueba\n\n1. Cada casa envía su histórico de tarifas del trimestre anterior al adherirse.\n1. Durante la edición, HOSBEC consulta una muestra aleatoria de fichas como lo haría cualquier usuario.\n1. Si el precio no cuadra, se pide explicación. Si no la hay, la casa queda fuera de la siguiente edición.\n\n## ¿Y el porcentaje que aparece en las fichas?\n\nEs la diferencia entre el precio Km0 y la tarifa habitual de esa noche, y lo pone cada alojamiento. Sirve para orientarse, pero el compromiso real es la regla de arriba, no el número grande de la etiqueta.\n\n> «Si el vecino se va con la sensación de haber salido perdiendo, hemos hecho mal lo único que importaba.»\n\nSi ves algo que no encaja, escríbenos a km0week@hosbec.com. Se revisa todo.",
+      "va": "## La regla\n\nEl preu de la Km0 Week ha de ser igual o inferior al més baix que ha tingut aquest allotjament en els tres mesos anteriors, per al mateix dia de la setmana i el mateix tipus d'habitació.\n\nDit d'una altra manera: no val pujar el preu a l'octubre per a poder baixar-lo al novembre.\n\n## Com es comprova\n\n1. Cada casa envia el seu històric de tarifes del trimestre anterior en adherir-se.\n1. Durant l'edició, HOSBEC consulta una mostra aleatòria de fitxes com ho faria qualsevol usuari.\n1. Si el preu no quadra, es demana explicació. Si no n'hi ha, la casa queda fora de l'edició següent.\n\n## I el percentatge que apareix a les fitxes?\n\nÉs la diferència entre el preu Km0 i la tarifa habitual d'aqueixa nit, i el posa cada allotjament. Serveix per a orientar-se, però el compromís real és la regla de dalt, no el número gran de l'etiqueta.\n\n> «Si el veí se'n va amb la sensació d'haver-hi eixit perdent, hem fet mal l'única cosa que importava.»\n\nSi veus alguna cosa que no encaixa, escriu-nos a km0week@hosbec.com. Es revisa tot."
+    },
+    "proxima": false
   },
   {
     "slug": "noticia-3",
     "imagen": "not-3",
-    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "seccion": {
+      "es": "Noticias",
+      "va": "Notícies"
+    },
     "titulo": {
       "es": "Doce ayuntamientos se suman con actividades abiertas",
       "va": "Dotze ajuntaments se sumen amb activitats obertes"
     },
-    "resumen": "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week."
+    "resumen": {
+      "es": "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week.",
+      "va": "Visites a espais normalment tancats, rutes guiades i tallers que s'obrin només durant la Km0 Week."
+    },
+    "etiqueta": {
+      "es": "Territorio",
+      "va": "Territori"
+    },
+    "color": "",
+    "fecha": "2026-07-09",
+    "lectura": 2,
+    "destacada": false,
+    "entradilla": {
+      "es": "Doce ayuntamientos de las tres provincias abrirán durante la Km0 Week espacios y visitas que normalmente no están disponibles, o que lo están solo para grupos organizados.",
+      "va": "Dotze ajuntaments de les tres províncies obriran durant la Km0 Week espais i visites que normalment no estan disponibles, o que ho estan només per a grups organitzats."
+    },
+    "boton": {
+      "url": "agenda.html",
+      "es": "Agenda",
+      "va": "Agenda"
+    },
+    "cuerpo": {
+      "es": "La condición que pusimos es sencilla: que sea algo que un vecino no pueda hacer un martes cualquiera. Nada de repetir la ruta turística de siempre.\n\n## Algunos ejemplos ya confirmados\n\n- Peñíscola: visita teatralizada al castillo en horario exclusivo, con el recinto cerrado al turismo general.\n- Elche: huertos históricos del Palmeral normalmente cerrados y demostración de palma blanca.\n- Dénia: subasta de pescado en la lonja y taller de arroz con cocineros de la Marina Alta.\n- Castelló de la Plana: paseo por el puerto pesquero contado por marineros jubilados.\n- Calpe: salida ornitológica al amanecer en las salinas, guiada por biólogos del parque natural.\n\n## Plazas limitadas e inscripción\n\nCasi todas requieren reserva previa y el número de plazas es corto: entre 20 y 60 personas según la actividad. El enlace de inscripción se abre quince días antes del arranque.\n\nLas que llevan precio son a coste: cubren material, guía o comida. Ni HOSBEC ni los ayuntamientos ganan nada con ellas.\n\n[Ver la agenda completa →](agenda.html)",
+      "va": "La condició que vam posar és senzilla: que siga una cosa que un veí no puga fer un dimarts qualsevol. Res de repetir la ruta turística de sempre.\n\n## Alguns exemples ja confirmats\n\n- Peníscola: visita teatralitzada al castell en horari exclusiu, amb el recinte tancat al turisme general.\n- Elx: horts històrics del Palmerar normalment tancats i demostració de palma blanca.\n- Dénia: subhasta de peix a la llotja i taller d'arròs amb cuiners de la Marina Alta.\n- Castelló de la Plana: passeig pel port pesquer contat per mariners jubilats.\n- Calp: eixida ornitològica a l'alba a les salines, guiada per biòlegs del parc natural.\n\n## Places limitades i inscripció\n\nQuasi totes requereixen reserva prèvia i el nombre de places és curt: entre 20 i 60 persones segons l'activitat. L'enllaç d'inscripció s'obri quinze dies abans de l'arrancada.\n\nLes que porten preu són a cost: cobreixen material, guia o menjar. Ni HOSBEC ni els ajuntaments hi guanyen res.\n\n[Veure l'agenda completa →](agenda.html)"
+    },
+    "proxima": false
   },
   {
     "slug": "noticia-4",
     "imagen": "not-4",
-    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "seccion": {
+      "es": "Noticias",
+      "va": "Notícies"
+    },
     "titulo": {
       "es": "El pasaporte Km0: cómo funciona el sorteo de diez estancias",
       "va": "El passaport Km0: com funciona el sorteig de deu estades"
     },
-    "resumen": "Tres sellos para entrar en el sorteo, cinco para la cena de clausura. Bases y calendario."
+    "resumen": {
+      "es": "Tres sellos para entrar en el sorteo, cinco para la cena de clausura. Bases y calendario.",
+      "va": "Tres segells per a entrar en el sorteig, cinc per al sopar de clausura. Bases i calendari."
+    },
+    "etiqueta": {
+      "es": "Pasaporte",
+      "va": "Passaport"
+    },
+    "color": "mar",
+    "fecha": "2026-06-21",
+    "lectura": 3,
+    "destacada": false,
+    "entradilla": {
+      "es": "El pasaporte Km0 es un cuadernillo de bolsillo con siete casillas. Cada alojamiento adherido y cada actividad de la agenda puede poner su sello.",
+      "va": "El passaport Km0 és un quadern de butxaca amb set caselles. Cada allotjament adherit i cada activitat de l'agenda pot posar-hi el seu segell."
+    },
+    "boton": {
+      "url": "descargas.html",
+      "es": "Descargar el pasaporte",
+      "va": "Descarregar el passaport"
+    },
+    "cuerpo": {
+      "es": "## Cómo se consiguen los sellos\n\nDurmiendo en un alojamiento adherido, participando en una actividad de la agenda o comiendo en uno de los restaurantes que se han sumado. Un sello por sitio: no vale repetir la misma casa dos veces.\n\n## Qué se consigue\n\n| Sellos | Premio |\n|---|---|\n| 3 | Entrada en el sorteo de diez estancias de fin de semana para dos, para disfrutar en 2027. |\n| 5 | Lo mismo, más invitación a la cena de clausura con los cocineros participantes. |\n| 7 | Lo mismo, y tu nombre en el mural de la primera edición. |\n\n## Calendario y bases\n\n- El pasaporte se podrá descargar e imprimir desde el 1 de octubre, y también se reparte en papel en las recepciones.\n- Se cierra el domingo 29 de noviembre a las 14:00.\n- El sorteo se celebra ese mismo domingo a las 18:00, ante notario y retransmitido.\n- Las bases completas se publicarán en la página de descargas.\n\nSi pierdes el pasaporte a la mitad, en cualquier alojamiento adherido te dan uno nuevo; los sellos anteriores, eso sí, se pierden.\n\n[Ir a descargas →](descargas.html)",
+      "va": "## Com s'aconsegueixen els segells\n\nDormint en un allotjament adherit, participant en una activitat de l'agenda o menjant en un dels restaurants que s'han sumat. Un segell per lloc: no val repetir la mateixa casa dues vegades.\n\n## Què s'aconsegueix\n\n| Segells | Premi |\n|---|---|\n| 3 | Entrada al sorteig de deu estades de cap de setmana per a dos, per a gaudir el 2027. |\n| 5 | El mateix, més invitació al sopar de clausura amb els cuiners participants. |\n| 7 | El mateix, i el teu nom al mural de la primera edició. |\n\n## Calendari i bases\n\n- El passaport es podrà descarregar i imprimir des de l'1 d'octubre, i també es reparteix en paper a les recepcions.\n- Es tanca el diumenge 29 de novembre a les 14:00.\n- El sorteig es fa aqueix mateix diumenge a les 18:00, davant de notari i retransmés.\n- Les bases completes es publicaran a la pàgina de descàrregues.\n\nSi perds el passaport a la meitat, en qualsevol allotjament adherit te'n donen un de nou; els segells anteriors, això sí, es perden.\n\n[Anar a descàrregues →](descargas.html)"
+    },
+    "proxima": false
+  },
+  {
+    "slug": "proxima-agenda",
+    "imagen": "not-5",
+    "seccion": {
+      "es": "Noticias",
+      "va": "Notícies"
+    },
+    "etiqueta": {
+      "es": "Próximamente",
+      "va": "Pròximament"
+    },
+    "color": "",
+    "fecha": "",
+    "cuando": {
+      "es": "Septiembre de 2026",
+      "va": "Setembre de 2026"
+    },
+    "lectura": 0,
+    "destacada": false,
+    "proxima": true,
+    "titulo": {
+      "es": "El programa completo, día a día",
+      "va": "El programa complet, dia a dia"
+    },
+    "resumen": {
+      "es": "Publicaremos la agenda cerrada de los diecisiete días cuando se confirmen las últimas actividades.",
+      "va": "Publicarem l'agenda tancada dels dèsset dies quan es confirmen les últimes activitats."
+    },
+    "entradilla": {
+      "es": "Publicaremos la agenda cerrada de los diecisiete días cuando se confirmen las últimas actividades.",
+      "va": "Publicarem l'agenda tancada dels dèsset dies quan es confirmen les últimes activitats."
+    },
+    "cuerpo": {
+      "es": "",
+      "va": ""
+    },
+    "boton": {
+      "url": "agenda.html",
+      "es": "Ver la agenda",
+      "va": "Veure l'agenda"
+    }
   }
 ]
