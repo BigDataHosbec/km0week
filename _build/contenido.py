@@ -39,6 +39,7 @@ ALOJAMIENTOS = _leer("alojamientos")
 AGENDA = _leer("agenda")
 CONFIG = _leer("configuracion")
 NOTICIAS = _leer("noticias")
+FILTROS = _leer("filtros")
 
 # Atajos de lo que se usa en todas partes
 DOMINIO = CONFIG["dominio"].rstrip("/")
@@ -92,10 +93,67 @@ def escribir_js():
         "\nconst ALOJAMIENTOS = %s;\n" % _js(ALOJAMIENTOS),
         "\nconst AGENDA = %s;\n" % _js(AGENDA),
         "\nconst CONFIG = %s;\n" % _js(CONFIG),
+        "\nconst FILTROS = %s;\n" % _js(FILTROS),
         "\n/* Exponer para los módulos de la web */\n",
-        "window.KM0 = { ALOJAMIENTOS, AGENDA, CONFIG };\n",
+        "window.KM0 = { ALOJAMIENTOS, AGENDA, CONFIG, FILTROS };\n",
     ]
     ruta = os.path.join(RAIZ, "assets", "js", "data-alojamientos.js")
     with io.open(ruta, "w", encoding="utf-8") as f:
         f.write("".join(partes))
     return ruta
+
+
+# ---------------------------------------------------------------------------
+# Traducción automática de lo que no se ha escrito a mano
+# ---------------------------------------------------------------------------
+def _bilingues(obj, salida=None):
+    """Recorre los datos y va soltando cada pareja {es, va} que encuentra."""
+    salida = [] if salida is None else salida
+    if isinstance(obj, dict):
+        if "es" in obj and "va" in obj:
+            salida.append(obj)
+        for v in obj.values():
+            _bilingues(v, salida)
+    elif isinstance(obj, list):
+        for v in obj:
+            _bilingues(v, salida)
+    return salida
+
+
+def completar_traducciones(idioma="va"):
+    """
+    Rellena el valenciano que falte a partir del castellano.
+
+    Lo escrito a mano manda siempre: solo se toca lo que está vacío. Devuelve
+    el diccionario {castellano: traducción} de lo que se ha traducido a
+    máquina, que es lo que el panel enseña marcado como «sin revisar».
+    """
+    import traducir
+
+    pendientes = []          # (nodo, clave_o_indice)
+    textos = []
+    for nodo in _bilingues([ALOJAMIENTOS, AGENDA, NOTICIAS, CONFIG]):
+        es, va = nodo.get("es"), nodo.get("va")
+        if isinstance(es, list):
+            destino = va if isinstance(va, list) else []
+            nodo[idioma] = destino
+            for i, t in enumerate(es):
+                if i >= len(destino):
+                    destino.append("")
+                if t and t.strip() and not (destino[i] or "").strip():
+                    pendientes.append((destino, i))
+                    textos.append(t)
+        elif isinstance(es, str) and es.strip() and not (va or "").strip():
+            pendientes.append((nodo, idioma))
+            textos.append(es)
+
+    if not textos:
+        return {}
+
+    hechas = traducir.traducir(textos, idioma)
+    memoria = {}
+    for (nodo, clave), es, va in zip(pendientes, textos, hechas):
+        if va:
+            nodo[clave] = va
+            memoria[es] = va
+    return memoria

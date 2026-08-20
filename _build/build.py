@@ -452,9 +452,35 @@ def sitemap(paginas):
         "User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: %s/sitemap.xml\n" % DOMINIO)
 
 
+def traducciones(memoria):
+    """
+    Deja en assets/traducciones.json lo que se ha traducido a máquina, como
+    diccionario {castellano: valenciano}. La web no lo usa: lo lee el panel,
+    para poder enseñar esos textos marcados como «sin revisar» y que alguien
+    los confirme o los corrija.
+    """
+    import json
+    ruta = os.path.join(RAIZ, "assets", "traducciones.json")
+    open(ruta, "w", encoding="utf-8").write(
+        json.dumps({"va": memoria}, ensure_ascii=False, indent=1,
+                   sort_keys=True) + "\n")
+
+
 def main():
-    # Primero los datos que consume el navegador, desde contenido/*.json
+    # 1 · Rellenar el idioma que falte. Lo escrito a mano nunca se toca.
+    import traducir
+    memoria = contenido.completar_traducciones("va")
+    if memoria:
+        print("traducidas al valencià: %d frases%s"
+              % (len(memoria), "" if traducir.disponible() else ""))
+    elif not traducir.disponible():
+        print("aviso: Apertium no está instalado, no se traduce nada "
+              "(sudo apt-get install -y %s)" % traducir.PAQUETES)
+    traducciones(memoria)
+
+    # 2 · Los datos que consume el navegador, ya completos
     contenido.escribir_js()
+
     todas = PAGINAS + paginas_noticia()
     for p in todas:
         construir(p)

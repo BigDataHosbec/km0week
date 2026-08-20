@@ -54,6 +54,12 @@ jobs:
         run: |
           python -m pip install --quiet openpyxl
           npm install --no-audit --no-fund --silent
+          # Apertium traduce al valencià lo que no se haya escrito a mano.
+          # Es de reglas, no de red neuronal: la misma frase da siempre la
+          # misma traducción, así que la web no cambia sola de un día a otro.
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq apertium apertium-spa-cat \
+                                      apertium-lex-tools cg3
 
       # Las versiones están fijadas en package.json, así que la caché sirve
       # hasta que se cambien a propósito.

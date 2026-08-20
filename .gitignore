@@ -24,3 +24,6 @@ package-lock.json
 /robots.txt
 /descargas/
 assets/js/data-alojamientos.js
+
+# Traducciones automáticas: las escribe _build/build.py en cada publicación
+assets/traducciones.json

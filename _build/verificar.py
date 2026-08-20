@@ -56,16 +56,28 @@ def aviso(donde, msg):
     avisos.append("%s · %s" % (donde, msg))
 
 
+sin_revisar = [0]
+
+
 def bilingue(donde, campo, valor, obligatorio_va=False):
-    """Comprueba un {es, va}."""
+    """
+    Comprueba un {es, va}.
+
+    El valenciano vacío ya no es un problema: lo rellena Apertium al publicar.
+    Lo que sí se cuenta es cuántos textos van a salir traducidos a máquina sin
+    que nadie los haya mirado, que es lo que el panel deja revisar.
+    """
     if not isinstance(valor, dict):
         error(donde, "«%s» debería tener texto en castellano y en valenciano" % campo)
         return
     if not (valor.get("es") or "").strip():
         error(donde, "«%s» está vacío en castellano" % campo)
+        return
     if not (valor.get("va") or "").strip():
-        (error if obligatorio_va else aviso)(
-            donde, "«%s» no tiene valenciano: se verá en castellano al cambiar de idioma" % campo)
+        if obligatorio_va:
+            error(donde, "«%s» necesita el valenciano escrito a mano" % campo)
+        else:
+            sin_revisar[0] += 1
 
 
 def existe_imagen(ruta):
@@ -242,6 +254,10 @@ def main():
     print("  %d alojamientos · %d actividades · %d noticias · %d plazas"
           % (len(contenido.ALOJAMIENTOS), len(contenido.AGENDA),
              len(contenido.NOTICIAS), contenido.CUPO_TOTAL))
+    if sin_revisar[0]:
+        print("  %d texto(s) saldrán traducidos al valencià a máquina, "
+              "sin revisar" % sin_revisar[0])
+        print("  → se repasan en el panel: /admin/ → Traducciones")
     print("")
 
     for a in avisos:

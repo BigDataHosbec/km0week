@@ -219,7 +219,11 @@ window.Km0 = (function () {
     const box = $("#temas"); if (!box) return;
     const c = {};
     D.forEach(a => a.experiencias.forEach(e => c[e] = (c[e] || 0) + 1));
-    box.innerHTML = Object.keys(c).sort((a, b) => c[b] - c[a]).map(k => {
+    const orden = segunConfig("portada", "experiencias",
+      Object.keys(c).sort((a, b) => c[b] - c[a]));
+    const seccion = box.closest("section") || box;
+    seccion.hidden = !orden.length;
+    box.innerHTML = orden.map(k => {
       const [ico, tono] = EXP_ICO[k] || ["costa", ""];
       const destino = $("#lista-alojamientos") ? "#filtros" : "alojamientos.html?experiencia=" + k;
       return `<a class="tema" href="${destino}" data-exp="${k}">
@@ -385,15 +389,36 @@ window.Km0 = (function () {
     document.dispatchEvent(new CustomEvent("km0:render"));
   }
 
+  /* Qué filtros se ven y en qué orden. Sale de contenido/filtros.json, que se
+     edita en el panel. Lista vacía = automático, lo que haya en los datos.
+     En cualquier caso solo se ofrecen valores con alojamientos detrás: un
+     filtro que no lleva a ninguna parte es peor que no tenerlo. */
+  function segunConfig(ambito, grupo, disponibles) {
+    const c = (((window.KM0 || {}).FILTROS || {})[ambito] || {})[grupo] || {};
+    if (c.mostrar === false) return [];
+    const elegidos = Array.isArray(c.valores) && c.valores.length ? c.valores : null;
+    let lista = elegidos ? elegidos.filter(v => disponibles.includes(v)) : disponibles;
+    if (c.maximo > 0) lista = lista.slice(0, c.maximo);
+    return lista;
+  }
+
   function montarFiltros() {
     const zona = $("#filtros"); if (!zona) return;
-    const provs = ["Castelló", "València", "Alicante"].filter(p => D.some(a => a.provincia === p));
-    const tipos = [...new Set(D.map(a => a.tipo))];
-    const exps = [...new Set(D.flatMap(a => a.experiencias))]
-      .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es"));
+    const provs = segunConfig("listado", "provincia",
+      ["Castelló", "València", "Alicante"].filter(p => D.some(a => a.provincia === p)));
+    const tipos = segunConfig("listado", "tipo", [...new Set(D.map(a => a.tipo))]);
+    const exps = segunConfig("listado", "experiencia",
+      [...new Set(D.flatMap(a => a.experiencias))]
+        .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es")));
     chipsDe($("#f-provincia"), provs, v => v, false);
     chipsDe($("#f-tipo"), tipos, v => t("tipos." + v), true);
     chipsDe($("#f-exp"), exps, v => t("exp." + v), true);
+
+    // Una fila sin valores se esconde entera, con su rótulo
+    [["provincia", provs], ["tipo", tipos], ["experiencia", exps]].forEach(([g, v]) => {
+      const fila = $(`.f-row[data-c="${g}"]`);
+      if (fila) fila.hidden = !v.length;
+    });
 
     const sel = $("#f-orden");
     if (sel) {

@@ -195,6 +195,39 @@ legend{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.0
   border:1px dashed var(--linea);width:100%;padding:.3rem;border-radius:var(--r-s)}
 .dia .mas:hover{border-color:var(--mar);background:var(--mar-p)}
 
+/* ----------------------------------------------------------- traducciones -- */
+.autotrad{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;
+  font-size:12.5px;color:var(--suave);margin:.4rem 0 0;padding:.35rem .55rem;
+  background:var(--arena-p);border:1px solid var(--arena);border-radius:var(--r-s)}
+.autotrad i{font-style:normal;font-weight:600;color:#7A5A16}
+.autotrad button{margin-left:auto;color:#7A5A16;font-weight:700}
+.trad .txt{margin:0;font-size:14.5px;color:var(--tinta);padding:.45rem .6rem;
+  border:1px solid var(--linea);border-radius:var(--r-s);background:#fff;
+  padding-right:2.6rem;min-height:2.4em}
+.trad .idi.auto .txt{background:var(--arena-p);border-color:var(--arena)}
+.txt.lectura{margin:0;padding:.45rem .6rem;border:1px solid var(--linea);
+  border-radius:var(--r-s);background:var(--roto);color:var(--tinta)}
+
+/* ---------------------------------------------------------------- filtros -- */
+.orden{list-style:none;margin:0;padding:0;border:1px solid var(--linea);
+  border-radius:var(--r-s);overflow:hidden}
+.orden li{display:flex;align-items:center;gap:.5rem;padding:.35rem .55rem;
+  border-bottom:1px solid var(--linea-2);background:#fff}
+.orden li:last-child{border-bottom:0}
+.orden .check{border:0;background:none;padding:.2rem 0}
+.orden .check:has(input:checked){background:none;color:var(--tinta)}
+.orden .n{font-size:12px;color:var(--suave);background:var(--linea-2);
+  border-radius:99px;padding:.05rem .45rem}
+.orden .sep{flex:1}
+
+/* ------------------------------------------------------------------ fotos -- */
+.foto{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start}
+#foto-lienzo{width:min(100%,360px);height:auto;aspect-ratio:3/2;border-radius:var(--r-s);
+  border:1px solid var(--linea);background:var(--linea-2);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+#foto-lienzo:active{cursor:grabbing}
+.foto-lado{flex:1;min-width:200px}
+.foto-lado .pista{margin:0 0 .5rem}
+
 /* ---------------------------------------------------------------- entrada -- */
 .entrada{max-width:560px;margin:6vh auto;padding:0 1rem}
 .entrada .tarjeta{padding:1.6rem}
@@ -270,6 +303,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
       <span class="marcador oculto" id="m-alojamientos"></span></button>
     <button type="button" data-seccion="agenda">Agenda
       <span class="marcador oculto" id="m-agenda"></span></button>
+    <button type="button" data-seccion="traducciones">Traducciones
+      <span class="marcador oculto" id="m-traducciones"></span></button>
+    <button type="button" data-seccion="filtros">Filtros</button>
     <button type="button" data-seccion="revision">Revisión
       <span class="marcador oculto" id="m-revision"></span></button>
   </nav>
@@ -314,6 +350,38 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
       <div class="dias" id="dias"></div>
     </section>
 
+    <!-- ------------------------------------------------------ TRADUCCIONES -->
+    <section id="s-traducciones" class="oculto" aria-labelledby="t-traducciones">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-traducciones">Traducciones al valencià</h2>
+          <p class="sub" id="resumen-traducciones"></p>
+        </div>
+      </div>
+      <div class="nota nota-inf">
+        <span><b>Cómo funciona</b>Escribes en castellano y el valenciano se
+        rellena solo al publicar, con Apertium. Aquí ves lo que se está
+        publicando sin que nadie lo haya mirado. «Doy por buena» lo deja fijo
+        tal cual; «Corregir» te deja escribir la tuya, y esa manda para
+        siempre.</span>
+      </div>
+      <div id="lista-traducciones"></div>
+    </section>
+
+    <!-- ----------------------------------------------------------- FILTROS -->
+    <section id="s-filtros" class="oculto" aria-labelledby="t-filtros">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-filtros">Filtros de la web</h2>
+          <p class="sub">Qué se puede filtrar en el listado de alojamientos y
+          qué experiencias salen en la portada.</p>
+        </div>
+        <span class="sep"></span>
+        <button type="button" class="b-1" id="guardar-filtros">Guardar y publicar</button>
+      </div>
+      <div id="editor-filtros"></div>
+    </section>
+
     <!-- ---------------------------------------------------------- REVISIÓN -->
     <section id="s-revision" class="oculto" aria-labelledby="t-revision">
       <div class="cabecera-seccion">
@@ -352,8 +420,25 @@ const API  = "https://api.github.com/repos/" + REPO;
 const RUTAS = {
   alojamientos: "contenido/alojamientos.json",
   agenda:       "contenido/agenda.json",
-  configuracion:"contenido/configuracion.json"
+  configuracion:"contenido/configuracion.json",
+  filtros:      "contenido/filtros.json"
 };
+
+/* Lo que Apertium tradujo en la última publicación: {castellano: valencià}.
+   No está en GitHub, lo escribe la compilación y se sirve con la web. Sirve
+   para enseñar aquí lo que se está publicando sin que nadie lo haya mirado. */
+const AUTO = { va: {} };
+
+async function leerTraducciones(){
+  try {
+    const r = await fetch("../assets/traducciones.json?t=" + Date.now());
+    if (r.ok) Object.assign(AUTO, await r.json());
+  } catch (e) { /* aún no se ha publicado ninguna: no pasa nada */ }
+}
+
+function autoDe(es){
+  return (AUTO.va || {})[String(es || "").trim()] || "";
+}
 
 let clave = localStorage.getItem("km0.clave") || "";
 let quien = localStorage.getItem("km0.quien") || "";
@@ -559,7 +644,7 @@ $("#salir").addEventListener("click", () => {
 /* ==========================================================================
    5 · Navegación
    ========================================================================== */
-const SECCIONES = ["alojamientos", "agenda", "revision"];
+const SECCIONES = ["alojamientos", "agenda", "traducciones", "filtros", "revision"];
 let seccionActual = "alojamientos";
 
 function irA(nombre){
@@ -568,6 +653,8 @@ function irA(nombre){
   $$(".pestanas button").forEach(b =>
     b.setAttribute("aria-current", b.dataset.seccion === nombre ? "page" : "false"));
   if (nombre === "revision") pintarRevision();
+  if (nombre === "traducciones") pintarTraducciones();
+  if (nombre === "filtros") pintarFiltros();
   location.hash = nombre;
 }
 $$(".pestanas button").forEach(b =>
@@ -580,7 +667,7 @@ async function arrancar(){
   $("#entrada").classList.add("oculto");
   $("#panel").classList.remove("oculto");
   try {
-    await Promise.all(Object.keys(RUTAS).map(leerArchivo));
+    await Promise.all(Object.keys(RUTAS).map(leerArchivo).concat([leerTraducciones()]));
   } catch (e) {
     $("#cargando").innerHTML =
       "<div class='nota nota-mal'><span><b>No se ha podido cargar el contenido</b>" +
@@ -679,12 +766,10 @@ function revisarAlojamiento(a, todos){
   if (!Number.isInteger(a.cupo) || a.cupo < 0) err.push("El cupo debe ser un número entero.");
   (a.experiencias || []).forEach(e => { if (!EXPERIENCIAS[e])
     avi.push("La experiencia «" + e + "» no existe: no saldrá en ese filtro."); });
+  // El valenciano vacío no es un problema: lo rellena Apertium al publicar y
+  // se repasa en la pestaña Traducciones. Aquí solo importa el castellano.
   if (vacio((a.claim || {}).es)) err.push("Falta el claim en castellano.");
-  else if (vacio((a.claim || {}).va)) avi.push("El claim no tiene valenciano.");
   if (vacio((a.descripcion || {}).es)) err.push("Falta la descripción en castellano.");
-  else if (vacio((a.descripcion || {}).va)) avi.push("La descripción no tiene valenciano.");
-  if (vacio(((a.oferta || {}).titulo || {}).va) && !vacio(((a.oferta || {}).titulo || {}).es))
-    avi.push("El título de la oferta no tiene valenciano.");
   return { nombre: nom, errores: err, avisos: avi };
 }
 
@@ -692,9 +777,7 @@ function revisarActividad(act){
   const err = [], avi = [];
   const nom = ((act.titulo || {}).es) || "actividad sin título";
   if (vacio((act.titulo || {}).es)) err.push("Falta el título en castellano.");
-  else if (vacio((act.titulo || {}).va)) avi.push("El título no tiene valenciano.");
   if (vacio((act.desc || {}).es)) err.push("Falta la descripción en castellano.");
-  else if (vacio((act.desc || {}).va)) avi.push("La descripción no tiene valenciano.");
   if (!Number.isInteger(act.dia) || act.dia < 1 || act.dia > TOTAL_DIAS)
     err.push("El día está fuera de la edición: no aparecería en la web.");
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(act.hora || "")) err.push("La hora debe ir como HH:MM.");
@@ -744,6 +827,7 @@ function contarAvisos(){
   marcador("alojamientos", ae, aa);
   marcador("agenda", ge, ga);
   marcador("revision", ae + ge, aa + ga);
+  marcador("traducciones", 0, textosAutomaticos().length);
 }
 
 function pintarRevision(){
@@ -804,10 +888,17 @@ function campoBi(id, etiqueta, obj, opciones){
       escapar(etiqueta) + " en " + idioma + '</label>' + control +
       '<span aria-hidden="true">' + sufijo + '</span></div>';
   };
+  const auto = String(v.va || "").trim() ? "" : autoDe(v.es);
+  const linea = auto
+    ? '<p class="autotrad" data-para="' + id + '">' +
+        '<span>Se publicará en valencià: <i>' + escapar(auto) + '</i></span>' +
+        '<button type="button" class="b-3 b-min" data-corregir="' + id + '">Corregir</button>' +
+      '</p>'
+    : '';
   return '<div class="campo" role="group" aria-label="' + escapar(etiqueta) + '">' +
     '<span class="et">' + escapar(etiqueta) + '</span>' +
     '<div class="bi">' + uno("es", "castellano", v.es) + uno("va", "valenciano", v.va) + '</div>' +
-    (o.pista ? '<p class="pista">' + o.pista + '</p>' : '') + '</div>';
+    linea + (o.pista ? '<p class="pista">' + o.pista + '</p>' : '') + '</div>';
 }
 
 function pastillas(nombre, catalogo, marcadas){
@@ -866,6 +957,27 @@ $("#hoja-cuerpo").addEventListener("input", ev => {
   sucia = true;
   const idi = ev.target.closest(".idi");
   if (idi) idi.classList.toggle("falta", !ev.target.value.trim());
+  // Si se escribe el valenciano a mano, sobra la propuesta automática. Y si se
+  // cambia el castellano, la propuesta ya no corresponde a este texto.
+  const id = (ev.target.id || "").replace(/-(es|va)$/, "");
+  const linea = $('.autotrad[data-para="' + id + '"]');
+  if (linea && ev.target.id !== id) linea.hidden = true;
+});
+
+$("#hoja-cuerpo").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-corregir]");
+  if (!b) return;
+  const id = b.dataset.corregir;
+  const campo = $("#" + id + "-va");
+  const texto = $('.autotrad[data-para="' + id + '"] i');
+  if (campo && texto) {
+    campo.value = texto.textContent;
+    campo.closest(".idi").classList.remove("falta");
+    campo.focus();
+    campo.select();
+    $('.autotrad[data-para="' + id + '"]').hidden = true;
+    sucia = true;
+  }
 });
 
 function cerrarHoja(){
@@ -988,9 +1100,23 @@ function editarAlojamiento(indice){
               { tipo: "url", placeholder: "https://…", pista: "Completa, con https://" }) +
         campo("f-telefono", "Teléfono", a.telefono, { tipo: "tel" }) +
       '</div>' +
-      campo("f-imagen", "Foto de la ficha", a.imagen, {
-        placeholder: "assets/img/foto/alo-" + (a.id || "identificador") + ".webp",
-        pista: "1200×800. Si lo dejas vacío, la web dibuja una portada ilustrada." }) +
+      '<div class="campo"><span class="et">Foto de la ficha</span>' +
+        '<div class="foto">' +
+          '<canvas id="foto-lienzo" width="480" height="320" ' +
+            'aria-label="Vista previa del recorte"></canvas>' +
+          '<div class="foto-lado">' +
+            '<p class="pista" id="foto-estado">' + (a.imagen
+              ? "Ahora: " + escapar(a.imagen.split("/").pop())
+              : "Sin foto propia: la web dibuja una ilustración.") + '</p>' +
+            '<label class="b-2" for="foto-archivo" style="display:inline-block;' +
+              'padding:.5rem .9rem;cursor:pointer">Elegir una foto…</label>' +
+            '<input type="file" id="foto-archivo" accept="image/*" class="vo">' +
+            '<p class="pista">Se recorta sola a 1200×800 y se guarda ligera. ' +
+              'Arrastra sobre la vista previa para elegir qué parte se ve.</p>' +
+          '</div>' +
+        '</div>' +
+        '<input type="hidden" id="f-imagen" value="' + escapar(a.imagen) + '">' +
+      '</div>' +
     '</fieldset>' +
 
     '<fieldset><legend>Cómo se cuenta</legend>' +
@@ -1048,6 +1174,8 @@ function editarAlojamiento(indice){
   fNombre.addEventListener("input", () => {
     if (idAutomatico) fId.value = resbalar(fNombre.value);
   });
+
+  montarFoto(a);
 
   const eco = $("#coords-eco"), fCoords = $("#f-coords");
   function mirarCoords(){
@@ -1110,6 +1238,27 @@ async function guardarAlojamiento(indice, base){
   const otros = D.alojamientos.filter((x, i) => i !== indice);
   const v = revisarAlojamiento(a, otros.concat([a]));
   if (pintarFallos(v)) return;
+
+  // Si han elegido foto nueva, primero se recorta y se sube, y solo después
+  // se guarda la ficha apuntando a ella.
+  if (foto) {
+    const boton = $("#hoja-aceptar");
+    boton.disabled = true; boton.textContent = "Subiendo la foto…";
+    try {
+      const fmt = formatoFoto();
+      const medida = MEDIDAS.ficha;
+      const blob = await aBlob(recortar(foto.img, medida[0], medida[1], foto.foco), fmt);
+      const ruta = "assets/img/foto/alo-" + a.id + "." + fmt.ext;
+      await subirFoto(ruta, blob, "Foto de «" + a.nombre + "»");
+      a.imagen = ruta;
+      foto = null;
+    } catch (e) {
+      boton.disabled = false; boton.textContent = "Guardar y publicar";
+      pintarFallos({ errores: ["No se ha podido subir la foto: " + e.message], avisos: [] });
+      return;
+    }
+    boton.disabled = false; boton.textContent = "Guardar y publicar";
+  }
 
   const antes = indice < 0 ? null : D.alojamientos[indice];
   if (indice < 0) D.alojamientos.push(a); else D.alojamientos[indice] = a;
@@ -1284,7 +1433,338 @@ async function borrarActividad(indice){
 }
 
 /* ==========================================================================
-   12 · Arranque
+   12 · Traducciones sin revisar
+   ========================================================================== */
+
+/* Recorre el contenido y devuelve cada pareja {es, va} que hoy se publica
+   traducida a máquina, con lo que hace falta para escribir encima. */
+function textosAutomaticos(){
+  const fuera = [];
+  const mirar = (nodo, donde, archivo) => {
+    if (Array.isArray(nodo)) return nodo.forEach(x => mirar(x, donde, archivo));
+    if (!nodo || typeof nodo !== "object") return;
+    if ("es" in nodo && "va" in nodo) {
+      if (typeof nodo.es === "string") {
+        if (nodo.es.trim() && !String(nodo.va || "").trim() && autoDe(nodo.es))
+          fuera.push({ nodo: nodo, clave: "va", es: nodo.es,
+                       auto: autoDe(nodo.es), donde: donde, archivo: archivo });
+      } else if (Array.isArray(nodo.es)) {
+        nodo.es.forEach((t, i) => {
+          const va = (nodo.va || [])[i];
+          if (t && t.trim() && !String(va || "").trim() && autoDe(t))
+            fuera.push({ nodo: nodo.va, clave: i, es: t, auto: autoDe(t),
+                         donde: donde, archivo: archivo });
+        });
+      }
+      return;
+    }
+    Object.values(nodo).forEach(v => mirar(v, donde, archivo));
+  };
+  D.alojamientos.forEach(a => mirar(a, a.nombre || "Alojamiento", "alojamientos"));
+  D.agenda.forEach(a => mirar(a, (a.titulo || {}).es || "Actividad", "agenda"));
+  mirar(D.configuracion, "Configuración de la edición", "configuracion");
+  return fuera;
+}
+
+let pendientesTrad = [];
+
+function pintarTraducciones(){
+  pendientesTrad = textosAutomaticos();
+  const n = pendientesTrad.length;
+  $("#resumen-traducciones").textContent = n
+    ? n + " texto(s) se publican traducidos a máquina, sin que nadie los haya mirado"
+    : "Todo el valenciano de la web está revisado o escrito a mano.";
+
+  $("#lista-traducciones").innerHTML = !n
+    ? "<div class='nota nota-ok'><span><b>Nada pendiente</b>No hay ningún texto " +
+      "publicándose con una traducción sin revisar.</span></div>"
+    : pendientesTrad.map((p, i) =>
+        '<div class="tarjeta trad" data-i="' + i + '">' +
+          '<p class="sub" style="margin:0 0 .5rem">' + escapar(p.donde) + '</p>' +
+          '<div class="bi">' +
+            '<div class="idi"><span aria-hidden="true">es</span>' +
+              '<p class="txt">' + escapar(p.es) + '</p></div>' +
+            '<div class="idi auto"><span aria-hidden="true">va</span>' +
+              '<p class="txt">' + escapar(p.auto) + '</p></div>' +
+          '</div>' +
+          '<div class="pastillas" style="margin-top:.7rem">' +
+            '<button type="button" class="b-2" data-buena="' + i + '">Doy por buena</button>' +
+            '<button type="button" class="b-3" data-editar="' + i + '">Corregir</button>' +
+          '</div>' +
+        '</div>').join("");
+
+  $$("#lista-traducciones [data-buena]").forEach(b =>
+    b.addEventListener("click", () => confirmarTraduccion(Number(b.dataset.buena))));
+  $$("#lista-traducciones [data-editar]").forEach(b =>
+    b.addEventListener("click", () => corregirTraduccion(Number(b.dataset.editar))));
+}
+
+async function confirmarTraduccion(i, textoNuevo){
+  const p = pendientesTrad[i];
+  if (!p) return;
+  const antes = p.nodo[p.clave];
+  p.nodo[p.clave] = textoNuevo != null ? textoNuevo : p.auto;
+  const ok = await guardar(p.archivo, "Valencià revisado: «" + p.es.slice(0, 45) + "»");
+  if (!ok) p.nodo[p.clave] = antes;
+  pintarTraducciones(); contarAvisos();
+}
+
+function corregirTraduccion(i){
+  const p = pendientesTrad[i];
+  if (!p) return;
+  abrirHoja("Corregir la traducción",
+    '<div class="campo"><span class="et">En castellano</span>' +
+      '<p class="txt lectura">' + escapar(p.es) + '</p></div>' +
+    campo("t-va", "En valencià", p.auto, { filas: 3,
+      pista: "Lo que escribas aquí manda para siempre: ya no se vuelve a traducir solo." }),
+    { aceptar: "Guardar y publicar",
+      guardar: () => {
+        const v = val("t-va");
+        if (!v) { alert("No puede quedarse vacío."); return; }
+        hoja.close();
+        confirmarTraduccion(i, v);
+      } });
+}
+
+/* ==========================================================================
+   13 · Filtros de la web
+   ========================================================================== */
+const GRUPOS_FILTRO = [
+  { ambito: "listado", grupo: "provincia", titulo: "Provincia",
+    ayuda: "En el listado de alojamientos. Solo se puede elegir una a la vez.",
+    valores: () => PROVINCIAS.slice(),
+    etiqueta: v => v },
+  { ambito: "listado", grupo: "tipo", titulo: "Tipo de alojamiento",
+    ayuda: "En el listado. Se pueden combinar varios.",
+    valores: () => Object.keys(TIPOS),
+    etiqueta: v => TIPOS[v] },
+  { ambito: "listado", grupo: "experiencia", titulo: "Experiencia",
+    ayuda: "En el listado. Se pueden combinar varias.",
+    valores: () => Object.keys(EXPERIENCIAS),
+    etiqueta: v => EXPERIENCIAS[v] },
+  { ambito: "portada", grupo: "experiencias", titulo: "Experiencias de la portada",
+    ayuda: "El bloque de temas de la portada. Por defecto salen ordenadas por " +
+           "número de alojamientos.",
+    valores: () => Object.keys(EXPERIENCIAS),
+    etiqueta: v => EXPERIENCIAS[v], tope: true }
+];
+
+function cuentaEn(grupo, valor){
+  const D2 = D.alojamientos;
+  if (grupo === "provincia") return D2.filter(a => a.provincia === valor).length;
+  if (grupo === "tipo") return D2.filter(a => a.tipo === valor).length;
+  return D2.filter(a => (a.experiencias || []).indexOf(valor) >= 0).length;
+}
+
+function confDe(g){
+  const amb = D.filtros[g.ambito] = D.filtros[g.ambito] || {};
+  return amb[g.grupo] = amb[g.grupo] || { mostrar: true, valores: [] };
+}
+
+function pintarFiltros(){
+  $("#editor-filtros").innerHTML = GRUPOS_FILTRO.map(g => {
+    const c = confDe(g);
+    const manual = Array.isArray(c.valores) && c.valores.length > 0;
+    const disponibles = g.valores().filter(v => cuentaEn(g.grupo, v) > 0);
+    const orden = manual
+      ? c.valores.filter(v => disponibles.indexOf(v) >= 0)
+          .concat(disponibles.filter(v => c.valores.indexOf(v) < 0))
+      : disponibles;
+    const fuera = manual ? disponibles.filter(v => c.valores.indexOf(v) < 0) : [];
+
+    return '<div class="tarjeta" data-g="' + g.ambito + "." + g.grupo + '">' +
+      '<div class="cabecera-seccion" style="margin-bottom:.6rem">' +
+        '<div><h3 style="font-size:16px">' + g.titulo + '</h3>' +
+        '<p class="sub">' + g.ayuda + '</p></div><span class="sep"></span>' +
+        '<label class="check"><input type="checkbox" data-mostrar' +
+          (c.mostrar === false ? "" : " checked") + '> Se ve en la web</label>' +
+      '</div>' +
+      '<div class="cuerpo-filtro"' + (c.mostrar === false ? ' hidden' : '') + '>' +
+        '<div class="pastillas" style="margin-bottom:.7rem">' +
+          '<label class="check"><input type="radio" name="modo-' + g.grupo +
+            '" value="auto"' + (manual ? "" : " checked") + '> Automático</label>' +
+          '<label class="check"><input type="radio" name="modo-' + g.grupo +
+            '" value="manual"' + (manual ? " checked" : "") + '> Elijo yo</label>' +
+        '</div>' +
+        (fuera.length ? '<div class="nota nota-avi"><span><b>' + fuera.length +
+          ' sin mostrar</b>' + fuera.map(v => escapar(g.etiqueta(v))).join(", ") +
+          '. Hay alojamientos con esas etiquetas y nadie podrá filtrarlos por ahí.' +
+          '</span></div>' : '') +
+        '<ol class="orden"' + (manual ? '' : ' hidden') + '>' +
+          orden.map(v =>
+            '<li data-v="' + v + '">' +
+              '<label class="check"><input type="checkbox" data-inc' +
+                (!manual || c.valores.indexOf(v) >= 0 ? " checked" : "") + '> ' +
+                escapar(g.etiqueta(v)) + '</label>' +
+              '<span class="n">' + cuentaEn(g.grupo, v) + '</span>' +
+              '<span class="sep"></span>' +
+              '<button type="button" class="b-3 b-min" data-sube aria-label="Subir">↑</button>' +
+              '<button type="button" class="b-3 b-min" data-baja aria-label="Bajar">↓</button>' +
+            '</li>').join("") +
+        '</ol>' +
+        (g.tope ? '<div class="campo" style="max-width:220px;margin-top:.8rem">' +
+          '<label for="tope-' + g.grupo + '">Enseñar como mucho</label>' +
+          '<input type="number" min="0" id="tope-' + g.grupo + '" value="' +
+            (c.maximo || 0) + '"><p class="pista">0 = todas</p></div>' : '') +
+      '</div></div>';
+  }).join("");
+
+  $$("#editor-filtros [data-mostrar]").forEach(ch =>
+    ch.addEventListener("change", () => {
+      $(".cuerpo-filtro", ch.closest(".tarjeta")).hidden = !ch.checked;
+    }));
+  $$('#editor-filtros input[type=radio]').forEach(r =>
+    r.addEventListener("change", () => {
+      $(".orden", r.closest(".tarjeta")).hidden = r.closest(".tarjeta")
+        .querySelector('input[value="auto"]').checked;
+    }));
+  $$("#editor-filtros [data-sube], #editor-filtros [data-baja]").forEach(b =>
+    b.addEventListener("click", () => {
+      const li = b.closest("li");
+      const otro = "sube" in b.dataset ? li.previousElementSibling : li.nextElementSibling;
+      if (!otro) return;
+      if ("sube" in b.dataset) li.parentNode.insertBefore(li, otro);
+      else li.parentNode.insertBefore(otro, li);
+      b.focus();
+    }));
+}
+
+$("#guardar-filtros").addEventListener("click", async () => {
+  const antes = JSON.parse(JSON.stringify(D.filtros));
+  GRUPOS_FILTRO.forEach(g => {
+    const caja = $('#editor-filtros [data-g="' + g.ambito + "." + g.grupo + '"]');
+    const c = confDe(g);
+    c.mostrar = $("[data-mostrar]", caja).checked;
+    const auto = $('input[value="auto"]', caja).checked;
+    c.valores = auto ? [] : $$("li", caja)
+      .filter(li => $("[data-inc]", li).checked)
+      .map(li => li.dataset.v);
+    if (g.tope) c.maximo = Number(($("#tope-" + g.grupo) || {}).value || 0);
+  });
+  const boton = $("#guardar-filtros");
+  boton.disabled = true;
+  const ok = await guardar("filtros", "Cambios en los filtros de la web");
+  boton.disabled = false;
+  if (!ok) D.filtros = antes;
+  pintarFiltros();
+});
+
+/* ==========================================================================
+   14 · Fotos
+   ========================================================================== */
+const MEDIDAS = { ficha: [1200, 800], cabecera: [2000, 900] };
+
+function formatoFoto(){
+  // Safari antiguo no sabe guardar webp desde el navegador: se usa jpg y ya
+  // está, la web se lo traga igual.
+  const c = document.createElement("canvas");
+  return c.toDataURL("image/webp").indexOf("data:image/webp") === 0
+    ? { tipo: "image/webp", ext: "webp" } : { tipo: "image/jpeg", ext: "jpg" };
+}
+
+/* Recorta al centro del encuadre elegido y devuelve el archivo listo. */
+function recortar(img, ancho, alto, foco){
+  const lienzo = document.createElement("canvas");
+  lienzo.width = ancho; lienzo.height = alto;
+  const ctx = lienzo.getContext("2d");
+  ctx.imageSmoothingQuality = "high";
+  const escala = Math.max(ancho / img.naturalWidth, alto / img.naturalHeight);
+  const w = img.naturalWidth * escala, h = img.naturalHeight * escala;
+  ctx.drawImage(img, (ancho - w) * (foco.x), (alto - h) * (foco.y), w, h);
+  return lienzo;
+}
+
+function aBlob(lienzo, formato){
+  return new Promise(r => lienzo.toBlob(r, formato.tipo, 0.82));
+}
+
+/* La foto elegida en la ficha abierta, aún sin subir. */
+let foto = null;
+
+function montarFoto(a){
+  foto = null;
+  const lienzo = $("#foto-lienzo"); if (!lienzo) return;
+  const ctx = lienzo.getContext("2d");
+  const foco = { x: 0.5, y: 0.5 };
+  let img = null;
+
+  function pintar(){
+    ctx.clearRect(0, 0, lienzo.width, lienzo.height);
+    if (!img) {
+      ctx.fillStyle = "#EFF3F4"; ctx.fillRect(0, 0, lienzo.width, lienzo.height);
+      ctx.fillStyle = "#7D8F98"; ctx.font = "14px Montserrat, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(a.imagen ? "La foto actual no se puede previsualizar aquí"
+                            : "Sin foto", lienzo.width / 2, lienzo.height / 2);
+      return;
+    }
+    const esc = Math.max(lienzo.width / img.naturalWidth, lienzo.height / img.naturalHeight);
+    const w = img.naturalWidth * esc, h = img.naturalHeight * esc;
+    ctx.drawImage(img, (lienzo.width - w) * foco.x, (lienzo.height - h) * foco.y, w, h);
+  }
+  pintar();
+
+  $("#foto-archivo").addEventListener("change", ev => {
+    const f = ev.target.files && ev.target.files[0];
+    if (!f) return;
+    if (f.size > 20 * 1024 * 1024) {
+      $("#foto-estado").textContent = "Esa foto pesa más de 20 MB. Usa una más ligera.";
+      return;
+    }
+    const url = URL.createObjectURL(f);
+    const nueva = new Image();
+    nueva.onload = () => {
+      img = nueva; foto = { img: nueva, foco: foco };
+      sucia = true;
+      $("#foto-estado").textContent = "Se subirá al guardar · " +
+        nueva.naturalWidth + "×" + nueva.naturalHeight + " → 1200×800";
+      pintar();
+      URL.revokeObjectURL(url);
+    };
+    nueva.onerror = () => {
+      $("#foto-estado").textContent = "No he podido leer ese archivo.";
+      URL.revokeObjectURL(url);
+    };
+    nueva.src = url;
+  });
+
+  let arrastrando = false, ultimo = null;
+  const mover = ev => {
+    if (!arrastrando || !img) return;
+    const p = ev.touches ? ev.touches[0] : ev;
+    if (ultimo) {
+      foco.x = Math.min(1, Math.max(0, foco.x + (p.clientX - ultimo.x) / lienzo.width));
+      foco.y = Math.min(1, Math.max(0, foco.y + (p.clientY - ultimo.y) / lienzo.height));
+      pintar();
+    }
+    ultimo = { x: p.clientX, y: p.clientY };
+    ev.preventDefault();
+  };
+  const soltar = () => { arrastrando = false; ultimo = null; };
+  ["mousedown", "touchstart"].forEach(e => lienzo.addEventListener(e, ev => {
+    if (!img) return;
+    ev.preventDefault();          // si no, arrastrar selecciona el texto de al lado
+    arrastrando = true; ultimo = null; mover(ev);
+  }));
+  ["mousemove", "touchmove"].forEach(e => lienzo.addEventListener(e, mover));
+  ["mouseup", "mouseleave", "touchend"].forEach(e => lienzo.addEventListener(e, soltar));
+}
+
+async function subirFoto(ruta, blob, mensaje){
+  const buf = new Uint8Array(await blob.arrayBuffer());
+  let s = "";
+  for (let i = 0; i < buf.length; i += 8192)
+    s += String.fromCharCode.apply(null, buf.subarray(i, i + 8192));
+  let sha = null;
+  try { sha = (await api("/contents/" + ruta + "?ref=main")).sha; } catch (e) {}
+  const cuerpo = { message: mensaje + "\n\nSubida desde el panel por " + quien + ".",
+                   content: btoa(s), branch: "main" };
+  if (sha) cuerpo.sha = sha;
+  await api("/contents/" + ruta, { method: "PUT", body: JSON.stringify(cuerpo) });
+}
+
+/* ==========================================================================
+   15 · Arranque
    ========================================================================== */
 if (clave && quien) {
   $("#e-quien").value = quien;

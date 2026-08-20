@@ -1,0 +1,11 @@
+{
+  "_ayuda": "Qué filtros se ven en la web. Lo edita el panel: /admin/ → Filtros. Una lista de valores vacía significa «automático»: salen todos los que haya en los alojamientos, en el orden de siempre. Con valores, salen solo esos y en ese orden. En los dos casos se descartan los que no tengan ningún alojamiento detrás, para no ofrecer un filtro que no lleva a ninguna parte.",
+  "listado": {
+    "provincia": { "mostrar": true, "valores": [] },
+    "tipo": { "mostrar": true, "valores": [] },
+    "experiencia": { "mostrar": true, "valores": [] }
+  },
+  "portada": {
+    "experiencias": { "mostrar": true, "valores": [], "maximo": 0 }
+  }
+}
