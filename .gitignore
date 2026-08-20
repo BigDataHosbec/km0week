@@ -9,3 +9,18 @@ __pycache__/
 # Node solo hace falta para generar los PDF y el .docx, y eso ocurre en GitHub
 node_modules/
 package-lock.json
+
+# ---------------------------------------------------------------------------
+# ARCHIVOS GENERADOS. No están en GitHub a propósito: los rehace la publicación
+# automática en cada cambio, y tenerlos aquí solo invitaba a editarlos por error.
+#   Las 18 páginas          las escribe _build/build.py desde _build/paginas/
+#   sitemap.xml, robots.txt  igual
+#   data-alojamientos.js     lo escribe _build/contenido.py desde contenido/
+#   descargas/               los escribe _build/descargables.py
+# Para verlos en tu ordenador: python3 _build/build.py
+# ---------------------------------------------------------------------------
+/*.html
+/sitemap.xml
+/robots.txt
+/descargas/
+assets/js/data-alojamientos.js
