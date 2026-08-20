@@ -1,0 +1,9 @@
+{
+  "name": "km0week",
+  "private": true,
+  "description": "Herramientas que necesita la generación de los descargables de la web Km0 Week. La web publicada no usa nada de esto.",
+  "dependencies": {
+    "docx": "9.7.1",
+    "playwright": "1.62.1"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "noticia-1",
+    "imagen": "not-1",
+    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "titulo": {
+      "es": "20 alojamientos ya se han sumado a la primera Km0 Week",
+      "va": "20 allotjaments ja s'han sumat a la primera Km0 Week"
+    },
+    "resumen": "Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes."
+  },
+  {
+    "slug": "noticia-2",
+    "imagen": "not-2",
+    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "titulo": {
+      "es": "Cómo se calcula el descuento de residente (y por qué es real)",
+      "va": "Com es calcula el descompte de resident (i per què és real)"
+    },
+    "resumen": "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba."
+  },
+  {
+    "slug": "noticia-3",
+    "imagen": "not-3",
+    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "titulo": {
+      "es": "Doce ayuntamientos se suman con actividades abiertas",
+      "va": "Dotze ajuntaments se sumen amb activitats obertes"
+    },
+    "resumen": "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week."
+  },
+  {
+    "slug": "noticia-4",
+    "imagen": "not-4",
+    "seccion": { "es": "Noticias", "va": "Notícies" },
+    "titulo": {
+      "es": "El pasaporte Km0: cómo funciona el sorteo de diez estancias",
+      "va": "El passaport Km0: com funciona el sorteig de deu estades"
+    },
+    "resumen": "Tres sellos para entrar en el sorteo, cinco para la cena de clausura. Bases y calendario."
+  }
+]

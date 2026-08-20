@@ -1,0 +1,268 @@
+[
+  {
+    "dia": 1,
+    "hora": "12:00",
+    "lugar": "Benidorm",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Acto inaugural en el Ayuntamiento",
+      "va": "Acte inaugural a l'Ajuntament"
+    },
+    "desc": {
+      "es": "Presentación oficial con hoteleros, ayuntamientos y Turisme CV. Entrada libre.",
+      "va": "Presentació oficial amb hotelers, ajuntaments i Turisme CV. Entrada lliure."
+    },
+    "tipo": "institucional",
+    "precio": {
+      "es": "Gratis",
+      "va": "Gratis"
+    }
+  },
+  {
+    "dia": 1,
+    "hora": "19:30",
+    "lugar": "Alicante",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Puertas abiertas: cocinas de hotel",
+      "va": "Portes obertes: cuines d'hotel"
+    },
+    "desc": {
+      "es": "Seis hoteles abren sus cocinas al público. Reserva previa.",
+      "va": "Sis hotels obrin les seues cuines al públic. Reserva prèvia."
+    },
+    "tipo": "gastronomia",
+    "precio": {
+      "es": "Gratis",
+      "va": "Gratis"
+    }
+  },
+  {
+    "dia": 2,
+    "hora": "10:00",
+    "lugar": "Calpe",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Flamencos al amanecer en las salinas",
+      "va": "Flamencs a l'alba a les salines"
+    },
+    "desc": {
+      "es": "Salida ornitológica guiada por biólogos del parque natural.",
+      "va": "Eixida ornitològica guiada per biòlegs del parc natural."
+    },
+    "tipo": "naturaleza",
+    "precio": {
+      "es": "12 €",
+      "va": "12 €"
+    }
+  },
+  {
+    "dia": 2,
+    "hora": "18:00",
+    "lugar": "València",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Ruta modernista de hoteles históricos",
+      "va": "Ruta modernista d'hotels històrics"
+    },
+    "desc": {
+      "es": "Tres palacetes convertidos en hotel, con acceso a zonas no visitables.",
+      "va": "Tres palauets convertits en hotel, amb accés a zones no visitables."
+    },
+    "tipo": "cultura",
+    "precio": {
+      "es": "8 €",
+      "va": "8 €"
+    }
+  },
+  {
+    "dia": 3,
+    "hora": "11:00",
+    "lugar": "Dénia",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Subasta de pescado + taller de arroz",
+      "va": "Subhasta de peix + taller d'arròs"
+    },
+    "desc": {
+      "es": "De la lonja al plato en tres horas, con cocineros de la Marina Alta.",
+      "va": "De la llotja al plat en tres hores, amb cuiners de la Marina Alta."
+    },
+    "tipo": "gastronomia",
+    "precio": {
+      "es": "25 €",
+      "va": "25 €"
+    }
+  },
+  {
+    "dia": 3,
+    "hora": "20:00",
+    "lugar": "Peñíscola",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Visita teatralizada al castillo",
+      "va": "Visita teatralitzada al castell"
+    },
+    "desc": {
+      "es": "Horario exclusivo Km0 Week, con el castillo cerrado al turismo general.",
+      "va": "Horari exclusiu Km0 Week, amb el castell tancat al turisme general."
+    },
+    "tipo": "cultura",
+    "precio": {
+      "es": "10 €",
+      "va": "10 €"
+    }
+  },
+  {
+    "dia": 9,
+    "hora": "09:30",
+    "lugar": "Oliva",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Kayak por el marjal",
+      "va": "Caiac pel marjal"
+    },
+    "desc": {
+      "es": "Ruta guiada de dos horas por los canales del humedal.",
+      "va": "Ruta guiada de dues hores pels canals de l'aiguamoll."
+    },
+    "tipo": "naturaleza",
+    "precio": {
+      "es": "18 €",
+      "va": "18 €"
+    }
+  },
+  {
+    "dia": 6,
+    "hora": "17:00",
+    "lugar": "Benidorm",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Mesa redonda: turismo y comunidad local",
+      "va": "Taula redona: turisme i comunitat local"
+    },
+    "desc": {
+      "es": "Hoteleros, vecinos y ayuntamientos debaten sobre convivencia. Abierto.",
+      "va": "Hotelers, veïns i ajuntaments debaten sobre convivència. Obert."
+    },
+    "tipo": "institucional",
+    "precio": {
+      "es": "Gratis",
+      "va": "Gratis"
+    }
+  },
+  {
+    "dia": 10,
+    "hora": "10:30",
+    "lugar": "Elche",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "El Palmeral por dentro",
+      "va": "El Palmerar per dins"
+    },
+    "desc": {
+      "es": "Huertos históricos normalmente cerrados y demostración de palma blanca.",
+      "va": "Horts històrics normalment tancats i demostració de palma blanca."
+    },
+    "tipo": "cultura",
+    "precio": {
+      "es": "6 €",
+      "va": "6 €"
+    }
+  },
+  {
+    "dia": 8,
+    "hora": "19:00",
+    "lugar": "Castelló de la Plana",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "El Grau contado por sus marineros",
+      "va": "El Grau contat pels seus mariners"
+    },
+    "desc": {
+      "es": "Paseo con marineros jubilados por el puerto pesquero.",
+      "va": "Passeig amb mariners jubilats pel port pesquer."
+    },
+    "tipo": "cultura",
+    "precio": {
+      "es": "Gratis",
+      "va": "Gratis"
+    }
+  },
+  {
+    "dia": 16,
+    "hora": "11:00",
+    "lugar": "Altea",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Taller de cerámica con artesanos",
+      "va": "Taller de ceràmica amb artesans"
+    },
+    "desc": {
+      "es": "Tres horas de torno y esmalte. Te llevas la pieza a casa.",
+      "va": "Tres hores de torn i esmalt. T'endús la peça a casa."
+    },
+    "tipo": "artesania",
+    "precio": {
+      "es": "30 €",
+      "va": "30 €"
+    }
+  },
+  {
+    "dia": 9,
+    "hora": "21:00",
+    "lugar": "Torrevieja",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Noche de habaneras en el hotel",
+      "va": "Nit d'havaneres a l'hotel"
+    },
+    "desc": {
+      "es": "Concierto abierto con coro local y cremaet.",
+      "va": "Concert obert amb cor local i cremaet."
+    },
+    "tipo": "musica",
+    "precio": {
+      "es": "Gratis",
+      "va": "Gratis"
+    }
+  },
+  {
+    "dia": 17,
+    "hora": "12:00",
+    "lugar": "Gandia",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Fideuà popular en el Grau",
+      "va": "Fideuà popular al Grau"
+    },
+    "desc": {
+      "es": "Cierre de la Km0 Week con fideuà para 400 personas. Inscripción previa.",
+      "va": "Tancament de la Km0 Week amb fideuà per a 400 persones. Inscripció prèvia."
+    },
+    "tipo": "gastronomia",
+    "precio": {
+      "es": "5 €",
+      "va": "5 €"
+    }
+  },
+  {
+    "dia": 17,
+    "hora": "18:00",
+    "lugar": "Toda la Comunitat",
+    "enlace": "https://hosbec.com",
+    "titulo": {
+      "es": "Sorteo Pasaporte Km0",
+      "va": "Sorteig Passaport Km0"
+    },
+    "desc": {
+      "es": "Sorteo de 10 estancias entre quienes hayan completado el pasaporte.",
+      "va": "Sorteig de 10 estades entre qui haja completat el passaport."
+    },
+    "tipo": "institucional",
+    "precio": {
+      "es": "Gratis",
+      "va": "Gratis"
+    }
+  }
+]

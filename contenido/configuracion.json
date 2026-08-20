@@ -1,0 +1,15 @@
+{
+  "edicion": "2026",
+  "fechaInicio": "2026-11-13T00:00:00+01:00",
+  "fechaFin": "2026-11-29T23:59:59+01:00",
+  "fechasTexto": {
+    "es": "13 – 29 de noviembre de 2026",
+    "va": "13 – 29 de novembre de 2026"
+  },
+  "emailContacto": "km0week@hosbec.com",
+  "endpointFormularios": "https://script.google.com/macros/s/AKfycbzBetmscGdalSaEnqCzPUtZrKU3Cqlgn8fxtYDHCjGfwzhWXv_3t5FrHexUIqv3EfjB/exec",
+  "tokenFormularios": "km0week-2026",
+  "telefonoContacto": "965 85 55 16",
+  "webHosbec": "https://hosbec.com",
+  "dominio": "https://bigdatahosbec.github.io/km0week"
+}

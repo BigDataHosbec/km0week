@@ -1,0 +1,11 @@
+# La carpeta que se publica: la arma _build/reunir.py en cada publicación
+_sitio/
+
+# Temporales de la generación de los descargables (se rehacen solos)
+_build/_desc/
+_build/__pycache__/
+__pycache__/
+
+# Node solo hace falta para generar los PDF y el .docx, y eso ocurre en GitHub
+node_modules/
+package-lock.json

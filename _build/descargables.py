@@ -44,35 +44,23 @@ for d in (TMP, HTML, SALIDA):
 
 
 # ---------------------------------------------------------------------------
-# Los datos, leídos del mismo archivo que usa la web
+# Los datos, leídos de contenido/*.json — los mismos que alimentan la web,
+# así que las cifras de los PDF siempre cuadran con lo que se ve publicado.
 # ---------------------------------------------------------------------------
-def cargar_datos():
-    lector = os.path.join(TMP, "leer.js")
-    io.open(lector, "w", encoding="utf-8").write(
-        "const fs=require('fs');\n"
-        "const src=fs.readFileSync(process.argv[2],'utf8');\n"
-        "const win={};\n"
-        "new Function('window', src)(win);\n"
-        "process.stdout.write(JSON.stringify(win.KM0));\n")
-    salida = subprocess.run(
-        ["node", lector, os.path.join(RAIZ, "assets", "js", "data-alojamientos.js")],
-        capture_output=True, text=True, check=True)
-    return json.loads(salida.stdout)
+import contenido
 
+ALOJ = contenido.ALOJAMIENTOS
+AGENDA = contenido.AGENDA
+CFG = contenido.CONFIG
 
-D = cargar_datos()
-ALOJ = D["ALOJAMIENTOS"]
-AGENDA = D["AGENDA"]
-CFG = D["CONFIG"]
-
-FECHAS = CFG["fechasTexto"]["es"]
-EMAIL = CFG["emailContacto"]
-TEL = CFG["telefonoContacto"]
-WEB = "bigdatahosbec.github.io/km0week"
+FECHAS = contenido.FECHAS_ES
+EMAIL = contenido.EMAIL
+TEL = contenido.TELEFONO
+WEB = contenido.DOMINIO.split("//", 1)[-1]
 HOSBEC = "Asociación Empresarial Hotelera y Turística de la Comunidad Valenciana"
 
-CUPO_TOTAL = sum(a.get("cupo") or 0 for a in ALOJ)
-DESTINOS = sorted({a["destino"] for a in ALOJ})
+CUPO_TOTAL = contenido.CUPO_TOTAL
+DESTINOS = contenido.DESTINOS
 PROVINCIAS = ["Castelló", "València", "Alicante"]
 HOY = datetime.date(2026, 8, 18)
 
@@ -1592,7 +1580,8 @@ const { chromium } = require(process.env.PW || 'playwright');
 const fs = require('fs');
 (async () => {
   const trabajos = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-  const b = await chromium.launch();
+  const b = await chromium.launch(
+    process.env.PW_CHROME ? { executablePath: process.env.PW_CHROME } : {});
   for (const t of trabajos) {
     const p = await b.newPage(t.ancho ? { viewport: { width: t.ancho, height: t.alto } } : {});
     const errs = [];
@@ -1633,7 +1622,13 @@ def renderizar(trabajos):
     manifiesto = os.path.join(TMP, "trabajos.json")
     io.open(manifiesto, "w", encoding="utf-8").write(json.dumps(trabajos))
     env = dict(os.environ)
-    env.setdefault("PW", "/home/claude/.npm-global/lib/node_modules/playwright")
+    # Dónde está el paquete playwright. Si no viene por entorno, se prueba la
+    # instalación global de Cowork; si tampoco está, se deja que Node lo
+    # resuelva solo (con "npm install playwright" en la raíz del repositorio,
+    # que es lo que hace la publicación automática de GitHub).
+    if "PW" not in env:
+        glob = "/home/claude/.npm-global/lib/node_modules/playwright"
+        env["PW"] = glob if os.path.isdir(glob) else "playwright"
     subprocess.run(["node", js, manifiesto], check=True, env=env)
 
 

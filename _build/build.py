@@ -14,23 +14,25 @@ Para cambiar el texto de una página: se toca su archivo en _build/paginas/.
 
 import os, re, datetime
 
+import contenido
+
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGS = os.path.join(RAIZ, "_build", "paginas")
 
 # ---------------------------------------------------------------------------
-# DOMINIO: la dirección donde se publica la web. Se usa en sitemap.xml,
-# robots.txt, las etiquetas canonical y las imágenes de compartir en redes.
-# SIN barra final.
-#   GitHub Pages de proyecto : https://USUARIO.github.io/km0week
-#   GitHub Pages de usuario  : https://USUARIO.github.io
-#   Dominio propio           : https://km0week.hosbec.com
-# Cámbialo y vuelve a ejecutar:  python3 _build/build.py
+# Estos cuatro datos vienen de contenido/configuracion.json, que es también lo
+# que lee la web y lo que usan los descargables. Antes estaban escritos aquí
+# Y ADEMÁS en data-alojamientos.js, y había que acordarse de cambiar los dos.
+#
+#   dominio      la dirección donde se publica, sin barra final. Se usa en
+#                sitemap.xml, robots.txt, los canonical y las imágenes de
+#                compartir en redes.
+#   fechasTexto  el rango de fechas tal y como se lee, en es y en va.
 # ---------------------------------------------------------------------------
-DOMINIO = "https://bigdatahosbec.github.io/km0week"
-EMAIL_KM0 = "km0week@hosbec.com"
-
-FECHAS_ES = "13 – 29 de noviembre de 2026"
-FECHAS_VA = "13 – 29 de novembre de 2026"
+DOMINIO = contenido.DOMINIO
+EMAIL_KM0 = contenido.EMAIL
+FECHAS_ES = contenido.FECHAS_ES
+FECHAS_VA = contenido.FECHAS_VA
 
 # ---------------------------------------------------------------- navegación --
 MENU = [
@@ -260,10 +262,37 @@ def cabecera(p):
 """
 
 
+# Los contadores de la web los recalcula home.js al cargar, pero el número que
+# viene escrito en el HTML es el que se ve si el JavaScript tarda o falla, y el
+# que leen los buscadores. Así que aquí se deja ya cuadrado con los datos.
+CIFRAS = {
+    "alojamientos": len(contenido.ALOJAMIENTOS),
+    "destinos": len(contenido.DESTINOS),
+    "cupo": contenido.CUPO_TOTAL,
+    "actividades": len(contenido.AGENDA),
+}
+_RE_AUTO = re.compile(r'<b([^>]*\bdata-auto="(\w+)"[^>]*)>(\d[\d.,]*)</b>')
+
+
+def cifras_al_dia(cuerpo):
+    def sust(m):
+        atributos, clave, _ = m.group(1), m.group(2), m.group(3)
+        n = CIFRAS.get(clave)
+        if n is None:
+            return m.group(0)
+        # data-count puede venir antes o después de data-auto: se quita y se
+        # vuelve a poner una sola vez, para no duplicar el atributo.
+        atributos = re.sub(r'\s*data-count="\d+"', "", atributos)
+        texto = "{:,}".format(n).replace(",", ".")
+        return '<b data-count="%d"%s>%s</b>' % (n, atributos, texto)
+    return _RE_AUTO.sub(sust, cuerpo)
+
+
 def construir(p):
     cuerpo = open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read()
     # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
+    cuerpo = cifras_al_dia(cuerpo)
     html = (cabeza(p) + cinta() + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))
@@ -390,23 +419,14 @@ PAGINAS = [
 ]
 
 # ------------------------------------------------------------------ noticias --
+# Vienen de contenido/noticias.json. Para publicar una nueva basta con añadirla
+# ahí (lo hace el panel) y crear su _build/paginas/<slug>.html.
 NOTICIAS = [
-    ("noticia-1", "not-1", ("Noticias", "Notícies"),
-     ("20 alojamientos ya se han sumado a la primera Km0 Week",
-      "20 allotjaments ja s'han sumat a la primera Km0 Week"),
-     "Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes."),
-    ("noticia-2", "not-2", ("Noticias", "Notícies"),
-     ("Cómo se calcula el descuento de residente (y por qué es real)",
-      "Com es calcula el descompte de resident (i per què és real)"),
-     "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba."),
-    ("noticia-3", "not-3", ("Noticias", "Notícies"),
-     ("Doce ayuntamientos se suman con actividades abiertas",
-      "Dotze ajuntaments se sumen amb activitats obertes"),
-     "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week."),
-    ("noticia-4", "not-4", ("Noticias", "Notícies"),
-     ("El pasaporte Km0: cómo funciona el sorteo de diez estancias",
-      "El passaport Km0: com funciona el sorteig de deu estades"),
-     "Tres sellos para entrar en el sorteo, cinco para la cena de clausura. Bases y calendario."),
+    (n["slug"], n["imagen"],
+     (n["seccion"]["es"], n["seccion"]["va"]),
+     (n["titulo"]["es"], n["titulo"]["va"]),
+     n["resumen"])
+    for n in contenido.NOTICIAS
 ]
 
 
@@ -433,10 +453,15 @@ def sitemap(paginas):
 
 
 def main():
+    # Primero los datos que consume el navegador, desde contenido/*.json
+    contenido.escribir_js()
     todas = PAGINAS + paginas_noticia()
     for p in todas:
         construir(p)
     sitemap(todas)
+    print("datos: %d alojamientos · %d actividades · %d plazas"
+          % (len(contenido.ALOJAMIENTOS), len(contenido.AGENDA),
+             contenido.CUPO_TOTAL))
     print("páginas generadas:", len(todas), "+ sitemap.xml + robots.txt")
 
 

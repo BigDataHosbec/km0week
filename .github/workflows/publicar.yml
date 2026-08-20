@@ -1,0 +1,100 @@
+# Publicar la web
+#
+# Cada vez que cambia el contenido, GitHub reconstruye la web entera y la
+# publica. Aquí dentro pasa exactamente lo que antes había que hacer a mano
+# desde un ordenador con Python, Node y Chromium instalados:
+#
+#   1. comprobar el contenido       python3 _build/verificar.py
+#   2. compilar las 18 páginas      python3 _build/build.py
+#   3. generar los 14 descargables  python3 _build/descargables.py
+#   4. publicar el resultado
+#
+# Tarda entre dos y cuatro minutos. Si algo falla, la web publicada NO se toca:
+# se queda la última versión buena y GitHub avisa por correo.
+
+name: Publicar la web
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:      # botón «Run workflow» para republicar sin cambiar nada
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si alguien guarda dos cambios seguidos, la segunda publicación espera a que
+# termine la primera en vez de pisarla.
+concurrency:
+  group: publicar-km0week
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    name: Construir
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el proyecto
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar lo que hace falta
+        run: |
+          python -m pip install --quiet openpyxl
+          npm install --no-audit --no-fund --silent
+
+      # Las versiones están fijadas en package.json, así que la caché sirve
+      # hasta que se cambien a propósito.
+      - name: Guardar Chromium entre publicaciones
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: chromium-${{ hashFiles('package.json') }}
+
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+
+      # -------------------------------------------------------------------
+      - name: 1 · Comprobar el contenido
+        run: python3 _build/verificar.py
+
+      - name: 2 · Compilar las páginas
+        run: python3 _build/build.py
+
+      - name: 3 · Generar los descargables
+        env:
+          PW: playwright
+        run: python3 _build/descargables.py
+
+      # -------------------------------------------------------------------
+      - name: 4 · Reunir lo que se publica
+        run: python3 _build/reunir.py
+
+      - name: Empaquetar
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _sitio
+
+  publicar:
+    name: Publicar
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - name: Poner la web en línea
+        id: despliegue
+        uses: actions/deploy-pages@v4
