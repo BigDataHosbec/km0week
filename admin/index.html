@@ -220,6 +220,39 @@ legend{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.0
   border-radius:99px;padding:.05rem .45rem}
 .orden .sep{flex:1}
 
+/* -------------------------------------------------------- cuerpo de noticia -- */
+.barra-cuerpo{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;
+  margin:0 0 .5rem;padding:.4rem;background:var(--roto);border:1px solid var(--linea);
+  border-radius:var(--r-s)}
+.barra-cuerpo .sep{flex:1}
+.leyenda{margin:.5rem 0 0;padding:.6rem .8rem;background:var(--mar-p);
+  border:1px solid #B9E0EC;border-radius:var(--r-s);font-size:12.5px;color:var(--mar-d)}
+.leyenda b{display:block;margin-bottom:.35rem}
+.leyenda table{border-collapse:collapse;width:100%}
+.leyenda td{padding:.15rem .5rem .15rem 0;vertical-align:top;line-height:1.7}
+.leyenda td:first-child{white-space:nowrap;width:1%}
+.leyenda .pista{margin:.4rem 0 0}
+#previa{width:100%;height:460px;border:1px solid var(--linea);
+  border-radius:var(--r-s);margin-top:.6rem;background:#fff}
+
+/* ------------------------------------------------------------- enlaces -- */
+.enlaces{list-style:none;margin:0;padding:0;border:1px solid var(--linea);
+  border-radius:var(--r-s);overflow:hidden}
+.enlaces li{display:flex;gap:.35rem;align-items:center;padding:.35rem .5rem;
+  border-bottom:1px solid var(--linea-2);background:#fff;flex-wrap:wrap}
+.enlaces li:last-child{border-bottom:0}
+.enlaces input{flex:1;min-width:120px;font-size:13.5px;padding:.3rem .45rem}
+
+/* --------------------------------------------------------------- galería -- */
+.galeria{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.galeria figure{margin:0;display:flex;flex-direction:column;gap:.35rem}
+.galeria img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r-s);
+  border:1px solid var(--linea);background:var(--linea-2)}
+.galeria figcaption{font-size:12px;color:var(--tinta);font-weight:600;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.galeria .ajena img{opacity:.65}
+.galeria button{align-self:flex-start}
+
 /* ------------------------------------------------------------------ fotos -- */
 .foto{display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start}
 #foto-lienzo{width:min(100%,360px);height:auto;aspect-ratio:3/2;border-radius:var(--r-s);
@@ -306,9 +339,12 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
     <button type="button" data-seccion="noticias">Noticias
       <span class="marcador oculto" id="m-noticias"></span></button>
     <button type="button" data-seccion="textos">Textos y FAQ</button>
+    <button type="button" data-seccion="imagenes">Imágenes</button>
+    <button type="button" data-seccion="edicion">Edición</button>
     <button type="button" data-seccion="traducciones">Traducciones
       <span class="marcador oculto" id="m-traducciones"></span></button>
     <button type="button" data-seccion="filtros">Filtros</button>
+    <button type="button" data-seccion="historial">Historial</button>
     <button type="button" data-seccion="revision">Revisión
       <span class="marcador oculto" id="m-revision"></span></button>
   </nav>
@@ -389,6 +425,36 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
       <div id="lista-textos"></div>
     </section>
 
+    <!-- ---------------------------------------------------------- IMÁGENES -->
+    <section id="s-imagenes" class="oculto" aria-labelledby="t-imagenes">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-imagenes">Imágenes</h2>
+          <p class="sub" id="resumen-imagenes"></p>
+        </div>
+      </div>
+      <div class="nota nota-avi">
+        <span><b>Ojo con lo que hay ahora</b>Las imágenes de la web son
+        ilustraciones generadas por ordenador, no fotografía de los
+        establecimientos. Mientras sea así, no se pueden mandar a un medio como
+        «fotos de los alojamientos adheridos».</span>
+      </div>
+      <div id="lista-imagenes"></div>
+    </section>
+
+    <!-- ----------------------------------------------------------- EDICIÓN -->
+    <section id="s-edicion" class="oculto" aria-labelledby="t-edicion">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-edicion">La edición</h2>
+          <p class="sub">Fechas, contacto, redes, menú, pie y formularios.</p>
+        </div>
+        <span class="sep"></span>
+        <button type="button" class="b-1" id="guardar-edicion">Guardar y publicar</button>
+      </div>
+      <div id="editor-edicion"></div>
+    </section>
+
     <!-- ------------------------------------------------------ TRADUCCIONES -->
     <section id="s-traducciones" class="oculto" aria-labelledby="t-traducciones">
       <div class="cabecera-seccion">
@@ -419,6 +485,24 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
         <button type="button" class="b-1" id="guardar-filtros">Guardar y publicar</button>
       </div>
       <div id="editor-filtros"></div>
+    </section>
+
+    <!-- --------------------------------------------------------- HISTORIAL -->
+    <section id="s-historial" class="oculto" aria-labelledby="t-historial">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-historial">Historial de cambios</h2>
+          <p class="sub">Lo último que se ha tocado, y quién lo tocó.</p>
+        </div>
+        <span class="sep"></span>
+        <button type="button" class="b-2" id="refrescar-historial">Actualizar</button>
+      </div>
+      <div class="nota nota-inf">
+        <span><b>Deshacer</b>Devuelve al estado justo anterior a ese cambio, solo
+        en lo que ese cambio tocó. Lo que se haya hecho después sobre otras cosas
+        se queda como está. Nada se borra nunca: deshacer también queda anotado.</span>
+      </div>
+      <div id="lista-historial"></div>
     </section>
 
     <!-- ---------------------------------------------------------- REVISIÓN -->
@@ -461,6 +545,7 @@ const RUTAS = {
   agenda:       "contenido/agenda.json",
   configuracion:"contenido/configuracion.json",
   filtros:      "contenido/filtros.json",
+  navegacion:   "contenido/navegacion.json",
   noticias:     "contenido/noticias.json"
 };
 
@@ -684,8 +769,8 @@ $("#salir").addEventListener("click", () => {
 /* ==========================================================================
    5 · Navegación
    ========================================================================== */
-const SECCIONES = ["alojamientos", "agenda", "noticias", "textos", "traducciones",
-                   "filtros", "revision"];
+const SECCIONES = ["alojamientos", "agenda", "noticias", "textos", "imagenes",
+                   "edicion", "traducciones", "filtros", "historial", "revision"];
 let seccionActual = "alojamientos";
 
 function irA(nombre){
@@ -696,6 +781,9 @@ function irA(nombre){
   if (nombre === "revision") pintarRevision();
   if (nombre === "noticias") pintarNoticias();
   if (nombre === "textos") pintarTextos();
+  if (nombre === "imagenes") pintarImagenes();
+  if (nombre === "edicion") pintarEdicion();
+  if (nombre === "historial") pintarHistorial();
   if (nombre === "traducciones") pintarTraducciones();
   if (nombre === "filtros") pintarFiltros();
   location.hash = nombre;
@@ -1494,6 +1582,43 @@ async function borrarActividad(indice){
    ========================================================================== */
 const COLORES = [["", "Gris"], ["mar", "Azul"], ["verde", "Verde"], ["terra", "Terracota"]];
 
+/* --------------------------------------------------------------------------
+   El cuerpo se escribe en texto normal con seis marcas. No es un editor de
+   los de negrita-y-cursiva a propósito: el texto tiene que poder traducirse
+   párrafo a párrafo y salir con las clases exactas de la web (la cita, la
+   tabla). Un editor libre generaría HTML cualquiera y rompería las dos cosas.
+   A cambio: botones que ponen las marcas, la leyenda al lado y vista previa.
+   -------------------------------------------------------------------------- */
+const BOTONES_CUERPO = [
+  ["Subtítulo", "bloque", "## "],
+  ["Cita", "bloque", "> "],
+  ["Lista", "bloque", "- "],
+  ["Numerada", "bloque", "1. "],
+  ["Enlace", "enlace", ""],
+  ["Tabla", "tabla", ""]
+];
+
+const BARRA_CUERPO =
+  '<div class="barra-cuerpo" role="group" aria-label="Dar formato al texto">' +
+  BOTONES_CUERPO.map((b, i) =>
+    '<button type="button" class="b-2 b-min" data-marca="' + i + '">' +
+    escapar(b[0]) + '</button>').join("") +
+  '<span class="sep"></span>' +
+  '<span class="pista" style="margin:0">Se aplica donde tengas el cursor</span>' +
+  '</div>';
+
+const LEYENDA_CUERPO =
+  '<div class="leyenda"><b>Cómo se escribe</b>' +
+  '<table><tbody>' +
+  '<tr><td><code>## Un subtítulo</code></td><td>Un subtítulo</td></tr>' +
+  '<tr><td><code>&gt; Una frase</code></td><td>Una cita destacada</td></tr>' +
+  '<tr><td><code>- algo</code></td><td>Lista con viñetas (una por línea)</td></tr>' +
+  '<tr><td><code>1. algo</code></td><td>Lista numerada</td></tr>' +
+  '<tr><td><code>[texto](pagina.html)</code></td><td>Un enlace</td></tr>' +
+  '<tr><td><code>| Col | Col |</code><br><code>|---|---|</code></td><td>Una tabla</td></tr>' +
+  '</tbody></table>' +
+  '<p class="pista">Una línea en blanco separa párrafos.</p></div>';
+
 const AYUDA_CUERPO =
   "Una línea en blanco separa párrafos. Además puedes usar: " +
   "<code>## Subtítulo</code> · <code>&gt; Una cita destacada</code> · " +
@@ -1597,7 +1722,13 @@ function editarNoticia(indice){
     '<fieldset><legend>El texto</legend>' +
       campoBi("n-entradilla", "Entradilla", n.entradilla,
               { filas: 3, pista: "El primer párrafo destacado del artículo." }) +
-      campoBi("n-cuerpo", "Cuerpo", n.cuerpo, { filas: 14, pista: AYUDA_CUERPO }) +
+      BARRA_CUERPO +
+      campoBi("n-cuerpo", "Cuerpo", n.cuerpo, { filas: 14 }) +
+      LEYENDA_CUERPO +
+      '<div class="campo"><button type="button" class="b-2" id="ver-previa">' +
+        'Ver cómo va a quedar</button>' +
+        '<iframe id="previa" class="oculto" title="Vista previa de la noticia"></iframe>' +
+      '</div>' +
     '</fieldset>' +
 
     '<fieldset><legend>Ficha</legend>' +
@@ -1636,6 +1767,7 @@ function editarNoticia(indice){
   });
 
   montarFoto(n.imagen);
+  montarCuerpo();
 
   const fSlug = $("#n-slug"), fTit = $("#n-titulo-es");
   let automatico = nueva;
@@ -1643,6 +1775,110 @@ function editarNoticia(indice){
   fTit.addEventListener("input", () => {
     if (automatico) fSlug.value = resbalar(fTit.value);
   });
+}
+
+/* Los mismos seis bloques que entiende _build/build.py, para poder enseñar
+   aquí exactamente lo que se va a publicar. */
+function cuerpoAHtml(texto){
+  const esc = t => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+                            .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const enlaces = t => esc(t).replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,
+    '<a href="$2">$1</a>');
+  return (texto || "").trim().split(/\n\s*\n/).filter(b => b.trim()).map(b => {
+    const lineas = b.split("\n").map(l => l.trim()).filter(Boolean);
+    if (b.startsWith("## ")) return "<h2>" + esc(b.slice(3).trim()) + "</h2>";
+    if (b.startsWith("> "))
+      return '<blockquote class="cita">' + esc(b.slice(2).trim()) + "</blockquote>";
+    if (lineas[0].indexOf("|") === 0) {
+      const filas = lineas.filter(l => !/^\|[\s\-|:]+\|$/.test(l));
+      const cel = l => l.trim().replace(/^\||\|$/g, "").split("|").map(c => c.trim());
+      let h = '<div class="tabla-envolt mt-1"><table class="tabla">';
+      filas.forEach((f, i) => {
+        const tag = i === 0 ? "th" : "td";
+        if (i === 0) h += "<thead>"; else if (i === 1) h += "<tbody>";
+        h += "<tr>" + cel(f).map(c => "<" + tag + ">" + esc(c) + "</" + tag + ">").join("") + "</tr>";
+        if (i === 0) h += "</thead>";
+      });
+      return h + (filas.length > 1 ? "</tbody>" : "") + "</table></div>";
+    }
+    const vinetas = lineas.every(l => l.indexOf("- ") === 0);
+    const nums = lineas.every(l => /^\d+\.\s/.test(l));
+    if (vinetas || nums) {
+      const et = nums ? "ol" : "ul";
+      return "<" + et + ">" + lineas.map(l =>
+        "<li>" + enlaces(l.replace(/^(- |\d+\.\s*)/, "")) + "</li>").join("") + "</" + et + ">";
+    }
+    return "<p>" + enlaces(lineas.join(" ")) + "</p>";
+  }).join("\n");
+}
+
+function montarCuerpo(){
+  const barra = $(".barra-cuerpo"); if (!barra) return;
+  const areas = [$("#n-cuerpo-es"), $("#n-cuerpo-va")];
+  let ultimo = areas[0];
+  areas.forEach(a => a && a.addEventListener("focus", () => { ultimo = a; }));
+
+  $$(".barra-cuerpo [data-marca]").forEach(b =>
+    b.addEventListener("click", () => {
+      const [, tipo, marca] = BOTONES_CUERPO[Number(b.dataset.marca)];
+      const a = ultimo || areas[0];
+      const ini = a.selectionStart, fin = a.selectionEnd;
+      const sel = a.value.slice(ini, fin);
+      let texto, cursor;
+      if (tipo === "enlace") {
+        texto = "[" + (sel || "texto del enlace") + "](pagina.html)";
+        cursor = ini + texto.length;
+      } else if (tipo === "tabla") {
+        texto = "\n\n| Columna | Columna |\n|---|---|\n| dato | dato |\n";
+        cursor = ini + texto.length;
+      } else {
+        // Actúa sobre la línea donde está el cursor: le pone esta marca y le
+        // quita la que tuviera. Si la línea ya era de este tipo, la deja en
+        // párrafo normal, para poder deshacerlo con el mismo botón.
+        const arranque = a.value.lastIndexOf("\n", ini - 1) + 1;
+        let final = a.value.indexOf("\n", arranque);
+        if (final < 0) final = a.value.length;
+        const linea = a.value.slice(arranque, final);
+        const limpia = linea.replace(/^(##\s+|>\s+|-\s+|\d+\.\s+)/, "");
+        const yaEra = linea !== limpia &&
+                      linea.slice(0, marca.length).replace(/\d+\./, "1.") === marca;
+        const nueva = yaEra ? limpia : marca + limpia;
+        a.value = a.value.slice(0, arranque) + nueva + a.value.slice(final);
+        a.focus();
+        a.selectionStart = a.selectionEnd = arranque + nueva.length;
+        a.dispatchEvent(new Event("input", { bubbles: true }));
+        return;
+      }
+      a.value = a.value.slice(0, ini) + texto + a.value.slice(fin);
+      a.focus();
+      a.selectionStart = a.selectionEnd = cursor;
+      a.dispatchEvent(new Event("input", { bubbles: true }));
+    }));
+
+  const marco = $("#previa"), boton = $("#ver-previa");
+  function refrescar(){
+    if (marco.classList.contains("oculto")) return;
+    const html = cuerpoAHtml($("#n-cuerpo-es").value);
+    marco.srcdoc =
+      '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">' +
+      '<link rel="stylesheet" href="../assets/css/km0.css">' +
+      '<style>body{margin:0;padding:1.2rem;background:#fff}' +
+      '.prosa{max-width:none}</style></head><body>' +
+      '<article class="prosa">' +
+      '<p class="lede">' + escapar($("#n-entradilla-es").value) + '</p>' +
+      html + '</article></body></html>';
+  }
+  boton.addEventListener("click", () => {
+    marco.classList.toggle("oculto");
+    boton.textContent = marco.classList.contains("oculto")
+      ? "Ver cómo va a quedar" : "Ocultar la vista previa";
+    refrescar();
+  });
+  let espera = null;
+  [$("#n-cuerpo-es"), $("#n-entradilla-es")].forEach(a => a &&
+    a.addEventListener("input", () => {
+      clearTimeout(espera); espera = setTimeout(refrescar, 250);
+    }));
 }
 
 function recogerNoticia(base){
@@ -1900,7 +2136,400 @@ $("#guardar-textos").addEventListener("click", async () => {
 });
 
 /* ==========================================================================
-   14 · Traducciones sin revisar
+   14 · Imágenes de la web
+   ========================================================================== */
+const FAMILIAS = [
+  { pre: "cab-",  titulo: "Cabeceras de página", medida: [2000, 900],
+    ayuda: "La franja de arriba de cada página." },
+  { pre: "prov-", titulo: "Provincias", medida: [1200, 800],
+    ayuda: "El bloque de territorio de la portada." },
+  { pre: "tema-", titulo: "Experiencias", medida: [1200, 800],
+    ayuda: "Las once temáticas." },
+  { pre: "idea-", titulo: "La iniciativa", medida: [1200, 800],
+    ayuda: "Los tres bloques de «Qué es»." },
+  { pre: "alo-",  titulo: "Alojamientos", medida: [1200, 800],
+    ayuda: "Se cambian desde la ficha de cada alojamiento.", ajena: "alojamientos" },
+  { pre: "not-",  titulo: "Noticias", medida: [1200, 800],
+    ayuda: "Se cambian desde cada noticia.", ajena: "noticias" }
+];
+
+let imagenes = null;
+
+async function pintarImagenes(){
+  if (!imagenes) {
+    $("#lista-imagenes").innerHTML = "<p class='vacio'>Cargando…</p>";
+    try {
+      const j = await api("/contents/assets/img/foto?ref=main&t=" + Date.now());
+      imagenes = j.filter(x => x.type === "file" && /\.(webp|jpg|jpeg|png)$/i.test(x.name))
+                  .map(x => x.name).sort();
+    } catch (e) {
+      $("#lista-imagenes").innerHTML =
+        "<div class='nota nota-mal'><span><b>No se han podido listar</b>" +
+        escapar(e.message) + "</span></div>";
+      return;
+    }
+  }
+  $("#resumen-imagenes").textContent = imagenes.length + " imágenes en la web";
+  const sello = Date.now();
+  $("#lista-imagenes").innerHTML = FAMILIAS.map(f => {
+    const suyas = imagenes.filter(n => n.indexOf(f.pre) === 0);
+    if (!suyas.length) return "";
+    return '<div class="tarjeta"><div class="cabecera-seccion" style="margin-bottom:.7rem">' +
+      '<div><h3 style="font-size:16px">' + escapar(f.titulo) + '</h3>' +
+      '<p class="sub">' + escapar(f.ayuda) + ' · ' + f.medida[0] + '×' + f.medida[1] +
+      '</p></div></div>' +
+      '<div class="galeria">' + suyas.map(n =>
+        '<figure' + (f.ajena ? ' class="ajena"' : '') + '>' +
+          '<img src="../assets/img/foto/' + n + '?t=' + sello + '" alt="" loading="lazy">' +
+          '<figcaption>' + escapar(n.replace(/\.\w+$/, "").replace(f.pre, "")) + '</figcaption>' +
+          (f.ajena
+            ? '<button type="button" class="b-3 b-min" data-ir="' + f.ajena + '">Ir a ' + f.ajena + '</button>'
+            : '<button type="button" class="b-2 b-min" data-img="' + n + '" ' +
+              'data-w="' + f.medida[0] + '" data-h="' + f.medida[1] + '">Cambiar</button>') +
+        '</figure>').join("") + '</div></div>';
+  }).join("");
+
+  $$("#lista-imagenes [data-img]").forEach(b =>
+    b.addEventListener("click", () => cambiarImagen(b.dataset.img,
+      Number(b.dataset.w), Number(b.dataset.h))));
+  $$("#lista-imagenes [data-ir]").forEach(b =>
+    b.addEventListener("click", () => irA(b.dataset.ir)));
+}
+
+function cambiarImagen(nombre, ancho, alto){
+  abrirHoja("Cambiar «" + nombre + "»",
+    '<div class="campo"><span class="et">Imagen nueva</span>' +
+      '<div class="foto">' +
+        '<canvas id="foto-lienzo" width="480" height="' +
+          Math.round(480 * alto / ancho) + '" aria-label="Vista previa del recorte"></canvas>' +
+        '<div class="foto-lado">' +
+          '<p class="pista" id="foto-estado">Se recortará a ' + ancho + '×' + alto + '.</p>' +
+          '<label class="b-2" for="foto-archivo" style="display:inline-block;' +
+            'padding:.5rem .9rem;cursor:pointer">Elegir una imagen…</label>' +
+          '<input type="file" id="foto-archivo" accept="image/*" class="vo">' +
+          '<p class="pista">Arrastra sobre la vista previa para elegir el encuadre.</p>' +
+        '</div>' +
+      '</div>' +
+      '<p class="pista">Sustituye el archivo <code>' + escapar(nombre) + '</code>. ' +
+      'La imagen anterior queda en el historial.</p>' +
+    '</div>',
+    { aceptar: "Subir y publicar",
+      guardar: async () => {
+        if (!foto) { alert("Elige antes una imagen."); return; }
+        const fmt = formatoFoto();
+        if (fmt.ext !== "webp" && /\.webp$/i.test(nombre)) {
+          pintarFallos({ errores: ["Este navegador no sabe guardar en webp. " +
+            "Sube la imagen desde Chrome o Edge."], avisos: [] });
+          return;
+        }
+        const boton = $("#hoja-aceptar");
+        boton.disabled = true; boton.textContent = "Subiendo…";
+        try {
+          const blob = await aBlob(recortar(foto.img, ancho, alto, foto.foco), fmt);
+          await subirFoto("assets/img/foto/" + nombre, blob, "Imagen «" + nombre + "»");
+          foto = null;
+          hoja.close();
+          avisar("ok", "<span><b>Imagen cambiada</b>La web se está recompilando: " +
+            "en un minuto y medio estará publicada.</span>", 25);
+          pintarEstado("va", "publicando…");
+          vigilarPublicacion();
+          pintarImagenes();
+        } catch (e) {
+          pintarFallos({ errores: ["No se ha podido subir: " + e.message], avisos: [] });
+        } finally {
+          boton.disabled = false; boton.textContent = "Subir y publicar";
+        }
+      } });
+  montarFoto(nombre);
+}
+
+/* ==========================================================================
+   15 · La edición: fechas, contacto, menú y pie
+   ========================================================================== */
+const REDES = [["instagram", "Instagram"], ["linkedin", "LinkedIn"],
+               ["facebook", "Facebook"], ["x", "X"], ["youtube", "YouTube"]];
+
+function filaEnlace(grupo, i, e){
+  return '<li data-i="' + i + '">' +
+    '<input type="text" data-c="url" value="' + escapar(e.url || "") +
+      '" placeholder="pagina.html" aria-label="Dirección" style="max-width:190px">' +
+    '<input type="text" data-c="es" value="' + escapar(e.es || "") +
+      '" placeholder="En castellano" aria-label="Texto en castellano">' +
+    '<input type="text" data-c="va" value="' + escapar(e.va || "") +
+      '" placeholder="En valencià" aria-label="Texto en valencià">' +
+    '<button type="button" class="b-3 b-min" data-sube aria-label="Subir">↑</button>' +
+    '<button type="button" class="b-3 b-min" data-baja aria-label="Bajar">↓</button>' +
+    '<button type="button" class="b-3 b-min" data-quita aria-label="Quitar">✕</button>' +
+    '</li>';
+}
+
+function listaEnlaces(id, titulo, enlaces){
+  return '<div class="campo"><span class="et">' + escapar(titulo) + '</span>' +
+    '<ol class="enlaces" id="' + id + '">' +
+      (enlaces || []).map((e, i) => filaEnlace(id, i, e)).join("") +
+    '</ol>' +
+    '<button type="button" class="b-2 b-min" data-anade="' + id + '" ' +
+      'style="margin-top:.4rem">+ Añadir enlace</button></div>';
+}
+
+function pintarEdicion(){
+  const c = D.configuracion, n = D.navegacion;
+  $("#editor-edicion").innerHTML =
+    '<div class="tarjeta"><h3 style="font-size:16px">Fechas de la edición</h3>' +
+      '<p class="sub" style="margin:.2rem 0 .8rem">De aquí salen el contador, ' +
+      'la agenda, el pie y los descargables.</p>' +
+      '<div class="fila fila-2">' +
+        campo("c-inicio", "Primer día", (c.fechaInicio || "").slice(0, 10), { tipo: "date" }) +
+        campo("c-fin", "Último día", (c.fechaFin || "").slice(0, 10), { tipo: "date" }) +
+      '</div>' +
+      campoBi("c-fechas", "Cómo se lee", c.fechasTexto,
+              { pista: "Lo que se ve escrito. Ej.: «13 – 29 de noviembre de 2026»." }) +
+      '<div id="aviso-fechas"></div>' +
+    '</div>' +
+
+    '<div class="tarjeta"><h3 style="font-size:16px">Contacto</h3>' +
+      '<div class="fila fila-3">' +
+        campo("c-email", "Correo", c.emailContacto) +
+        campo("c-tel", "Teléfono", c.telefonoContacto) +
+        campo("c-hosbec", "Web de HOSBEC", c.webHosbec) +
+      '</div>' +
+      '<div class="fila fila-2">' +
+        REDES.map(r => campo("c-red-" + r[0], r[1], (n.redes || {})[r[0]] || "",
+                             { tipo: "url", placeholder: "https://…" })).join("") +
+      '</div>' +
+    '</div>' +
+
+    '<div class="tarjeta"><h3 style="font-size:16px">Menú y pie</h3>' +
+      '<p class="sub" style="margin:.2rem 0 .8rem">Los enlaces de arriba y de ' +
+      'abajo. Uno que empiece por <code>http</code> se abre en pestaña nueva.</p>' +
+      listaEnlaces("nav-menu", "Menú de arriba", n.menu) +
+      (n.pie || []).map((col, i) =>
+        '<div class="fila fila-2" style="align-items:end">' +
+          campo("pie-tit-" + i + "-es", "Título de la columna " + (i + 1),
+                (col.titulo || {}).es || "") +
+          campo("pie-tit-" + i + "-va", "…en valencià", (col.titulo || {}).va || "") +
+        '</div>' + listaEnlaces("nav-pie-" + i, "Enlaces de esa columna", col.enlaces)
+      ).join("") +
+      listaEnlaces("nav-legal", "Enlaces legales del pie", n.legal) +
+    '</div>' +
+
+    '<div class="tarjeta"><h3 style="font-size:16px">Formularios</h3>' +
+      '<p class="sub" style="margin:.2rem 0 .8rem">A dónde van el boletín y ' +
+      '«Suma tu alojamiento». No lo toques si no sabes qué es.</p>' +
+      campo("c-endpoint", "Dirección del Apps Script", c.endpointFormularios,
+            { pista: "Termina en <code>/exec</code>. Si se deja vacía, los envíos " +
+                     "abren el correo del visitante en vez de guardarse." }) +
+      campo("c-token", "Contraseña anti-spam", c.tokenFormularios,
+            { pista: "Tiene que ser la misma que hay en el Apps Script." }) +
+      campo("c-dominio", "Dirección de la web", c.dominio,
+            { pista: "Sin barra al final. Cambiarla sin más deja los enlaces " +
+                     "de compartir apuntando a un sitio que no existe." }) +
+    '</div>';
+
+  const mirarFechas = () => {
+    const ini = val("c-inicio"), fin = val("c-fin");
+    if (!ini || !fin) return;
+    const dias = Math.round((soloFecha(fin) - soloFecha(ini)) / 86400000) + 1;
+    const fuera = D.agenda.filter(a => a.dia > dias);
+    $("#aviso-fechas").innerHTML =
+      '<div class="nota nota-' + (fuera.length ? "avi" : "inf") + '"><span>' +
+      '<b>' + dias + ' días de edición</b>' +
+      (fuera.length
+        ? fuera.length + " actividad(es) quedarían fuera del calendario y " +
+          "dejarían de verse: " + fuera.map(a => escapar(a.titulo.es)).join(", ") + "."
+        : "Todas las actividades siguen dentro.") + '</span></div>';
+  };
+  ["c-inicio", "c-fin"].forEach(id => $("#" + id).addEventListener("change", mirarFechas));
+  mirarFechas();
+
+  $$("#editor-edicion [data-anade]").forEach(b =>
+    b.addEventListener("click", () => {
+      const ol = $("#" + b.dataset.anade);
+      ol.insertAdjacentHTML("beforeend",
+        filaEnlace(b.dataset.anade, ol.children.length, { url: "", es: "", va: "" }));
+      conectarEnlaces();
+      const ultimo = ol.lastElementChild.querySelector("input");
+      if (ultimo) ultimo.focus();
+    }));
+  conectarEnlaces();
+}
+
+function conectarEnlaces(){
+  $$("#editor-edicion .enlaces li button").forEach(b => {
+    if (b.dataset.listo) return;
+    b.dataset.listo = "1";
+    b.addEventListener("click", () => {
+      const li = b.closest("li");
+      if ("quita" in b.dataset) { li.remove(); return; }
+      const otro = "sube" in b.dataset ? li.previousElementSibling : li.nextElementSibling;
+      if (!otro) return;
+      if ("sube" in b.dataset) li.parentNode.insertBefore(li, otro);
+      else li.parentNode.insertBefore(otro, li);
+      b.focus();
+    });
+  });
+}
+
+function leerEnlaces(id){
+  return $$("#" + id + " li").map(li => ({
+    url: $('[data-c="url"]', li).value.trim(),
+    es: $('[data-c="es"]', li).value.trim(),
+    va: $('[data-c="va"]', li).value.trim()
+  })).filter(e => e.url && e.es);
+}
+
+$("#refrescar-historial").addEventListener("click", pintarHistorial);
+
+$("#guardar-edicion").addEventListener("click", async () => {
+  const antesC = JSON.parse(JSON.stringify(D.configuracion));
+  const antesN = JSON.parse(JSON.stringify(D.navegacion));
+  const c = D.configuracion, n = D.navegacion;
+
+  const hora = (f, cola) => f ? f + cola : "";
+  c.fechaInicio = hora(val("c-inicio"), "T00:00:00+01:00");
+  c.fechaFin = hora(val("c-fin"), "T23:59:59+01:00");
+  c.fechasTexto = bi("c-fechas");
+  c.emailContacto = val("c-email");
+  c.telefonoContacto = val("c-tel");
+  c.webHosbec = val("c-hosbec");
+  c.endpointFormularios = val("c-endpoint");
+  c.tokenFormularios = val("c-token");
+  c.dominio = val("c-dominio").replace(/\/$/, "");
+
+  n.redes = {};
+  REDES.forEach(r => { n.redes[r[0]] = val("c-red-" + r[0]); });
+  n.menu = leerEnlaces("nav-menu");
+  n.legal = leerEnlaces("nav-legal");
+  n.pie = (n.pie || []).map((col, i) => ({
+    titulo: { es: val("pie-tit-" + i + "-es"), va: val("pie-tit-" + i + "-va") },
+    enlaces: leerEnlaces("nav-pie-" + i)
+  }));
+
+  const fallos = [];
+  if (!/^\d{4}-\d{2}-\d{2}/.test(c.fechaInicio)) fallos.push("Falta el primer día.");
+  if (c.fechaFin <= c.fechaInicio) fallos.push("El último día no puede ir antes del primero.");
+  if (c.emailContacto.indexOf("@") < 0) fallos.push("El correo no parece un correo.");
+  if (!/^https:\/\//.test(c.dominio)) fallos.push("La dirección de la web debe empezar por https://");
+  if (!n.menu.length) fallos.push("El menú no puede quedarse vacío.");
+  if (fallos.length) {
+    D.configuracion = antesC; D.navegacion = antesN;
+    avisar("mal", "<span><b>Hay que arreglar esto</b><ul>" +
+      fallos.map(f => "<li>" + escapar(f) + "</li>").join("") + "</ul></span>");
+    pintarEdicion();
+    return;
+  }
+
+  const boton = $("#guardar-edicion");
+  boton.disabled = true;
+  const ok1 = await guardar("configuracion", "Datos de la edición y contacto");
+  const ok2 = ok1 && await guardar("navegacion", "Menú, pie y redes");
+  boton.disabled = false;
+  if (!ok1 || !ok2) { D.configuracion = antesC; D.navegacion = antesN; }
+  prepararEdicion();
+  pintarEdicion(); pintarAgenda(); contarAvisos();
+});
+
+/* ==========================================================================
+   16 · Historial y deshacer
+   ========================================================================== */
+const EDITABLES = ["contenido/", "_build/paginas/", "assets/img/foto/"];
+
+function quienDe(mensaje){
+  const m = /(?:Guardado|Subida) desde el panel por (.+?)\.?$/m.exec(mensaje || "");
+  return m ? m[1] : "";
+}
+
+async function pintarHistorial(){
+  $("#lista-historial").innerHTML = "<p class='vacio'>Cargando…</p>";
+  let commits;
+  try {
+    commits = await api("/commits?per_page=25&sha=main&t=" + Date.now());
+  } catch (e) {
+    $("#lista-historial").innerHTML =
+      "<div class='nota nota-mal'><span><b>No se ha podido leer el historial</b>" +
+      escapar(e.message) + "</span></div>";
+    return;
+  }
+  $("#lista-historial").innerHTML = '<div class="lista">' + commits.map((c, i) => {
+    const men = c.commit.message || "";
+    const titulo = men.split("\n")[0];
+    const persona = quienDe(men);
+    const cuando = new Date(c.commit.author.date);
+    const delPanel = !!persona;
+    return '<div class="item" style="cursor:default">' +
+      '<span><span class="nom">' + escapar(titulo) + '</span>' +
+      '<span class="det">' +
+        (persona ? escapar(persona) + " · " : "cambio de código · ") +
+        cuando.toLocaleString("es-ES", { day: "2-digit", month: "2-digit",
+          year: "numeric", hour: "2-digit", minute: "2-digit" }) +
+      '</span></span>' +
+      '<span class="cifra">' +
+        (delPanel && i > 0
+          ? '<button type="button" class="b-2 b-min" data-deshacer="' + c.sha + '" ' +
+            'data-que="' + escapar(titulo) + '">Deshacer</button>'
+          : (i === 0 && delPanel
+              ? '<button type="button" class="b-2 b-min" data-deshacer="' + c.sha + '" ' +
+                'data-que="' + escapar(titulo) + '">Deshacer</button>'
+              : '<span class="pista">—</span>')) +
+      '</span></div>';
+  }).join("") + '</div>';
+
+  $$("#lista-historial [data-deshacer]").forEach(b =>
+    b.addEventListener("click", () => deshacer(b.dataset.deshacer, b.dataset.que, b)));
+}
+
+async function deshacer(sha, que, boton){
+  if (!confirm("¿Deshacer «" + que + "»?\n\nSe vuelve a dejar el contenido como " +
+               "estaba justo antes de ese cambio. Los cambios posteriores sobre " +
+               "otras cosas no se tocan.")) return;
+  boton.disabled = true; boton.textContent = "Deshaciendo…";
+  try {
+    const c = await api("/commits/" + sha);
+    const padre = (c.parents || [])[0];
+    if (!padre) throw new Error("Ese cambio no tiene nada anterior.");
+    const tocados = (c.files || []).filter(f =>
+      EDITABLES.some(p => f.filename.indexOf(p) === 0));
+    if (!tocados.length) throw new Error("Ese cambio no toca contenido editable.");
+
+    for (const f of tocados) {
+      let antes = null;
+      try { antes = await api("/contents/" + f.filename + "?ref=" + padre.sha); }
+      catch (e) { antes = null; }          // no existía: hay que borrarlo
+      let ahora = null;
+      try { ahora = await api("/contents/" + f.filename + "?ref=main"); }
+      catch (e) { ahora = null; }
+
+      if (antes === null && ahora) {
+        await api("/contents/" + f.filename, { method: "DELETE",
+          body: JSON.stringify({ message: "Deshacer: se quita " + f.filename +
+            "\n\nGuardado desde el panel por " + quien + ".",
+            sha: ahora.sha, branch: "main" }) });
+      } else if (antes) {
+        const cuerpo = { message: "Deshacer «" + que + "»\n\nGuardado desde el panel por " +
+                                  quien + ".",
+                         content: antes.content.replace(/\n/g, ""), branch: "main" };
+        if (ahora) cuerpo.sha = ahora.sha;
+        await api("/contents/" + f.filename, { method: "PUT", body: JSON.stringify(cuerpo) });
+      }
+    }
+    avisar("ok", "<span><b>Deshecho</b>" + escapar(que) +
+      ". La web se está recompilando.</span>", 25);
+    pintarEstado("va", "publicando…");
+    vigilarPublicacion();
+    // volver a leer todo, que ha cambiado por debajo
+    await Promise.all(Object.keys(RUTAS).map(leerArchivo));
+    imagenes = null; paginaActual = null;
+    prepararEdicion(); pintarAlojamientos(); pintarAgenda(); pintarNoticias();
+    contarAvisos(); pintarHistorial();
+  } catch (e) {
+    avisar("mal", "<span><b>No se ha podido deshacer</b>" + escapar(e.message) +
+      "</span>");
+    boton.disabled = false; boton.textContent = "Deshacer";
+  }
+}
+
+/* ==========================================================================
+   17 · Traducciones sin revisar
    ========================================================================== */
 
 /* Recorre el contenido y devuelve cada pareja {es, va} que hoy se publica

@@ -35,39 +35,15 @@ FECHAS_ES = contenido.FECHAS_ES
 FECHAS_VA = contenido.FECHAS_VA
 
 # ---------------------------------------------------------------- navegación --
-MENU = [
-    ("index.html",        "Inicio",         "Inici"),
-    ("iniciativa.html",   "La iniciativa",  "La iniciativa"),
-    ("alojamientos.html", "Alojamientos",   "Allotjaments"),
-    ("mapa.html",         "Mapa",           "Mapa"),
-    ("agenda.html",       "Agenda",         "Agenda"),
-    ("noticias.html",     "Noticias",       "Notícies"),
-    ("faq.html",          "Preguntas",      "Preguntes"),
-]
-
-PIE_COLS = [
-    ("La edición", "L'edició", [
-        ("iniciativa.html", "La iniciativa", "La iniciativa"),
-        ("alojamientos.html", "Alojamientos", "Allotjaments"),
-        ("mapa.html", "Mapa y cercanía", "Mapa i proximitat"),
-        ("agenda.html", "Agenda", "Agenda"),
-        ("noticias.html", "Noticias", "Notícies"),
-    ]),
-    ("Alojamientos", "Allotjaments", [
-        ("suma.html", "Suma tu alojamiento", "Suma el teu allotjament"),
-        ("suma.html#requisitos", "Requisitos", "Requisits"),
-        ("descargas.html", "Materiales y kit", "Materials i kit"),
-        ("prensa.html", "Sala de prensa", "Sala de premsa"),
-        ("https://hosbec.com", "hosbec.com", "hosbec.com"),
-    ]),
-]
-
-PIE_LEGAL = [
-    ("aviso-legal.html", "Aviso legal", "Avís legal"),
-    ("privacidad.html", "Privacidad", "Privacitat"),
-    ("cookies.html", "Cookies", "Galetes"),
-    ("faq.html", "Preguntas frecuentes", "Preguntes freqüents"),
-]
+# El menú, las columnas del pie, los enlaces legales y las redes salen de
+# contenido/navegacion.json, que se edita en el panel.
+NAV = contenido.NAVEGACION
+MENU = [(e["url"], e["es"], e["va"]) for e in NAV["menu"]]
+PIE_COLS = [(c["titulo"]["es"], c["titulo"]["va"],
+             [(e["url"], e["es"], e["va"]) for e in c["enlaces"]])
+            for c in NAV["pie"]]
+PIE_LEGAL = [(e["url"], e["es"], e["va"]) for e in NAV["legal"]]
+REDES = NAV.get("redes", {})
 
 
 # ------------------------------------------------------------------- plantilla --
@@ -206,19 +182,19 @@ def pie(p):
     </div>
     <div class="foot-redes">
       <span class="body-sm" data-va="Segueix HOSBEC">Sigue a HOSBEC</span>
-      <a href="https://www.instagram.com/hosbeconline/" target="_blank" rel="noopener" aria-label="Instagram de HOSBEC" title="Instagram">
+      <a href="{REDES.get('instagram', '')}" target="_blank" rel="noopener" aria-label="Instagram de HOSBEC" title="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
       </a>
-      <a href="https://www.linkedin.com/company/hosbeconline/" target="_blank" rel="noopener" aria-label="LinkedIn de HOSBEC" title="LinkedIn">
+      <a href="{REDES.get('linkedin', '')}" target="_blank" rel="noopener" aria-label="LinkedIn de HOSBEC" title="LinkedIn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5v6M7.5 7.6v.1M11.5 16.5v-6M11.5 13.2c0-1.5.9-2.4 2.2-2.4s2.3.9 2.3 2.6v3.1"/></svg>
       </a>
-      <a href="https://www.facebook.com/Hosbeconline/" target="_blank" rel="noopener" aria-label="Facebook de HOSBEC" title="Facebook">
+      <a href="{REDES.get('facebook', '')}" target="_blank" rel="noopener" aria-label="Facebook de HOSBEC" title="Facebook">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.4 20.5v-6.9h2.3l.35-2.7h-2.65V9.2c0-.78.22-1.31 1.34-1.31h1.43V5.47c-.25-.03-1.1-.11-2.09-.11-2.07 0-3.48 1.26-3.48 3.58v2h-2.34v2.7h2.34v6.86z"/></svg>
       </a>
-      <a href="https://x.com/hosbeconline" target="_blank" rel="noopener" aria-label="X de HOSBEC" title="X">
+      <a href="{REDES.get('x', '')}" target="_blank" rel="noopener" aria-label="X de HOSBEC" title="X">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg>
       </a>
-      <a href="https://www.youtube.com/@hosbeconline" target="_blank" rel="noopener" aria-label="YouTube de HOSBEC" title="YouTube">
+      <a href="{REDES.get('youtube', '')}" target="_blank" rel="noopener" aria-label="YouTube de HOSBEC" title="YouTube">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5.6" width="18.8" height="12.8" rx="4"/><path d="M10.4 9.6l4.4 2.4-4.4 2.4z"/></svg>
       </a>
     </div>
@@ -295,7 +271,21 @@ _RE_TEXTO = re.compile(r"<([a-z0-9]+)([^>]*)>([^<>]*)</\1>", re.I)
 _MEMORIA_PAGINAS = {}
 
 
+def _zonas_html(cuerpo):
+    """
+    Trozos que ya están cubiertos por un data-va-html del padre. Ahí dentro no
+    hay que tocar nada: al cambiar de idioma se sustituye el bloque entero, y
+    un data-va suelto en un hijo sobra y puede traducir dos veces.
+    """
+    fuera = []
+    for m in re.finditer(r'<([a-z0-9]+)[^>]*\sdata-va-html="[^"]*"[^>]*>', cuerpo, re.I):
+        cierre = cuerpo.find("</%s>" % m.group(1), m.end())
+        fuera.append((m.start(), (cierre if cierre >= 0 else len(cuerpo))))
+    return fuera
+
+
 def _traducibles(cuerpo):
+    zonas = _zonas_html(cuerpo)
     for m in _RE_TEXTO.finditer(cuerpo):
         etiqueta, attrs, dentro = m.group(1), m.group(2), m.group(3)
         if etiqueta.lower() in ("script", "style", "option"):
@@ -303,6 +293,8 @@ def _traducibles(cuerpo):
         if "data-va" in attrs or not dentro.strip():
             continue
         if not re.search(r"[a-záéíóúñüçA-ZÁÉÍÓÚÑÜÇ]", dentro):
+            continue
+        if any(a < m.start() < b for a, b in zonas):
             continue
         yield m, dentro.strip()
 

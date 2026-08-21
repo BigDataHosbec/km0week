@@ -40,6 +40,7 @@ AGENDA = _leer("agenda")
 CONFIG = _leer("configuracion")
 NOTICIAS = _leer("noticias")
 FILTROS = _leer("filtros")
+NAVEGACION = _leer("navegacion")
 
 # Atajos de lo que se usa en todas partes
 DOMINIO = CONFIG["dominio"].rstrip("/")

@@ -1,0 +1,47 @@
+{
+  "_ayuda": "El menú de arriba, las columnas del pie, los enlaces legales y las redes. Lo edita el panel: /admin/ → Edición. Un enlace que empieza por http se abre en una pestaña nueva.",
+  "menu": [
+    { "url": "index.html", "es": "Inicio", "va": "Inici" },
+    { "url": "iniciativa.html", "es": "La iniciativa", "va": "La iniciativa" },
+    { "url": "alojamientos.html", "es": "Alojamientos", "va": "Allotjaments" },
+    { "url": "mapa.html", "es": "Mapa", "va": "Mapa" },
+    { "url": "agenda.html", "es": "Agenda", "va": "Agenda" },
+    { "url": "noticias.html", "es": "Noticias", "va": "Notícies" },
+    { "url": "faq.html", "es": "Preguntas", "va": "Preguntes" }
+  ],
+  "pie": [
+    {
+      "titulo": { "es": "La edición", "va": "L'edició" },
+      "enlaces": [
+        { "url": "iniciativa.html", "es": "La iniciativa", "va": "La iniciativa" },
+        { "url": "alojamientos.html", "es": "Alojamientos", "va": "Allotjaments" },
+        { "url": "mapa.html", "es": "Mapa y cercanía", "va": "Mapa i proximitat" },
+        { "url": "agenda.html", "es": "Agenda", "va": "Agenda" },
+        { "url": "noticias.html", "es": "Noticias", "va": "Notícies" }
+      ]
+    },
+    {
+      "titulo": { "es": "Alojamientos", "va": "Allotjaments" },
+      "enlaces": [
+        { "url": "suma.html", "es": "Suma tu alojamiento", "va": "Suma el teu allotjament" },
+        { "url": "suma.html#requisitos", "es": "Requisitos", "va": "Requisits" },
+        { "url": "descargas.html", "es": "Materiales y kit", "va": "Materials i kit" },
+        { "url": "prensa.html", "es": "Sala de prensa", "va": "Sala de premsa" },
+        { "url": "https://hosbec.com", "es": "hosbec.com", "va": "hosbec.com" }
+      ]
+    }
+  ],
+  "legal": [
+    { "url": "aviso-legal.html", "es": "Aviso legal", "va": "Avís legal" },
+    { "url": "privacidad.html", "es": "Privacidad", "va": "Privacitat" },
+    { "url": "cookies.html", "es": "Cookies", "va": "Galetes" },
+    { "url": "faq.html", "es": "Preguntas frecuentes", "va": "Preguntes freqüents" }
+  ],
+  "redes": {
+    "instagram": "https://www.instagram.com/hosbeconline/",
+    "linkedin": "https://www.linkedin.com/company/hosbeconline/",
+    "facebook": "https://www.facebook.com/Hosbeconline/",
+    "x": "https://x.com/hosbeconline",
+    "youtube": "https://www.youtube.com/@hosbeconline"
+  }
+}
