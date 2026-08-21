@@ -1,12 +1,14 @@
 # Km0 Week — web completa (v5)
 
-Abre `index.html` en el navegador: funciona tal cual, sin servidor.
-Misma piel que aprobaste en la v4, ahora con **18 páginas**, fotos en todos los
-huecos y contenido de ejemplo en todas partes.
+Inventario de lo que tiene la web: **18 páginas**, con la piel aprobada en la v4.
 
-> **¿Vas a cambiar algo?** Lee antes `MANUAL-DE-ACTUALIZACION.md`: está
-> todo por recetas (añadir un hotel, cambiar una foto, publicar una noticia,
-> regenerar los PDF) y avisa de las trampas.
+> **¿Vas a cambiar contenido?** Se hace en el panel, no aquí:
+> **https://bigdatahosbec.github.io/km0week/admin/**
+> Lo demás está en `MANUAL-DE-ACTUALIZACION.md`.
+
+Las páginas de esta lista **no están en el repositorio**: las genera la
+publicación automática. Para verlas en tu ordenador, `python3 _build/build.py`
+y luego abre `index.html`.
 
 
 ---
@@ -22,7 +24,7 @@ huecos y contenido de ejemplo en todas partes.
 | Agenda | `agenda.html` | Programa día a día del 13 al 29, con filtro por día, por fin de semana y por «solo gratuitas» |
 | Suma tu alojamiento | `suma.html` | Qué pone cada parte, requisitos, calendario y formulario de solicitud |
 | Preguntas | `faq.html` | Doce preguntas en tres bloques, en acordeón |
-| Noticias | `noticias.html` + `noticia-1..4.html` | Listado y cuatro entradas escritas enteras |
+| Noticias | `noticias.html` + una por entrada, generadas desde `contenido/noticias.json` | Listado y cuatro entradas escritas enteras |
 | Sala de prensa | `prensa.html` | Cifras verificables, material para medios, contacto y tabla de repercusión |
 | Descargas | `descargas.html` | Nueve piezas descargables: pasaporte, programa, bases, cartelería, kit de redes, textos, manual, sello y guía de recepción |
 | Legales | `aviso-legal.html` · `privacidad.html` · `cookies.html` | Con los datos reales de HOSBEC. Pendientes de revisión jurídica |

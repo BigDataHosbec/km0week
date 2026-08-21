@@ -4,13 +4,21 @@ Web de la **Km0 Week**: tres fines de semana para que quienes viven en la Comuni
 Valenciana redescubran los alojamientos de su propio territorio. Del **13 al 29 de
 noviembre de 2026**.
 
-> **¿Vas a cambiar algo?** Lee antes `MANUAL-DE-ACTUALIZACION.md`: está
-> todo por recetas (añadir un hotel, cambiar una foto, publicar una noticia,
-> regenerar los PDF) y avisa de las trampas.
+> ## ¿Vas a cambiar contenido?
+> **No toques este repositorio: usa el panel.**
+> ### https://bigdatahosbec.github.io/km0week/admin/
+>
+> Alojamientos, agenda, noticias, textos, imágenes, fechas y contacto se cambian
+> ahí, y la web se republica sola en minuto y medio. El
+> `MANUAL-DE-ACTUALIZACION.md` explica qué se hace dónde.
 
+Sitio estático: HTML, CSS y JavaScript, sin dependencias externas ni peticiones a
+terceros (tipografías, scripts e imágenes están autoalojados).
 
-Sitio estático: HTML, CSS y JavaScript. Sin build obligatorio, sin dependencias externas
-y sin peticiones a terceros (tipografías, scripts e imágenes están autoalojados).
+**Lo que hay aquí son las fuentes.** Las 18 páginas, `sitemap.xml`, `robots.txt`,
+`assets/js/data-alojamientos.js` y los 14 archivos de `descargas/` no están en el
+repositorio: los genera la publicación automática en cada cambio. Para verlos en
+local, `python3 _build/build.py`.
 
 ## Publicado en
 
