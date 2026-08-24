@@ -273,12 +273,14 @@ _MEMORIA_PAGINAS = {}
 
 def _zonas_html(cuerpo):
     """
-    Trozos que ya están cubiertos por un data-va-html del padre. Ahí dentro no
-    hay que tocar nada: al cambiar de idioma se sustituye el bloque entero, y
-    un data-va suelto en un hijo sobra y puede traducir dos veces.
+    Trozos que ya están cubiertos por un data-va del padre, de cualquiera de
+    las dos clases. Ahí dentro no hay que tocar nada: al cambiar de idioma se
+    sustituye el contenido entero del padre, así que un data-va en un hijo
+    sobra, no se llega a usar y encima puede traducir dos veces.
     """
     fuera = []
-    for m in re.finditer(r'<([a-z0-9]+)[^>]*\sdata-va-html="[^"]*"[^>]*>', cuerpo, re.I):
+    for m in re.finditer(r'<([a-z0-9]+)[^>]*\sdata-va(?:-html)?="[^"]*"[^>]*>',
+                         cuerpo, re.I):
         cierre = cuerpo.find("</%s>" % m.group(1), m.end())
         fuera.append((m.start(), (cierre if cierre >= 0 else len(cuerpo))))
     return fuera
@@ -293,6 +295,12 @@ def _traducibles(cuerpo):
         if "data-va" in attrs or not dentro.strip():
             continue
         if not re.search(r"[a-záéíóúñüçA-ZÁÉÍÓÚÑÜÇ]", dentro):
+            continue
+        # Un marcador @@ALGO@@ no es texto: es un hueco que se rellena luego
+        # con etiquetas. Traducirlo y ponerle data-va al contenedor hace que
+        # el selector de idioma sustituya el bloque entero por esa cadena y se
+        # lleve por delante lo que se hubiera metido dentro.
+        if re.search(r"@@\w+@@", dentro):
             continue
         if any(a < m.start() < b for a, b in zonas):
             continue
@@ -335,18 +343,53 @@ def rellenar_valenciano(cuerpo):
     return "".join(trozos)
 
 
+def revisar_traducibles(archivo, html):
+    """
+    Un `data-va` solo vale sobre texto suelto: el selector de idioma sustituye
+    el contenido entero del elemento. Si cae sobre un bloque que lleva otras
+    etiquetas dentro, al cambiar a valencià ese bloque se vacía y se pierde lo
+    que hubiera —tarjetas, listas, lo que sea—. Para eso está `data-va-html`.
+
+    Pasó de verdad: la traducción automática se ejecutaba antes de rellenar el
+    hueco de las noticias, vio `@@NOTICIAS@@` como si fuera una frase, y le
+    puso un `data-va` al contenedor de las tarjetas. En castellano se veía
+    bien; al pasar a valencià desaparecían las cuatro.
+    """
+    # Perder una negrita al traducir es feo pero se vive con ello, y la web ya
+    # venía así de fábrica. Lo que no se puede perder es contenido de verdad:
+    # enlaces, imágenes, tarjetas, listas, tablas. Solo eso detiene la
+    # publicación.
+    graves = re.compile(r"<(a|div|section|article|ul|ol|li|table|img|p|h[1-6])\b", re.I)
+    malos = []
+    for m in re.finditer(r'<([a-z0-9]+)([^>]*\sdata-va="[^"]*"[^>]*)>', html, re.I):
+        cierre = html.find("</%s>" % m.group(1), m.end())
+        dentro = html[m.end():cierre if cierre >= 0 else len(html)]
+        if graves.search(dentro):
+            malos.append((m.group(1), dentro.strip()[:60]))
+    if malos:
+        print("\nERROR en %s: hay %d data-va sobre bloques con etiquetas dentro."
+              % (archivo, len(malos)))
+        for et, t in malos[:5]:
+            print("  <%s> … %s…" % (et, t.replace("\n", " ")))
+        print("Eso vacía el bloque al cambiar de idioma. Usa data-va-html.")
+        raise SystemExit(1)
+
+
 def construir(p):
     cuerpo = (p["html"] if "html" in p
               else open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read())
-    cuerpo = rellenar_valenciano(cuerpo)
+    # Primero se rellenan los huecos y solo después se traduce: así lo que se
+    # mira es el HTML final y no un marcador que todavía parece texto suelto.
     # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
     if "@@NOTICIAS@@" in cuerpo:
         cuerpo = cuerpo.replace("@@NOTICIAS@@", tarjetas_noticias())
     cuerpo = cifras_al_dia(cuerpo)
+    cuerpo = rellenar_valenciano(cuerpo)
     html = (cabeza(p) + cinta() + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))
+    revisar_traducibles(p["archivo"], html)
     destino = os.path.join(RAIZ, p["archivo"])
     open(destino, "w", encoding="utf-8").write(html)
     return destino
