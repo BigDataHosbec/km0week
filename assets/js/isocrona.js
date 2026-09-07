@@ -23,10 +23,10 @@ window.Isocrona = (function () {
 
   /* Paleta del manual de marca */
   const C = {
-    mar: "#1EA4C6", marD: "#14647D", marP: "#E2F3F8",
-    verde: "#8CB26F", verdeD: "#6E9553",
-    arena: "#EED8AE", terra: "#D9794D",
-    tinta: "#123C4C", suave: "#7D8F98", blanco: "#FFFFFF",
+    mar: "#4A603B", marD: "#394642", marP: "#EBF1E6",
+    verde: "#9DBE8D", verdeD: "#4A603B",
+    arena: "#E6E0D4", terra: "#B68464",
+    tinta: "#394642", suave: "#8A938C", blanco: "#FFFFFF",
     tierra: "rgba(140,178,111,.10)"   // relleno del territorio, integrado con el fondo
   };
 
@@ -121,13 +121,13 @@ window.Isocrona = (function () {
     ctx.closePath();
   }
 
-  /* Chincheta de casa, en azul Mediterráneo */
+  /* Chincheta de casa, en verde oscuro */
   function casita(x, y, escala) {
     const s = escala || 1;
     ctx.save();
     ctx.translate(x, y); ctx.scale(s, s);
     ctx.beginPath(); ctx.ellipse(0, 17, 13, 4, 0, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(18,60,76,.16)"; ctx.fill();
+    ctx.fillStyle = "rgba(57,70,66,.16)"; ctx.fill();
     ctx.beginPath(); ctx.arc(0, 0, 16, 0, Math.PI * 2);
     ctx.fillStyle = C.mar; ctx.fill();
     ctx.lineWidth = 3; ctx.strokeStyle = "#fff"; ctx.stroke();
@@ -167,8 +167,8 @@ window.Isocrona = (function () {
       // 3 · zona alcanzada, en azul muy suave
       const rb = Math.max(1, barrido * proj.kmPx);
       const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, rb);
-      g.addColorStop(0, "rgba(30,164,198,.20)");
-      g.addColorStop(0.6, "rgba(30,164,198,.10)");
+      g.addColorStop(0, "rgba(74,96,59,.20)");
+      g.addColorStop(0.6, "rgba(74,96,59,.10)");
       g.addColorStop(1, "rgba(140,178,111,.04)");
       ctx.beginPath(); ctx.arc(ox, oy, rb, 0, Math.PI * 2);
       ctx.fillStyle = g; ctx.fill();
@@ -185,7 +185,7 @@ window.Isocrona = (function () {
         ctx.stroke();
         ctx.setLineDash([]);
         if (activo) {
-          ctx.font = '400 17px "Caveat Brush", cursive';
+          ctx.font = '600 14px "Bricolage Grotesque", sans-serif';
           ctx.fillStyle = BANDA[i];
           ctx.textAlign = "center";
           ctx.fillText(ETIQ[i], ox, oy - r - 8);
@@ -196,7 +196,7 @@ window.Isocrona = (function () {
       if (!reduced) {
         const rp = (pulso % 1) * (ANILLOS[2] * proj.kmPx);
         ctx.beginPath(); ctx.arc(ox, oy, rp, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(30,164,198,${(1 - (pulso % 1)) * 0.32})`;
+        ctx.strokeStyle = `rgba(74,96,59,${(1 - (pulso % 1)) * 0.32})`;
         ctx.lineWidth = 2; ctx.stroke();
       }
     }
@@ -206,27 +206,27 @@ window.Isocrona = (function () {
       const d = origen ? haversine([origen.lat, origen.lng], p.a.coords) : Infinity;
       const f = origen && d <= barrido ? franja(d) : -1;
       const hi = hover && hover.a.id === p.a.id;
-      const col = f >= 0 ? BANDA[f] : "#fff";
+      const col = f >= 0 ? BANDA[f] : C.verdeD;
       const r = hi ? 8.5 : (f >= 0 ? 6.5 : 5);
       if (hi) {
         ctx.beginPath(); ctx.arc(p.px, p.py, r + 6, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(30,164,198,.22)"; ctx.fill();
+        ctx.fillStyle = "rgba(74,96,59,.22)"; ctx.fill();
       }
       ctx.beginPath(); ctx.arc(p.px, p.py, r, 0, Math.PI * 2);
       ctx.fillStyle = col; ctx.fill();
       ctx.lineWidth = 1.8;
-      ctx.strokeStyle = f >= 0 ? "#fff" : "rgba(125,143,152,.75)";
+      ctx.strokeStyle = "#fff";
       ctx.stroke();
     });
 
     // 7 · tu casa
     if (origen) {
       casita(origen.px, origen.py, W >= 620 ? 1 : .8);
-      ctx.font = '400 20px "Caveat Brush", cursive';
+      ctx.font = '600 17px "Bricolage Grotesque", sans-serif';
       ctx.fillStyle = C.tinta;
       ctx.textAlign = "left";
       ctx.fillText(origen.label, origen.px + 22, origen.py + 1);
-      ctx.font = '400 15px "Caveat Brush", cursive';
+      ctx.font = '500 13px "Bricolage Grotesque", sans-serif';
       ctx.fillStyle = C.suave;
       ctx.fillText(ETIQ_CASA, origen.px + 22, origen.py + 17);
     }

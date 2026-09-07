@@ -26,7 +26,7 @@ window.Km0 = (function () {
       seis: "Seis planes para empezar", seisCerca: "Los seis que tienes más cerca",
       nota: "cambia si nos dices dónde vives", notaOk: "ordenados desde tu casa",
       anillos: ["media hora", "1 hora", "2 horas"], casa: "tu casa", aqui: "aquí",
-      lema: ["Descubre lo cerca, vive lo nuestro", "Km 0", "Sé turista donde vives", "Km 0"],
+      lema: ["Hay experiencias que se viven mejor de cerca", "Km 0", "Descubre lo cerca, vive lo nuestro", "Km 0", "Sé turista donde vives", "Km 0"],
       todo: "Todos", ordenar: {
         destacados: "Destacados primero", precio: "Precio más bajo",
         dto: "Mayor descuento", nombre: "Nombre (A-Z)", destino: "Destino (A-Z)"
@@ -55,7 +55,7 @@ window.Km0 = (function () {
       seis: "Sis plans per a començar", seisCerca: "Els sis que tens més a prop",
       nota: "canvia si ens dius on vius", notaOk: "ordenats des de ta casa",
       anillos: ["mitja hora", "1 hora", "2 hores"], casa: "ta casa", aqui: "ací",
-      lema: ["Descobreix el que és a prop, viu el que és nostre", "Km 0", "Sigues turista on vius", "Km 0"],
+      lema: ["Hi ha experiències que es viuen millor de prop", "Km 0", "Descobreix el que és a prop, viu el que és nostre", "Km 0", "Sigues turista on vius", "Km 0"],
       todo: "Tots", ordenar: {
         destacados: "Destacats primer", precio: "Preu més baix",
         dto: "Major descompte", nombre: "Nom (A-Z)", destino: "Destí (A-Z)"
@@ -115,10 +115,10 @@ window.Km0 = (function () {
     return h >>> 0;
   }
   const PALS = [
-    { cielo: "#E2F3F8", agua: "#1EA4C6", tierra: "#8CB26F", sol: "#EED8AE" },
-    { cielo: "#FBF2DE", agua: "#7BC0D4", tierra: "#6E9553", sol: "#D9794D" },
-    { cielo: "#EDF3E4", agua: "#1EA4C6", tierra: "#D9794D", sol: "#EED8AE" },
-    { cielo: "#FBE7DB", agua: "#4FB2CE", tierra: "#8CB26F", sol: "#EED8AE" }
+    { cielo: "#EFF4EA", agua: "#4A603B", tierra: "#9DBE8D", sol: "#E6E0D4" },
+    { cielo: "#F3F0E9", agua: "#9DBE8D", tierra: "#4A603B", sol: "#B68464" },
+    { cielo: "#EBF1E6", agua: "#4A603B", tierra: "#B68464", sol: "#E6E0D4" },
+    { cielo: "#F2E7DE", agua: "#9DBE8D", tierra: "#B68464", sol: "#E6E0D4" }
   ];
 
   function ilustracion(item, w, h) {
@@ -219,11 +219,7 @@ window.Km0 = (function () {
     const box = $("#temas"); if (!box) return;
     const c = {};
     D.forEach(a => a.experiencias.forEach(e => c[e] = (c[e] || 0) + 1));
-    const orden = segunConfig("portada", "experiencias",
-      Object.keys(c).sort((a, b) => c[b] - c[a]));
-    const seccion = box.closest("section") || box;
-    seccion.hidden = !orden.length;
-    box.innerHTML = orden.map(k => {
+    box.innerHTML = Object.keys(c).sort((a, b) => c[b] - c[a]).map(k => {
       const [ico, tono] = EXP_ICO[k] || ["costa", ""];
       const destino = $("#lista-alojamientos") ? "#filtros" : "alojamientos.html?experiencia=" + k;
       return `<a class="tema" href="${destino}" data-exp="${k}">
@@ -389,36 +385,15 @@ window.Km0 = (function () {
     document.dispatchEvent(new CustomEvent("km0:render"));
   }
 
-  /* Qué filtros se ven y en qué orden. Sale de contenido/filtros.json, que se
-     edita en el panel. Lista vacía = automático, lo que haya en los datos.
-     En cualquier caso solo se ofrecen valores con alojamientos detrás: un
-     filtro que no lleva a ninguna parte es peor que no tenerlo. */
-  function segunConfig(ambito, grupo, disponibles) {
-    const c = (((window.KM0 || {}).FILTROS || {})[ambito] || {})[grupo] || {};
-    if (c.mostrar === false) return [];
-    const elegidos = Array.isArray(c.valores) && c.valores.length ? c.valores : null;
-    let lista = elegidos ? elegidos.filter(v => disponibles.includes(v)) : disponibles;
-    if (c.maximo > 0) lista = lista.slice(0, c.maximo);
-    return lista;
-  }
-
   function montarFiltros() {
     const zona = $("#filtros"); if (!zona) return;
-    const provs = segunConfig("listado", "provincia",
-      ["Castelló", "València", "Alicante"].filter(p => D.some(a => a.provincia === p)));
-    const tipos = segunConfig("listado", "tipo", [...new Set(D.map(a => a.tipo))]);
-    const exps = segunConfig("listado", "experiencia",
-      [...new Set(D.flatMap(a => a.experiencias))]
-        .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es")));
+    const provs = ["Castelló", "València", "Alicante"].filter(p => D.some(a => a.provincia === p));
+    const tipos = [...new Set(D.map(a => a.tipo))];
+    const exps = [...new Set(D.flatMap(a => a.experiencias))]
+      .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es"));
     chipsDe($("#f-provincia"), provs, v => v, false);
     chipsDe($("#f-tipo"), tipos, v => t("tipos." + v), true);
     chipsDe($("#f-exp"), exps, v => t("exp." + v), true);
-
-    // Una fila sin valores se esconde entera, con su rótulo
-    [["provincia", provs], ["tipo", tipos], ["experiencia", exps]].forEach(([g, v]) => {
-      const fila = $(`.f-row[data-c="${g}"]`);
-      if (fila) fila.hidden = !v.length;
-    });
 
     const sel = $("#f-orden");
     if (sel) {
@@ -447,18 +422,20 @@ window.Km0 = (function () {
     const bl = $("#f-limpiar"); if (bl) bl.addEventListener("click", limpiar);
     $$("[data-limpiar]").forEach(b => b.addEventListener("click", limpiar));
 
-    // ?provincia=Alicante  ·  ?experiencia=gastronomia  ·  ?tipo=camping
+    // ?provincia=Alicante  ·  ?experiencia=gastronomia,cultura  ·  ?tipo=camping
+    // (tipo y experiencia admiten varios valores separados por comas)
     const q = new URLSearchParams(location.search);
     if (q.get("provincia")) FILTRO.provincia = q.get("provincia");
-    if (q.get("tipo")) FILTRO.tipo = [q.get("tipo")];
-    if (q.get("experiencia")) FILTRO.experiencia = [q.get("experiencia")];
+    const lista = v => v.split(",").map(x => x.trim()).filter(Boolean);
+    if (q.get("tipo")) FILTRO.tipo = lista(q.get("tipo"));
+    if (q.get("experiencia")) FILTRO.experiencia = lista(q.get("experiencia"));
     pintarListado();
   }
 
   /* ---------------------------- página del mapa -------------------------- */
   function pintarCercanos() {
     const box = $("#cercanos"); if (!box) return;
-    const col = ["#8CB26F", "#D9794D", "#1EA4C6"];
+    const col = ["#4A603B", "#9DBE8D", "#B68464"];
     const lista = D.slice();
     if (ORIGEN) lista.sort((x, y) => hav(ORIGEN, x.coords) - hav(ORIGEN, y.coords));
     else lista.sort((x, y) => x.destino.localeCompare(y.destino, "es"));
@@ -466,7 +443,7 @@ window.Km0 = (function () {
       const d = ORIGEN ? hav(ORIGEN, a.coords) : null;
       const banda = d == null ? 2 : d <= 30 ? 0 : d <= 60 ? 1 : 2;
       return `<a class="cercano" href="${a.web}" target="_blank" rel="noopener">
-        <span class="bolita" style="background:${d == null ? "#C9D6DB" : col[banda]}"></span>
+        <span class="bolita" style="background:${d == null ? "#CFD6CC" : col[banda]}"></span>
         <span><span class="n">${a.nombre}</span><br><span class="d">${t("tipos." + a.tipo)} · ${a.destino}</span></span>
         <span class="km">${d == null ? "—" : d.toFixed(d < 10 ? 1 : 0) + " km"}</span>
       </a>`;
