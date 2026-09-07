@@ -22,23 +22,25 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SALIDA = os.path.join(RAIZ, "assets", "img", "foto")
 
 # ---------------------------------------------------------------- paleta ----
-MAR      = (30, 164, 198)
-MAR_D    = (20, 100, 125)
-VERDE    = (140, 178, 111)
-VERDE_D  = (110, 149, 83)
-ARENA    = (238, 216, 174)
-TERRA    = (217, 121, 77)
-TINTA    = (18, 60, 76)
-ROTO     = (250, 245, 236)
+# Paleta del rediseño de septiembre de 2026: verde claro, verde oscuro,
+# terracota, arena y verde tinta. Sin azul.
+MAR      = (74, 96, 59)      # verde oscuro — antes era el azul de acento
+MAR_D    = (57, 70, 66)      # verde tinta
+VERDE    = (157, 190, 141)   # verde claro
+VERDE_D  = (74, 96, 59)
+ARENA    = (230, 224, 212)
+TERRA    = (182, 132, 100)
+TINTA    = (57, 70, 66)
+ROTO     = (247, 245, 240)
 
 # Cada ambiente define cielo (arriba/abajo), sol, capas de terreno y agua.
 AMBIENTES = {
-    "amanecer":  dict(cielo=((252, 228, 196), (247, 199, 173)), sol=(255, 236, 205), agua=(94, 165, 190)),
-    "mediodia":  dict(cielo=((214, 238, 246), (240, 246, 240)), sol=(255, 249, 226), agua=MAR),
-    "tarde":     dict(cielo=((250, 233, 205), (245, 205, 176)), sol=(255, 226, 174), agua=(60, 143, 172)),
-    "atardecer": dict(cielo=((246, 205, 178), (233, 160, 137)), sol=(255, 214, 160), agua=(46, 110, 138)),
-    "bruma":     dict(cielo=((232, 240, 240), (245, 240, 228)), sol=(255, 250, 235), agua=(120, 175, 194)),
-    "noche":     dict(cielo=((40, 78, 100), (86, 124, 142)),    sol=(232, 240, 246), agua=(22, 60, 82)),
+    "amanecer":  dict(cielo=((243, 233, 219), (232, 206, 186)), sol=(250, 240, 222), agua=(118, 148, 108)),
+    "mediodia":  dict(cielo=((235, 241, 230), (246, 244, 238)), sol=(252, 249, 238), agua=VERDE),
+    "tarde":     dict(cielo=((242, 231, 214), (231, 205, 182)), sol=(248, 232, 205), agua=(103, 132, 92)),
+    "atardecer": dict(cielo=((234, 209, 188), (206, 158, 128)), sol=(245, 222, 190), agua=(74, 96, 59)),
+    "bruma":     dict(cielo=((234, 238, 231), (244, 241, 233)), sol=(250, 250, 242), agua=(150, 176, 140)),
+    "noche":     dict(cielo=((48, 60, 56), (86, 100, 92)),      sol=(226, 236, 222), agua=(38, 50, 44)),
 }
 
 

@@ -14,40 +14,63 @@ Para cambiar el texto de una página: se toca su archivo en _build/paginas/.
 
 import os, re, datetime
 
-import contenido
-
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGS = os.path.join(RAIZ, "_build", "paginas")
 
 # ---------------------------------------------------------------------------
-# Estos cuatro datos vienen de contenido/configuracion.json, que es también lo
-# que lee la web y lo que usan los descargables. Antes estaban escritos aquí
-# Y ADEMÁS en data-alojamientos.js, y había que acordarse de cambiar los dos.
-#
-#   dominio      la dirección donde se publica, sin barra final. Se usa en
-#                sitemap.xml, robots.txt, los canonical y las imágenes de
-#                compartir en redes.
-#   fechasTexto  el rango de fechas tal y como se lee, en es y en va.
+# DOMINIO: la dirección donde se publica la web. Se usa en sitemap.xml,
+# robots.txt, las etiquetas canonical y las imágenes de compartir en redes.
+# SIN barra final.
+#   GitHub Pages de proyecto : https://USUARIO.github.io/km0week
+#   GitHub Pages de usuario  : https://USUARIO.github.io
+#   Dominio propio           : https://km0week.hosbec.com
+# Cámbialo y vuelve a ejecutar:  python3 _build/build.py
 # ---------------------------------------------------------------------------
-DOMINIO = contenido.DOMINIO
-EMAIL_KM0 = contenido.EMAIL
-FECHAS_ES = contenido.FECHAS_ES
-FECHAS_VA = contenido.FECHAS_VA
+DOMINIO = "https://bigdatahosbec.github.io/km0week"
+EMAIL_KM0 = "km0week@hosbec.com"
+
+FECHAS_ES = "13 – 29 de noviembre de 2026"
+FECHAS_VA = "13 – 29 de novembre de 2026"
 
 # ---------------------------------------------------------------- navegación --
-# El menú, las columnas del pie, los enlaces legales y las redes salen de
-# contenido/navegacion.json, que se edita en el panel.
-NAV = contenido.NAVEGACION
-MENU = [(e["url"], e["es"], e["va"]) for e in NAV["menu"]]
-PIE_COLS = [(c["titulo"]["es"], c["titulo"]["va"],
-             [(e["url"], e["es"], e["va"]) for e in c["enlaces"]])
-            for c in NAV["pie"]]
-PIE_LEGAL = [(e["url"], e["es"], e["va"]) for e in NAV["legal"]]
-REDES = NAV.get("redes", {})
+MENU = [
+    ("index.html",        "Inicio",         "Inici"),
+    ("iniciativa.html",   "La iniciativa",  "La iniciativa"),
+    ("alojamientos.html", "Experiencias",   "Experiències"),
+    ("mapa.html",         "Mapa",           "Mapa"),
+    ("agenda.html",       "Agenda",         "Agenda"),
+    ("noticias.html",     "Noticias",       "Notícies"),
+    ("faq.html",          "Preguntas",      "Preguntes"),
+]
+
+PIE_COLS = [
+    ("La edición", "L'edició", [
+        ("iniciativa.html", "La iniciativa", "La iniciativa"),
+        ("alojamientos.html", "Experiencias", "Experiències"),
+        ("mapa.html", "Mapa y cercanía", "Mapa i proximitat"),
+        ("agenda.html", "Agenda", "Agenda"),
+        ("noticias.html", "Noticias", "Notícies"),
+    ]),
+    ("Alojamientos", "Allotjaments", [
+        ("suma.html", "Suma tu alojamiento", "Suma el teu allotjament"),
+        ("suma.html#requisitos", "Requisitos", "Requisits"),
+        ("descargas.html", "Materiales y kit", "Materials i kit"),
+        ("prensa.html", "Sala de prensa", "Sala de premsa"),
+        ("https://hosbec.com", "hosbec.com", "hosbec.com"),
+    ]),
+]
+
+PIE_LEGAL = [
+    ("aviso-legal.html", "Aviso legal", "Avís legal"),
+    ("privacidad.html", "Privacidad", "Privacitat"),
+    ("cookies.html", "Cookies", "Galetes"),
+    ("faq.html", "Preguntas frecuentes", "Preguntes freqüents"),
+]
 
 
 # ------------------------------------------------------------------- plantilla --
 def cabeza(p):
+    cuerpo_clase = ' class="home"' if p["archivo"] == "index.html" else ""
     css_extra = "".join('\n<link rel="stylesheet" href="%s">' % c for c in p.get("css", []))
     # la portada canoniza a la carpeta, no a /index.html
     canon = DOMINIO + "/" + ("" if p["archivo"] == "index.html" else p["archivo"])
@@ -60,28 +83,29 @@ def cabeza(p):
 <title>{p['titulo']}</title>
 <meta name="description" content="{p['desc']}">{noindex}
 <link rel="canonical" href="{canon}">
-<meta name="theme-color" content="#1EA4C6">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#394642">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/img/icono-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <meta property="og:site_name" content="HOSBEC Km0 Week">
 <meta property="og:title" content="{p['titulo']}">
 <meta property="og:description" content="{p['desc']}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{canon}">
-<meta property="og:image" content="{DOMINIO}/{p.get('og', 'assets/img/foto/cab-iniciativa.webp')}">
+<meta property="og:image" content="{DOMINIO}/{p.get('og', 'assets/img/foto/hero-cocktail.webp')}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="assets/css/km0.css">{css_extra}
-<!-- En un servidor normal precargamos las dos tipografías principales.
+<!-- En un servidor normal precargamos la tipografía de la marca.
      Si la web se abre directamente desde el disco (file://) el navegador
      bloquea los .woff2 sueltos por CORS: en ese caso, y solo en ese caso,
-     cargamos las mismas tipografías embebidas en base64. -->
+     cargamos la misma tipografía embebida en base64. -->
 <script>
   document.write(location.protocol === "file:"
     ? '<link rel="stylesheet" href="assets/css/fuentes-local.css">'
-    : '<link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>'
-    + '<link rel="preload" href="assets/fonts/lora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>');
+    : '<link rel="preload" href="assets/fonts/bricolage-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>');
 </script>
 </head>
-<body>
+<body{cuerpo_clase}>
 <a class="skip" href="#main" data-va="Anar al contingut">Ir al contenido</a>
 """
 
@@ -111,11 +135,8 @@ def nav(activo):
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="Km0 Week — inicio">
-      <img class="emblema" src="assets/img/emblema.svg" alt="" width="38" height="38">
-      <span class="brand-txt">
-        <span><span class="k">KM0</span><span class="w">week</span></span>
-        <small>Hosbec · Comunitat Valenciana</small>
-      </span>
+      <img class="logo logo-h" src="assets/img/logo-h-blanco.png" alt="Km0 Week · HOSBEC" width="900" height="379">
+      <img class="logo logo-v" src="assets/img/logo-v-blanco.png" alt="" width="520" height="916" aria-hidden="true">
     </a>
 
     <nav class="nav-links" aria-label="Principal">{enlaces}
@@ -127,7 +148,6 @@ def nav(activo):
         <button type="button" data-lang="es" aria-pressed="true">ES</button>
         <button type="button" data-lang="va" aria-pressed="false">VA</button>
       </div>
-      <a class="btn btn-terra btn-sm" href="suma.html" data-va="Sóc allotjament">Soy alojamiento</a>
       <button class="burger" aria-label="Menú" aria-expanded="false"><i></i><i></i></button>
     </div>
   </div>
@@ -156,8 +176,7 @@ def pie(p):
     <div class="foot-grid">
       <div>
         <div class="foot-marca">
-          <img src="assets/img/emblema.svg" alt="" width="38" height="38">
-          <span><span class="k">KM0</span><span class="w">week</span></span>
+          <img src="assets/img/logo-v-verde.png" alt="Km0 Week · HOSBEC" width="520" height="916">
         </div>
         <p class="body-sm foot-lema" data-va="Descobreix el que és a prop, viu el que és nostre.">Descubre lo cerca, vive lo nuestro.</p>
         <p class="body-sm foot-lema" data-fechas>{FECHAS_ES}</p>
@@ -182,19 +201,19 @@ def pie(p):
     </div>
     <div class="foot-redes">
       <span class="body-sm" data-va="Segueix HOSBEC">Sigue a HOSBEC</span>
-      <a href="{REDES.get('instagram', '')}" target="_blank" rel="noopener" aria-label="Instagram de HOSBEC" title="Instagram">
+      <a href="https://www.instagram.com/hosbeconline/" target="_blank" rel="noopener" aria-label="Instagram de HOSBEC" title="Instagram">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
       </a>
-      <a href="{REDES.get('linkedin', '')}" target="_blank" rel="noopener" aria-label="LinkedIn de HOSBEC" title="LinkedIn">
+      <a href="https://www.linkedin.com/company/hosbeconline/" target="_blank" rel="noopener" aria-label="LinkedIn de HOSBEC" title="LinkedIn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5v6M7.5 7.6v.1M11.5 16.5v-6M11.5 13.2c0-1.5.9-2.4 2.2-2.4s2.3.9 2.3 2.6v3.1"/></svg>
       </a>
-      <a href="{REDES.get('facebook', '')}" target="_blank" rel="noopener" aria-label="Facebook de HOSBEC" title="Facebook">
+      <a href="https://www.facebook.com/Hosbeconline/" target="_blank" rel="noopener" aria-label="Facebook de HOSBEC" title="Facebook">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.4 20.5v-6.9h2.3l.35-2.7h-2.65V9.2c0-.78.22-1.31 1.34-1.31h1.43V5.47c-.25-.03-1.1-.11-2.09-.11-2.07 0-3.48 1.26-3.48 3.58v2h-2.34v2.7h2.34v6.86z"/></svg>
       </a>
-      <a href="{REDES.get('x', '')}" target="_blank" rel="noopener" aria-label="X de HOSBEC" title="X">
+      <a href="https://x.com/hosbeconline" target="_blank" rel="noopener" aria-label="X de HOSBEC" title="X">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg>
       </a>
-      <a href="{REDES.get('youtube', '')}" target="_blank" rel="noopener" aria-label="YouTube de HOSBEC" title="YouTube">
+      <a href="https://www.youtube.com/@hosbeconline" target="_blank" rel="noopener" aria-label="YouTube de HOSBEC" title="YouTube">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="5.6" width="18.8" height="12.8" rx="4"/><path d="M10.4 9.6l4.4 2.4-4.4 2.4z"/></svg>
       </a>
     </div>
@@ -238,158 +257,13 @@ def cabecera(p):
 """
 
 
-# Los contadores de la web los recalcula home.js al cargar, pero el número que
-# viene escrito en el HTML es el que se ve si el JavaScript tarda o falla, y el
-# que leen los buscadores. Así que aquí se deja ya cuadrado con los datos.
-CIFRAS = {
-    "alojamientos": len(contenido.ALOJAMIENTOS),
-    "destinos": len(contenido.DESTINOS),
-    "cupo": contenido.CUPO_TOTAL,
-    "actividades": len(contenido.AGENDA),
-}
-_RE_AUTO = re.compile(r'<b([^>]*\bdata-auto="(\w+)"[^>]*)>(\d[\d.,]*)</b>')
-
-
-def cifras_al_dia(cuerpo):
-    def sust(m):
-        atributos, clave, _ = m.group(1), m.group(2), m.group(3)
-        n = CIFRAS.get(clave)
-        if n is None:
-            return m.group(0)
-        # data-count puede venir antes o después de data-auto: se quita y se
-        # vuelve a poner una sola vez, para no duplicar el atributo.
-        atributos = re.sub(r'\s*data-count="\d+"', "", atributos)
-        texto = "{:,}".format(n).replace(",", ".")
-        return '<b data-count="%d"%s>%s</b>' % (n, atributos, texto)
-    return _RE_AUTO.sub(sust, cuerpo)
-
-
-# Textos de las páginas que no llevan su valenciano escrito: se rellenan con
-# Apertium igual que los de contenido/. La fuente en _build/paginas/ no se
-# toca; el data-va se añade solo en el HTML que se publica.
-_RE_TEXTO = re.compile(r"<([a-z0-9]+)([^>]*)>([^<>]*)</\1>", re.I)
-_MEMORIA_PAGINAS = {}
-
-
-def _zonas_html(cuerpo):
-    """
-    Trozos que ya están cubiertos por un data-va del padre, de cualquiera de
-    las dos clases. Ahí dentro no hay que tocar nada: al cambiar de idioma se
-    sustituye el contenido entero del padre, así que un data-va en un hijo
-    sobra, no se llega a usar y encima puede traducir dos veces.
-    """
-    fuera = []
-    for m in re.finditer(r'<([a-z0-9]+)[^>]*\sdata-va(?:-html)?="[^"]*"[^>]*>',
-                         cuerpo, re.I):
-        cierre = cuerpo.find("</%s>" % m.group(1), m.end())
-        fuera.append((m.start(), (cierre if cierre >= 0 else len(cuerpo))))
-    return fuera
-
-
-def _traducibles(cuerpo):
-    zonas = _zonas_html(cuerpo)
-    for m in _RE_TEXTO.finditer(cuerpo):
-        etiqueta, attrs, dentro = m.group(1), m.group(2), m.group(3)
-        if etiqueta.lower() in ("script", "style", "option"):
-            continue
-        if "data-va" in attrs or not dentro.strip():
-            continue
-        if not re.search(r"[a-záéíóúñüçA-ZÁÉÍÓÚÑÜÇ]", dentro):
-            continue
-        # Un marcador @@ALGO@@ no es texto: es un hueco que se rellena luego
-        # con etiquetas. Traducirlo y ponerle data-va al contenedor hace que
-        # el selector de idioma sustituya el bloque entero por esa cadena y se
-        # lleve por delante lo que se hubiera metido dentro.
-        if re.search(r"@@\w+@@", dentro):
-            continue
-        if any(a < m.start() < b for a, b in zonas):
-            continue
-        yield m, dentro.strip()
-
-
-POR_PAGINA = {}
-
-
-def preparar_paginas():
-    """Recoge de todas las páginas lo que hay que traducir, y lo traduce de una vez."""
-    import traducir
-    pendientes = set()
-    for p in PAGINAS:
-        ruta = os.path.join(PAGS, p["cuerpo"])
-        if not os.path.isfile(ruta):
-            continue
-        for _, texto in _traducibles(open(ruta, encoding="utf-8").read()):
-            pendientes.add(texto)
-            POR_PAGINA.setdefault(p["cuerpo"], []).append(texto)
-    if not pendientes:
-        return {}
-    _MEMORIA_PAGINAS.update(traducir.memoria(sorted(pendientes), "va"))
-    return _MEMORIA_PAGINAS
-
-
-def rellenar_valenciano(cuerpo):
-    if not _MEMORIA_PAGINAS:
-        return cuerpo
-    trozos, ultimo = [], 0
-    for m, texto in _traducibles(cuerpo):
-        va = _MEMORIA_PAGINAS.get(texto)
-        if not va or va == texto:
-            continue
-        trozos.append(cuerpo[ultimo:m.start()])
-        trozos.append("<%s%s data-va=\"%s\">%s</%s>"
-                      % (m.group(1), m.group(2), esc(va), m.group(3), m.group(1)))
-        ultimo = m.end()
-    trozos.append(cuerpo[ultimo:])
-    return "".join(trozos)
-
-
-def revisar_traducibles(archivo, html):
-    """
-    Un `data-va` solo vale sobre texto suelto: el selector de idioma sustituye
-    el contenido entero del elemento. Si cae sobre un bloque que lleva otras
-    etiquetas dentro, al cambiar a valencià ese bloque se vacía y se pierde lo
-    que hubiera —tarjetas, listas, lo que sea—. Para eso está `data-va-html`.
-
-    Pasó de verdad: la traducción automática se ejecutaba antes de rellenar el
-    hueco de las noticias, vio `@@NOTICIAS@@` como si fuera una frase, y le
-    puso un `data-va` al contenedor de las tarjetas. En castellano se veía
-    bien; al pasar a valencià desaparecían las cuatro.
-    """
-    # Perder una negrita al traducir es feo pero se vive con ello, y la web ya
-    # venía así de fábrica. Lo que no se puede perder es contenido de verdad:
-    # enlaces, imágenes, tarjetas, listas, tablas. Solo eso detiene la
-    # publicación.
-    graves = re.compile(r"<(a|div|section|article|ul|ol|li|table|img|p|h[1-6])\b", re.I)
-    malos = []
-    for m in re.finditer(r'<([a-z0-9]+)([^>]*\sdata-va="[^"]*"[^>]*)>', html, re.I):
-        cierre = html.find("</%s>" % m.group(1), m.end())
-        dentro = html[m.end():cierre if cierre >= 0 else len(html)]
-        if graves.search(dentro):
-            malos.append((m.group(1), dentro.strip()[:60]))
-    if malos:
-        print("\nERROR en %s: hay %d data-va sobre bloques con etiquetas dentro."
-              % (archivo, len(malos)))
-        for et, t in malos[:5]:
-            print("  <%s> … %s…" % (et, t.replace("\n", " ")))
-        print("Eso vacía el bloque al cambiar de idioma. Usa data-va-html.")
-        raise SystemExit(1)
-
-
 def construir(p):
-    cuerpo = (p["html"] if "html" in p
-              else open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read())
-    # Primero se rellenan los huecos y solo después se traduce: así lo que se
-    # mira es el HTML final y no un marcador que todavía parece texto suelto.
+    cuerpo = open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read()
     # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
-    if "@@NOTICIAS@@" in cuerpo:
-        cuerpo = cuerpo.replace("@@NOTICIAS@@", tarjetas_noticias())
-    cuerpo = cifras_al_dia(cuerpo)
-    cuerpo = rellenar_valenciano(cuerpo)
-    html = (cabeza(p) + cinta() + nav(p["archivo"]) +
+    html = (cabeza(p) + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))
-    revisar_traducibles(p["archivo"], html)
     destino = os.path.join(RAIZ, p["archivo"])
     open(destino, "w", encoding="utf-8").write(html)
     return destino
@@ -417,10 +291,10 @@ PAGINAS = [
                 "Km0 Week naix d'una idea simple: qui viu en un destí turístic quasi mai el gaudeix com a tal. Del 13 al 29 de novembre li donem la volta."))),
 
     dict(archivo="alojamientos.html", cuerpo="alojamientos.html",
-         titulo="Alojamientos y ofertas · HOSBEC Km0 Week",
-         desc="Todos los alojamientos adheridos a la Km0 Week con su oferta para residentes. Filtra por provincia, tipo, experiencia y precio.",
+         titulo="Experiencias y ofertas · HOSBEC Km0 Week",
+         desc="Todas las experiencias y alojamientos adheridos a la Km0 Week con su oferta para residentes. Filtra por provincia, tipo, experiencia y precio.",
          og="assets/img/foto/cab-alojamientos.webp",
-         cab=C("cab-alojamientos", ("Dónde dormir", "On dormir"),
+         cab=C("cab-alojamientos", ("Experiencias", "Experiències"),
                ("Todas las ofertas, en un sitio", "Totes les ofertes, en un lloc"),
                ("Cada alojamiento pone su propuesta y sus condiciones. Reservas directamente con él: aquí no hay comisiones ni intermediarios.",
                 "Cada allotjament posa la seua proposta i les seues condicions. Reserves directament amb ell: ací no hi ha comissions ni intermediaris."))),
@@ -454,7 +328,7 @@ PAGINAS = [
 
     dict(archivo="faq.html", cuerpo="faq.html",
          titulo="Preguntas frecuentes · HOSBEC Km0 Week",
-         desc="Dudas resueltas sobre la Km0 Week: quién puede reservar, cómo funcionan los descuentos, el pasaporte, el sorteo y las condiciones.",
+         desc="Dudas resueltas sobre la Km0 Week: quién puede reservar, cómo funcionan los descuentos, las actividades abiertas y las condiciones.",
          og="assets/img/foto/cab-faq.webp",
          cab=C("cab-faq", ("Preguntas frecuentes", "Preguntes freqüents"),
                ("Lo que más nos preguntáis", "El que més ens pregunteu"),
@@ -481,7 +355,7 @@ PAGINAS = [
 
     dict(archivo="descargas.html", cuerpo="descargas.html",
          titulo="Materiales y kit gráfico · HOSBEC Km0 Week",
-         desc="Cartelería, kit de redes sociales, pasaporte imprimible, manual de marca y plantillas para los alojamientos adheridos.",
+         desc="Cartelería, kit de redes sociales, manual de marca y textos preparados para los alojamientos adheridos.",
          og="assets/img/foto/cab-descargas.webp",
          cab=C("cab-descargas", ("Descargas", "Descàrregues"),
                ("Todo lo que necesitas para contarlo", "Tot el que necessites per a contar-ho"),
@@ -512,192 +386,29 @@ PAGINAS = [
                 "No hem trobat el que buscaves. Et deixem per on continuar."))),
 ]
 
-# ================================================================== noticias ==
-# El cuerpo de cada noticia se escribe en el panel con un marcado mínimo y de
-# aquí sale el HTML. Las cinco cosas que se pueden usar:
-#
-#   ## Un subtítulo
-#   > Una cita destacada
-#   - viñeta          (varias líneas seguidas hacen una lista)
-#   1. numerada
-#   | Col A | Col B | ... con su fila de |---|---| debajo
-#   [el texto del enlace](adonde.html)
-#
-# Una línea en blanco separa bloques. Nada más: no hay que saber HTML.
-
-def esc(t):
-    return (str(t).replace("&", "&amp;").replace("<", "&lt;")
-            .replace(">", "&gt;").replace('"', "&quot;"))
-
-
-_RE_ENLACE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
-
-
-def _linea(t):
-    """Texto de una línea → HTML, resolviendo los enlaces."""
-    salida, resto = [], t
-    while True:
-        m = _RE_ENLACE.search(resto)
-        if not m:
-            salida.append(esc(resto)); break
-        salida.append(esc(resto[:m.start()]))
-        salida.append('<a href="%s">%s</a>' % (esc(m.group(2)), esc(m.group(1))))
-        resto = resto[m.end():]
-    return "".join(salida)
-
-
-def _bloque(b, va):
-    """Un bloque de texto → su etiqueta HTML, con la traducción si la hay."""
-    lineas = [l.strip() for l in b.split("\n") if l.strip()]
-    lva = [l.strip() for l in (va or "").split("\n") if l.strip()]
-    def attr(texto, html=False):
-        if not texto:
-            return ""
-        return ' data-va%s="%s"' % ("-html" if html else "", esc(texto))
-
-    if b.startswith("## "):
-        return "<h2%s>%s</h2>" % (attr((va or "")[3:].strip()), esc(b[3:].strip()))
-    if b.startswith("> "):
-        return '<blockquote class="cita"%s>%s</blockquote>' % (
-            attr((va or "")[2:].strip()), esc(b[2:].strip()))
-    if lineas[0].startswith("|"):
-        filas = [l for l in lineas if not re.fullmatch(r"\|[\s\-|:]+\|", l)]
-        fva = [l for l in lva if not re.fullmatch(r"\|[\s\-|:]+\|", l)]
-        def celdas(l):
-            return [c.strip() for c in l.strip().strip("|").split("|")]
-        out = ['<div class="tabla-envolt mt-1"><table class="tabla">']
-        for i, f in enumerate(filas):
-            tag = "th" if i == 0 else "td"
-            trad = celdas(fva[i]) if i < len(fva) else []
-            if i == 0:
-                out.append("<thead>")
-            elif i == 1:
-                out.append("<tbody>")
-            out.append("<tr>")
-            for j, c in enumerate(celdas(f)):
-                tv = trad[j] if j < len(trad) else ""
-                out.append("<%s%s>%s</%s>" % (
-                    tag, attr(tv if tv != c else ""), esc(c), tag))
-            out.append("</tr>")
-            if i == 0:
-                out.append("</thead>")
-        if len(filas) > 1:
-            out.append("</tbody>")
-        out.append("</table></div>")
-        return "".join(out)
-    if all(l.startswith("- ") for l in lineas) or all(re.match(r"\d+\. ", l) for l in lineas):
-        ol = not lineas[0].startswith("- ")
-        quita = (lambda l: re.sub(r"^\d+\.\s*", "", l)) if ol else (lambda l: l[2:])
-        items = []
-        for i, l in enumerate(lineas):
-            t = quita(l).strip()
-            tv = quita(lva[i]).strip() if i < len(lva) else ""
-            items.append("<li%s>%s</li>" % (attr(tv), _linea(t)))
-        return "<%s>%s</%s>" % ("ol" if ol else "ul", "".join(items), "ol" if ol else "ul")
-
-    texto = " ".join(lineas)
-    tv = " ".join(lva)
-    if _RE_ENLACE.search(texto):
-        return "<p%s>%s</p>" % (attr(_linea(tv), html=True) if tv else "", _linea(texto))
-    return "<p%s>%s</p>" % (attr(tv), esc(texto))
-
-
-def prosa(cuerpo):
-    """El cuerpo entero de una noticia."""
-    partes = [b for b in re.split(r"\n\s*\n", (cuerpo.get("es") or "").strip()) if b.strip()]
-    tra = [b for b in re.split(r"\n\s*\n", (cuerpo.get("va") or "").strip()) if b.strip()]
-    if len(tra) != len(partes):
-        tra = [""] * len(partes)      # si no casan, mejor sin traducir que mal emparejado
-    return "\n      ".join(_bloque(b, t) for b, t in zip(partes, tra))
-
-
-def fecha_larga(iso):
-    if not iso:
-        return ""
-    a, m, d = iso.split("-")
-    return "%d de %s de %s" % (int(d), MESES[int(m) - 1], a)
-
-
-MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
-         "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
-
-
-def cuerpo_noticia(n):
-    """La página completa de una noticia."""
-    fecha = fecha_larga(n.get("fecha"))
-    boton = n.get("boton") or {}
-    return """<section class="sec">
-  <div class="wrap">
-    <article class="prosa">
-      <p class="dato-fecha">%s · HOSBEC</p>
-      <p class="lede" data-va="%s">%s</p>
-
-      %s
-    </article>
-
-    <div class="mt-2" style="display:flex;gap:.8rem;flex-wrap:wrap">
-      <a class="btn btn-linea" href="noticias.html" data-va="← Totes les notícies">← Todas las noticias</a>
-      <a class="btn btn-mar" href="%s" data-va="%s">%s</a>
-    </div>
-  </div>
-</section>
-""" % (esc(fecha), esc(n["entradilla"].get("va", "")), esc(n["entradilla"]["es"]),
-       prosa(n.get("cuerpo") or {}),
-       esc(boton.get("url", "alojamientos.html")), esc(boton.get("va", "")),
-       esc(boton.get("es", "Ver los alojamientos")))
-
-
-def tarjetas_noticias():
-    """La rejilla del listado de noticias."""
-    out = []
-    for n in contenido.NOTICIAS:
-        img = '<img src="assets/img/foto/%s.webp" alt="" width="1200" height="800" loading="lazy">' % n["imagen"]
-        etq = n.get("etiqueta") or n.get("seccion") or {}
-        clase = "label label-" + n["color"] if n.get("color") else "label"
-        estilo = ' style="color:var(--suave)"' if n.get("proxima") else ""
-        pie = (('<span class="dato-fecha" data-va="%s">%s</span>'
-                % (esc((n.get("cuando") or {}).get("va", "")),
-                   esc((n.get("cuando") or {}).get("es", ""))))
-               if n.get("proxima") else
-               ('<span class="dato-fecha">%s · <span data-va="%d min de lectura">'
-                '%d min de lectura</span></span>'
-                % (n["fecha"].split("-")[2] + " · " + n["fecha"].split("-")[1] +
-                   " · " + n["fecha"].split("-")[0], n.get("lectura", 3),
-                   n.get("lectura", 3))))
-        dentro = ("""%s
-        <div class="bd">
-          <span class="%s"%s data-va="%s">%s</span>
-          <h3%s data-va="%s">%s</h3>
-          <p class="body-sm" data-va="%s">%s</p>
-          %s
-        </div>""" % (img, clase, estilo, esc(etq.get("va", "")), esc(etq.get("es", "")),
-                     ' class="d3"' if n.get("destacada") else "",
-                     esc(n["titulo"]["va"]), esc(n["titulo"]["es"]),
-                     esc(n["resumen"].get("va", "")), esc(n["resumen"]["es"]), pie))
-        if n.get("proxima"):
-            out.append('<article class="nota" aria-label="Próxima entrada">%s</article>' % dentro)
-        else:
-            out.append('<a class="nota%s" href="%s.html">%s</a>'
-                       % (" grande" if n.get("destacada") else "", n["slug"], dentro))
-    return "\n\n      ".join(out)
-
-
 # ------------------------------------------------------------------ noticias --
-# Vienen de contenido/noticias.json. Para publicar una nueva basta con añadirla
-# ahí (lo hace el panel) y crear su _build/paginas/<slug>.html.
-PUBLICADAS = [n for n in contenido.NOTICIAS if not n.get("proxima")]
+NOTICIAS = [
+    ("noticia-1", "not-1", ("Noticias", "Notícies"),
+     ("20 alojamientos ya se han sumado a la primera Km0 Week",
+      "20 allotjaments ja s'han sumat a la primera Km0 Week"),
+     "Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes."),
+    ("noticia-2", "not-2", ("Noticias", "Notícies"),
+     ("Cómo se calcula el descuento de residente (y por qué es real)",
+      "Com es calcula el descompte de resident (i per què és real)"),
+     "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba."),
+    ("noticia-3", "not-3", ("Noticias", "Notícies"),
+     ("Doce ayuntamientos se suman con actividades abiertas",
+      "Dotze ajuntaments se sumen amb activitats obertes"),
+     "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week."),
+]
 
 
 def paginas_noticia():
-    return [dict(archivo=n["slug"] + ".html",
-                 html=cuerpo_noticia(n),
-                 titulo=n["titulo"]["es"] + " · HOSBEC Km0 Week",
-                 desc=n["resumen"]["es"],
-                 og="assets/img/foto/%s.webp" % n["imagen"],
-                 cab=C(n["imagen"],
-                       (n["seccion"]["es"], n["seccion"]["va"]),
-                       (n["titulo"]["es"], n["titulo"]["va"])))
-            for n in PUBLICADAS]
+    return [dict(archivo=slug + ".html", cuerpo=slug + ".html",
+                 titulo=tit[0] + " · HOSBEC Km0 Week", desc=sub,
+                 og="assets/img/foto/%s.webp" % foto,
+                 cab=C(foto, ante, tit))
+            for slug, foto, ante, tit, sub in NOTICIAS]
 
 
 # ------------------------------------------------------------------ auxiliares --
@@ -711,52 +422,14 @@ def sitemap(paginas):
     open(os.path.join(RAIZ, "sitemap.xml"), "w", encoding="utf-8").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s\n</urlset>\n' % urls)
     open(os.path.join(RAIZ, "robots.txt"), "w", encoding="utf-8").write(
-        "User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: %s/sitemap.xml\n" % DOMINIO)
-
-
-def traducciones(memoria):
-    """
-    Deja en assets/traducciones.json lo que se ha traducido a máquina, como
-    diccionario {castellano: valenciano}. La web no lo usa: lo lee el panel,
-    para poder enseñar esos textos marcados como «sin revisar» y que alguien
-    los confirme o los corrija.
-    """
-    import json
-    ruta = os.path.join(RAIZ, "assets", "traducciones.json")
-    open(ruta, "w", encoding="utf-8").write(
-        json.dumps({"va": memoria, "paginas": POR_PAGINA}, ensure_ascii=False,
-                   indent=1, sort_keys=True) + "\n")
+        "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % DOMINIO)
 
 
 def main():
-    # 1 · Rellenar el idioma que falte. Lo escrito a mano nunca se toca.
-    import traducir
-    memoria = contenido.completar_traducciones("va")
-    if memoria:
-        print("traducidas al valencià: %d frases%s"
-              % (len(memoria), "" if traducir.disponible() else ""))
-    elif not traducir.disponible():
-        print("aviso: Apertium no está instalado, no se traduce nada "
-              "(sudo apt-get install -y %s)" % traducir.PAQUETES)
-    traducciones(memoria)
-
-    # 2 · Lo mismo con los textos sueltos de las páginas
-    dePaginas = preparar_paginas()
-    if dePaginas:
-        print("traducidos textos de página: %d" % len(dePaginas))
-        memoria.update(dePaginas)
-        traducciones(memoria)
-
-    # 3 · Los datos que consume el navegador, ya completos
-    contenido.escribir_js()
-
     todas = PAGINAS + paginas_noticia()
     for p in todas:
         construir(p)
     sitemap(todas)
-    print("datos: %d alojamientos · %d actividades · %d plazas"
-          % (len(contenido.ALOJAMIENTOS), len(contenido.AGENDA),
-             contenido.CUPO_TOTAL))
     print("páginas generadas:", len(todas), "+ sitemap.xml + robots.txt")
 
 

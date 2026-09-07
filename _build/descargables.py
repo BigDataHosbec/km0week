@@ -44,23 +44,35 @@ for d in (TMP, HTML, SALIDA):
 
 
 # ---------------------------------------------------------------------------
-# Los datos, leídos de contenido/*.json — los mismos que alimentan la web,
-# así que las cifras de los PDF siempre cuadran con lo que se ve publicado.
+# Los datos, leídos del mismo archivo que usa la web
 # ---------------------------------------------------------------------------
-import contenido
+def cargar_datos():
+    lector = os.path.join(TMP, "leer.js")
+    io.open(lector, "w", encoding="utf-8").write(
+        "const fs=require('fs');\n"
+        "const src=fs.readFileSync(process.argv[2],'utf8');\n"
+        "const win={};\n"
+        "new Function('window', src)(win);\n"
+        "process.stdout.write(JSON.stringify(win.KM0));\n")
+    salida = subprocess.run(
+        ["node", lector, os.path.join(RAIZ, "assets", "js", "data-alojamientos.js")],
+        capture_output=True, text=True, check=True)
+    return json.loads(salida.stdout)
 
-ALOJ = contenido.ALOJAMIENTOS
-AGENDA = contenido.AGENDA
-CFG = contenido.CONFIG
 
-FECHAS = contenido.FECHAS_ES
-EMAIL = contenido.EMAIL
-TEL = contenido.TELEFONO
-WEB = contenido.DOMINIO.split("//", 1)[-1]
+D = cargar_datos()
+ALOJ = D["ALOJAMIENTOS"]
+AGENDA = D["AGENDA"]
+CFG = D["CONFIG"]
+
+FECHAS = CFG["fechasTexto"]["es"]
+EMAIL = CFG["emailContacto"]
+TEL = CFG["telefonoContacto"]
+WEB = "bigdatahosbec.github.io/km0week"
 HOSBEC = "Asociación Empresarial Hotelera y Turística de la Comunidad Valenciana"
 
-CUPO_TOTAL = contenido.CUPO_TOTAL
-DESTINOS = contenido.DESTINOS
+CUPO_TOTAL = sum(a.get("cupo") or 0 for a in ALOJ)
+DESTINOS = sorted({a["destino"] for a in ALOJ})
 PROVINCIAS = ["Castelló", "València", "Alicante"]
 HOY = datetime.date(2026, 8, 18)
 
@@ -1580,8 +1592,7 @@ const { chromium } = require(process.env.PW || 'playwright');
 const fs = require('fs');
 (async () => {
   const trabajos = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-  const b = await chromium.launch(
-    process.env.PW_CHROME ? { executablePath: process.env.PW_CHROME } : {});
+  const b = await chromium.launch();
   for (const t of trabajos) {
     const p = await b.newPage(t.ancho ? { viewport: { width: t.ancho, height: t.alto } } : {});
     const errs = [];
@@ -1622,13 +1633,7 @@ def renderizar(trabajos):
     manifiesto = os.path.join(TMP, "trabajos.json")
     io.open(manifiesto, "w", encoding="utf-8").write(json.dumps(trabajos))
     env = dict(os.environ)
-    # Dónde está el paquete playwright. Si no viene por entorno, se prueba la
-    # instalación global de Cowork; si tampoco está, se deja que Node lo
-    # resuelva solo (con "npm install playwright" en la raíz del repositorio,
-    # que es lo que hace la publicación automática de GitHub).
-    if "PW" not in env:
-        glob = "/home/claude/.npm-global/lib/node_modules/playwright"
-        env["PW"] = glob if os.path.isdir(glob) else "playwright"
+    env.setdefault("PW", "/home/claude/.npm-global/lib/node_modules/playwright")
     subprocess.run(["node", js, manifiesto], check=True, env=env)
 
 
@@ -1656,13 +1661,14 @@ def main():
     print("Km0 Week · generando los descargables\n")
     trabajos = []
 
+    # 07/09/2026 — se retira la accion del pasaporte Km0. Ya no se generan
+    # pasaporte-km0, sello-pasaporte, bases-sorteo ni programa-actividades, y la
+    # web no los enlaza. Las funciones doc_pasaporte(), doc_sello(), doc_bases()
+    # y doc_programa() se dejan escritas por si la accion vuelve en otra edicion:
+    # basta con volver a poner su linea en esta lista.
     docs = [
-        ("pasaporte-km0",        doc_pasaporte(),  "A4", True),
-        ("programa-actividades", doc_programa(),   "A4", False),
-        ("bases-sorteo",         doc_bases(),      "A4", False),
         ("carteleria",           doc_carteleria(), "A4", False),
         ("manual-de-marca",      doc_manual(),     "A4", False),
-        ("sello-pasaporte",      doc_sello(),      "A4", False),
         ("guia-recepcion",       doc_guia(),       "A4", False),
         ("dossier-prensa",       doc_dossier(),    "A4", False),
         ("nota-prensa-presentacion", doc_nota(),   "A4", False),
@@ -1700,9 +1706,8 @@ def main():
     print("· imprimiendo %d piezas con Chromium…" % len(trabajos))
     renderizar(trabajos)
 
-    # ---------------------------------------------------------------- xlsx --
-    print("· hoja de cálculo de alojamientos…")
-    hacer_xlsx(os.path.join(SALIDA, "alojamientos-adheridos.xlsx"))
+    # El listado en xlsx y el banco de imagenes salieron de la sala de prensa el
+    # 07/09/2026; hacer_xlsx() y hacer_banco() siguen aqui por si vuelven.
 
     # ---------------------------------------------------------------- docx --
     print("· documento de textos…")
@@ -1731,8 +1736,6 @@ def main():
             z.write(os.path.join(FUENTES, f), "tipografias/" + f)
         z.write(os.path.join(SALIDA, "manual-de-marca.pdf"), "manual-de-marca.pdf")
         z.writestr("LEEME.txt", LEEME_LOGOS)
-
-    hacer_banco(os.path.join(SALIDA, "banco-imagenes.zip"))
 
     print("\nHecho. En descargas/:")
     for f in sorted(os.listdir(SALIDA)):
