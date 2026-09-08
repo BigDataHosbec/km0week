@@ -19,7 +19,7 @@ contenido de cada página vive en `_build/paginas/`.
 Ya nos costó una tarde: se subieron las páginas pero no `assets/js/`, y la web
 siguió mandando los formularios al sistema antiguo aunque el código nuevo
 estuviera «hecho». Si tocas JavaScript o CSS y no lo ves en producción, abre el
-archivo directamente en `bigdatahosbec.github.io` y compara.
+archivo directamente en `km0week.com` y compara.
 
 **3. Cuando dudes de si hay que compilar, compila.**
 `python3 _build/build.py` es inofensivo: reescribe las 18 páginas a partir de
@@ -115,6 +115,35 @@ archivos se parte del `.ttf` variable de Google Fonts y se subsetea fijando
 
 Los tres tokens de tipografía (`--f-disp`, `--f-text`, `--f-hand`) apuntan a la
 misma familia: el contraste se hace con el peso, no con la familia.
+
+### Las cuatro bandas de experiencia de la portada
+
+Cada banda es una foto a sangre con el rótulo encima. Para que la foto se lea,
+las cuatro están recortadas a **2,4:1** —el mismo formato que tiene la banda en
+un escritorio— y en la altura donde se reconoce el motivo. Así el navegador casi
+no tiene que recortar.
+
+Si cambias una foto:
+
+1. Recórtala a 2,4:1 (por ejemplo 1920 x 800) eligiendo la franja donde se ve lo
+   que quieres que se vea, y guárdala en `assets/img/foto/` con el mismo nombre
+   (`exp-escapadas.webp`, `exp-bienestar.webp`, `exp-ocio.webp`,
+   `exp-orgullo.webp`).
+2. Si en móvil se corta por el lado que no toca, ajusta el porcentaje horizontal
+   de su regla en `assets/css/km0.css`:
+
+```css
+#exp-escapadas > img { object-position: 62% 50%; }
+#exp-bienestar > img { object-position: 80% 50%; }
+#exp-ocio      > img { object-position: 52% 50%; }
+#exp-orgullo   > img { object-position: 50% 50%; }
+```
+
+El primer número es qué parte de la foto queda centrada de izquierda a derecha:
+0% pega al borde izquierdo, 100% al derecho. En escritorio apenas se nota
+—la foto y la banda tienen casi el mismo formato—; en móvil es lo que decide
+qué mitad se ve. La altura de la banda se controla con `min-height` en `.banda`.
+
 
 ### El logotipo
 
@@ -356,10 +385,16 @@ El teléfono y el correo **también** están en `CONFIG` de
 `data-alojamientos.js` (`telefonoContacto`, `emailContacto`), porque los usan el
 JavaScript y los descargables. Si cambias uno, cambia el otro.
 
-Sobre `DOMINIO`: hoy apunta a `https://bigdatahosbec.github.io/km0week`. Si
-algún día HOSBEC concede `km0week.hosbec.com`, son tres cosas: cambiar
-`DOMINIO`, compilar, y crear un archivo `CNAME` en la raíz con el dominio
-dentro. No existe hoy.
+Sobre `DOMINIO`: hoy apunta a `https://km0week.com`, el dominio propio
+registrado en IONOS. De ese valor sale solo el archivo `CNAME` de la raíz, que
+es lo que le dice a GitHub Pages cuál es el dominio: lo escribe `build.py` en
+cada compilación, así que **no se toca a mano y no debe borrarse**. Si el
+`CNAME` desapareciera del repositorio, GitHub dejaría de servir la web en
+km0week.com y volvería a github.io.
+
+Para cambiar de dominio basta con cambiar `DOMINIO` y compilar: el `CNAME` se
+reescribe solo. Si se pone de nuevo una dirección `github.io`, el `CNAME` se
+borra solo también.
 
 ---
 

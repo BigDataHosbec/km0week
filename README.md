@@ -14,7 +14,10 @@ y sin peticiones a terceros (tipografías, scripts e imágenes están autoalojad
 
 ## Publicado en
 
-https://bigdatahosbec.github.io/km0week/
+https://km0week.com
+
+(dominio propio de HOSBEC en IONOS, sobre GitHub Pages. La direccion antigua
+`https://bigdatahosbec.github.io/km0week/` sigue redirigiendo aqui.)
 
 ## Para añadir un alojamiento
 

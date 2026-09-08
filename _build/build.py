@@ -21,12 +21,15 @@ PAGS = os.path.join(RAIZ, "_build", "paginas")
 # DOMINIO: la dirección donde se publica la web. Se usa en sitemap.xml,
 # robots.txt, las etiquetas canonical y las imágenes de compartir en redes.
 # SIN barra final.
+#   Dominio propio           : https://km0week.com      <-- EL QUE SE USA
 #   GitHub Pages de proyecto : https://USUARIO.github.io/km0week
 #   GitHub Pages de usuario  : https://USUARIO.github.io
-#   Dominio propio           : https://km0week.hosbec.com
-# Cámbialo y vuelve a ejecutar:  python3 _build/build.py
+# El build escribe tambien el archivo CNAME a partir de este valor: es lo que
+# le dice a GitHub Pages cual es el dominio propio. Si el CNAME desaparece del
+# repositorio, GitHub deja de servir la web en km0week.com.
+# Cambialo y vuelve a ejecutar:  python3 _build/build.py
 # ---------------------------------------------------------------------------
-DOMINIO = "https://bigdatahosbec.github.io/km0week"
+DOMINIO = "https://km0week.com"
 EMAIL_KM0 = "km0week@hosbec.com"
 
 FECHAS_ES = "13 – 29 de noviembre de 2026"
@@ -425,12 +428,29 @@ def sitemap(paginas):
         "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % DOMINIO)
 
 
+def cname():
+    """Escribe el archivo CNAME que GitHub Pages necesita para servir la web en
+    el dominio propio. Se saca de DOMINIO, sin protocolo ni barra final.
+    Si DOMINIO apunta a github.io no se escribe nada y se borra el CNAME que
+    hubiera, porque ahí el dominio propio no pinta nada."""
+    ruta = os.path.join(RAIZ, "CNAME")
+    host = DOMINIO.split("//", 1)[-1].split("/", 1)[0].strip()
+    if host.endswith("github.io"):
+        if os.path.exists(ruta):
+            os.remove(ruta)
+        return None
+    open(ruta, "w", encoding="utf-8", newline="\n").write(host + "\n")
+    return host
+
+
 def main():
     todas = PAGINAS + paginas_noticia()
     for p in todas:
         construir(p)
     sitemap(todas)
-    print("páginas generadas:", len(todas), "+ sitemap.xml + robots.txt")
+    host = cname()
+    print("páginas generadas:", len(todas), "+ sitemap.xml + robots.txt"
+          + (" + CNAME (%s)" % host if host else ""))
 
 
 if __name__ == "__main__":
