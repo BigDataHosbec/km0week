@@ -832,14 +832,8 @@ const TIPOS = {
 };
 const PROVINCIAS = ["Alicante", "València", "Castelló"];
 const EXPERIENCIAS = {
-  gastronomia:"Gastronomía", bienestar:"Bienestar", familia:"Familia", cultura:"Cultura",
-  mar:"Mar", deporte:"Deporte", romantico:"Romántico", mascotas:"Mascotas",
-  accesible:"Accesible", sostenible:"Sostenible", noche:"Noche"
-};
-const SERVICIOS = {
-  piscina:"Piscina", spa:"Spa", parking:"Parking", wifi:"Wifi", restaurante:"Restaurante",
-  gimnasio:"Gimnasio", playa:"Playa", mascotas:"Mascotas", accesible:"Accesible",
-  familiar:"Familiar", vistas:"Vistas", terraza:"Terraza"
+  alojamiento:"Alojamiento", bienestar:"Bienestar", gastronomia:"Gastronomía",
+  cocteleria:"Coctelería", ocio:"Ocio"
 };
 const LAT = [37.7, 40.9], LNG = [-1.7, 0.9];
 const DIAS_SEM = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
@@ -901,7 +895,6 @@ function revisarAlojamiento(a, todos){
   // El valenciano vacío no es un problema: lo rellena Apertium al publicar y
   // se repasa en la pestaña Traducciones. Aquí solo importa el castellano.
   if (vacio((a.claim || {}).es)) err.push("Falta el claim en castellano.");
-  if (vacio((a.descripcion || {}).es)) err.push("Falta la descripción en castellano.");
   return { nombre: nom, errores: err, avisos: avi };
 }
 
@@ -1190,12 +1183,12 @@ $("#nuevo-alo").addEventListener("click", () => editarAlojamiento(-1));
 function alojamientoEnBlanco(){
   return {
     id: "", nombre: "", tipo: "hotel", categoria: 4, destino: "", provincia: "Alicante",
-    coords: null, web: "https://", telefono: "",
-    imagen: "", claim: { es: "", va: "" }, descripcion: { es: "", va: "" },
+    coords: null, web: "https://",
+    imagen: "", claim: { es: "", va: "" },
     oferta: { titulo: { es: "", va: "" }, incluye: { es: [], va: [] },
               precioDesde: 0, precioOriginal: 0, unidad: { es: "por noche", va: "per nit" },
               dto: 0, condiciones: { es: "", va: "" } },
-    experiencias: [], servicios: [], destacado: false, nuevo: true, cupo: 0,
+    experiencias: [], destacado: false, nuevo: true, cupo: 0,
     plazas: { es: "", va: "" }
   };
 }
@@ -1240,11 +1233,8 @@ function editarAlojamiento(indice){
     '</fieldset>' +
 
     '<fieldset><legend>Contacto</legend>' +
-      '<div class="fila fila-2">' +
-        campo("f-web", "Web a la que lleva el botón", a.web,
-              { tipo: "url", placeholder: "https://…", pista: "Completa, con https://" }) +
-        campo("f-telefono", "Teléfono", a.telefono, { tipo: "tel" }) +
-      '</div>' +
+      campo("f-web", "Web a la que lleva el botón", a.web,
+            { tipo: "url", placeholder: "https://…", pista: "Completa, con https://" }) +
       '<div class="campo"><span class="et">Foto de la ficha</span>' +
         '<div class="foto">' +
           '<canvas id="foto-lienzo" width="480" height="320" ' +
@@ -1267,7 +1257,6 @@ function editarAlojamiento(indice){
     '<fieldset><legend>Cómo se cuenta</legend>' +
       campoBi("f-claim", "Frase de gancho", a.claim,
               { placeholder: "Una línea que enganche" }) +
-      campoBi("f-descripcion", "Descripción", a.descripcion, { filas: 3 }) +
     '</fieldset>' +
 
     '<fieldset><legend>La oferta Km0</legend>' +
@@ -1295,8 +1284,6 @@ function editarAlojamiento(indice){
       '<div class="campo" role="group" aria-label="Experiencias"><span class="et">Experiencias</span>' +
         pastillas("exp", EXPERIENCIAS, a.experiencias) +
         '<p class="pista">Es por lo que la gente filtra en el listado.</p></div>' +
-      '<div class="campo" role="group" aria-label="Servicios"><span class="et">Servicios</span>' +
-        pastillas("srv", SERVICIOS, a.servicios) + '</div>' +
       '<div class="pastillas" style="margin-top:.6rem">' +
         '<label class="check"><input type="checkbox" id="f-destacado"' +
           (a.destacado ? " checked" : "") + '> Sale en la portada</label>' +
@@ -1352,10 +1339,8 @@ function recogerAlojamiento(base){
   a.provincia = val("f-provincia");
   a.coords = sacarCoords(val("f-coords"));
   a.web = val("f-web");
-  a.telefono = val("f-telefono");
   a.imagen = val("f-imagen") || ("assets/img/foto/alo-" + a.id + ".webp");
   a.claim = bi("f-claim");
-  a.descripcion = bi("f-descripcion");
   const inc = bi("f-incluye");
   a.oferta = {
     titulo: bi("f-oferta-titulo"),
@@ -1370,7 +1355,6 @@ function recogerAlojamiento(base){
     condiciones: bi("f-condiciones")
   };
   a.experiencias = marcadas("exp");
-  a.servicios = marcadas("srv");
   a.destacado = $("#f-destacado").checked;
   a.nuevo = $("#f-nuevo").checked;
   a.cupo = num("f-cupo");

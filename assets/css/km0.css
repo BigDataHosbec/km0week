@@ -513,6 +513,21 @@ button, input, select, textarea { font: inherit; color: inherit; }
   content: ""; position: absolute; left: 2px; top: .58em; width: 7px; height: 7px;
   border-radius: 50%; background: var(--verde);
 }
+/* El cupo comprometido. La web lo promete por escrito —la noticia y el
+   dossier dicen que «aparece en su ficha»— y hasta ahora no aparecía. */
+.ficha-cupo {
+  display: flex; align-items: center; gap: 7px; margin-top: 2px;
+  font-size: .8rem; font-weight: 600; color: var(--verde-osc, var(--mar-d));
+}
+.ficha-cupo svg { width: 15px; height: 15px; flex: none; }
+
+/* Letra pequeña de la oferta: condiciones, vigencia y acreditación. Anunciar
+   un descuento sin ellas a la vista es lo que trae problemas de consumo. */
+.ficha-letra {
+  margin: 0 18px; padding-top: 10px; border-top: 1px dashed var(--linea-2);
+  font-size: .72rem; line-height: 1.45; color: var(--suave);
+}
+
 .ficha-ft { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 18px 18px; }
 .ficha-price b { font-family: var(--f-disp); font-weight: 600; font-size: 1.5rem; line-height: 1; color: var(--tinta); }
 .ficha-price s { color: var(--suave); font-size: .85rem; margin-left: 5px; }
@@ -806,13 +821,29 @@ button, input, select, textarea { font: inherit; color: inherit; }
   display: grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px;
   border-radius: var(--r-full); background: var(--mar); color: #fff; font-size: .72rem;
 }
-.f-toggle[aria-expanded="true"] { border-color: var(--mar); color: var(--mar-d); }
+.f-toggle[aria-expanded="true"] { border-color: var(--mar); color: var(--mar-d); background: var(--verde-p, #F2F6EE); }
+
+/* Los filtros van plegados SIEMPRE, no solo en móvil: desplegados se comían
+   media pantalla y las fichas quedaban por debajo del pliegue. La barra en
+   reposo es una sola línea (cuántos hay · limpiar · ordenar · Filtros). */
+.f-toggle { display: inline-flex; }
+.filtros-grupos { display: none; }
+.filtros-grupos.abierto { display: block; padding-top: .2rem; }
+.filtros-top { padding-bottom: 0; border-bottom: 0; }
+.filtros-grupos.abierto { border-top: 1px solid var(--linea-2); margin-top: .6rem; }
 @media (max-width: 779px) {
-  .f-toggle { display: inline-flex; }
-  .f-orden { margin-left: 0; font-size: .74rem; }
-  .filtros-top { gap: .45rem .7rem; }
-  .filtros-grupos { display: none; }
-  .filtros-grupos.abierto { display: block; }
+  /* Dos líneas y no tres: arriba cuántos hay y el enlace de limpiar, abajo
+     el orden y el botón de filtros. La barra es pegajosa, cada fila de más
+     se come una franja de fichas durante todo el scroll. */
+  .filtros-top { gap: .4rem .6rem; }
+  .filtros-top .res { margin-right: auto; }
+  .btn-limpiar { margin-left: 0; }
+  /* El rótulo «ORDENAR» sobra: el propio desplegable dice «Destacados
+     primero». Quitarlo es lo que deja sitio al botón en la misma línea. */
+  .f-orden { margin-left: 0; flex: 1 1 auto; min-width: 0; }
+  .f-orden > span { display: none; }
+  .f-orden select { width: 100%; min-width: 0; }
+  .f-toggle { flex: none; }
   .f-row { padding-block: .45rem; }
 }
 .btn-limpiar {

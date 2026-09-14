@@ -15,10 +15,8 @@ window.Km0 = (function () {
     es: {
       tipos: { hotel: "Hotel", apartamentos: "Apartamentos", camping: "Camping", rural: "Casa rural", hostal: "Hostal", balneario: "Balneario" },
       exp: {
-        gastronomia: "Gastronomía", bienestar: "Bienestar", familia: "En familia",
-        cultura: "Cultura y pueblos", mar: "Junto al mar", deporte: "Naturaleza y deporte",
-        romantico: "En pareja", mascotas: "Con mascota", accesible: "Accesible",
-        sostenible: "Sostenible", noche: "De noche"
+        alojamiento: "Alojamiento", bienestar: "Bienestar", gastronomia: "Gastronomía",
+        cocteleria: "Coctelería", ocio: "Ocio"
       },
       desde: "desde", ver: "Ver oferta", aTi: "a {d} km de casa", nuevo: "Nuevo",
       alojamientos: "alojamientos", alojamiento: "alojamiento", destinos: "destinos", destino: "destino",
@@ -44,10 +42,8 @@ window.Km0 = (function () {
     va: {
       tipos: { hotel: "Hotel", apartamentos: "Apartaments", camping: "Càmping", rural: "Casa rural", hostal: "Hostal", balneario: "Balneari" },
       exp: {
-        gastronomia: "Gastronomia", bienestar: "Benestar", familia: "En família",
-        cultura: "Cultura i pobles", mar: "Vora la mar", deporte: "Natura i esport",
-        romantico: "En parella", mascotas: "Amb mascota", accesible: "Accessible",
-        sostenible: "Sostenible", noche: "De nit"
+        alojamiento: "Allotjament", bienestar: "Benestar", gastronomia: "Gastronomia",
+        cocteleria: "Cocteleria", ocio: "Oci"
       },
       desde: "des de", ver: "Veure oferta", aTi: "a {d} km de casa", nuevo: "Nou",
       alojamientos: "allotjaments", alojamiento: "allotjament", destinos: "destins", destino: "destí",
@@ -95,11 +91,9 @@ window.Km0 = (function () {
   };
   // Cada experiencia toma su icono y su color del manual
   const EXP_ICO = {
-    gastronomia: ["gastronomia", "t-terra"], bienestar: ["bienestar", "t-verde"],
-    familia: ["familia", ""], cultura: ["pueblos", "t-terra"], mar: ["costa", ""],
-    deporte: ["montana", "t-verde"], romantico: ["romantico", "t-terra"],
-    mascotas: ["mascotas", "t-arena"], accesible: ["accesible", ""],
-    sostenible: ["naturaleza", "t-verde"], noche: ["noche", "t-arena"]
+    alojamiento: ["escapadas", ""], bienestar: ["bienestar", "t-verde"],
+    gastronomia: ["gastronomia", "t-terra"], cocteleria: ["noche", "t-arena"],
+    ocio: ["pueblos", "t-terra"]
   };
 
   /* --------------------- ilustración de cada alojamiento -----------------
@@ -163,9 +157,13 @@ window.Km0 = (function () {
 
   /* -------------------------------- fichas ------------------------------- */
   function ficha(a, dist) {
-    const inc = (L(a.oferta.incluye) || []).slice(0, 3);
+    // Todas las líneas de «qué incluye», no las tres primeras: las veinte
+    // ofertas tienen cuatro, así que recortar solo escondía la última.
+    const inc = L(a.oferta.incluye) || [];
     const estrellas = a.categoria ? " · " + "★".repeat(a.categoria) : "";
-    const tema = a.experiencias[0];
+    // La píldora enseña lo que DISTINGUE a esta casa. Como «alojamiento» lo
+    // llevan todas, solo sale cuando no hay nada más que contar.
+    const tema = a.experiencias.find(e => e !== "alojamiento") || a.experiencias[0];
     return `<article class="ficha" data-id="${a.id}">
       <div class="ficha-art">
         ${a.imagen ? `<img src="${a.imagen}" alt="${a.nombre}" loading="lazy">` : ilustracion(a, 560, 350)}
@@ -184,7 +182,9 @@ window.Km0 = (function () {
           <div class="ttl">${L(a.oferta.titulo)}</div>
           <ul>${inc.map(i => `<li>${i}</li>`).join("")}</ul>
         </div>
+        ${L(a.plazas) ? `<p class="ficha-cupo">${IC.escapadas}<span>${L(a.plazas)}</span></p>` : ""}
       </div>
+      ${L(a.oferta.condiciones) ? `<p class="ficha-letra">${L(a.oferta.condiciones)}</p>` : ""}
       <div class="ficha-ft">
         <div class="ficha-price">
           <span class="label" style="display:block;margin-bottom:3px;color:var(--suave)">${t("desde")}</span>
@@ -385,15 +385,41 @@ window.Km0 = (function () {
     document.dispatchEvent(new CustomEvent("km0:render"));
   }
 
+  /* Qué filtros se enseñan. Lo decide contenido/filtros.json (pestaña Filtros
+     del panel), no el código:
+       · mostrar:false        → el grupo entero desaparece de la página
+       · valores: []          → automático: salen todos los que haya
+       · valores: [a, b, c]   → solo esos y en ese orden
+     En los dos últimos casos se descarta lo que no tenga ningún alojamiento
+     detrás, para no ofrecer nunca un filtro que no lleva a ninguna parte. */
+  function grupoVisible(clave, candidatos, cuantos) {
+    const cfg = ((window.KM0.FILTROS || {}).listado || {})[clave] || {};
+    const fila = $(`.f-row[data-c="${clave}"]`);
+    if (cfg.mostrar === false) {
+      if (fila) fila.remove();
+      return [];
+    }
+    const pedidos = Array.isArray(cfg.valores) && cfg.valores.length ? cfg.valores : candidatos;
+    const vivos = pedidos.filter(v => cuantos(v) > 0);
+    if (!vivos.length && fila) fila.remove();
+    return vivos;
+  }
+
   function montarFiltros() {
     const zona = $("#filtros"); if (!zona) return;
-    const provs = ["Castelló", "València", "Alicante"].filter(p => D.some(a => a.provincia === p));
-    const tipos = [...new Set(D.map(a => a.tipo))];
-    const exps = [...new Set(D.flatMap(a => a.experiencias))]
-      .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es"));
-    chipsDe($("#f-provincia"), provs, v => v, false);
-    chipsDe($("#f-tipo"), tipos, v => t("tipos." + v), true);
-    chipsDe($("#f-exp"), exps, v => t("exp." + v), true);
+    const provs = grupoVisible("provincia",
+      ["Castelló", "València", "Alicante"],
+      v => D.filter(a => a.provincia === v).length);
+    const tipos = grupoVisible("tipo",
+      [...new Set(D.map(a => a.tipo))],
+      v => D.filter(a => a.tipo === v).length);
+    const exps = grupoVisible("experiencia",
+      [...new Set(D.flatMap(a => a.experiencias))]
+        .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es")),
+      v => D.filter(a => a.experiencias.includes(v)).length);
+    if ($("#f-provincia")) chipsDe($("#f-provincia"), provs, v => v, false);
+    if ($("#f-tipo")) chipsDe($("#f-tipo"), tipos, v => t("tipos." + v), true);
+    if ($("#f-exp")) chipsDe($("#f-exp"), exps, v => t("exp." + v), true);
 
     const sel = $("#f-orden");
     if (sel) {

@@ -33,11 +33,7 @@ RAIZ = contenido.RAIZ
 
 TIPOS = {"hotel", "apartamentos", "camping", "rural", "hostal", "balneario"}
 PROVINCIAS = {"Alicante", "València", "Castelló"}
-EXPERIENCIAS = {"gastronomia", "bienestar", "familia", "cultura", "mar",
-                "deporte", "romantico", "mascotas", "accesible", "sostenible",
-                "noche"}
-SERVICIOS = {"piscina", "spa", "parking", "wifi", "restaurante", "gimnasio",
-             "playa", "mascotas", "accesible", "familiar", "vistas", "terraza"}
+EXPERIENCIAS = {"alojamiento", "bienestar", "gastronomia", "cocteleria", "ocio"}
 
 # Recuadro generoso alrededor de la Comunitat Valenciana. Sirve para cazar el
 # error clásico de pegar las coordenadas en el orden contrario.
@@ -136,16 +132,12 @@ def revisar_alojamientos():
         for exp in a.get("experiencias") or []:
             if exp not in EXPERIENCIAS:
                 aviso(donde, "la experiencia «%s» no existe: no saldrá en ese filtro" % exp)
-        for srv in a.get("servicios") or []:
-            if srv not in SERVICIOS:
-                aviso(donde, "el servicio «%s» no existe: no se verá su icono" % srv)
 
         img = a.get("imagen") or ""
         if img and not img.startswith("http") and not existe_imagen(img):
             error(donde, "la foto «%s» no está en el proyecto" % img)
 
         bilingue(donde, "claim", a.get("claim"))
-        bilingue(donde, "descripcion", a.get("descripcion"))
         oferta = a.get("oferta") or {}
         if oferta:
             bilingue(donde, "oferta → titulo", oferta.get("titulo"))

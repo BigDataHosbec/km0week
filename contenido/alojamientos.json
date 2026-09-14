@@ -11,15 +11,10 @@
       -0.1314
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 01",
     "imagen": "assets/img/foto/alo-gran-hotel-mirador-poniente.webp",
     "claim": {
       "es": "El skyline que ves desde la autovía, ahora desde dentro.",
       "va": "L'skyline que veus des de l'autovia, ara des de dins."
-    },
-    "descripcion": {
-      "es": "Un clásico de Poniente reformado en 2024, con terraza panorámica sobre la bahía y una carta que reivindica el arroz de la comarca.",
-      "va": "Un clàssic de Ponent reformat en 2024, amb terrassa panoràmica sobre la badia i una carta que reivindica l'arròs de la comarca."
     },
     "oferta": {
       "titulo": {
@@ -53,17 +48,8 @@
       }
     },
     "experiencias": [
-      "gastronomia",
-      "mar",
-      "romantico"
-    ],
-    "servicios": [
-      "piscina",
-      "restaurante",
-      "parking",
-      "vistas",
-      "terraza",
-      "wifi"
+      "alojamiento",
+      "gastronomia"
     ],
     "destacado": true,
     "nuevo": false,
@@ -85,15 +71,10 @@
       -0.481
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 02",
     "imagen": "assets/img/foto/alo-sercotel-almadraba-suites.webp",
     "claim": {
       "es": "Dormir a diez minutos de casa y despertar en otra ciudad.",
       "va": "Dormir a deu minuts de casa i despertar en una altra ciutat."
-    },
-    "descripcion": {
-      "es": "En pleno casco antiguo, a los pies del Benacantil. Azoteas, tapeo del barrio y una ruta guiada por el Alicante que los alicantinos ya no miran.",
-      "va": "En ple casc antic, als peus del Benacantil. Terrats, tapeig del barri i una ruta guiada per l'Alacant que els alacantins ja no miren."
     },
     "oferta": {
       "titulo": {
@@ -127,15 +108,9 @@
       }
     },
     "experiencias": [
-      "cultura",
+      "alojamiento",
       "gastronomia",
-      "noche"
-    ],
-    "servicios": [
-      "terraza",
-      "restaurante",
-      "wifi",
-      "vistas"
+      "ocio"
     ],
     "destacado": true,
     "nuevo": false,
@@ -157,15 +132,10 @@
       -0.2331
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 03",
     "imagen": "assets/img/foto/alo-balneario-serra-gelada.webp",
     "claim": {
       "es": "Cinco horas de silencio a veinte kilómetros de tu oficina.",
       "va": "Cinc hores de silenci a vint quilòmetres de la teua oficina."
-    },
-    "descripcion": {
-      "es": "Circuito termal frente al Mediterráneo, con agua de mar climatizada y un ritual de chocolate de la Vila que solo se hace en noviembre.",
-      "va": "Circuit termal davant del Mediterrani, amb aigua de mar climatitzada i un ritual de xocolate de la Vila que només es fa al novembre."
     },
     "oferta": {
       "titulo": {
@@ -199,16 +169,9 @@
       }
     },
     "experiencias": [
+      "alojamiento",
       "bienestar",
-      "gastronomia",
-      "mar"
-    ],
-    "servicios": [
-      "spa",
-      "piscina",
-      "restaurante",
-      "parking",
-      "accesible"
+      "gastronomia"
     ],
     "destacado": true,
     "nuevo": true,
@@ -230,15 +193,10 @@
       0.0447
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 04",
     "imagen": "assets/img/foto/alo-hotel-penyal-ifach.webp",
     "claim": {
       "es": "Amanecer con el Peñón en la ventana. Sin hacer maleta.",
       "va": "Amanéixer amb el Penyal a la finestra. Sense fer maleta."
-    },
-    "descripcion": {
-      "es": "A pie de las salinas y del casco antiguo. Programa de observación de flamencos al amanecer con un biólogo del parque natural.",
-      "va": "A peu de les salines i del casc antic. Programa d'observació de flamencs a l'alba amb un biòleg del parc natural."
     },
     "oferta": {
       "titulo": {
@@ -272,16 +230,7 @@
       }
     },
     "experiencias": [
-      "mar",
-      "sostenible",
-      "familia"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "parking",
-      "restaurante",
-      "vistas"
+      "alojamiento"
     ],
     "destacado": false,
     "nuevo": false,
@@ -303,15 +252,10 @@
       0.1057
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 05",
     "imagen": "assets/img/foto/alo-apartamentos-marina-alta.webp",
     "claim": {
       "es": "Cocina propia y la lonja a cinco minutos.",
       "va": "Cuina pròpia i la llotja a cinc minuts."
-    },
-    "descripcion": {
-      "es": "Apartamentos junto al puerto en la Ciudad Creativa de la Gastronomía UNESCO. Incluye visita a la subasta de pescado y clase de arroz a banda.",
-      "va": "Apartaments vora el port a la Ciutat Creativa de la Gastronomia UNESCO. Inclou visita a la subhasta de peix i classe d'arròs a banda."
     },
     "oferta": {
       "titulo": {
@@ -345,16 +289,8 @@
       }
     },
     "experiencias": [
-      "gastronomia",
-      "familia",
-      "mar"
-    ],
-    "servicios": [
-      "parking",
-      "wifi",
-      "playa",
-      "terraza",
-      "familiar"
+      "alojamiento",
+      "gastronomia"
     ],
     "destacado": false,
     "nuevo": true,
@@ -376,15 +312,10 @@
       -0.0518
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 06",
     "imagen": "assets/img/foto/alo-casa-altea-la-vella.webp",
     "claim": {
       "es": "Una casa de pueblo con el mar al fondo y nadie alrededor.",
       "va": "Una casa de poble amb el mar al fons i ningú al voltant."
-    },
-    "descripcion": {
-      "es": "Seis habitaciones en una finca de bancales recuperada, con horno de leña, huerto y taller de cerámica con artesanos de Altea.",
-      "va": "Sis habitacions en una finca de bancals recuperada, amb forn de llenya, hort i taller de ceràmica amb artesans d'Altea."
     },
     "oferta": {
       "titulo": {
@@ -418,17 +349,9 @@
       }
     },
     "experiencias": [
-      "cultura",
-      "sostenible",
-      "romantico",
-      "gastronomia"
-    ],
-    "servicios": [
-      "piscina",
-      "parking",
-      "restaurante",
-      "vistas",
-      "mascotas"
+      "alojamiento",
+      "gastronomia",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -450,15 +373,10 @@
       -0.6983
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 07",
     "imagen": "assets/img/foto/alo-hotel-palmeral-elx.webp",
     "claim": {
       "es": "Dormir dentro de un Patrimonio de la Humanidad.",
       "va": "Dormir dins d'un Patrimoni de la Humanitat."
-    },
-    "descripcion": {
-      "es": "Rodeado de palmeras datileras, con visita nocturna al huerto histórico y demostración de trenzado de palma blanca.",
-      "va": "Envoltat de palmeres datileres, amb visita nocturna a l'hort històric i demostració de trenat de palma blanca."
     },
     "oferta": {
       "titulo": {
@@ -492,16 +410,8 @@
       }
     },
     "experiencias": [
-      "cultura",
-      "familia",
-      "sostenible"
-    ],
-    "servicios": [
-      "piscina",
-      "parking",
-      "restaurante",
-      "wifi",
-      "accesible"
+      "alojamiento",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -523,15 +433,10 @@
       -0.6537
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 08",
     "imagen": "assets/img/foto/alo-camping-dunas-guardamar.webp",
     "claim": {
       "es": "El pinar más grande de la costa, para ti solo en noviembre.",
       "va": "La pineda més gran de la costa, per a tu a soles al novembre."
-    },
-    "descripcion": {
-      "es": "Bungalows entre pinos plantados hace un siglo para frenar las dunas. Rutas de bici, observación de estrellas y fogata de otoño.",
-      "va": "Bungalows entre pins plantats fa un segle per a frenar les dunes. Rutes de bici, observació d'estreles i foguera de tardor."
     },
     "oferta": {
       "titulo": {
@@ -565,17 +470,8 @@
       }
     },
     "experiencias": [
-      "familia",
-      "deporte",
-      "sostenible",
-      "mascotas"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "parking",
-      "mascotas",
-      "familiar"
+      "alojamiento",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -597,15 +493,10 @@
       0.1663
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 09",
     "imagen": "assets/img/foto/alo-hotel-cap-de-la-nau.webp",
     "claim": {
       "es": "Acantilados, calas vacías y una carretera que no lleva a ninguna parte.",
       "va": "Penya-segats, cales buides i una carretera que no porta a cap lloc."
-    },
-    "descripcion": {
-      "es": "Sobre las calas del Cap de la Nau. En noviembre el agua sigue a 20 grados y las calas están vacías: snorkel guiado incluido.",
-      "va": "Damunt les cales del Cap de la Nau. Al novembre l'aigua continua a 20 graus i les cales estan buides: snorkel guiat inclòs."
     },
     "oferta": {
       "titulo": {
@@ -639,16 +530,8 @@
       }
     },
     "experiencias": [
-      "mar",
-      "deporte",
-      "romantico"
-    ],
-    "servicios": [
-      "piscina",
-      "vistas",
-      "restaurante",
-      "parking",
-      "terraza"
+      "alojamiento",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": true,
@@ -670,15 +553,10 @@
       -0.6822
     ],
     "web": "https://hosbec.com",
-    "telefono": "965 00 01 10",
     "imagen": "assets/img/foto/alo-hotel-salinas-torrevieja.webp",
     "claim": {
       "es": "La laguna rosa a diez minutos andando.",
       "va": "La llacuna rosa a deu minuts caminant."
-    },
-    "descripcion": {
-      "es": "Frente al parque natural de La Mata. Baños flotantes en la laguna salada, spa marino y habanera en directo el sábado.",
-      "va": "Davant del parc natural de La Mata. Banys flotants a la llacuna salada, spa marí i havanera en directe el dissabte."
     },
     "oferta": {
       "titulo": {
@@ -712,17 +590,9 @@
       }
     },
     "experiencias": [
+      "alojamiento",
       "bienestar",
-      "cultura",
-      "mar",
-      "accesible"
-    ],
-    "servicios": [
-      "spa",
-      "piscina",
-      "restaurante",
-      "accesible",
-      "parking"
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -744,15 +614,10 @@
       -0.1615
     ],
     "web": "https://hosbec.com",
-    "telefono": "962 00 01 11",
     "imagen": "assets/img/foto/alo-hotel-platja-gandia.webp",
     "claim": {
       "es": "La playa de tu infancia, sin sombrillas.",
       "va": "La platja de la teua infància, sense para-sols."
-    },
-    "descripcion": {
-      "es": "Primera línea en la playa nord. Noviembre es la mejor época: paseos de 3 km sin nadie y fideuà en el puerto pesquero.",
-      "va": "Primera línia a la platja nord. Novembre és la millor època: passejos de 3 km sense ningú i fideuà al port pesquer."
     },
     "oferta": {
       "titulo": {
@@ -786,18 +651,9 @@
       }
     },
     "experiencias": [
-      "mar",
-      "gastronomia",
-      "familia",
-      "bienestar"
-    ],
-    "servicios": [
-      "spa",
-      "piscina",
-      "playa",
-      "restaurante",
-      "parking",
-      "vistas"
+      "alojamiento",
+      "bienestar",
+      "gastronomia"
     ],
     "destacado": true,
     "nuevo": false,
@@ -819,15 +675,10 @@
       -0.376
     ],
     "web": "https://hosbec.com",
-    "telefono": "963 00 01 12",
     "imagen": "assets/img/foto/alo-hotel-ciutat-vella-valencia.webp",
     "claim": {
       "es": "Vivir en València no es lo mismo que quedarte a dormir en ella.",
       "va": "Viure a València no és el mateix que quedar-te a dormir-hi."
-    },
-    "descripcion": {
-      "es": "Palacete del XIX entre la Lonja y el Mercat Central. Desayuno de mercado, ruta modernista y acceso a la azotea al atardecer.",
-      "va": "Palauet del XIX entre la Llotja i el Mercat Central. Esmorzar de mercat, ruta modernista i accés al terrat al capvespre."
     },
     "oferta": {
       "titulo": {
@@ -861,17 +712,9 @@
       }
     },
     "experiencias": [
-      "cultura",
+      "alojamiento",
       "gastronomia",
-      "noche",
-      "romantico"
-    ],
-    "servicios": [
-      "terraza",
-      "restaurante",
-      "wifi",
-      "vistas",
-      "accesible"
+      "ocio"
     ],
     "destacado": true,
     "nuevo": false,
@@ -893,15 +736,10 @@
       -0.2519
     ],
     "web": "https://hosbec.com",
-    "telefono": "962 00 01 13",
     "imagen": "assets/img/foto/alo-apartamentos-far-de-cullera.webp",
     "claim": {
       "es": "Donde el Xúquer se rinde al mar.",
       "va": "On el Xúquer es rendeix a la mar."
-    },
-    "descripcion": {
-      "es": "Al pie del castillo y del faro. Incluye paseo en barca por la desembocadura del Xúquer y cata de arroces de la Ribera.",
-      "va": "Al peu del castell i del far. Inclou passeig en barca per la desembocadura del Xúquer i tast d'arrossos de la Ribera."
     },
     "oferta": {
       "titulo": {
@@ -935,17 +773,9 @@
       }
     },
     "experiencias": [
+      "alojamiento",
       "gastronomia",
-      "familia",
-      "mar",
-      "cultura"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "parking",
-      "terraza",
-      "familiar"
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -967,15 +797,10 @@
       -0.1188
     ],
     "web": "https://hosbec.com",
-    "telefono": "962 00 01 14",
     "imagen": "assets/img/foto/alo-hotel-marjal-oliva.webp",
     "claim": {
       "es": "Doce kilómetros de arena y un humedal lleno de pájaros.",
       "va": "Dotze quilòmetres d'arena i un aiguamoll ple d'ocells."
-    },
-    "descripcion": {
-      "es": "Entre el marjal y la playa virgen de Oliva. Kayak por los canales del humedal y menú de temporada con producto de la Safor.",
-      "va": "Entre el marjal i la platja verge d'Oliva. Caiac pels canals de l'aiguamoll i menú de temporada amb producte de la Safor."
     },
     "oferta": {
       "titulo": {
@@ -1009,17 +834,9 @@
       }
     },
     "experiencias": [
-      "sostenible",
-      "deporte",
-      "familia",
-      "gastronomia"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "restaurante",
-      "parking",
-      "mascotas"
+      "alojamiento",
+      "gastronomia",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": true,
@@ -1041,15 +858,10 @@
       -1.1
     ],
     "web": "https://hosbec.com",
-    "telefono": "962 00 01 15",
     "imagen": "assets/img/foto/alo-bodega-hotel-utiel-requena.webp",
     "claim": {
       "es": "El interior también es costa. Solo que de viñedo.",
       "va": "L'interior també és costa. Només que de vinya."
-    },
-    "descripcion": {
-      "es": "Bodega familiar con habitaciones sobre las cuevas del siglo XV. Vendimia tardía, cata a ciegas y cena maridada en la sala de barricas.",
-      "va": "Celler familiar amb habitacions damunt de les coves del segle XV. Verema tardana, tast a cegues i sopar maridat a la sala de bótes."
     },
     "oferta": {
       "titulo": {
@@ -1083,17 +895,9 @@
       }
     },
     "experiencias": [
+      "alojamiento",
       "gastronomia",
-      "cultura",
-      "romantico",
-      "sostenible"
-    ],
-    "servicios": [
-      "restaurante",
-      "parking",
-      "vistas",
-      "wifi",
-      "terraza"
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -1115,15 +919,10 @@
       0.4028
     ],
     "web": "https://hosbec.com",
-    "telefono": "964 00 01 16",
     "imagen": "assets/img/foto/alo-hotel-papa-luna-peniscola.webp",
     "claim": {
       "es": "El castillo sin colas y la playa sin toallas.",
       "va": "El castell sense cues i la platja sense tovalloles."
-    },
-    "descripcion": {
-      "es": "A los pies de la ciudad amurallada. Visita teatralizada del castillo del Papa Luna en horario exclusivo para participantes de la Km0 Week.",
-      "va": "Als peus de la ciutat emmurallada. Visita teatralitzada del castell del Papa Luna en horari exclusiu per a participants de la Km0 Week."
     },
     "oferta": {
       "titulo": {
@@ -1157,18 +956,9 @@
       }
     },
     "experiencias": [
-      "cultura",
+      "alojamiento",
       "gastronomia",
-      "familia",
-      "mar"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "restaurante",
-      "parking",
-      "vistas",
-      "accesible"
+      "ocio"
     ],
     "destacado": true,
     "nuevo": false,
@@ -1190,15 +980,10 @@
       0.0653
     ],
     "web": "https://hosbec.com",
-    "telefono": "964 00 01 17",
     "imagen": "assets/img/foto/alo-villa-benicassim.webp",
     "claim": {
       "es": "Las villas de los indianos, ahora con desayuno.",
       "va": "Les vil·les dels indians, ara amb esmorzar."
-    },
-    "descripcion": {
-      "es": "Villa modernista de la ruta de las Villas, restaurada. Vía Verde del Mar en bici hasta Oropesa y vermut en el paseo.",
-      "va": "Vil·la modernista de la ruta de les Vil·les, restaurada. Via Verda del Mar en bici fins a Orpesa i vermut al passeig."
     },
     "oferta": {
       "titulo": {
@@ -1232,17 +1017,9 @@
       }
     },
     "experiencias": [
-      "deporte",
-      "cultura",
+      "alojamiento",
       "gastronomia",
-      "mar"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "wifi",
-      "terraza",
-      "parking"
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -1264,15 +1041,10 @@
       -0.1013
     ],
     "web": "https://hosbec.com",
-    "telefono": "964 00 01 18",
     "imagen": "assets/img/foto/alo-hostal-morella-muralla.webp",
     "claim": {
       "es": "Niebla, piedra y un plato de olla a 1.000 metros.",
       "va": "Boira, pedra i un plat d'olla a 1.000 metres."
-    },
-    "descripcion": {
-      "es": "Dentro de la muralla, en una casa del siglo XVI. Ruta de las pinturas rupestres, manta morellana en la cama y olla de la abuela.",
-      "va": "Dins de la muralla, en una casa del segle XVI. Ruta de les pintures rupestres, manta morellana al llit i olla de l'àvia."
     },
     "oferta": {
       "titulo": {
@@ -1306,15 +1078,9 @@
       }
     },
     "experiencias": [
-      "cultura",
+      "alojamiento",
       "gastronomia",
-      "sostenible"
-    ],
-    "servicios": [
-      "restaurante",
-      "wifi",
-      "vistas",
-      "parking"
+      "ocio"
     ],
     "destacado": false,
     "nuevo": true,
@@ -1336,15 +1102,10 @@
       0.2711
     ],
     "web": "https://hosbec.com",
-    "telefono": "964 00 01 19",
     "imagen": "assets/img/foto/alo-resort-alcossebre-familias.webp",
     "claim": {
       "es": "Un fin de semana en el que los niños duermen agotados.",
       "va": "Un cap de setmana en què els xiquets dormen esgotats."
-    },
-    "descripcion": {
-      "es": "Apartamentos junto a la Sierra de Irta con programa infantil de naturaleza, piscina climatizada y taller de cocina para peques.",
-      "va": "Apartaments vora la Serra d'Irta amb programa infantil de natura, piscina climatitzada i taller de cuina per a menuts."
     },
     "oferta": {
       "titulo": {
@@ -1378,18 +1139,8 @@
       }
     },
     "experiencias": [
-      "familia",
-      "deporte",
-      "mar",
-      "sostenible"
-    ],
-    "servicios": [
-      "piscina",
-      "playa",
-      "familiar",
-      "parking",
-      "accesible",
-      "restaurante"
+      "alojamiento",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
@@ -1411,15 +1162,10 @@
       -0.0513
     ],
     "web": "https://hosbec.com",
-    "telefono": "964 00 01 20",
     "imagen": "assets/img/foto/alo-hotel-grau-castello.webp",
     "claim": {
       "es": "El puerto, las Islas Columbretes y una tarde sin plan.",
       "va": "El port, les Illes Columbretes i una vesprada sense pla."
-    },
-    "descripcion": {
-      "es": "Junto al Planetario y al puerto pesquero. Incluye visita al Grau con marineros jubilados y clase de nudos marineros.",
-      "va": "Vora el Planetari i el port pesquer. Inclou visita al Grau amb mariners jubilats i classe de nusos mariners."
     },
     "oferta": {
       "titulo": {
@@ -1453,17 +1199,8 @@
       }
     },
     "experiencias": [
-      "cultura",
-      "familia",
-      "mar",
-      "accesible"
-    ],
-    "servicios": [
-      "restaurante",
-      "wifi",
-      "parking",
-      "accesible",
-      "playa"
+      "alojamiento",
+      "ocio"
     ],
     "destacado": false,
     "nuevo": false,
