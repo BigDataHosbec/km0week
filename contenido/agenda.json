@@ -245,24 +245,5 @@
       "es": "5 €",
       "va": "5 €"
     }
-  },
-  {
-    "dia": 17,
-    "hora": "18:00",
-    "lugar": "Toda la Comunitat",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Sorteo Pasaporte Km0",
-      "va": "Sorteig Passaport Km0"
-    },
-    "desc": {
-      "es": "Sorteo de 10 estancias entre quienes hayan completado el pasaporte.",
-      "va": "Sorteig de 10 estades entre qui haja completat el passaport."
-    },
-    "tipo": "institucional",
-    "precio": {
-      "es": "Gratis",
-      "va": "Gratis"
-    }
   }
 ]

@@ -11,5 +11,11 @@
   "tokenFormularios": "km0week-2026",
   "telefonoContacto": "965 85 55 16",
   "webHosbec": "https://hosbec.com",
-  "dominio": "https://bigdatahosbec.github.io/km0week"
+  "dominio": "https://km0week.com",
+  "cifras": {
+    "alojamientos": 20,
+    "destinos": 17,
+    "experiencias": 14,
+    "dtoMedio": 39
+  }
 }

@@ -114,44 +114,6 @@
     "proxima": false
   },
   {
-    "slug": "noticia-4",
-    "imagen": "not-4",
-    "seccion": {
-      "es": "Noticias",
-      "va": "Notícies"
-    },
-    "titulo": {
-      "es": "El pasaporte Km0: cómo funciona el sorteo de diez estancias",
-      "va": "El passaport Km0: com funciona el sorteig de deu estades"
-    },
-    "resumen": {
-      "es": "Tres sellos para entrar en el sorteo, cinco para la cena de clausura. Bases y calendario.",
-      "va": "Tres segells per a entrar en el sorteig, cinc per al sopar de clausura. Bases i calendari."
-    },
-    "etiqueta": {
-      "es": "Pasaporte",
-      "va": "Passaport"
-    },
-    "color": "mar",
-    "fecha": "2026-06-21",
-    "lectura": 3,
-    "destacada": false,
-    "entradilla": {
-      "es": "El pasaporte Km0 es un cuadernillo de bolsillo con siete casillas. Cada alojamiento adherido y cada actividad de la agenda puede poner su sello.",
-      "va": "El passaport Km0 és un quadern de butxaca amb set caselles. Cada allotjament adherit i cada activitat de l'agenda pot posar-hi el seu segell."
-    },
-    "boton": {
-      "url": "descargas.html",
-      "es": "Descargar el pasaporte",
-      "va": "Descarregar el passaport"
-    },
-    "cuerpo": {
-      "es": "## Cómo se consiguen los sellos\n\nDurmiendo en un alojamiento adherido, participando en una actividad de la agenda o comiendo en uno de los restaurantes que se han sumado. Un sello por sitio: no vale repetir la misma casa dos veces.\n\n## Qué se consigue\n\n| Sellos | Premio |\n|---|---|\n| 3 | Entrada en el sorteo de diez estancias de fin de semana para dos, para disfrutar en 2027. |\n| 5 | Lo mismo, más invitación a la cena de clausura con los cocineros participantes. |\n| 7 | Lo mismo, y tu nombre en el mural de la primera edición. |\n\n## Calendario y bases\n\n- El pasaporte se podrá descargar e imprimir desde el 1 de octubre, y también se reparte en papel en las recepciones.\n- Se cierra el domingo 29 de noviembre a las 14:00.\n- El sorteo se celebra ese mismo domingo a las 18:00, ante notario y retransmitido.\n- Las bases completas se publicarán en la página de descargas.\n\nSi pierdes el pasaporte a la mitad, en cualquier alojamiento adherido te dan uno nuevo; los sellos anteriores, eso sí, se pierden.\n\n[Ir a descargas →](descargas.html)",
-      "va": "## Com s'aconsegueixen els segells\n\nDormint en un allotjament adherit, participant en una activitat de l'agenda o menjant en un dels restaurants que s'han sumat. Un segell per lloc: no val repetir la mateixa casa dues vegades.\n\n## Què s'aconsegueix\n\n| Segells | Premi |\n|---|---|\n| 3 | Entrada al sorteig de deu estades de cap de setmana per a dos, per a gaudir el 2027. |\n| 5 | El mateix, més invitació al sopar de clausura amb els cuiners participants. |\n| 7 | El mateix, i el teu nom al mural de la primera edició. |\n\n## Calendari i bases\n\n- El passaport es podrà descarregar i imprimir des de l'1 d'octubre, i també es reparteix en paper a les recepcions.\n- Es tanca el diumenge 29 de novembre a les 14:00.\n- El sorteig es fa aqueix mateix diumenge a les 18:00, davant de notari i retransmés.\n- Les bases completes es publicaran a la pàgina de descàrregues.\n\nSi perds el passaport a la meitat, en qualsevol allotjament adherit te'n donen un de nou; els segells anteriors, això sí, es perden.\n\n[Anar a descàrregues →](descargas.html)"
-    },
-    "proxima": false
-  },
-  {
     "slug": "proxima-agenda",
     "imagen": "not-5",
     "seccion": {

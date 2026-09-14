@@ -80,9 +80,23 @@ CABECERA_JS = """\
 """
 
 
+def _sin_ayudas(dato):
+    """Quita las claves que empiezan por «_».
+
+    Los JSON llevan un `_ayuda` con la explicación para quien los abra a mano.
+    Es útil en el repositorio y no pinta nada viajando al navegador de cada
+    visitante, así que se cae al generar el JS.
+    """
+    if isinstance(dato, dict):
+        return {k: _sin_ayudas(v) for k, v in dato.items() if not k.startswith("_")}
+    if isinstance(dato, list):
+        return [_sin_ayudas(v) for v in dato]
+    return dato
+
+
 def _js(dato):
     """JSON válido también como JavaScript."""
-    txt = json.dumps(dato, ensure_ascii=False, indent=2)
+    txt = json.dumps(_sin_ayudas(dato), ensure_ascii=False, indent=2)
     # U+2028 y U+2029 son saltos de línea legales en JSON pero rompen JavaScript
     return txt.replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
 

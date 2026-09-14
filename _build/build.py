@@ -12,10 +12,23 @@ Para cambiar el menú, el pie o los metadatos: se toca AQUÍ y sale en todas.
 Para cambiar el texto de una página: se toca su archivo en _build/paginas/.
 """
 
-import os, re, datetime
+import os, re, datetime, sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGS = os.path.join(RAIZ, "_build", "paginas")
+
+# ---------------------------------------------------------------------------
+# TODO EL CONTENIDO VIENE DE contenido/*.json, que es lo que escribe el panel.
+# Antes estaba a mano aquí abajo y en assets/js/data-alojamientos.js, con el
+# resultado de que lo que se guardaba en el panel no llegaba nunca a la web.
+# Desde el 14/09/2026 el orden es: el panel escribe el JSON -> build.py lo lee
+# -> de ahí salen las páginas Y assets/js/data-alojamientos.js.
+#
+# Consecuencia: data-alojamientos.js pasa a ser un ARCHIVO GENERADO. No se
+# edita a mano; lo que se escriba ahí se pierde en la siguiente compilación.
+# ---------------------------------------------------------------------------
+sys.path.insert(0, os.path.join(RAIZ, "_build"))
+import contenido
 
 # ---------------------------------------------------------------------------
 # DOMINIO: la dirección donde se publica la web. Se usa en sitemap.xml,
@@ -29,46 +42,24 @@ PAGS = os.path.join(RAIZ, "_build", "paginas")
 # repositorio, GitHub deja de servir la web en km0week.com.
 # Cambialo y vuelve a ejecutar:  python3 _build/build.py
 # ---------------------------------------------------------------------------
-DOMINIO = "https://km0week.com"
-EMAIL_KM0 = "km0week@hosbec.com"
-
-FECHAS_ES = "13 – 29 de noviembre de 2026"
-FECHAS_VA = "13 – 29 de novembre de 2026"
+DOMINIO = contenido.DOMINIO
+EMAIL_KM0 = contenido.EMAIL
+FECHAS_ES = contenido.FECHAS_ES
+FECHAS_VA = contenido.FECHAS_VA
 
 # ---------------------------------------------------------------- navegación --
-MENU = [
-    ("index.html",        "Inicio",         "Inici"),
-    ("iniciativa.html",   "La iniciativa",  "La iniciativa"),
-    ("alojamientos.html", "Experiencias",   "Experiències"),
-    ("mapa.html",         "Mapa",           "Mapa"),
-    ("agenda.html",       "Agenda",         "Agenda"),
-    ("noticias.html",     "Noticias",       "Notícies"),
-    ("faq.html",          "Preguntas",      "Preguntes"),
-]
+# Sale de contenido/navegacion.json (panel -> Edición -> Menú y pie). Se pasa
+# a la forma de tuplas que ya usaban nav() y pie(), para no tocarlas.
+def _enlaces(lista):
+    return [(e["url"], e["es"], e["va"]) for e in lista]
 
-PIE_COLS = [
-    ("La edición", "L'edició", [
-        ("iniciativa.html", "La iniciativa", "La iniciativa"),
-        ("alojamientos.html", "Experiencias", "Experiències"),
-        ("mapa.html", "Mapa y cercanía", "Mapa i proximitat"),
-        ("agenda.html", "Agenda", "Agenda"),
-        ("noticias.html", "Noticias", "Notícies"),
-    ]),
-    ("Alojamientos", "Allotjaments", [
-        ("suma.html", "Suma tu alojamiento", "Suma el teu allotjament"),
-        ("suma.html#requisitos", "Requisitos", "Requisits"),
-        ("descargas.html", "Materiales y kit", "Materials i kit"),
-        ("prensa.html", "Sala de prensa", "Sala de premsa"),
-        ("https://hosbec.com", "hosbec.com", "hosbec.com"),
-    ]),
-]
 
-PIE_LEGAL = [
-    ("aviso-legal.html", "Aviso legal", "Avís legal"),
-    ("privacidad.html", "Privacidad", "Privacitat"),
-    ("cookies.html", "Cookies", "Galetes"),
-    ("faq.html", "Preguntas frecuentes", "Preguntes freqüents"),
-]
+MENU = _enlaces(contenido.NAVEGACION["menu"])
+
+PIE_COLS = [(c["titulo"]["es"], c["titulo"]["va"], _enlaces(c["enlaces"]))
+            for c in contenido.NAVEGACION["pie"]]
+
+PIE_LEGAL = _enlaces(contenido.NAVEGACION["legal"])
 
 
 # ------------------------------------------------------------------- plantilla --
@@ -261,9 +252,14 @@ def cabecera(p):
 
 
 def construir(p):
-    cuerpo = open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read()
+    # El cuerpo viene de un archivo de _build/paginas/ o ya renderizado desde
+    # los datos (las noticias, que salen de contenido/noticias.json).
+    cuerpo = p.get("html")
+    if cuerpo is None:
+        cuerpo = open(os.path.join(PAGS, p["cuerpo"]), encoding="utf-8").read()
     # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
+    cuerpo = cuerpo.replace("@@TARJETAS_NOTICIAS@@", TARJETAS_NOTICIAS)
     html = (cabeza(p) + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))
@@ -389,29 +385,208 @@ PAGINAS = [
                 "No hem trobat el que buscaves. Et deixem per on continuar."))),
 ]
 
-# ------------------------------------------------------------------ noticias --
-NOTICIAS = [
-    ("noticia-1", "not-1", ("Noticias", "Notícies"),
-     ("20 alojamientos ya se han sumado a la primera Km0 Week",
-      "20 allotjaments ja s'han sumat a la primera Km0 Week"),
-     "Cerramos la primera tanda de adhesiones con presencia en las tres provincias y 504 plazas reservadas para residentes."),
-    ("noticia-2", "not-2", ("Noticias", "Notícies"),
-     ("Cómo se calcula el descuento de residente (y por qué es real)",
-      "Com es calcula el descompte de resident (i per què és real)"),
-     "El compromiso de la Km0 Week es que el precio de esos días sea el más bajo del trimestre. Explicamos cómo se comprueba."),
-    ("noticia-3", "not-3", ("Noticias", "Notícies"),
-     ("Doce ayuntamientos se suman con actividades abiertas",
-      "Dotze ajuntaments se sumen amb activitats obertes"),
-     "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week."),
-]
+# ---------------------------------------------------------------- noticias --
+# Las noticias salen de contenido/noticias.json, que es lo que escribe el
+# panel. El cuerpo se guarda en texto plano con seis marcas y se convierte
+# aquí. El panel tiene el MISMO convertidor (`cuerpoAHtml` en admin/index.html)
+# para que la vista previa enseñe exactamente lo que se va a publicar: si se
+# toca uno, hay que tocar el otro.
+#
+#   ## subtítulo        <h2>
+#   > cita              <blockquote class="cita">
+#   - viñeta            <ul>
+#   1. numerada         <ol>
+#   | a | b |           <table class="tabla"> dentro de .tabla-envolt
+#   [texto](enlace)     <a href="enlace">
+#
+# Lo bilingüe: se renderizan el castellano y el valenciano por separado y el
+# valenciano se cuelga del elemento como `data-va` (texto suelto) o
+# `data-va-html` (cuando dentro hay un enlace), que es lo que sabe leer el
+# selector de idioma. Si un idioma tiene más bloques que el otro —porque
+# alguien ha editado solo uno— el bloque descabalado sale sin traducir en vez
+# de emparejarse con el que no toca.
+
+MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+            "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def _esc(t):
+    return (str(t).replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def _con_enlaces(t):
+    return re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r'<a href="\2">\1</a>', _esc(t))
+
+
+def _bloques(txt):
+    return [b for b in re.split(r"\n\s*\n", (txt or "").strip()) if b.strip()]
+
+
+def _atrib(va):
+    """Cómo se cuelga una traducción: como texto o como HTML."""
+    if not va:
+        return ""
+    return ' %s="%s"' % ("data-va-html" if "<" in va else "data-va", _esc(va))
+
+
+def _lineas(b):
+    return [l.strip() for l in b.split("\n") if l.strip()]
+
+
+def _celdas(l):
+    return [c.strip() for c in l.strip().strip("|").split("|")]
+
+
+def _empareja(a, b):
+    """Empareja dos listas; lo que no tenga pareja se queda sin traducir."""
+    return [(x, b[k] if k < len(b) else "") for k, x in enumerate(a)]
+
+
+def _bloque(b, v=""):
+    """Un bloque de texto plano -> su HTML, ya bilingüe.
+
+    La traducción se cuelga del elemento más pequeño posible: de cada <li> y
+    no de la lista entera, y del <a> cuando el párrafo es solo un enlace. Así,
+    si alguien traduce media lista, la otra media sigue funcionando.
+    """
+    lineas, vlineas = _lineas(b), _lineas(v)
+    if b.startswith("## "):
+        return "<h2%s>%s</h2>" % (_atrib(v[3:].strip() if v.startswith("## ") else ""),
+                                  _esc(b[3:].strip()))
+    if b.startswith("> "):
+        return '<blockquote class="cita"%s>%s</blockquote>' % (
+            _atrib(v[2:].strip() if v.startswith("> ") else ""), _esc(b[2:].strip()))
+    if lineas[0].startswith("|"):
+        quita = lambda L: [l for l in L if not re.match(r"^\|[\s\-|:]+\|$", l)]
+        filas, vfilas = quita(lineas), quita(vlineas)
+        h = '<div class="tabla-envolt mt-1"><table class="tabla">'
+        for k, (f, vf) in enumerate(_empareja(filas, vfilas)):
+            etq = "th" if k == 0 else "td"
+            if k == 0:
+                h += "<thead>"
+            elif k == 1:
+                h += "<tbody>"
+            h += "<tr>%s</tr>" % "".join(
+                "<%s%s>%s</%s>" % (etq, _atrib(vc), _esc(c), etq)
+                for c, vc in _empareja(_celdas(f), _celdas(vf) if vf else []))
+            if k == 0:
+                h += "</thead>"
+        return h + ("</tbody>" if len(filas) > 1 else "") + "</table></div>"
+    vinetas = all(l.startswith("- ") for l in lineas)
+    nums = all(re.match(r"^\d+\.\s", l) for l in lineas)
+    if vinetas or nums:
+        pela = lambda l: re.sub(r"^(- |\d+\.\s*)", "", l)
+        return "<%s>%s</%s>" % (
+            "ol" if nums else "ul",
+            "".join("<li%s>%s</li>" % (_atrib(_con_enlaces(pela(vl)) if vl else ""),
+                                       _con_enlaces(pela(l)))
+                    for l, vl in _empareja(lineas, vlineas)),
+            "ol" if nums else "ul")
+    # Párrafo. Si es SOLO un enlace, la traducción va en el <a>, que es lo que
+    # se traduce de verdad; si no, en el <p>.
+    texto, vtexto = " ".join(lineas), " ".join(vlineas)
+    solo = re.match(r"^\[([^\]]+)\]\(([^)\s]+)\)$", texto)
+    vsolo = re.match(r"^\[([^\]]+)\]\(([^)\s]+)\)$", vtexto)
+    if solo:
+        return '<p><a href="%s"%s>%s</a></p>' % (
+            solo.group(2), _atrib(vsolo.group(1) if vsolo else ""), _esc(solo.group(1)))
+    return "<p%s>%s</p>" % (_atrib(_con_enlaces(vtexto) if vtexto else ""),
+                            _con_enlaces(texto))
+
+
+def prosa(es, va=""):
+    """El cuerpo de una noticia, bilingüe."""
+    return "\n      ".join(
+        _bloque(b, v) for b, v in _empareja(_bloques(es), _bloques(va)))
+
+
+def _fecha_larga(iso):
+    if not iso:
+        return ""
+    a, m, d = iso.split("-")
+    return "%d de %s de %s" % (int(d), MESES_ES[int(m) - 1], a)
+
+
+def _bi(n, campo, idioma="es"):
+    return (n.get(campo) or {}).get(idioma, "")
+
+
+def tarjeta_noticia(n):
+    """Una tarjeta del listado de Noticias."""
+    if n.get("proxima"):
+        return '''      <article class="nota" aria-label="Próxima entrada">
+        <img src="assets/img/foto/%s.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label" style="color:var(--suave)" data-va="%s">%s</span>
+          <h3 data-va="%s">%s</h3>
+          <p class="body-sm" data-va="%s">%s</p>
+          <span class="dato-fecha" data-va="%s">%s</span>
+        </div>
+      </article>''' % (
+            n["imagen"], _esc(_bi(n, "etiqueta", "va")), _esc(_bi(n, "etiqueta")),
+            _esc(_bi(n, "titulo", "va")), _esc(_bi(n, "titulo")),
+            _esc(_bi(n, "resumen", "va")), _esc(_bi(n, "resumen")),
+            _esc(_bi(n, "cuando", "va")), _esc(_bi(n, "cuando")))
+
+    color = " label-%s" % n["color"] if n.get("color") else ""
+    grande = " grande" if n.get("destacada") else ""
+    tit = "h3 class=\"d3\"" if n.get("destacada") else "h3"
+    a, m, d = (n.get("fecha") or "--- - -").split("-")
+    lectura = "%d min de lectura" % (n.get("lectura") or 0)
+    return '''      <a class="nota%s" href="%s.html">
+        <img src="assets/img/foto/%s.webp" alt="" width="1200" height="800" loading="lazy">
+        <div class="bd">
+          <span class="label%s" data-va="%s">%s</span>
+          <%s data-va="%s">%s</h3>
+          <p class="body-sm" data-va="%s">%s</p>
+          <span class="dato-fecha">%s · %s · %s · <span data-va="%s">%s</span></span>
+        </div>
+      </a>''' % (
+        grande, n["slug"], n["imagen"], color,
+        _esc(_bi(n, "etiqueta", "va")), _esc(_bi(n, "etiqueta")),
+        tit, _esc(_bi(n, "titulo", "va")), _esc(_bi(n, "titulo")),
+        _esc(_bi(n, "resumen", "va")), _esc(_bi(n, "resumen")),
+        d, m, a, lectura, lectura)
+
+
+def cuerpo_noticia(n):
+    """La página entera de una noticia."""
+    b = n.get("boton") or {}
+    boton = ('\n      <a class="btn btn-mar" href="%s" data-va="%s">%s</a>'
+             % (b["url"], _esc(b.get("va", "")), _esc(b.get("es", "")))) if b.get("url") else ""
+    return '''<section class="sec">
+  <div class="wrap">
+    <article class="prosa">
+      <p class="dato-fecha">%s · HOSBEC</p>
+      <p class="lede" data-va="%s">%s</p>
+
+      %s
+    </article>
+
+    <div class="mt-2" style="display:flex;gap:.8rem;flex-wrap:wrap">
+      <a class="btn btn-linea" href="noticias.html" data-va="← Totes les notícies">← Todas las noticias</a>%s
+    </div>
+  </div>
+</section>
+''' % (_fecha_larga(n.get("fecha")),
+       _esc(_bi(n, "entradilla", "va")), _esc(_bi(n, "entradilla")),
+       prosa(_bi(n, "cuerpo"), _bi(n, "cuerpo", "va")), boton)
+
+
+NOTICIAS = [n for n in contenido.NOTICIAS if not n.get("proxima")]
+
+TARJETAS_NOTICIAS = "\n\n".join(tarjeta_noticia(n) for n in contenido.NOTICIAS)
 
 
 def paginas_noticia():
-    return [dict(archivo=slug + ".html", cuerpo=slug + ".html",
-                 titulo=tit[0] + " · HOSBEC Km0 Week", desc=sub,
-                 og="assets/img/foto/%s.webp" % foto,
-                 cab=C(foto, ante, tit))
-            for slug, foto, ante, tit, sub in NOTICIAS]
+    return [dict(archivo=n["slug"] + ".html", html=cuerpo_noticia(n),
+                 titulo=_bi(n, "titulo") + " · HOSBEC Km0 Week",
+                 desc=_bi(n, "resumen"),
+                 og="assets/img/foto/%s.webp" % n["imagen"],
+                 cab=C(n["imagen"], (_bi(n, "seccion"), _bi(n, "seccion", "va")),
+                       (_bi(n, "titulo"), _bi(n, "titulo", "va"))))
+            for n in NOTICIAS]
 
 
 # ------------------------------------------------------------------ auxiliares --
@@ -444,13 +619,19 @@ def cname():
 
 
 def main():
+    # Primero los datos: assets/js/data-alojamientos.js se REESCRIBE desde
+    # contenido/*.json en cada compilación. Es lo que hace que un alta hecha
+    # en el panel aparezca de verdad en la web.
+    contenido.escribir_js()
+
     todas = PAGINAS + paginas_noticia()
     for p in todas:
         construir(p)
     sitemap(todas)
     host = cname()
     print("páginas generadas:", len(todas), "+ sitemap.xml + robots.txt"
-          + (" + CNAME (%s)" % host if host else ""))
+          + (" + CNAME (%s)" % host if host else "")
+          + " + data-alojamientos.js")
 
 
 if __name__ == "__main__":
