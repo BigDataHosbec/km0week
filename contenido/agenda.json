@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "dia": 15,
+    "hora": "18:00",
+    "lugar": "Peñíscola",
+    "enlace": "https://peniscola.zthotels.com/booking1?namespace=zt-peniscola&language=SPANISH&startDate=27/11/2026&endDate=29/11/2026&numRooms=1&adultsRoom1=2&childrenRoom1=0&babiesRoom1=0&package_preselection=true",
+    "titulo": {
+      "es": "Feria del Vino 2026 en ZT Peñíscola Plaza Suites",
+      "va": ""
+    },
+    "desc": {
+      "es": "La Feria del Vino 2026 se celebrará en el ZT Hotel & Spa Peñíscola Plaza Suites los días viernes 27 y sábado 28 de noviembre, reuniendo una cuidada selección de vinos procedentes de diversas regiones de España. Una experiencia pensada para amantes del vino, curiosos y residentes de la Comunidad Valenciana que deseen disfrutar de una actividad cercana, accesible y con carácter local.",
+      "va": ""
+    },
+    "tipo": "gastronomia",
+    "precio": {
+      "es": "A consultar en la web",
+      "va": ""
+    }
+  }
+]
