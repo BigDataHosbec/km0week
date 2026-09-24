@@ -1,25 +1,6 @@
 [
   {
     "dia": 2,
-    "hora": "10:00",
-    "lugar": "Calpe",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Flamencos al amanecer en las salinas",
-      "va": "Flamencs a l'alba a les salines"
-    },
-    "desc": {
-      "es": "Salida ornitológica guiada por biólogos del parque natural.",
-      "va": "Eixida ornitològica guiada per biòlegs del parc natural."
-    },
-    "tipo": "naturaleza",
-    "precio": {
-      "es": "12 €",
-      "va": "12 €"
-    }
-  },
-  {
-    "dia": 2,
     "hora": "18:00",
     "lugar": "València",
     "enlace": "https://hosbec.com",
