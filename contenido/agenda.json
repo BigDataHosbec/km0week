@@ -57,25 +57,6 @@
     }
   },
   {
-    "dia": 8,
-    "hora": "19:00",
-    "lugar": "Castelló de la Plana",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "El Grau contado por sus marineros",
-      "va": "El Grau contat pels seus mariners"
-    },
-    "desc": {
-      "es": "Paseo con marineros jubilados por el puerto pesquero.",
-      "va": "Passeig amb mariners jubilats pel port pesquer."
-    },
-    "tipo": "cultura",
-    "precio": {
-      "es": "Gratis",
-      "va": "Gratis"
-    }
-  },
-  {
     "dia": 16,
     "hora": "11:00",
     "lugar": "Altea",
