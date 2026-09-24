@@ -1151,66 +1151,6 @@
     }
   },
   {
-    "id": "hotel-grau-castello",
-    "nombre": "Hotel Grau de Castelló",
-    "tipo": "hotel",
-    "categoria": 3,
-    "destino": "Castelló de la Plana",
-    "provincia": "Castelló",
-    "coords": [
-      39.9864,
-      -0.0513
-    ],
-    "web": "https://hosbec.com",
-    "imagen": "assets/img/foto/alo-hotel-grau-castello.webp",
-    "claim": {
-      "es": "El puerto, las Islas Columbretes y una tarde sin plan.",
-      "va": "El port, les Illes Columbretes i una vesprada sense pla."
-    },
-    "oferta": {
-      "titulo": {
-        "es": "El Grau contado por quien lo vivió",
-        "va": "El Grau contat per qui el va viure"
-      },
-      "incluye": {
-        "es": [
-          "Habitación doble con desayuno",
-          "Paseo guiado por marineros del Grau",
-          "Taller de nudos marineros",
-          "Entrada al Planetario"
-        ],
-        "va": [
-          "Habitació doble amb esmorzar",
-          "Passeig guiat per mariners del Grau",
-          "Taller de nusos mariners",
-          "Entrada al Planetari"
-        ]
-      },
-      "precioDesde": 59,
-      "precioOriginal": 95,
-      "unidad": {
-        "es": "por noche / hab. doble",
-        "va": "per nit / hab. doble"
-      },
-      "dto": 38,
-      "condiciones": {
-        "es": "Paseo los sábados a las 11 h. Máximo 20 personas.",
-        "va": "Passeig els dissabtes a les 11 h. Màxim 20 persones."
-      }
-    },
-    "experiencias": [
-      "alojamiento",
-      "ocio"
-    ],
-    "destacado": false,
-    "nuevo": false,
-    "cupo": 32,
-    "plazas": {
-      "es": "32 habitaciones",
-      "va": "32 habitacions"
-    }
-  },
-  {
     "id": "zt-hotel-spa-peniscola-plaza-suites",
     "nombre": "ZT Hotel & Spa Peñíscola Plaza Suites",
     "tipo": "hotel",
