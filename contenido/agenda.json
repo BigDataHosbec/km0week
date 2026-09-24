@@ -1,25 +1,6 @@
 [
   {
     "dia": 3,
-    "hora": "11:00",
-    "lugar": "Dénia",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Subasta de pescado + taller de arroz",
-      "va": "Subhasta de peix + taller d'arròs"
-    },
-    "desc": {
-      "es": "De la lonja al plato en tres horas, con cocineros de la Marina Alta.",
-      "va": "De la llotja al plat en tres hores, amb cuiners de la Marina Alta."
-    },
-    "tipo": "gastronomia",
-    "precio": {
-      "es": "25 €",
-      "va": "25 €"
-    }
-  },
-  {
-    "dia": 3,
     "hora": "20:00",
     "lugar": "Peñíscola",
     "enlace": "https://hosbec.com",
