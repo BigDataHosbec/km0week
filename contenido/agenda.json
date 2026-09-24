@@ -19,25 +19,6 @@
     }
   },
   {
-    "dia": 6,
-    "hora": "17:00",
-    "lugar": "Benidorm",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Mesa redonda: turismo y comunidad local",
-      "va": "Taula redona: turisme i comunitat local"
-    },
-    "desc": {
-      "es": "Hoteleros, vecinos y ayuntamientos debaten sobre convivencia. Abierto.",
-      "va": "Hotelers, veïns i ajuntaments debaten sobre convivència. Obert."
-    },
-    "tipo": "institucional",
-    "precio": {
-      "es": "Gratis",
-      "va": "Gratis"
-    }
-  },
-  {
     "dia": 10,
     "hora": "10:30",
     "lugar": "Elche",
