@@ -1,25 +1,6 @@
 [
   {
     "dia": 1,
-    "hora": "12:00",
-    "lugar": "Benidorm",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Acto inaugural en el Ayuntamiento",
-      "va": "Acte inaugural a l'Ajuntament"
-    },
-    "desc": {
-      "es": "Presentación oficial con hoteleros, ayuntamientos y Turisme CV. Entrada libre.",
-      "va": "Presentació oficial amb hotelers, ajuntaments i Turisme CV. Entrada lliure."
-    },
-    "tipo": "institucional",
-    "precio": {
-      "es": "Gratis",
-      "va": "Gratis"
-    }
-  },
-  {
-    "dia": 1,
     "hora": "19:30",
     "lugar": "Alicante",
     "enlace": "https://hosbec.com",
