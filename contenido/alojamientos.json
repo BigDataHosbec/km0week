@@ -1209,5 +1209,61 @@
       "es": "32 habitaciones",
       "va": "32 habitacions"
     }
+  },
+  {
+    "id": "zt-hotel-spa-peniscola-plaza-suites",
+    "nombre": "ZT Hotel & Spa Peñíscola Plaza Suites",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Peñíscola",
+    "provincia": "Castelló",
+    "coords": [
+      40.39742884974306,
+      0.41337015039288244
+    ],
+    "web": "https://peniscola.zthotels.com/booking1?namespace=zt-peniscola&language=SPANISH&startDate=27/11/2026&endDate=29/11/2026&numRooms=1&adultsRoom1=2&childrenRoom1=0&babiesRoom1=0&package_preselection=true",
+    "imagen": "assets/img/foto/alo-zt-hotel-spa-peniscola-plaza-suites.webp",
+    "claim": {
+      "es": "Una experiencia pensada para amantes del vino",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Feria del Vino 2026 en ZT Hotel & Spa Peñíscola Plaza Suites",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Alojamiento en la habitación seleccionada",
+          "Régimen elegido: AD, MP o PC",
+          "Copa de cristal ZT para catar todos los vinos",
+          "Portacopa",
+          "Ticket degustación de tres tapas y un AOVE"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
