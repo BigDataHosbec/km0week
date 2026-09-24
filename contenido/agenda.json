@@ -1,24 +1,5 @@
 [
   {
-    "dia": 10,
-    "hora": "10:30",
-    "lugar": "Elche",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "El Palmeral por dentro",
-      "va": "El Palmerar per dins"
-    },
-    "desc": {
-      "es": "Huertos históricos normalmente cerrados y demostración de palma blanca.",
-      "va": "Horts històrics normalment tancats i demostració de palma blanca."
-    },
-    "tipo": "cultura",
-    "precio": {
-      "es": "6 €",
-      "va": "6 €"
-    }
-  },
-  {
     "dia": 16,
     "hora": "11:00",
     "lugar": "Altea",
