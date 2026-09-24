@@ -1,24 +1,5 @@
 [
   {
-    "dia": 16,
-    "hora": "11:00",
-    "lugar": "Altea",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Taller de cerámica con artesanos",
-      "va": "Taller de ceràmica amb artesans"
-    },
-    "desc": {
-      "es": "Tres horas de torno y esmalte. Te llevas la pieza a casa.",
-      "va": "Tres hores de torn i esmalt. T'endús la peça a casa."
-    },
-    "tipo": "artesania",
-    "precio": {
-      "es": "30 €",
-      "va": "30 €"
-    }
-  },
-  {
     "dia": 17,
     "hora": "12:00",
     "lugar": "Gandia",
