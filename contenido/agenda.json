@@ -1,24 +1,5 @@
 [
   {
-    "dia": 2,
-    "hora": "18:00",
-    "lugar": "València",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Ruta modernista de hoteles históricos",
-      "va": "Ruta modernista d'hotels històrics"
-    },
-    "desc": {
-      "es": "Tres palacetes convertidos en hotel, con acceso a zonas no visitables.",
-      "va": "Tres palauets convertits en hotel, amb accés a zones no visitables."
-    },
-    "tipo": "cultura",
-    "precio": {
-      "es": "8 €",
-      "va": "8 €"
-    }
-  },
-  {
     "dia": 3,
     "hora": "11:00",
     "lugar": "Dénia",
