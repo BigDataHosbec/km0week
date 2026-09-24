@@ -38,44 +38,6 @@
     "proxima": false
   },
   {
-    "slug": "noticia-3",
-    "imagen": "not-3",
-    "seccion": {
-      "es": "Noticias",
-      "va": "Notícies"
-    },
-    "titulo": {
-      "es": "Doce ayuntamientos se suman con actividades abiertas",
-      "va": "Dotze ajuntaments se sumen amb activitats obertes"
-    },
-    "resumen": {
-      "es": "Visitas a espacios normalmente cerrados, rutas guiadas y talleres que se abren solo durante la Km0 Week.",
-      "va": "Visites a espais normalment tancats, rutes guiades i tallers que s'obrin només durant la Km0 Week."
-    },
-    "etiqueta": {
-      "es": "Territorio",
-      "va": "Territori"
-    },
-    "color": "",
-    "fecha": "2026-07-09",
-    "lectura": 2,
-    "destacada": false,
-    "entradilla": {
-      "es": "Doce ayuntamientos de las tres provincias abrirán durante la Km0 Week espacios y visitas que normalmente no están disponibles, o que lo están solo para grupos organizados.",
-      "va": "Dotze ajuntaments de les tres províncies obriran durant la Km0 Week espais i visites que normalment no estan disponibles, o que ho estan només per a grups organitzats."
-    },
-    "boton": {
-      "url": "agenda.html",
-      "es": "Agenda",
-      "va": "Agenda"
-    },
-    "cuerpo": {
-      "es": "La condición que pusimos es sencilla: que sea algo que un vecino no pueda hacer un martes cualquiera. Nada de repetir la ruta turística de siempre.\n\n## Algunos ejemplos ya confirmados\n\n- Peñíscola: visita teatralizada al castillo en horario exclusivo, con el recinto cerrado al turismo general.\n- Elche: huertos históricos del Palmeral normalmente cerrados y demostración de palma blanca.\n- Dénia: subasta de pescado en la lonja y taller de arroz con cocineros de la Marina Alta.\n- Castelló de la Plana: paseo por el puerto pesquero contado por marineros jubilados.\n- Calpe: salida ornitológica al amanecer en las salinas, guiada por biólogos del parque natural.\n\n## Plazas limitadas e inscripción\n\nCasi todas requieren reserva previa y el número de plazas es corto: entre 20 y 60 personas según la actividad. El enlace de inscripción se abre quince días antes del arranque.\n\nLas que llevan precio son a coste: cubren material, guía o comida. Ni HOSBEC ni los ayuntamientos ganan nada con ellas.\n\n[Ver la agenda completa →](agenda.html)",
-      "va": "La condició que vam posar és senzilla: que siga una cosa que un veí no puga fer un dimarts qualsevol. Res de repetir la ruta turística de sempre.\n\n## Alguns exemples ja confirmats\n\n- Peníscola: visita teatralitzada al castell en horari exclusiu, amb el recinte tancat al turisme general.\n- Elx: horts històrics del Palmerar normalment tancats i demostració de palma blanca.\n- Dénia: subhasta de peix a la llotja i taller d'arròs amb cuiners de la Marina Alta.\n- Castelló de la Plana: passeig pel port pesquer contat per mariners jubilats.\n- Calp: eixida ornitològica a l'alba a les salines, guiada per biòlegs del parc natural.\n\n## Places limitades i inscripció\n\nQuasi totes requereixen reserva prèvia i el nombre de places és curt: entre 20 i 60 persones segons l'activitat. L'enllaç d'inscripció s'obri quinze dies abans de l'arrancada.\n\nLes que porten preu són a cost: cobreixen material, guia o menjar. Ni HOSBEC ni els ajuntaments hi guanyen res.\n\n[Veure l'agenda completa →](agenda.html)"
-    },
-    "proxima": false
-  },
-  {
     "slug": "proxima-agenda",
     "imagen": "not-5",
     "seccion": {
