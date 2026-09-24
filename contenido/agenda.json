@@ -38,25 +38,6 @@
     }
   },
   {
-    "dia": 9,
-    "hora": "21:00",
-    "lugar": "Torrevieja",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Noche de habaneras en el hotel",
-      "va": "Nit d'havaneres a l'hotel"
-    },
-    "desc": {
-      "es": "Concierto abierto con coro local y cremaet.",
-      "va": "Concert obert amb cor local i cremaet."
-    },
-    "tipo": "musica",
-    "precio": {
-      "es": "Gratis",
-      "va": "Gratis"
-    }
-  },
-  {
     "dia": 17,
     "hora": "12:00",
     "lugar": "Gandia",
