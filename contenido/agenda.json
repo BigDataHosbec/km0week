@@ -1,24 +1,5 @@
 [
   {
-    "dia": 1,
-    "hora": "19:30",
-    "lugar": "Alicante",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Puertas abiertas: cocinas de hotel",
-      "va": "Portes obertes: cuines d'hotel"
-    },
-    "desc": {
-      "es": "Seis hoteles abren sus cocinas al público. Reserva previa.",
-      "va": "Sis hotels obrin les seues cuines al públic. Reserva prèvia."
-    },
-    "tipo": "gastronomia",
-    "precio": {
-      "es": "Gratis",
-      "va": "Gratis"
-    }
-  },
-  {
     "dia": 2,
     "hora": "10:00",
     "lugar": "Calpe",
