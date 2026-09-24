@@ -1,24 +1,5 @@
 [
   {
-    "dia": 3,
-    "hora": "20:00",
-    "lugar": "Peñíscola",
-    "enlace": "https://hosbec.com",
-    "titulo": {
-      "es": "Visita teatralizada al castillo",
-      "va": "Visita teatralitzada al castell"
-    },
-    "desc": {
-      "es": "Horario exclusivo Km0 Week, con el castillo cerrado al turismo general.",
-      "va": "Horari exclusiu Km0 Week, amb el castell tancat al turisme general."
-    },
-    "tipo": "cultura",
-    "precio": {
-      "es": "10 €",
-      "va": "10 €"
-    }
-  },
-  {
     "dia": 9,
     "hora": "09:30",
     "lugar": "Oliva",
