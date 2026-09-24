@@ -54,5 +54,58 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "zt-peniscola-plaza-suites-pasadia",
+    "nombre": "ZT Peñíscola Plaza Suites",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Peñíscola",
+    "provincia": "Castelló",
+    "coords": [
+      40.39741006905523,
+      0.4133545449960282
+    ],
+    "web": "https://peniscola.zthotels.com/",
+    "imagen": "assets/img/foto/alo-zt-peniscola-plaza-suites-pasadia.webp",
+    "claim": {
+      "es": "Una propuesta pensada para quienes desean disfrutar de un día diferente sin alejarse de la Comunidad Valenciana",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "El Pasadía del ZT Hotel & Spa Peñíscola Plaza Suites",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Acceso a una sesión completa en el Spa",
+          "Comida o cena en uno de nuestros restaurantes temáticos"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por circuito",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Contacto y reservas: 964 010 724 / minospps@zthotels.com",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "bienestar",
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "Contacto y reservas: 964 010 724 / minospps@zthotels.com",
+      "va": ""
+    }
   }
 ]
