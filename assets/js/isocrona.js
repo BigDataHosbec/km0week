@@ -298,7 +298,7 @@ window.Isocrona = (function () {
     cv.addEventListener("click", e => {
       const r = cv.getBoundingClientRect();
       const mx = e.clientX - r.left, my = e.clientY - r.top;
-      if (hover) { window.open(hover.a.web, "_blank", "noopener"); return; }
+      if (hover && hover.a.web) { window.open(hover.a.web, "_blank", "noopener"); return; }
       const [lat, lng] = proj.from(mx, my);
       if (lat < 36.5 || lat > 41.5 || lng < -2.2 || lng > 1.4) return;
       setOrigen(lat, lng, opts.etiquetaAqui ? opts.etiquetaAqui() : "aquí");

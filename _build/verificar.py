@@ -121,13 +121,12 @@ def revisar_alojamientos():
                     error(donde, "las coordenadas [%s, %s] caen fuera de la Comunitat Valenciana"
                           % (lat, lng))
 
+        # La web es opcional: sin ella la ficha se queda informativa, sin
+        # botón. Lo que no vale es ponerla mal.
         web = a.get("web") or ""
-        if not web.startswith("https://"):
+        if web and not web.startswith("https://"):
             error(donde, "la web debe empezar por https:// (ahora: «%s»)" % web)
 
-        cupo = a.get("cupo")
-        if not isinstance(cupo, int) or isinstance(cupo, bool) or cupo < 0:
-            error(donde, "el cupo debe ser un número entero (ahora: %r)" % (cupo,))
 
         for exp in a.get("experiencias") or []:
             if exp not in EXPERIENCIAS:
@@ -256,9 +255,10 @@ def main():
     revisar_noticias()
 
     print("Km0 Week · comprobación del contenido")
-    print("  %d alojamientos · %d actividades · %d noticias · %d plazas"
-          % (len(contenido.ALOJAMIENTOS), len(contenido.AGENDA),
-             len(contenido.NOTICIAS), contenido.CUPO_TOTAL))
+    destinos = len({a.get("destino") for a in contenido.ALOJAMIENTOS})
+    print("  %d alojamientos · %d destinos · %d actividades · %d noticias"
+          % (len(contenido.ALOJAMIENTOS), destinos,
+             len(contenido.AGENDA), len(contenido.NOTICIAS)))
     if sin_revisar[0]:
         print("  %d texto(s) saldrán traducidos al valencià a máquina, "
               "sin revisar" % sin_revisar[0])

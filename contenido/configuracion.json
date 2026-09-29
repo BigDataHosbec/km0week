@@ -17,5 +17,10 @@
     "destinos": 17,
     "experiencias": 14,
     "dtoMedio": 39
-  }
+  },
+  "paginasOcultas": [
+    "descargas.html",
+    "prensa.html"
+  ],
+  "_ayuda_paginasOcultas": "Páginas que NO se publican. No se generan, desaparecen del menú y del pie, no entran en el sitemap y se quitan los botones que llevaban a ellas. Si «descargas.html» está aquí, tampoco se publica la carpeta descargas/, así que no queda ningún PDF accesible por URL. Para devolverlas: vaciar la lista y dejarla en []"
 }

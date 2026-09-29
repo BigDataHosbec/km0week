@@ -31,6 +31,13 @@ FUERA_ARCHIVOS = {
 }
 FUERA_EXTENSIONES = {".md", ".py", ".pyc"}
 
+# Si «Materiales y kit» está oculta, la carpeta de descargas tampoco se sirve:
+# de nada vale esconder la página si los PDF siguen accesibles por su URL.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import contenido
+if "descargas.html" in contenido.OCULTAS:
+    FUERA_CARPETAS = FUERA_CARPETAS | {"descargas"}
+
 
 def se_publica(rel):
     partes = rel.split(os.sep)

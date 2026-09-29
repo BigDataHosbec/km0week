@@ -71,7 +71,6 @@ TEL = CFG["telefonoContacto"]
 WEB = "bigdatahosbec.github.io/km0week"
 HOSBEC = "Asociación Empresarial Hotelera y Turística de la Comunidad Valenciana"
 
-CUPO_TOTAL = sum(a.get("cupo") or 0 for a in ALOJ)
 DESTINOS = sorted({a["destino"] for a in ALOJ})
 PROVINCIAS = ["Castelló", "València", "Alicante"]
 HOY = datetime.date(2026, 8, 18)
@@ -82,6 +81,8 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
 
 INICIO = datetime.date(*[int(x) for x in CFG["fechaInicio"][:10].split("-")])
 FIN = datetime.date(*[int(x) for x in CFG["fechaFin"][:10].split("-")])
+# Los días que dura la edición: la cifra que sustituyó al cupo el 29/09/2026.
+DIAS_EDICION = (FIN - INICIO).days + 1
 TOTAL_DIAS = (FIN - INICIO).days + 1
 
 
@@ -582,8 +583,8 @@ def doc_guia():
         o por nuestra web. Ni comisiones ni intermediarios: por eso el precio puede ser el que
         es.</p></div>
     <div><h4>«¿Cuántas habitaciones hay?»</h4>
-      <p style="font-size:9.3pt">Las que figuran como cupo en nuestra ficha de la web, ni una
-        menos. Cuando se agotan, se agotan: es un compromiso público, no una estimación.</p></div>
+      <p style="font-size:9.3pt">Las que nos queden. La oferta se mantiene mientras haya
+        habitaciones disponibles; cuando se agotan, se agotan.</p></div>
     <div><h4>«¿Qué es el pasaporte?»</h4>
       <p style="font-size:9.3pt">Un cuadernillo con siete casillas. Cada estancia y cada
         actividad suman un sello. Con tres entran en el sorteo de diez estancias para 2027.
@@ -930,7 +931,7 @@ def doc_manual():
       <ul class="limpia" style="font-size:9.2pt">
         <li>Tutear. Siempre.</li>
         <li>Frases cortas y concretas. «Dormir a veinte minutos de casa».</li>
-        <li>Datos comprobables: cupos, precios, distancias.</li>
+        <li>Datos comprobables: precios, distancias, fechas.</li>
         <li>Nombrar los sitios por su nombre: Peñíscola, el Palmeral, el Grau.</li>
         <li>Reconocer lo que no se sabe todavía.</li>
       </ul></div>
@@ -983,8 +984,8 @@ def doc_manual():
 def doc_dossier():
     por_prov = {p: [a for a in ALOJ if a["provincia"] == p] for p in PROVINCIAS}
     tabla_prov = "".join(
-        "<tr><td><b>%s</b></td><td>%d</td><td>%d</td><td>%s</td></tr>" % (
-            esc(p), len(v), sum(a.get("cupo") or 0 for a in v),
+        "<tr><td><b>%s</b></td><td>%d</td><td>%s</td></tr>" % (
+            esc(p), len(v),
             esc(", ".join(sorted({a["destino"] for a in v}))))
         for p, v in por_prov.items())
 
@@ -1006,7 +1007,8 @@ def doc_dossier():
       más cerca de lo que crees</h1>
     <p style="font-size:13pt; color:#EAF6F9; max-width:125mm; margin-top:6mm; line-height:1.55">
       Del %s, %d alojamientos de la Comunitat Valenciana abren las puertas a sus propios
-      vecinos con %d plazas reservadas y precios que no se encuentran en ningún otro canal.</p>
+      vecinos con precios que no se encuentran en ningún otro canal, hasta fin de
+      disponibilidad.</p>
   </div>
   <div style="font-size:9.5pt; color:rgba(234,246,249,.8); line-height:1.6">
     <b style="color:#EED8AE">Contacto de prensa</b><br>
@@ -1036,7 +1038,7 @@ def doc_dossier():
     <div class="caja verde"><span class="cifra" style="color:#6E9553">%d</span>
       <span class="u">destinos</span><span class="n">costa e interior</span></div>
     <div class="caja arena"><span class="cifra" style="color:#B58A3C">%d</span>
-      <span class="u">plazas comprometidas</span><span class="n">cupo publicado y verificable</span></div>
+      <span class="u">días de edición</span><span class="n">tres fines de semana</span></div>
     <div class="caja"><span class="cifra" style="color:#D9794D">%d</span>
       <span class="u">actividades abiertas</span><span class="n">sin necesidad de alojarse</span></div>
   </div>
@@ -1063,10 +1065,10 @@ def doc_dossier():
       <p style="font-size:9.3pt">Se reserva directamente con el alojamiento, por teléfono o por
         su web. Ni comisiones, ni intermediarios, ni plataformas por medio. Es lo que permite
         que el precio sea el que es.</p></div>
-    <div class="caja"><h4 style="margin-top:0">3 · Cupo publicado</h4>
-      <p style="font-size:9.3pt">Cada casa compromete un número concreto de plazas para
-        residentes y lo publica en su ficha. Si dice treinta, son treinta. Cualquiera puede
-        comprobarlo llamando.</p></div>
+    <div class="caja"><h4 style="margin-top:0">3 · Hasta fin de disponibilidad</h4>
+      <p style="font-size:9.3pt">Cada casa mantiene la oferta mientras le queden habitaciones.
+        Cuando se acaban, se acaban: no se cierra antes de tiempo ni se guarda para otro
+        canal.</p></div>
     <div class="caja"><h4 style="margin-top:0">4 · Condiciones a la vista</h4>
       <p style="font-size:9.3pt">La letra pequeña está entera en la ficha: qué entra, qué no y
         hasta cuándo se puede cancelar. Sin asteriscos.</p></div>
@@ -1120,7 +1122,7 @@ def doc_dossier():
   <ul class="limpia">
     <li><b>Este dossier</b> en PDF y la nota de prensa de presentación.</li>
     <li><b>Listado completo de alojamientos adheridos</b> en hoja de cálculo, con municipio,
-        provincia, tipo, cupo comprometido y contacto.</li>
+        provincia, tipo y contacto.</li>
     <li><b>Programa de actividades</b> día a día, con hora, lugar y condiciones de acceso.</li>
     <li><b>Logotipos</b> en vectorial y PNG, con el manual de marca.</li>
     <li><b>Banco de imágenes</b> libre para uso editorial citando la fuente.</li>
@@ -1137,10 +1139,10 @@ def doc_dossier():
   </div>
   %s
 </div>""" % (
-        CFG["edicion"], esc(FECHAS), len(ALOJ), CUPO_TOTAL,
+        CFG["edicion"], esc(FECHAS), len(ALOJ),
         esc(HOSBEC), esc(EMAIL), esc(TEL), WEB,
         cabecera("Dossier", "Dossier de prensa"),
-        len(ALOJ), len(DESTINOS), CUPO_TOTAL, len(AGENDA),
+        len(ALOJ), len(DESTINOS), DIAS_EDICION, len(AGENDA),
         tabla_prov, tabla_tipos, pie("Dossier de prensa · Km0 Week 2026"),
         cabecera("Dossier", "Dossier de prensa"), len(AGENDA), esc(EMAIL),
         pie("Dossier de prensa · Km0 Week 2026"),
@@ -1159,7 +1161,7 @@ def doc_nota():
     <span style="font-size:8.4pt; color:#7D8F98">Benidorm, %d de %s de %d</span>
   </div>
   <h1 style="margin:4px 0 8px; font-size:25pt; max-width:155mm">%d alojamientos de la Comunitat
-    reservan %d plazas para que sus vecinos redescubran su propio territorio</h1>
+    abren sus puertas para que sus vecinos redescubran su propio territorio</h1>
   <p class="lede" style="max-width:155mm">HOSBEC presenta la primera <b>Km0 Week</b>, que se
      celebrará del %s: tres fines de semana con oferta exclusiva para residentes, reserva
      directa y %d actividades abiertas a todo el mundo.</p>
@@ -1171,9 +1173,9 @@ def doc_nota():
      pone en marcha la primera <b>Km0 Week</b>: tres fines de semana de noviembre en los que los
      residentes son los huéspedes.</p>
 
-  <p>Participan <b>%d alojamientos</b> de <b>%d municipios</b> de las tres provincias, que
-     comprometen <b>%d plazas</b> para residentes. Ese cupo no es una estimación: cada casa lo
-     publica en su ficha y cualquiera puede comprobarlo llamando.</p>
+  <p>Participan <b>%d alojamientos</b> de <b>%d municipios</b> de las tres provincias, durante
+     los <b>%d días</b> de la edición. Cada casa mantiene su oferta mientras le queden
+     habitaciones: cuando se acaban, se acaban.</p>
 
   <h2>Precio verificable y reserva directa</h2>
   <p>El compromiso central es que el precio Km0 sea <b>igual o inferior al más bajo</b> que ha
@@ -1203,8 +1205,8 @@ def doc_nota():
 </div>""" % (
         cabecera("Nota de prensa", ""),
         HOY.day, MESES[HOY.month - 1], HOY.year,
-        len(ALOJ), CUPO_TOTAL, esc(FECHAS), len(AGENDA),
-        len(ALOJ), len(DESTINOS), CUPO_TOTAL,
+        len(ALOJ), esc(FECHAS), len(AGENDA),
+        len(ALOJ), len(DESTINOS), DIAS_EDICION,
         len(AGENDA), len(AGENDA), WEB, esc(EMAIL), esc(TEL),
         pie("Nota de prensa · Km0 Week 2026"))
     return envolver("Nota de prensa · HOSBEC Km0 Week", cuerpo)
@@ -1292,7 +1294,7 @@ def piezas_redes():
             "fuera.", 1.35, "#14647D"), "#14647D"), 1080, 1080),
         ("ejemplo-banner-1200x628", base(1200, 628, relleno(
             1200, 628, "Todo lo bueno está más cerca",
-            "%d alojamientos · %d plazas para residentes · %s" % (len(ALOJ), CUPO_TOTAL, esc(FECHAS)),
+            "%d alojamientos · %s" % (len(ALOJ), esc(FECHAS)),
             0.95, "#123C4C")), 1200, 628),
     ]
 
@@ -1372,7 +1374,7 @@ def hacer_xlsx(ruta):
 
     cols = [
         ("Nombre", 34), ("Tipo", 15), ("Categoría", 10), ("Municipio", 22),
-        ("Provincia", 12), ("Plazas comprometidas", 12), ("Precio desde (€)", 12),
+        ("Provincia", 12), ("Precio desde (€)", 12),
         ("Precio habitual (€)", 13), ("Descuento (%)", 11), ("Unidad", 26),
         ("Teléfono", 15), ("Web", 30), ("Experiencias", 40), ("Oferta", 34),
     ]
@@ -1395,7 +1397,7 @@ def hacer_xlsx(ruta):
         o = a.get("oferta") or {}
         ws.append([
             a["nombre"], tipo_es(a["tipo"]), a.get("categoria") or "", a["destino"],
-            a["provincia"], a.get("cupo") or 0,
+            a["provincia"],
             o.get("precioDesde") or "", o.get("precioOriginal") or "", o.get("dto") or "",
             L(o.get("unidad")), a.get("telefono") or "", a.get("web") or "",
             ", ".join(exp_es(e) for e in a.get("experiencias") or []),
@@ -1427,7 +1429,7 @@ def hacer_xlsx(ruta):
 
     # ---- resumen por provincia, también con fórmulas ----
     r2 = wb.create_sheet("Resumen")
-    r2.append(["Provincia", "Alojamientos", "Plazas comprometidas"])
+    r2.append(["Provincia", "Alojamientos"])
     for i in (1, 2, 3):
         c = r2.cell(row=1, column=i)
         c.fill, c.font = tinta, blanco
@@ -1457,12 +1459,12 @@ def hacer_xlsx(ruta):
 TEXTOS = [
     ("Un párrafo para tu web", [
         ("es", "Somos alojamiento adherido a la HOSBEC Km0 Week. Del %s abrimos las puertas a "
-               "quienes viven en la Comunitat Valenciana con una tarifa pensada para ellos y un "
-               "cupo de plazas reservado. Se reserva directamente con nosotros, sin "
+               "quienes viven en la Comunitat Valenciana con una tarifa pensada para ellos, "
+               "hasta fin de disponibilidad. Se reserva directamente con nosotros, sin "
                "intermediarios, acreditando residencia en la Comunitat al llegar." % FECHAS),
         ("va", "Som allotjament adherit a la HOSBEC Km0 Week. Del %s obrim les portes a qui viu "
-               "a la Comunitat Valenciana amb una tarifa pensada per a ells i un cupo de places "
-               "reservat. Es reserva directament amb nosaltres, sense intermediaris, acreditant "
+               "a la Comunitat Valenciana amb una tarifa pensada per a ells, fins a fi de "
+               "disponibilitat. Es reserva directament amb nosaltres, sense intermediaris, acreditant "
                "residència a la Comunitat en arribar." % CFG["fechasTexto"]["va"]),
     ]),
     ("Texto corto para la portada", [
@@ -1475,23 +1477,22 @@ TEXTOS = [
         ("es", "Asunto: Esta vez el huésped eres tú\n\nHola:\n\nDel %s participamos en la Km0 "
                "Week, la iniciativa de HOSBEC para que quienes viven en la Comunitat Valenciana "
                "redescubran los alojamientos de su propio territorio.\n\nDurante esos días "
-               "tenemos una tarifa específica para residentes, con un cupo de plazas reservado y "
-               "condiciones a la vista. Se reserva directamente con nosotros: ni comisiones ni "
+               "tenemos una tarifa específica para residentes y las condiciones a la vista, hasta "
+               "fin de disponibilidad. Se reserva directamente con nosotros: ni comisiones ni "
                "intermediarios.\n\nAdemás hay un programa de actividades abiertas a todo el "
-               "mundo, sin necesidad de alojarse, y un pasaporte que suma sellos y entra en el "
-               "sorteo de diez estancias para 2027.\n\nTe esperamos.\n" % FECHAS),
+               "mundo, sin necesidad de alojarse.\n\nTe esperamos.\n" % FECHAS),
         ("va", "Assumpte: Aquesta vegada l'hoste eres tu\n\nHola:\n\nDel %s participem en la Km0 "
                "Week, la iniciativa d'HOSBEC perquè qui viu a la Comunitat Valenciana "
                "redescobrisca els allotjaments del seu propi territori.\n\nDurant aqueixos dies "
-               "tenim una tarifa específica per a residents, amb un cupo de places reservat i "
-               "condicions a la vista. Es reserva directament amb nosaltres.\n\nT'esperem.\n"
+               "tenim una tarifa específica per a residents i les condicions a la vista, fins a "
+               "fi de disponibilitat. Es reserva directament amb nosaltres.\n\nT'esperem.\n"
                % CFG["fechasTexto"]["va"]),
     ]),
     ("Respuesta cuando pregunten por teléfono", [
         ("es", "«Sí, participamos en la Km0 Week. Es una tarifa solo para gente que viva en la "
                "Comunitat, del %s. Se reserva con nosotros directamente y solo hace falta traer "
-               "el DNI o algo con domicilio en la Comunitat al llegar. Tenemos un cupo de plazas "
-               "reservado para eso, así que cuanto antes mejor.»" % FECHAS),
+               "el DNI o algo con domicilio en la Comunitat al llegar. Es hasta fin de "
+               "disponibilidad, así que cuanto antes mejor.»" % FECHAS),
         ("va", "«Sí, participem en la Km0 Week. És una tarifa només per a gent que visca a la "
                "Comunitat, del %s. Es reserva amb nosaltres directament i només cal portar el "
                "DNI o alguna cosa amb domicili a la Comunitat en arribar.»"

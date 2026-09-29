@@ -51,7 +51,9 @@ FECHAS_VA = contenido.FECHAS_VA
 # Sale de contenido/navegacion.json (panel -> Edición -> Menú y pie). Se pasa
 # a la forma de tuplas que ya usaban nav() y pie(), para no tocarlas.
 def _enlaces(lista):
-    return [(e["url"], e["es"], e["va"]) for e in lista]
+    """Los enlaces de navegación, quitando los que llevan a páginas ocultas."""
+    return [(e["url"], e["es"], e["va"]) for e in lista
+            if e["url"] not in contenido.OCULTAS]
 
 
 MENU = _enlaces(contenido.NAVEGACION["menu"])
@@ -251,6 +253,28 @@ def cabecera(p):
 """
 
 
+def sin_enlaces_ocultos(html):
+    """Borra los <a> que apuntan a una página oculta.
+
+    El pie y el menú se filtran en los datos, pero dentro de las páginas hay
+    botones sueltos («Ver los materiales») que, si la página está oculta,
+    llevarían a un 404. Se quita el enlace entero, no solo el href: un botón
+    que no va a ninguna parte es peor que no tener botón.
+    """
+    if not contenido.OCULTAS:
+        return html
+    destinos = list(contenido.OCULTAS)
+    # Si no se publica «Materiales y kit», tampoco se sirve la carpeta
+    # descargas/, así que cualquier enlace a un archivo de dentro también
+    # apuntaría a un 404 (la portada tenía uno al dossier).
+    if "descargas.html" in contenido.OCULTAS:
+        destinos.append("descargas/")
+    for url in destinos:
+        html = re.sub(r'\s*<a\b[^>]*href="%s[^"]*"[^>]*>.*?</a>' % re.escape(url),
+                      "", html, flags=re.S)
+    return html
+
+
 def construir(p):
     # El cuerpo viene de un archivo de _build/paginas/ o ya renderizado desde
     # los datos (las noticias, que salen de contenido/noticias.json).
@@ -260,6 +284,7 @@ def construir(p):
     # las páginas pueden escribir @@DOMINIO@@ y aquí se sustituye
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
     cuerpo = cuerpo.replace("@@TARJETAS_NOTICIAS@@", TARJETAS_NOTICIAS)
+    cuerpo = sin_enlaces_ocultos(cuerpo)
     html = (cabeza(p) + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))
@@ -618,17 +643,42 @@ def cname():
     return host
 
 
+def limpiar_huerfanos(generadas):
+    """Borra los .html de la raíz que esta compilación no ha generado.
+
+    Todos los HTML de la raíz son generados, así que cualquiera que sobre es
+    el rastro de una página retirada: una noticia borrada, una página oculta.
+    Si se quedan, `reunir.py` los publica igual y siguen accesibles por su URL
+    aunque ya no los enlace nadie.
+    """
+    esperados = {p["archivo"] for p in generadas}
+    fuera = []
+    for f in sorted(os.listdir(RAIZ)):
+        if f.endswith(".html") and f not in esperados:
+            os.remove(os.path.join(RAIZ, f))
+            fuera.append(f)
+    return fuera
+
+
+def visibles(paginas):
+    """Las páginas que sí se publican."""
+    return [p for p in paginas if p["archivo"] not in contenido.OCULTAS]
+
+
 def main():
     # Primero los datos: assets/js/data-alojamientos.js se REESCRIBE desde
     # contenido/*.json en cada compilación. Es lo que hace que un alta hecha
     # en el panel aparezca de verdad en la web.
     contenido.escribir_js()
 
-    todas = PAGINAS + paginas_noticia()
+    todas = visibles(PAGINAS + paginas_noticia())
     for p in todas:
         construir(p)
+    sobras = limpiar_huerfanos(todas)
     sitemap(todas)
     host = cname()
+    if sobras:
+        print("huérfanos borrados:", ", ".join(sobras))
     print("páginas generadas:", len(todas), "+ sitemap.xml + robots.txt"
           + (" + CNAME (%s)" % host if host else "")
           + " + data-alojamientos.js")

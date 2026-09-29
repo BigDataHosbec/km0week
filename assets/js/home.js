@@ -18,7 +18,7 @@ window.Km0 = (function () {
         alojamiento: "Alojamiento", bienestar: "Bienestar", gastronomia: "Gastronomía",
         cocteleria: "Coctelería", ocio: "Ocio"
       },
-      desde: "desde", ver: "Ver oferta", aTi: "a {d} km de casa", nuevo: "Nuevo",
+      desde: "desde", consultar: "A consultar", ver: "Ver oferta", aTi: "a {d} km de casa", nuevo: "Nuevo",
       alojamientos: "alojamientos", alojamiento: "alojamiento", destinos: "destinos", destino: "destino",
       elige: "— elige tu municipio —", ubic: "No hemos podido ubicarte", loc: "Buscándote…",
       seis: "Seis planes para empezar", seisCerca: "Los seis que tienes más cerca",
@@ -45,7 +45,7 @@ window.Km0 = (function () {
         alojamiento: "Allotjament", bienestar: "Benestar", gastronomia: "Gastronomia",
         cocteleria: "Cocteleria", ocio: "Oci"
       },
-      desde: "des de", ver: "Veure oferta", aTi: "a {d} km de casa", nuevo: "Nou",
+      desde: "des de", consultar: "A consultar", ver: "Veure oferta", aTi: "a {d} km de casa", nuevo: "Nou",
       alojamientos: "allotjaments", alojamiento: "allotjament", destinos: "destins", destino: "destí",
       elige: "— tria el teu municipi —", ubic: "No hem pogut ubicar-te", loc: "Buscant-te…",
       seis: "Sis plans per a començar", seisCerca: "Els sis que tens més a prop",
@@ -164,6 +164,9 @@ window.Km0 = (function () {
     // La píldora enseña lo que DISTINGUE a esta casa. Como «alojamiento» lo
     // llevan todas, solo sale cuando no hay nada más que contar.
     const tema = a.experiencias.find(e => e !== "alojamiento") || a.experiencias[0];
+    // Precio 0 (o sin poner) quiere decir «a consultar»: no se enseña
+    // «desde 0 €» ni el precio tachado, que sin precio nuevo no significa nada.
+    const precio = a.oferta.precioDesde || 0;
     return `<article class="ficha" data-id="${a.id}">
       <div class="ficha-art">
         ${a.imagen ? `<img src="${a.imagen}" alt="${a.nombre}" loading="lazy">` : ilustracion(a, 560, 350)}
@@ -182,16 +185,17 @@ window.Km0 = (function () {
           <div class="ttl">${L(a.oferta.titulo)}</div>
           <ul>${inc.map(i => `<li>${i}</li>`).join("")}</ul>
         </div>
-        ${L(a.plazas) ? `<p class="ficha-cupo">${IC.escapadas}<span>${L(a.plazas)}</span></p>` : ""}
+        ${L(a.plazas) ? `<p class="ficha-dispo">${IC.escapadas}<span>${L(a.plazas)}</span></p>` : ""}
       </div>
       ${L(a.oferta.condiciones) ? `<p class="ficha-letra">${L(a.oferta.condiciones)}</p>` : ""}
       <div class="ficha-ft">
         <div class="ficha-price">
-          <span class="label" style="display:block;margin-bottom:3px;color:var(--suave)">${t("desde")}</span>
-          <b>${a.oferta.precioDesde} €</b>${a.oferta.precioOriginal ? `<s>${a.oferta.precioOriginal} €</s>` : ""}
-          <span class="u">${L(a.oferta.unidad)}</span>
+          ${precio ? `<span class="label" style="display:block;margin-bottom:3px;color:var(--suave)">${t("desde")}</span>
+          <b>${precio} €</b>${a.oferta.precioOriginal ? `<s>${a.oferta.precioOriginal} €</s>` : ""}`
+            : `<b class="consultar">${t("consultar")}</b>`}
+          ${L(a.oferta.unidad) ? `<span class="u">${L(a.oferta.unidad)}</span>` : ""}
         </div>
-        <a class="btn btn-mar btn-sm" href="${a.web}" target="_blank" rel="noopener">${t("ver")}</a>
+        ${a.web ? `<a class="btn btn-mar btn-sm" href="${a.web}" target="_blank" rel="noopener">${t("ver")}</a>` : ""}
       </div>
     </article>`;
   }
@@ -281,7 +285,7 @@ window.Km0 = (function () {
     const v = {
       alojamientos: D.length,
       destinos: new Set(D.map(a => a.destino)).size,
-      cupo: D.reduce((a, b) => a + (b.cupo || 0), 0),
+      dias: totalDias(),
       actividades: (window.KM0.AGENDA || []).length
     };
     $$("[data-auto]").forEach(el => {
@@ -468,11 +472,15 @@ window.Km0 = (function () {
     box.innerHTML = lista.map(a => {
       const d = ORIGEN ? hav(ORIGEN, a.coords) : null;
       const banda = d == null ? 2 : d <= 30 ? 0 : d <= 60 ? 1 : 2;
-      return `<a class="cercano" href="${a.web}" target="_blank" rel="noopener">
+      // Sin web no hay a dónde ir: la fila se queda informativa.
+      const ap = a.web ? `a class="cercano" href="${a.web}" target="_blank" rel="noopener"`
+                       : `div class="cercano sin-enlace"`;
+      const cierra = a.web ? "a" : "div";
+      return `<${ap}>
         <span class="bolita" style="background:${d == null ? "#CFD6CC" : col[banda]}"></span>
         <span><span class="n">${a.nombre}</span><br><span class="d">${t("tipos." + a.tipo)} · ${a.destino}</span></span>
         <span class="km">${d == null ? "—" : d.toFixed(d < 10 ? 1 : 0) + " km"}</span>
-      </a>`;
+      </${cierra}>`;
     }).join("");
   }
 
@@ -713,7 +721,7 @@ window.Km0 = (function () {
       const datos = {
         formulario: "alojamiento",
         nombre: v("nombre"), municipio: v("municipio"), tipo: v("tipo"),
-        cupo: v("cupo"), contacto: v("contacto"), email: v("email"),
+        contacto: v("contacto"), email: v("email"),
         telefono: v("telefono"), web: v("web"), oferta: v("oferta"),
         acepto: !!f.querySelector("[name=acepto]:checked"),
         _honey: v("_honey")
@@ -732,7 +740,6 @@ window.Km0 = (function () {
           "Alojamiento: " + datos.nombre,
           "Municipio: " + datos.municipio,
           "Tipo: " + datos.tipo,
-          "Plazas comprometidas: " + datos.cupo,
           "Persona de contacto: " + datos.contacto,
           "Correo: " + datos.email,
           "Teléfono: " + datos.telefono,

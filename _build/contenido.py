@@ -49,6 +49,10 @@ TELEFONO = CONFIG["telefonoContacto"]
 FECHAS_ES = CONFIG["fechasTexto"]["es"]
 FECHAS_VA = CONFIG["fechasTexto"]["va"]
 
+# Páginas que no se publican (ver el _ayuda del propio configuracion.json).
+# Vaciar la lista las devuelve, sin tocar una línea de código.
+OCULTAS = set(CONFIG.get("paginasOcultas") or [])
+
 
 def _entero(v):
     """Tolerante a propósito: si un dato viene mal, que lo diga verificar.py
@@ -56,7 +60,6 @@ def _entero(v):
     return v if isinstance(v, int) and not isinstance(v, bool) else 0
 
 
-CUPO_TOTAL = sum(_entero(a.get("cupo")) for a in ALOJAMIENTOS)
 DESTINOS = sorted({a["destino"] for a in ALOJAMIENTOS
                    if isinstance(a.get("destino"), str) and a["destino"].strip()})
 

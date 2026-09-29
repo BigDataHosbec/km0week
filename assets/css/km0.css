@@ -513,13 +513,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
   content: ""; position: absolute; left: 2px; top: .58em; width: 7px; height: 7px;
   border-radius: 50%; background: var(--verde);
 }
-/* El cupo comprometido. La web lo promete por escrito —la noticia y el
-   dossier dicen que «aparece en su ficha»— y hasta ahora no aparecía. */
-.ficha-cupo {
+/* La nota de disponibilidad de cada casa: texto libre, lo que quiera contar
+   sobre cuándo y cómo queda sitio. Sustituye al cupo, que se retiró el
+   29/09/2026 porque los alojamientos no lo estaban dando. */
+.ficha-dispo {
   display: flex; align-items: center; gap: 7px; margin-top: 2px;
   font-size: .8rem; font-weight: 600; color: var(--verde-osc, var(--mar-d));
 }
-.ficha-cupo svg { width: 15px; height: 15px; flex: none; }
+.ficha-dispo svg { width: 15px; height: 15px; flex: none; }
 
 /* Letra pequeña de la oferta: condiciones, vigencia y acreditación. Anunciar
    un descuento sin ellas a la vista es lo que trae problemas de consumo. */
@@ -532,6 +533,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .ficha-price b { font-family: var(--f-disp); font-weight: 600; font-size: 1.5rem; line-height: 1; color: var(--tinta); }
 .ficha-price s { color: var(--suave); font-size: .85rem; margin-left: 5px; }
 .ficha-price .u { display: block; font-size: .74rem; color: var(--suave); margin-top: 3px; }
+/* «A consultar» ocupa el sitio del precio, con el mismo peso pero sin el
+   tamaño de una cifra: no es un número y no debe leerse como tal. */
+.ficha-price .consultar { font-family: var(--f-disp); font-weight: 600; font-size: 1.15rem; color: var(--tinta); }
 
 /* --------------------------------- TEMAS --------------------------------- */
 .temas { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
@@ -1037,6 +1041,10 @@ table.tabla td { color: var(--texto); }
   border-radius: var(--r-m); padding: .7rem .9rem; text-decoration: none; color: inherit;
 }
 .cercano:hover { border-color: var(--mar); }
+/* Un alojamiento sin web no lleva a ninguna parte: ni cursor de mano ni
+   resaltado al pasar por encima, para no prometer un clic que no existe. */
+.cercano.sin-enlace { cursor: default; }
+.cercano.sin-enlace:hover { border-color: var(--linea); }
 .cercano .bolita { width: 11px; height: 11px; border-radius: var(--r-full); }
 .cercano .n { font-family: var(--f-disp); font-weight: 600; color: var(--tinta); }
 .cercano .d { font-size: .8rem; color: var(--suave); }

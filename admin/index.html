@@ -888,8 +888,7 @@ function revisarAlojamiento(a, todos){
       err.push("Las coordenadas están del revés: deberían ser " + c[1] + ", " + c[0] + ".");
     else err.push("Las coordenadas caen fuera de la Comunitat Valenciana.");
   }
-  if (!/^https:\/\//.test(a.web || "")) err.push("La web debe empezar por https://");
-  if (!Number.isInteger(a.cupo) || a.cupo < 0) err.push("El cupo debe ser un número entero.");
+  if (a.web && !/^https:\/\//.test(a.web)) err.push("La web debe empezar por https://");
   (a.experiencias || []).forEach(e => { if (!EXPERIENCIAS[e])
     avi.push("La experiencia «" + e + "» no existe: no saldrá en ese filtro."); });
   // El valenciano vacío no es un problema: lo rellena Apertium al publicar y
@@ -1152,10 +1151,10 @@ function pintarAlojamientos(){
     .map((a, i) => ({ a: a, i: i }))
     .filter(x => !q || resbalar(x.a.nombre + " " + x.a.destino + " " + x.a.id).indexOf(q) >= 0);
 
-  const total = D.alojamientos.reduce((s, a) => s + (a.cupo || 0), 0);
   const destinos = new Set(D.alojamientos.map(a => a.destino)).size;
+  const municipios = destinos === 1 ? " destino" : " destinos";
   $("#resumen-alojamientos").textContent =
-    D.alojamientos.length + " alojamientos · " + destinos + " destinos · " + total + " plazas";
+    D.alojamientos.length + " alojamientos · " + destinos + municipios;
 
   $("#lista-alo").innerHTML = !lista.length
     ? "<p class='vacio'>" + (q ? "Ningún alojamiento coincide con «" + escapar($("#buscar-alo").value) + "»."
@@ -1170,7 +1169,9 @@ function pintarAlojamientos(){
               (v.errores.length > 1 ? 'es' : '') + '</span>' : '') +
           '</span><span class="det">' + escapar(TIPOS[a.tipo] || a.tipo) + " · " +
             escapar(a.destino) + " (" + escapar(a.provincia) + ")</span></span>" +
-          '<span class="cifra"><b>' + (a.cupo || 0) + '</b>plazas</span></button>';
+          '<span class="cifra">' + (((a.oferta || {}).precioDesde)
+            ? '<b>' + a.oferta.precioDesde + ' €</b>desde'
+            : '<b>—</b>a consultar') + '</span></button>';
       }).join("");
 
   $$("#lista-alo .item").forEach(b =>
@@ -1183,12 +1184,12 @@ $("#nuevo-alo").addEventListener("click", () => editarAlojamiento(-1));
 function alojamientoEnBlanco(){
   return {
     id: "", nombre: "", tipo: "hotel", categoria: 4, destino: "", provincia: "Alicante",
-    coords: null, web: "https://",
+    coords: null, web: "",
     imagen: "", claim: { es: "", va: "" },
     oferta: { titulo: { es: "", va: "" }, incluye: { es: [], va: [] },
               precioDesde: 0, precioOriginal: 0, unidad: { es: "por noche", va: "per nit" },
               dto: 0, condiciones: { es: "", va: "" } },
-    experiencias: [], destacado: false, nuevo: true, cupo: 0,
+    experiencias: [], destacado: false, nuevo: true,
     plazas: { es: "", va: "" }
   };
 }
@@ -1210,8 +1211,6 @@ function editarAlojamiento(indice){
               { opciones: Object.keys(TIPOS).map(k => [k, TIPOS[k]]) }) +
         campo("f-categoria", "Estrellas o llaves", a.categoria,
               { tipo: "number", min: 0, paso: 1, pista: "0 si no aplica." }) +
-        campo("f-cupo", "Plazas para vecinos", a.cupo,
-              { tipo: "number", min: 0, paso: 1, pista: "Se suma al contador de portada." }) +
       '</div>' +
       '<div class="fila fila-2">' +
         campo("f-destino", "Municipio", a.destino, { lista: "municipios" }) +
@@ -1234,7 +1233,8 @@ function editarAlojamiento(indice){
 
     '<fieldset><legend>Contacto</legend>' +
       campo("f-web", "Web a la que lleva el botón", a.web,
-            { tipo: "url", placeholder: "https://…", pista: "Completa, con https://" }) +
+            { tipo: "url", placeholder: "https://…",
+              pista: "Opcional. Si la dejas vacía, la ficha no lleva botón: se queda informativa." }) +
       '<div class="campo"><span class="et">Foto de la ficha</span>' +
         '<div class="foto">' +
           '<canvas id="foto-lienzo" width="480" height="320" ' +
@@ -1267,7 +1267,7 @@ function editarAlojamiento(indice){
       }, { filas: 4, pista: "Una cosa por línea." }) +
       '<div class="fila fila-4">' +
         campo("f-precio", "Precio Km0 (€)", of.precioDesde || 0,
-              { tipo: "number", min: 0, pista: "0 = «consultar»" }) +
+              { tipo: "number", min: 0, pista: "0 = la ficha pone «A consultar»" }) +
         campo("f-precio-orig", "Precio habitual (€)", of.precioOriginal || 0,
               { tipo: "number", min: 0, pista: "0 = no mostrar" }) +
         campo("f-dto", "Descuento (%)", of.dto || 0,
@@ -1357,7 +1357,6 @@ function recogerAlojamiento(base){
   a.experiencias = marcadas("exp");
   a.destacado = $("#f-destacado").checked;
   a.nuevo = $("#f-nuevo").checked;
-  a.cupo = num("f-cupo");
   a.plazas = bi("f-plazas");
   return a;
 }
