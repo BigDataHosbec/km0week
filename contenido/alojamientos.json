@@ -107,5 +107,58 @@
       "es": "Contacto y reservas: 964 010 724 / minospps@zthotels.com",
       "va": ""
     }
+  },
+  {
+    "id": "hotel-meridional",
+    "nombre": "Hotel Meridional",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Guardamar del Segura",
+    "provincia": "Alicante",
+    "coords": [
+      38.07895354447239,
+      -0.6486140873212578
+    ],
+    "web": "https://www.hotelmeridional.es/",
+    "imagen": "assets/img/foto/alo-hotel-meridional.webp",
+    "claim": {
+      "es": "Un oasis para desconectar más cerca de lo que esperabas",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Escapada relax",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Habitación doble estándar en alojamiento y desayuno",
+          "1 sesión de 30 min en hidromasaje panorámico"
+        ],
+        "va": []
+      },
+      "precioDesde": 150,
+      "precioOriginal": 167,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "bienestar"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
