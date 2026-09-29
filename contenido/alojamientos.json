@@ -160,5 +160,57 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "hotel-meridional-wellness",
+    "nombre": "Hotel Meridional",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Guardamar del Segura",
+    "provincia": "Alicante",
+    "coords": [
+      38.078955127971334,
+      -0.648631521679171
+    ],
+    "web": "https://www.hotelmeridional.es/",
+    "imagen": "assets/img/foto/alo-hotel-meridional-wellness.webp",
+    "claim": {
+      "es": "Regálate un momento de bienestar y desconexión con una experiencia diseñada para relajarte cuerpo y mente",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Ritual de calma",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "30min de masaje relajante (A elegir tren superior o tren inferior)",
+          "30 min en sesión privada en hidromasaje panorámico"
+        ],
+        "va": []
+      },
+      "precioDesde": 75,
+      "precioOriginal": 84,
+      "unidad": {
+        "es": "por sesión",
+        "va": "per nit"
+      },
+      "dto": 11,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "bienestar"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
