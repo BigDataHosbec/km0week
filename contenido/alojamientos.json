@@ -212,5 +212,58 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "hotel-meridional-gastro-1",
+    "nombre": "Hotel Meridional",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Guardamar del Segura",
+    "provincia": "Alicante",
+    "coords": [
+      38.07895723930323,
+      -0.6486335333358533
+    ],
+    "web": "https://www.hotelmeridional.es/",
+    "imagen": "assets/img/foto/alo-hotel-meridional-gastro-1.webp",
+    "claim": {
+      "es": "El sabor del Mediterráneo al lado de casa",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Menú arrocero para 2 personas",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Ensalada de salazones alicantinos.",
+          "Arroz a elegir: Arroz a banda o Arroz de alcachofa, habas y coliflor.",
+          "Postre: Limón, limón y limón"
+        ],
+        "va": []
+      },
+      "precioDesde": 60,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "para 2 personas",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
