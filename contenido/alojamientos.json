@@ -320,5 +320,57 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "terra-natura-benidorm-invierno",
+    "nombre": "Terra Natura Benidorm",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.56894930390102,
+      -0.14458867747481624
+    ],
+    "web": "https://tickets.terranatura.com/pase-temporada",
+    "imagen": "assets/img/foto/alo-terra-natura-benidorm-invierno.webp",
+    "claim": {
+      "es": "Disfruta del Pase Invierno de Terra Natura Benidorm",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Pase INVIERNO",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "ACCESO ILIMITADO a Terra Natura Benidorm hasta el 28 de febrero de 2027",
+          "PARKING GRATUITO"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por pase",
+        "va": ""
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Promoción especial no acumulable a otras promociones o descuentos. Consulta calendario y horario en la web",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "ocio"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
