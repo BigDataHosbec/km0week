@@ -265,5 +265,60 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "hotel-meridional-gastro-2",
+    "nombre": "Hotel Meridional",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Guardamar del Segura",
+    "provincia": "Alicante",
+    "coords": [
+      38.0789519609734,
+      -0.6486342038880807
+    ],
+    "web": "https://www.hotelmeridional.es/",
+    "imagen": "assets/img/foto/alo-hotel-meridional-gastro-2.webp",
+    "claim": {
+      "es": "50 años de sabor, más cerca que nunca",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Menú tapas, 50 Aniversario",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Ensalada de ventresca de atún, anchoas y pimiento rojo a la llama.",
+          "Marineras de ensaladilla de merluza con anguila ahumada.",
+          "Croquetas de gamba roja al ajillo.",
+          "Canelón de pularda, trufa y foie.",
+          "Souflé de turrón, ñora y helado de leche quemada de oveja"
+        ],
+        "va": []
+      },
+      "precioDesde": 60,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "para 2 personas",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Bebida no incluida",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "gastronomia"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "cupo": 0,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
