@@ -2307,6 +2307,11 @@ function pintarEdicion(){
       campo("c-dominio", "Dirección de la web", c.dominio,
             { pista: "Sin barra al final. Cambiarla sin más deja los enlaces " +
                      "de compartir apuntando a un sitio que no existe." }) +
+      campo("c-gtm", "Google Tag Manager", c.gtm || "",
+            { pista: "Identificador tipo <code>GTM-XXXXXXX</code>. Si lo dejas " +
+                     "vacío desaparecen la medición y el aviso de cookies, y la " +
+                     "política de cookies se reescribe sola. Nada se carga hasta " +
+                     "que el visitante acepta." }) +
     '</div>';
 
   const mirarFechas = () => {
@@ -2378,6 +2383,7 @@ $("#guardar-edicion").addEventListener("click", async () => {
   c.endpointFormularios = val("c-endpoint");
   c.tokenFormularios = val("c-token");
   c.dominio = val("c-dominio").replace(/\/$/, "");
+  c.gtm = val("c-gtm").trim().toUpperCase();
 
   n.redes = {};
   REDES.forEach(r => { n.redes[r[0]] = val("c-red-" + r[0]); });
@@ -2393,6 +2399,8 @@ $("#guardar-edicion").addEventListener("click", async () => {
   if (c.fechaFin <= c.fechaInicio) fallos.push("El último día no puede ir antes del primero.");
   if (c.emailContacto.indexOf("@") < 0) fallos.push("El correo no parece un correo.");
   if (!/^https:\/\//.test(c.dominio)) fallos.push("La dirección de la web debe empezar por https://");
+  if (c.gtm && !/^GTM-[A-Z0-9]+$/.test(c.gtm))
+    fallos.push("El identificador de Google Tag Manager debe ser del tipo GTM-XXXXXXX (o quedar vacío).");
   if (!n.menu.length) fallos.push("El menú no puede quedarse vacío.");
   if (fallos.length) {
     D.configuracion = antesC; D.navegacion = antesN;

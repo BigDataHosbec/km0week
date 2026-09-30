@@ -1486,3 +1486,47 @@ body.home .nav:not(.stuck) { overflow: visible; }
 .exp-card:hover img { transform: scale(1.05); }
 .exp-tit { font-family: var(--f-disp); font-weight: 700; text-transform: uppercase; font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.1; letter-spacing: -.01em; }
 .exp-sub { font-size: .78rem; color: rgba(255,255,255,.8); }
+
+/* ------------------------- aviso de cookies ------------------------------ */
+/* Abajo, sin tapar la página: no es un muro, se puede seguir leyendo. */
+.consent {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: clamp(.6rem, 2vw, 1.2rem); z-index: 300;
+  width: min(760px, calc(100vw - 1.6rem));
+  display: flex; align-items: center; gap: clamp(.8rem, 2vw, 1.6rem); flex-wrap: wrap;
+  padding: clamp(.9rem, 1.8vw, 1.25rem) clamp(1rem, 2vw, 1.5rem);
+  background: #fff; color: var(--tinta);
+  border: 1px solid rgba(57,70,66,.12); border-radius: var(--r-m); box-shadow: var(--sh-m);
+  animation: consent-entra .4s var(--e-out) both;
+}
+@keyframes consent-entra { from { opacity: 0; transform: translate(-50%, 14px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .consent { animation: none; } }
+.consent-bd { flex: 1 1 320px; min-width: 0; }
+.consent-bd h2 { font-family: var(--f-disp); font-size: 1rem; line-height: 1.2; margin: 0 0 .25rem; }
+.consent-bd p { font-size: .82rem; line-height: 1.45; margin: 0; color: var(--texto); }
+.consent-bd a { text-decoration: underline; text-underline-offset: 2px; }
+/* Los dos botones pesan lo mismo: rechazar no puede costar más que aceptar. */
+.consent-bt { display: flex; gap: .5rem; flex: 0 0 auto; }
+.consent-bt .btn { flex: 1 1 auto; justify-content: center; }
+@media (max-width: 560px) {
+  /* En el móvil el aviso no puede comerse media pantalla: texto más
+     compacto y los dos botones en la misma fila, que caben de sobra. */
+  .consent { flex-direction: column; align-items: stretch; gap: .7rem; padding: .85rem 1rem; }
+  /* En columna, flex-basis es ALTO: sin esto el texto reservaba 320px. */
+  .consent-bd { flex: 0 0 auto; }
+  .consent-bd h2 { font-size: .93rem; }
+  .consent-bd p { font-size: .78rem; line-height: 1.4; }
+  .consent-bt .btn { flex: 1 1 0; width: auto; }
+}
+/* El enlace del pie para volver a decidir: un botón que parece enlace. */
+.foot-consent {
+  background: none; border: 0; padding: 0; font: inherit; cursor: pointer;
+  color: rgba(234,246,249,.62);
+}
+.foot-consent:hover { color: #fff; }
+/* El mismo botón, dentro de un párrafo de texto corrido. */
+.enlace-consent {
+  background: none; border: 0; padding: 0; font: inherit; cursor: pointer;
+  color: var(--mar-d); text-decoration: underline; text-underline-offset: 2px;
+}
+.enlace-consent:hover { color: var(--terra); }

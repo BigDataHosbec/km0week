@@ -767,6 +767,8 @@ window.Km0 = (function () {
   let refrescarCuenta = null;   // la cuenta atrás también cambia de idioma
   function aplicarIdioma() {
     document.documentElement.lang = LANG === "va" ? "ca-ES-valencia" : "es";
+    // Quien pinte algo fuera de este archivo —el aviso de cookies— se entera.
+    document.dispatchEvent(new CustomEvent("km0:idioma", { detail: LANG }));
     $$("[data-va]").forEach(el => {
       if (!el.hasAttribute("data-es")) el.setAttribute("data-es", el.textContent.trim());
       el.textContent = LANG === "va" ? el.getAttribute("data-va") : el.getAttribute("data-es");

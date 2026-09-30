@@ -12,6 +12,8 @@
   "telefonoContacto": "965 85 55 16",
   "webHosbec": "https://hosbec.com",
   "dominio": "https://km0week.com",
+  "gtm": "GTM-W8M2BK4F",
+  "_ayuda_gtm": "Identificador de Google Tag Manager. Si lo dejas vacío no se carga ninguna medición y desaparece el aviso de cookies. Nada se carga hasta que el visitante acepta.",
   "cifras": {
     "alojamientos": 20,
     "destinos": 17,

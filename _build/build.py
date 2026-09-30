@@ -62,6 +62,7 @@ PIE_COLS = [(c["titulo"]["es"], c["titulo"]["va"], _enlaces(c["enlaces"]))
             for c in contenido.NAVEGACION["pie"]]
 
 PIE_LEGAL = _enlaces(contenido.NAVEGACION["legal"])
+GTM = contenido.GTM
 
 
 # ------------------------------------------------------------------- plantilla --
@@ -165,6 +166,10 @@ def pie(p):
         </ul>
       </div>"""
     legal = " · ".join('<a href="%s" data-va="%s">%s</a>' % (u, va, es) for u, es, va in PIE_LEGAL)
+    if GTM:
+        # Retirar el permiso tiene que ser tan fácil como darlo.
+        legal += (' · <button type="button" class="foot-consent" data-consent'
+                  ' data-va="Preferencies de galetes">Preferencias de cookies</button>')
     return f"""
 <!-- =============================== PIE ================================== -->
 <footer class="foot">
@@ -220,10 +225,12 @@ def pie(p):
 
 def scripts(p):
     extra = "".join('\n<script src="%s"></script>' % s for s in p.get("js", []))
+    # Sin identificador de GTM no hay nada que medir ni que consentir.
+    consent = '\n<script src="assets/js/consentimiento.js"></script>' if GTM else ""
     return f"""
 <script src="assets/js/data-alojamientos.js"></script>
 <script src="assets/js/isocrona.js"></script>
-<script src="assets/js/home.js"></script>{extra}
+<script src="assets/js/home.js"></script>{consent}{extra}
 <script src="assets/vendor/anime.global.js"></script>
 <script src="assets/js/motion.js"></script>
 </body>
@@ -251,6 +258,20 @@ def cabecera(p):
   </div>
 </section>
 """
+
+
+def sin_bloques_gtm(html):
+    """Resuelve los bloques @@SI-GTM@@ ... @@FIN-GTM@@.
+
+    La política de cookies describe una medición que solo existe si hay un
+    identificador de GTM configurado. Si mañana se vacía en el panel, el
+    aviso desaparece de la web: el texto legal tiene que desaparecer con él,
+    o la página pasaría a contar algo que ya no es verdad.
+    """
+    dentro, fuera = ("SI-GTM", "NO-GTM") if GTM else ("NO-GTM", "SI-GTM")
+    html = re.sub(r"@@%s@@.*?@@FIN-%s@@\n?" % (fuera, fuera), "", html, flags=re.S)
+    html = html.replace("@@%s@@" % dentro, "")
+    return html.replace("@@FIN-%s@@\n" % dentro, "").replace("@@FIN-%s@@" % dentro, "")
 
 
 def sin_enlaces_ocultos(html):
@@ -285,6 +306,7 @@ def construir(p):
     cuerpo = cuerpo.replace("@@DOMINIO@@", DOMINIO)
     cuerpo = cuerpo.replace("@@TARJETAS_NOTICIAS@@", TARJETAS_NOTICIAS)
     cuerpo = sin_enlaces_ocultos(cuerpo)
+    cuerpo = sin_bloques_gtm(cuerpo)
     html = (cabeza(p) + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))

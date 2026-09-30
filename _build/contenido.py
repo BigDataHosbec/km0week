@@ -52,6 +52,7 @@ FECHAS_VA = CONFIG["fechasTexto"]["va"]
 # Páginas que no se publican (ver el _ayuda del propio configuracion.json).
 # Vaciar la lista las devuelve, sin tocar una línea de código.
 OCULTAS = set(CONFIG.get("paginasOcultas") or [])
+GTM = (CONFIG.get("gtm") or "").strip()
 
 
 def _entero(v):

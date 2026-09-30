@@ -370,20 +370,23 @@ contador y la agenda harán caso al primero, y el pie y los metadatos al segundo
 
 ## 7 · Menú, pie, teléfono, correo, redes, dominio
 
-**Archivo:** `_build/build.py`, todo en la parte de arriba.
+**Sitio:** el panel, o `contenido/configuracion.json` y `contenido/navegacion.json`.
 **Compilar:** **sí**.
 
 | Qué | Dónde |
 |---|---|
-| Dirección donde se publica | `DOMINIO` (sin barra final) |
-| Correo de contacto | `EMAIL_KM0` |
-| Enlaces del menú | lista `MENU` |
-| Columnas del pie | `PIE_COLS` |
-| Redes sociales | el bloque de SVG de la función `pie()` |
+| Dirección donde se publica | `configuracion.json` → `dominio` (sin barra final) |
+| Correo y teléfono | `configuracion.json` → `emailContacto`, `telefonoContacto` |
+| Enlaces del menú | `navegacion.json` → `menu` |
+| Columnas del pie | `navegacion.json` → `pie` |
+| Enlaces legales del pie | `navegacion.json` → `legal` |
+| Páginas que no se publican | `configuracion.json` → `paginasOcultas` |
+| Redes sociales | el bloque de SVG de la función `pie()` en `_build/build.py` |
 
-El teléfono y el correo **también** están en `CONFIG` de
-`data-alojamientos.js` (`telefonoContacto`, `emailContacto`), porque los usan el
-JavaScript y los descargables. Si cambias uno, cambia el otro.
+Lo único que sigue estando a mano en `build.py` son los iconos de redes.
+Todo lo demás sale de `contenido/`, que es lo que edita el panel: `build.py`
+lee esos archivos al arrancar (`DOMINIO`, `MENU`, `PIE_COLS`, `PIE_LEGAL`,
+`GTM` son variables que se rellenan desde ahí, no valores escritos).
 
 Sobre `DOMINIO`: hoy apunta a `https://km0week.com`, el dominio propio
 registrado en IONOS. De ese valor sale solo el archivo `CNAME` de la raíz, que
@@ -395,6 +398,71 @@ km0week.com y volvería a github.io.
 Para cambiar de dominio basta con cambiar `DOMINIO` y compilar: el `CNAME` se
 reescribe solo. Si se pone de nuevo una dirección `github.io`, el `CNAME` se
 borra solo también.
+
+---
+
+## 7 bis · Medición y aviso de cookies
+
+**Sitio:** el panel → Configuración → **Google Tag Manager**.
+(o `contenido/configuracion.json` → `gtm`)
+**Compilar:** **sí**.
+
+Hoy vale `GTM-W8M2BK4F`, el contenedor de la agencia de comunicación.
+
+### Cómo está montado
+
+El código de Google **no está pegado en el HTML**. Si lo estuviera, se
+cargaría antes de que nadie diga nada, y eso es justo lo que no se puede
+hacer: la analítica de terceros necesita consentimiento **previo**.
+
+Lo que hay es `assets/js/consentimiento.js`, que hace esto:
+
+1. Declara el *consent mode* de Google con todo denegado.
+2. Si no hay respuesta guardada, saca el aviso de abajo.
+3. **Solo al pulsar «Aceptar»** inyecta `gtm.js`. Antes de eso el navegador
+   no le pide ni un archivo a Google.
+4. Guarda la respuesta en el propio navegador (`km0-consentimiento`) para no
+   volver a preguntar. No se envía a ninguna parte.
+
+«Rechazar» y «Aceptar» miden lo mismo y están al lado: rechazar no puede
+costar más que aceptar. La tecla Esc cuenta como rechazar. No hay muro: se
+puede navegar por toda la web sin contestar.
+
+Para volver a decidir hay un botón **«Preferencias de cookies»** en el pie de
+todas las páginas y otro dentro del texto de `cookies.html`.
+
+### El interruptor
+
+Si vacías `gtm` en el panel y compilas, desaparecen de golpe: el aviso, el
+script, el botón del pie y los párrafos de la política de cookies que hablan
+de Google Analytics. La página vuelve a decir la verdad sola. Esos párrafos
+están marcados en `_build/paginas/cookies.html` con `@@SI-GTM@@` /
+`@@FIN-SI-GTM@@` (y `@@NO-GTM@@` para el texto contrario); los resuelve
+`sin_bloques_gtm()` en `build.py`.
+
+### Lo que le toca a la agencia
+
+- Las etiquetas se configuran **dentro** de GTM, no en la web. No hay que
+  volver a tocar el repositorio para añadir una.
+- No hace falta que marquen nada en GTM para cumplir: el contenedor entero
+  solo existe si el visitante ha aceptado. Aun así conviene que dejen GA4
+  con *Consent Mode* activado, por si algún día se cambia este esquema.
+- **No se ha puesto el `<noscript>` con el iframe** que venía en su correo, y
+  es a propósito: ese trozo se ejecuta sin JavaScript y por tanto no se puede
+  condicionar al consentimiento. Sería precisamente la vía por la que se
+  escaparía el seguimiento sin permiso.
+- El fragmento que mandaron por correo venía **roto** (el gestor de correo
+  metió un enlace dentro del JavaScript). Da igual: lo único que se ha usado
+  de ahí es el identificador.
+
+### Comprobar que sigue bien
+
+Con la web abierta, F12 → pestaña **Red** → filtrar por `google`:
+
+- Antes de contestar el aviso: **cero** peticiones.
+- Tras «Rechazar»: **cero** peticiones, y al cambiar de página no vuelve a
+  preguntar.
+- Tras «Aceptar»: aparece `gtm.js?id=GTM-W8M2BK4F`.
 
 ---
 
@@ -523,15 +591,20 @@ por 6 anchos, errores de consola, desbordes y enlaces rotos.
 ## Chuleta
 
 ```
-Añadir un hotel        →  data-alojamientos.js                  →  regenerar descargables
-Cambiar una foto       →  assets/img/foto/ (mismo nombre)       →  regenerar descargables
-Cambiar la agenda      →  data-alojamientos.js (AGENDA)         →  regenerar descargables
-Cambiar un texto       →  _build/paginas/<pagina>.html          →  compilar
-Nueva noticia          →  build.py + paginas/noticia-N.html     →  compilar
-Cambiar fechas         →  data-alojamientos.js + build.py       →  compilar + regenerar
-Menú, pie, dominio     →  _build/build.py                       →  compilar
-Colores y estilos      →  assets/css/km0.css                    →  nada
-Contenido de un PDF    →  _build/descargables.py                →  regenerar descargables
+Añadir un hotel        →  panel  (contenido/alojamientos.json)   →  regenerar descargables
+Cambiar una foto       →  panel  (assets/img/foto/)              →  regenerar descargables
+Cambiar la agenda      →  panel  (contenido/agenda.json)         →  regenerar descargables
+Nueva noticia          →  panel  (contenido/noticias.json)       →  compilar
+Cambiar fechas         →  panel  (contenido/configuracion.json)  →  compilar + regenerar
+Menú, pie, dominio     →  panel  (contenido/navegacion.json)     →  compilar
+Medición y cookies     →  panel  → Configuración → GTM           →  compilar
+Cambiar un texto largo →  _build/paginas/<pagina>.html           →  compilar
+Colores y estilos      →  assets/css/km0.css                     →  nada
+Contenido de un PDF    →  _build/descargables.py                 →  regenerar descargables
+
+El panel hace el commit él solo: lo que edites ahí ya está en GitHub, y la
+Action compila y publica sin que toques nada. Lo de «compilar» de arriba es
+para cuando editas un archivo a mano en tu carpeta.
 
 compilar               =  python3 _build/build.py
 regenerar descargables =  python3 _build/descargables.py   (pídemelo en Cowork)

@@ -1,9 +1,18 @@
 <section class="sec">
   <div class="wrap">
     <article class="prosa">
-      <p class="lede" data-va="Resum curt: aquesta web no fa servir galetes de seguiment ni analítica de tercers. L'única cosa que es guarda al teu navegador és l'idioma que tries.">Resumen corto: esta web no usa cookies de seguimiento ni analítica de terceros. Lo único que se guarda en tu navegador es el idioma que eliges.</p>
+@@NO-GTM@@      <p class="lede" data-va="Resum curt: ara mateix aquesta web no carrega cap galeta de mesurament ni cap script de tercers. L'única cosa que es guarda al teu navegador són dues preferències tècniques.">Resumen corto: ahora mismo esta web no carga ninguna cookie de medición ni ningún script de terceros. Lo único que se guarda en tu navegador son dos preferencias técnicas.</p>
+@@FIN-NO-GTM@@
 
-      <h2 data-va="Què es guarda exactament">Qué se guarda exactamente</h2>
+@@SI-GTM@@      <p class="lede" data-va="Resum curt: aquesta web no carrega cap galeta de mesurament fins que tu dius que sí. Si no dius res, o si dius que no, ací no entra res de Google.">Resumen corto: esta web no carga ninguna cookie de medición hasta que tú dices que sí. Si no dices nada, o si dices que no, aquí no entra nada de Google.</p>
+
+      <h2 data-va="Com funciona l'avís">Cómo funciona el aviso</h2>
+      <p data-va="La primera vegada que entres apareix un avís a baix amb dos botons del mateix pes: «Acceptar» i «Rebutjar». Fins que no toques un dels dos, no es carrega cap eina de mesurament. Si rebutges —o si tanques l'avís amb la tecla Esc, que compta com rebutjar—, no es carrega res i no es torna a preguntar. No hi ha cap mur: pots navegar per tota la web sense acceptar res.">La primera vez que entras aparece un aviso abajo con dos botones del mismo peso: «Aceptar» y «Rechazar». Hasta que no pulsas uno de los dos, no se carga ninguna herramienta de medición. Si rechazas —o si cierras el aviso con la tecla Esc, que cuenta como rechazar—, no se carga nada y no se vuelve a preguntar. No hay muro: puedes navegar por toda la web sin aceptar nada.</p>
+      <p data-va-html="Pots canviar de parer quan vulgues des de &lt;button type=&quot;button&quot; class=&quot;enlace-consent&quot; data-consent&gt;«Preferències de galetes»&lt;/button&gt;, al peu de qualsevol pàgina.">Puedes cambiar de idea cuando quieras desde <button type="button" class="enlace-consent" data-consent data-va="«Preferències de galetes»">«Preferencias de cookies»</button>, al pie de cualquier página.</p>
+@@FIN-SI-GTM@@
+
+      <h2 data-va="Què es guarda sense demanar permís">Qué se guarda sin pedir permiso</h2>
+      <p data-va="Només dues preferències tècniques. No identifiquen ningú, no s'envien a cap servidor i no es comparteixen, per la qual cosa no requereixen consentiment previ.">Solo dos preferencias técnicas. No identifican a nadie, no se envían a ningún servidor y no se comparten, por lo que no requieren consentimiento previo.</p>
       <div class="tabla-envolt mt-1">
         <table class="tabla">
           <thead>
@@ -21,22 +30,59 @@
               <td data-va="Recordar si prefereixes castellà o valencià.">Recordar si prefieres castellano o valenciano.</td>
               <td data-va="Fins que esborres les dades del navegador">Hasta que borres los datos del navegador</td>
             </tr>
+@@SI-GTM@@            <tr>
+              <td>km0-consentimiento</td>
+              <td data-va="Emmagatzematge local">Almacenamiento local</td>
+              <td data-va="Recordar la teua resposta a aquest avís, per no tornar a preguntar-t'ho.">Recordar tu respuesta a este aviso, para no volver a preguntártelo.</td>
+              <td data-va="Fins que esborres les dades del navegador">Hasta que borres los datos del navegador</td>
+            </tr>@@FIN-SI-GTM@@
           </tbody>
         </table>
       </div>
-      <p data-va="És una preferència tècnica que no identifica ningú i no s'envia a cap servidor, per la qual cosa no requereix consentiment previ.">Es una preferencia técnica que no identifica a nadie y no se envía a ningún servidor, por lo que no requiere consentimiento previo.</p>
 
-      <h2 data-va="Què NO fa aquesta web">Qué NO hace esta web</h2>
+@@SI-GTM@@      <h2 data-va="Què es carrega només si acceptes">Qué se carga solo si aceptas</h2>
+      <p data-va="Google Tag Manager i, a través d'ell, Google Analytics. Els gestiona Google Ireland Limited i serveixen per a saber quantes visites té la campanya, quines pàgines es miren i quines ofertes es punxen. Són galetes de tercers i per això van darrere del teu permís.">Google Tag Manager y, a través de él, Google Analytics. Los gestiona Google Ireland Limited y sirven para saber cuántas visitas tiene la campaña, qué páginas se miran y qué ofertas se pulsan. Son cookies de terceros y por eso van detrás de tu permiso.</p>
+      <div class="tabla-envolt mt-1">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th data-va="Nom">Nombre</th>
+              <th data-va="Qui">Quién</th>
+              <th data-va="Per a què">Para qué</th>
+              <th data-va="Durada">Duración</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>_ga</td>
+              <td>Google Analytics</td>
+              <td data-va="Distingir un visitant d'un altre.">Distinguir un visitante de otro.</td>
+              <td data-va="2 anys">2 años</td>
+            </tr>
+            <tr>
+              <td>_ga_&lt;id&gt;</td>
+              <td>Google Analytics</td>
+              <td data-va="Mantindre l'estat de la sessió.">Mantener el estado de la sesión.</td>
+              <td data-va="2 anys">2 años</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-va-html="Google pot tractar aquestes dades fora de la Unió Europea. Ho fa a l'empara de les clàusules contractuals tipus de la Comissió Europea i del Marc de Privacitat de Dades UE-EUA. En les seues pròpies pàgines pots consultar &lt;a href=&quot;https://policies.google.com/technologies/cookies&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;com les utilitza&lt;/a&gt; i com oposar-t'hi.">Google puede tratar estos datos fuera de la Unión Europea. Lo hace al amparo de las cláusulas contractuales tipo de la Comisión Europea y del Marco de Privacidad de Datos UE-EE. UU. En sus propias páginas puedes consultar <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">cómo las utiliza</a> y cómo oponerte.</p>
+@@FIN-SI-GTM@@
+
+      <h2 data-va="Què no fa aquesta web, en cap cas">Qué no hace esta web, en ningún caso</h2>
       <ul>
-        <li data-va="No carrega Google Fonts, Google Analytics ni cap píxel de xarxes socials.">No carga Google Fonts, Google Analytics ni ningún píxel de redes sociales.</li>
-        <li data-va="No fa perfils, ni publicitat, ni remàrqueting.">No hace perfiles, ni publicidad, ni remarketing.</li>
-        <li data-va="No comparteix la teua navegació amb ningú.">No comparte tu navegación con nadie.</li>
+        <li data-va="No carrega Google Fonts ni cap píxel de xarxes socials: les tipografies i els scripts són al mateix servidor.">No carga Google Fonts ni ningún píxel de redes sociales: las tipografías y los scripts están en el mismo servidor.</li>
+        <li data-va="No fa publicitat ni remàrqueting, ni ven les teues dades.">No hace publicidad ni remarketing, ni vende tus datos.</li>
+        <li data-va="No et segueix per altres webs.">No te sigue por otras webs.</li>
       </ul>
 
-      <h2 data-va="Analítica">Analítica</h2>
-      <p data-va="Ara mateix no hi ha cap eina de mesurament. Si algun dia se n'incorpora una, aquesta pàgina ho recollirà i se't demanarà consentiment abans de carregar-la.">Ahora mismo no hay ninguna herramienta de medición. Si algún día se incorpora una, esta página lo recogerá y se te pedirá consentimiento antes de cargarla.</p>
+      <h2 data-va="Esborrar-les pel teu compte">Borrarlas por tu cuenta</h2>
+      <p data-va="A més del botó de preferències, tot navegador permet esborrar galetes i dades de llocs des dels seus ajustos de privacitat. Si ho fas, aquesta web tornarà a preguntar-t'ho la pròxima vegada.">Además del botón de preferencias, todo navegador permite borrar cookies y datos de sitios desde sus ajustes de privacidad. Si lo haces, esta web volverá a preguntártelo la próxima vez.</p>
+      <p data-va-html="Per a qualsevol dubte: &lt;a href=&quot;mailto:km0week@hosbec.com&quot;&gt;km0week@hosbec.com&lt;/a&gt;.">Para cualquier duda: <a href="mailto:km0week@hosbec.com">km0week@hosbec.com</a>.</p>
 
-      <p class="dato-fecha" data-va="Última actualització: agost de 2026">Última actualización: agosto de 2026</p>
+      <p class="dato-fecha" data-va="Última actualització: setembre de 2026">Última actualización: septiembre de 2026</p>
     </article>
   </div>
 </section>
