@@ -47,12 +47,15 @@
   --verde:    #9DBE8D;
   --verde-d:  #4A603B;
   --verde-p:  #EFF4EA;
+  --verde-txt:#628749;   /* el verde de marca cuando hace de TEXTO sobre claro:
+                            el #9DBE8D se queda en 2.1:1 y no llega ni al 3:1
+                            que se le pide a un titular grande. */
 
   --arena:    #E6E0D4;
   --arena-p:  #F3F0E9;
 
   --terra:    #B68464;
-  --terra-h:  #9C6D4F;
+  --terra-h:  #85593D;   /* el terracota cuando hace de TEXTO: 6.0:1 sobre blanco */
   --terra-p:  #F2E7DE;
 
   --roto:     #E6E0D4;   /* secciones alternas */
@@ -62,8 +65,11 @@
   /* Texto y superficie */
   --tinta:    #394642;   /* titulares */
   --texto:    #55625B;   /* cuerpo */
-  --suave:    #8A938C;   /* terciario */
-  --tenue:    #7C8A7E;   /* segunda línea de los titulares a dos tonos */
+  --suave:    #5B6560;   /* terciario · antes #8A938C, que sobre arena se quedaba
+                            en 2.4:1 y dejaba ilegibles las ayudas de los
+                            formularios. La jerarquía la marcan el tamaño y el
+                            espaciado, no solo el color. */
+  --tenue:    #6E7D6A;   /* segunda línea de los titulares a dos tonos */
   --card:     #FFFFFF;
   --linea:    #D9D4C8;
   --linea-2:  #EAE6DC;
@@ -150,7 +156,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* Antetítulos en versalitas */
 .label {
   font-family: var(--f-text); font-size: .74rem; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase; color: var(--terra);
+  letter-spacing: .14em; text-transform: uppercase; color: var(--terra-h);
 }
 .label-mar { color: var(--mar); }
 .label-verde { color: var(--verde-d); }
@@ -159,7 +165,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .hand {
   font-family: var(--f-hand); font-weight: 400;
   font-size: clamp(1.3rem, 1.9vw, 1.75rem); line-height: 1.1;
-  color: var(--terra);
+  color: var(--terra-h);
 }
 .hand-sm { font-size: 1.2rem; }
 .hand-mar { color: var(--mar); }
@@ -226,7 +232,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   letter-spacing: .02em; color: var(--mar); display: inline-block;
 }
 .brand-txt .w {
-  font-family: var(--f-hand); font-size: 1.34rem; color: var(--terra);
+  font-family: var(--f-hand); font-size: 1.34rem; color: var(--terra-h);
   display: inline-block; margin-left: 4px; transform: translateY(1px);
 }
 .brand-txt small {
@@ -302,7 +308,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .link-arrow {
   display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .9rem;
-  color: var(--terra); transition: gap .25s var(--e-out);
+  color: var(--terra-h); transition: gap .25s var(--e-out);
+  min-height: 24px; padding-block: 2px;   /* que se pueda pulsar con el dedo */
 }
 .link-arrow:hover { gap: 14px; }
 
@@ -314,8 +321,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .pill-terra { background: var(--terra-p); color: var(--terra-h); }
 .pill-verde { background: var(--verde-p); color: var(--verde-d); }
-.pill-arena { background: var(--arena-p); color: #96702a; }
-.pill-solida { background: var(--terra); color: #fff; }
+.pill-arena { background: var(--arena-p); color: #7E6039; }
+.pill-solida { background: var(--terra-h); color: #fff; }
 
 /* Icono en círculo, como en el manual */
 .ico {
@@ -391,7 +398,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .km-pick button {
   border: 0; border-left: 1.5px solid var(--linea-2); background: transparent; cursor: pointer;
-  padding: 12px 18px; font-weight: 700; font-size: .84rem; color: var(--terra); transition: background .25s;
+  padding: 12px 18px; font-weight: 700; font-size: .84rem; color: var(--terra-h); transition: background .25s;
 }
 .km-pick button:hover { background: var(--terra-p); }
 
@@ -615,8 +622,23 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .foot h5 { font-size: .74rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--arena); margin-bottom: 14px; }
 .foot a:hover { color: var(--arena); }
 .foot li { margin-bottom: 8px; font-size: .92rem; }
-.foot-grid { display: grid; gap: var(--gut); grid-template-columns: repeat(2,1fr); }
-@media (min-width: 900px) { .foot-grid { grid-template-columns: 2fr 1fr 1fr 1.4fr; } }
+/* En el móvil los enlaces del pie median unos 20px de alto: se fallan
+   con el dedo. Con un poco de aire pasan de 24px sin cambiar el aspecto. */
+@media (max-width: 560px) {
+  .foot li { margin-bottom: 2px; }
+  .foot li > a, .foot-legal a, .foot-legal .foot-consent, .foot-contacto a {
+    display: inline-block; padding-block: 5px;
+  }
+}
+/* Ojo con «1fr»: equivale a minmax(auto,1fr) y una columna así no baja del
+   ancho mínimo de su contenido. El formulario del boletín (campo + botón en
+   una línea) pedía 327 px, así que en el móvil la segunda columna del pie se
+   salía de la pantalla: media lista de enlaces cortada y el botón «Avísame»
+   directamente fuera, imposible de pulsar. Con minmax(0,1fr) las columnas
+   pueden encoger, y por debajo de 560 px el pie pasa a una sola columna. */
+.foot-grid { display: grid; gap: var(--gut); grid-template-columns: repeat(2, minmax(0,1fr)); }
+@media (max-width: 560px) { .foot-grid { grid-template-columns: minmax(0,1fr); gap: 1.6rem; } }
+@media (min-width: 900px) { .foot-grid { grid-template-columns: 2fr minmax(0,1fr) minmax(0,1fr) 1.4fr; } }
 .foot-bot {
   margin-top: clamp(1.8rem,3.4vw,2.8rem); padding-top: 1.3rem; border-top: 1px solid rgba(234,246,249,.16);
   display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .82rem;
@@ -624,9 +646,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* El boletín aparece en dos sitios con fondos opuestos: el pie (azul tinta)
    y la sección clara de Noticias. El estilo base es para fondo claro y la
    variante oscura se aplica solo donde toca. */
-.subscribe { display: flex; gap: 8px; }
+/* Si no cabe en una línea, el botón baja: nunca se sale de la pantalla. */
+.subscribe { display: flex; gap: 8px; flex-wrap: wrap; }
 .subscribe input {
-  flex: 1; min-width: 0; background: #fff; border: 1.5px solid var(--linea);
+  flex: 1 1 8rem; min-width: 0; background: #fff; border: 1.5px solid var(--linea);
   border-radius: var(--r-s); padding: 11px 15px; color: var(--tinta); font-size: .9rem;
 }
 .subscribe input::placeholder { color: var(--suave); }
@@ -713,7 +736,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .cabecera .lede { color: rgba(240,250,252,.86); max-width: 62ch; }
 .label-arena { color: var(--arena); }
 .migas { font-size: .8rem; color: rgba(240,250,252,.66); margin-bottom: 1.1rem; }
-.migas a { color: rgba(240,250,252,.86); text-decoration: none; border-bottom: 1px solid rgba(240,250,252,.34); }
+.migas a { color: rgba(240,250,252,.86); text-decoration: none; border-bottom: 1px solid rgba(240,250,252,.34);
+           display: inline-block; padding-block: 4px; }
 .migas a:hover { color: #fff; border-color: #fff; }
 .migas i { font-style: normal; margin-inline: .45rem; opacity: .5; }
 .nav-links a.on { color: var(--mar); }
@@ -949,6 +973,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .aviso-ok b { font-family: var(--f-disp); font-size: 1.2rem; color: var(--tinta); }
 .aviso-ok p { font-size: .9rem; color: var(--texto); }
 .campo .ayuda { font-size: .78rem; color: var(--suave); }
+/* La casilla del consentimiento venía con los 13px que da el navegador:
+   imposible de acertar con el dedo y por debajo del mínimo de WCAG. */
+.campo.check input[type="checkbox"] {
+  inline-size: 24px; block-size: 24px; flex: 0 0 auto; accent-color: var(--verde-osc);
+  margin: 0; cursor: pointer;
+}
 .check, .campo.check { display: flex; gap: .6rem; align-items: flex-start; font-size: .86rem; color: var(--texto); }
 .check input { margin-top: .25rem; }
 
@@ -1067,6 +1097,11 @@ table.tabla td { color: var(--texto); }
   margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(240,250,252,.14);
 }
 .foot-redes > span { margin-right: .3rem; opacity: .72; }
+/* En el móvil el rótulo se lleva media línea y dejaba un icono suelto
+   debajo. Ocupando línea propia, los cinco entran en una sola fila. */
+@media (max-width: 560px) {
+  .foot-redes > span { flex: 1 0 100%; margin: 0 0 .2rem; }
+}
 .foot-redes a {
   display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%;
   border: 1px solid rgba(240,250,252,.24); color: inherit;
@@ -1190,7 +1225,7 @@ body.home .nav.stuck { background: var(--verde-tinta); }
 .pill { text-transform: uppercase; letter-spacing: .08em; }
 .pill-terra { background: var(--terra-p); color: var(--terra-h); }
 .pill-verde { background: var(--verde-p); color: var(--verde-d); }
-.pill-arena { background: var(--arena-p); color: #8A6B45; }
+.pill-arena { background: var(--arena-p); color: #7E6039; }
 
 /* --------------------------- PORTADA · HERO ------------------------------- */
 .hero-full {
@@ -1344,10 +1379,12 @@ body.home .nav.stuck { background: var(--verde-tinta); }
   width: clamp(96px, 9vw, 130px); aspect-ratio: 1; border-radius: 50%;
   border: 2.5px solid var(--verde-claro); display: grid; place-items: center;
   font-family: var(--f-disp); font-weight: 300; font-size: clamp(2.4rem, 4vw, 3.4rem);
-  color: var(--verde-claro); line-height: 1; margin-bottom: .9rem;
+  color: var(--verde-txt); line-height: 1; margin-bottom: .9rem;
   transition: background .3s var(--e-out), color .3s var(--e-out);
 }
-.paso-c:hover .n { background: var(--verde-claro); color: #fff; }
+/* Al pasar por encima, cifra oscura sobre el verde claro: en blanco se
+   perdía (2.1:1). Es el mismo par que ya usa la pestaña activa del menú. */
+.paso-c:hover .n { background: var(--verde-claro); color: var(--verde-tinta); }
 .paso-c h3 {
   font-family: var(--f-disp); font-weight: 800; text-transform: uppercase;
   font-size: clamp(.95rem, 1.15vw, 1.08rem); line-height: 1.18; color: var(--verde-tinta);
@@ -1457,16 +1494,32 @@ body.home .nav.stuck { background: var(--verde-tinta); }
 .sello.s3 { color: #fff; }
 
 /* Logotipo del menú: en la portada, mientras la barra está sobre la foto,
-   se ve el vertical grande; al fijarse pasa al horizontal, como en el diseño. */
+   se ve el vertical grande colgando sobre ella; al fijarse pasa al
+   horizontal, como en el diseño.
+
+   Se ancla ARRIBA y se mide por su ALTO, no por su ancho. Antes se centraba
+   un logo de 162 px dentro de una barra de 74 y se compensaba con un margen
+   calculado a ojo: bastaba con que cambiara el ancho de la ventana para que
+   el alto cambiara con él y todo el cálculo se desplazara. En la mayoría de
+   portátiles (1366 px en adelante) el logo asomaba 6 px por encima del borde
+   y salía cortado; en el resto quedaba pegadísimo al canto. Midiéndolo por
+   el alto, el hueco de arriba es exactamente el margen y no depende de nada
+   más. El tope en vh es para el móvil en horizontal, donde sobra ancho pero
+   falta alto. */
 .brand .logo-v { display: none; }
 body.home .nav:not(.stuck) .brand .logo-h { display: none; }
+body.home .nav:not(.stuck) .brand { align-self: flex-start; align-items: flex-start; }
 body.home .nav:not(.stuck) .brand .logo-v {
-  display: block; height: auto; width: clamp(66px, 6.6vw, 92px);
-  margin-top: clamp(52px, 6vw, 76px);
+  display: block; width: auto;
+  height: clamp(84px, min(11vw, 20vh), 158px);
+  margin-top: clamp(10px, 1.2vw, 18px);
 }
 body.home .nav:not(.stuck) { overflow: visible; }
 @media (max-width: 1060px) {
-  body.home .nav:not(.stuck) .brand .logo-v { width: 60px; margin-top: 44px; }
+  body.home .nav:not(.stuck) .brand .logo-v {
+    height: clamp(72px, min(17vw, 18vh), 112px);
+    margin-top: clamp(9px, 2.4vw, 14px);
+  }
 }
 
 /* ------------------- tarjetas de categoría (Experiencias) ----------------- */

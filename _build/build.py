@@ -260,6 +260,25 @@ def cabecera(p):
 """
 
 
+def cifras_al_dia(html):
+    """Escribe las cifras reales en los <b data-auto>.
+
+    home.js ya las recalcula al arrancar, pero el HTML llegaba con el número
+    con el que se escribió a mano: durante un instante la portada decía «20
+    alojamientos» cuando hay 7, y si el JavaScript falla se queda así para
+    siempre. Aquí se dejan bien de origen.
+    """
+    def cambia(m):
+        n = contenido.CIFRAS.get(m.group("clave"))
+        if n is None:
+            return m.group(0)
+        return re.sub(r'data-count="[^"]*"', 'data-count="%d"' % n,
+                      m.group("abre")) + str(n) + "</b>"
+    return re.sub(
+        r'(?P<abre><b\b[^>]*\bdata-auto="(?P<clave>[a-z]+)"[^>]*>)[^<]*</b>',
+        cambia, html)
+
+
 def sin_bloques_gtm(html):
     """Resuelve los bloques @@SI-GTM@@ ... @@FIN-GTM@@.
 
@@ -307,6 +326,7 @@ def construir(p):
     cuerpo = cuerpo.replace("@@TARJETAS_NOTICIAS@@", TARJETAS_NOTICIAS)
     cuerpo = sin_enlaces_ocultos(cuerpo)
     cuerpo = sin_bloques_gtm(cuerpo)
+    cuerpo = cifras_al_dia(cuerpo)
     html = (cabeza(p) + nav(p["archivo"]) +
             '\n<main id="main">\n' + cabecera(p) + cuerpo + "\n</main>\n" +
             pie(p) + scripts(p))

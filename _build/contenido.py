@@ -65,6 +65,31 @@ DESTINOS = sorted({a["destino"] for a in ALOJAMIENTOS
                    if isinstance(a.get("destino"), str) and a["destino"].strip()})
 
 
+def _dias_edicion():
+    """Los días que dura la edición, contando el primero y el último."""
+    from datetime import date
+    def leer(s):
+        a, m, d = (s or "")[:10].split("-")
+        return date(int(a), int(m), int(d))
+    try:
+        ini = leer(CONFIG["fechaInicio"])
+        fin = leer(CONFIG.get("fechaFin") or CONFIG["fechaInicio"])
+        return max(1, (fin - ini).days + 1)
+    except Exception:
+        return 1
+
+
+# Las mismas cuatro cifras que calcula home.js en el navegador. Se escriben
+# también en el HTML al compilar, para que la página no llegue nunca diciendo
+# un número viejo mientras carga el JavaScript (ni se quede con él si falla).
+CIFRAS = {
+    "alojamientos": len(ALOJAMIENTOS),
+    "destinos": len(DESTINOS),
+    "dias": _dias_edicion(),
+    "actividades": len(AGENDA),
+}
+
+
 # ---------------------------------------------------------------------------
 # Generación de assets/js/data-alojamientos.js
 # ---------------------------------------------------------------------------

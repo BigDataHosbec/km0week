@@ -69,6 +69,12 @@ window.Km0 = (function () {
   };
   const t = k => k.split(".").reduce((o, p) => o && o[p], T[LANG]) ?? k;
   const L = o => (!o ? "" : typeof o === "string" ? o : (o[LANG] ?? o.es));
+  // Lo que se escribe en el panel entra aquí y acaba en innerHTML. Un
+  // «Hotel Mar & Sol» o cualquier «<» se interpretarían como etiquetas y
+  // romperían la tarjeta, así que todo texto de contenido pasa por aquí.
+  const MAL = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+  const E = v => String(v == null ? "" : v).replace(/[&<>"']/g, c => MAL[c]);
+  const LE = o => E(L(o));
   // "1 alojamiento" / "3 alojamientos"
   const pl = (n, clave) => n + " " + t(n === 1 ? clave : clave + "s");
 
@@ -167,9 +173,9 @@ window.Km0 = (function () {
     // Precio 0 (o sin poner) quiere decir «a consultar»: no se enseña
     // «desde 0 €» ni el precio tachado, que sin precio nuevo no significa nada.
     const precio = a.oferta.precioDesde || 0;
-    return `<article class="ficha" data-id="${a.id}">
+    return `<article class="ficha" data-id="${E(a.id)}">
       <div class="ficha-art">
-        ${a.imagen ? `<img src="${a.imagen}" alt="${a.nombre}" loading="lazy">` : ilustracion(a, 560, 350)}
+        ${a.imagen ? `<img src="${E(a.imagen)}" alt="${E(a.nombre)}" loading="lazy">` : ilustracion(a, 560, 350)}
         <div class="ficha-tags">
           ${tema ? `<span class="pill pill-verde">${t("exp." + tema)}</span>` : ""}
           ${a.oferta.dto ? `<span class="pill pill-solida">−${a.oferta.dto}%</span>` : ""}
@@ -178,24 +184,24 @@ window.Km0 = (function () {
         ${dist != null ? `<span class="ficha-dist">${IC.cercania} ${t("aTi").replace("{d}", dist.toFixed(dist < 10 ? 1 : 0))}</span>` : ""}
       </div>
       <div class="ficha-bd">
-        <span class="label">${t("tipos." + a.tipo)}${estrellas} · ${a.destino}</span>
-        <h3>${a.nombre}</h3>
-        <p class="ficha-claim">${L(a.claim)}</p>
+        <span class="label">${t("tipos." + a.tipo)}${estrellas} · ${E(a.destino)}</span>
+        <h3>${E(a.nombre)}</h3>
+        <p class="ficha-claim">${LE(a.claim)}</p>
         <div class="ficha-oferta">
-          <div class="ttl">${L(a.oferta.titulo)}</div>
-          <ul>${inc.map(i => `<li>${i}</li>`).join("")}</ul>
+          <div class="ttl">${LE(a.oferta.titulo)}</div>
+          <ul>${inc.map(i => `<li>${E(i)}</li>`).join("")}</ul>
         </div>
-        ${L(a.plazas) ? `<p class="ficha-dispo">${IC.escapadas}<span>${L(a.plazas)}</span></p>` : ""}
+        ${L(a.plazas) ? `<p class="ficha-dispo">${IC.escapadas}<span>${LE(a.plazas)}</span></p>` : ""}
       </div>
-      ${L(a.oferta.condiciones) ? `<p class="ficha-letra">${L(a.oferta.condiciones)}</p>` : ""}
+      ${L(a.oferta.condiciones) ? `<p class="ficha-letra">${LE(a.oferta.condiciones)}</p>` : ""}
       <div class="ficha-ft">
         <div class="ficha-price">
           ${precio ? `<span class="label" style="display:block;margin-bottom:3px;color:var(--suave)">${t("desde")}</span>
           <b>${precio} €</b>${a.oferta.precioOriginal ? `<s>${a.oferta.precioOriginal} €</s>` : ""}`
             : `<b class="consultar">${t("consultar")}</b>`}
-          ${L(a.oferta.unidad) ? `<span class="u">${L(a.oferta.unidad)}</span>` : ""}
+          ${L(a.oferta.unidad) ? `<span class="u">${LE(a.oferta.unidad)}</span>` : ""}
         </div>
-        ${a.web ? `<a class="btn btn-mar btn-sm" href="${a.web}" target="_blank" rel="noopener">${t("ver")}</a>` : ""}
+        ${a.web ? `<a class="btn btn-mar btn-sm" href="${E(a.web)}" target="_blank" rel="noopener">${t("ver")}</a>` : ""}
       </div>
     </article>`;
   }
@@ -473,12 +479,12 @@ window.Km0 = (function () {
       const d = ORIGEN ? hav(ORIGEN, a.coords) : null;
       const banda = d == null ? 2 : d <= 30 ? 0 : d <= 60 ? 1 : 2;
       // Sin web no hay a dónde ir: la fila se queda informativa.
-      const ap = a.web ? `a class="cercano" href="${a.web}" target="_blank" rel="noopener"`
+      const ap = a.web ? `a class="cercano" href="${E(a.web)}" target="_blank" rel="noopener"`
                        : `div class="cercano sin-enlace"`;
       const cierra = a.web ? "a" : "div";
       return `<${ap}>
         <span class="bolita" style="background:${d == null ? "#CFD6CC" : col[banda]}"></span>
-        <span><span class="n">${a.nombre}</span><br><span class="d">${t("tipos." + a.tipo)} · ${a.destino}</span></span>
+        <span><span class="n">${E(a.nombre)}</span><br><span class="d">${t("tipos." + a.tipo)} · ${E(a.destino)}</span></span>
         <span class="km">${d == null ? "—" : d.toFixed(d < 10 ? 1 : 0) + " km"}</span>
       </${cierra}>`;
     }).join("");
@@ -545,16 +551,16 @@ window.Km0 = (function () {
 
     ca.innerHTML = lista.map(a => {
       const f = fechaDia(a.dia);
-      return `<article class="acto ${a.tipo}">
+      return `<article class="acto ${E(a.tipo)}">
         <div>
-          <div class="h">${a.hora}</div>
+          <div class="h">${E(a.hora)}</div>
           <div class="body-sm" style="color:var(--suave)">${t("dias")[(f.getDay() + 6) % 7]} ${f.getDate()}</div>
         </div>
         <div>
-          <h3>${L(a.titulo)}</h3>
-          <p class="body-sm">${L(a.desc)}</p>
+          <h3>${LE(a.titulo)}</h3>
+          <p class="body-sm">${LE(a.desc)}</p>
           <div class="meta">
-            <span class="pill pill-verde">${a.lugar}</span>
+            <span class="pill pill-verde">${E(a.lugar)}</span>
             <span class="pill ${esGratis(a) ? "pill-arena" : "pill-terra"}">${esGratis(a) ? t("gratis") : L(a.precio)}</span>
           </div>
         </div>
@@ -801,7 +807,7 @@ window.Km0 = (function () {
     const sel = $("#origen-select");
     if (sel) {
       sel.innerHTML = `<option value="">${t("elige")}</option>` +
-        MUNIS.map(m => `<option value="${m[1]},${m[2]}">${m[0]}</option>`).join("");
+        MUNIS.map(m => `<option value="${E(m[1])},${E(m[2])}">${E(m[0])}</option>`).join("");
     }
 
     cifrasAutomaticas();
