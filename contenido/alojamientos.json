@@ -1007,5 +1007,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-villa-gadea-wellness",
+    "nombre": "SH Villa Gadea",
+    "tipo": "hotel",
+    "categoria": 5,
+    "destino": "Altea",
+    "provincia": "Alicante",
+    "coords": [
+      38.62016437179094,
+      -0.026923146383781762
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-villa-gadea-wellness.webp",
+    "claim": {
+      "es": "Una noche de bienestar frente al Mediterráneo",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Desconecta, cuídate y recarga energía en SH Villa Gadea.",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Villa Gadea.",
+          "Desayuno incluido.",
+          "Acceso al circuito spa para 2 personas."
+        ],
+        "va": []
+      },
+      "precioDesde": 265,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel. No disponibles a través de agencias, intermediarios ni portales de reserva online.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.\nReservas: reservas.villa.gadea@sh-hoteles.com · 966 817 100",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "bienestar"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
