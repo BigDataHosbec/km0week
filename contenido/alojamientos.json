@@ -404,7 +404,7 @@
         "es": "por noche",
         "va": "per nit"
       },
-      "dto": 0,
+      "dto": 10,
       "condiciones": {
         "es": "Trabajamos con precios dinámicos. Por lo que tanto los precios como las mínimas estancias pueden ir variando.",
         "va": ""
@@ -418,6 +418,7 @@
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": false
   }
 ]
