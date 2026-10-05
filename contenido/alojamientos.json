@@ -737,5 +737,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-villa-gadea",
+    "nombre": "SH Villa Gadea",
+    "tipo": "hotel",
+    "categoria": 5,
+    "destino": "Altea",
+    "provincia": "Alicante",
+    "coords": [
+      38.62012245953536,
+      -0.026944604055059527
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-villa-gadea.webp",
+    "claim": {
+      "es": "Una noche, una mesa y todo el Mediterráneo en PRODUCT-OUna noche, una mesa y todo el Mediterráneo en PRODUCT-O",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Alojamiento y Sabores Km 0 en PRODUCT-O Altea",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Villa Gadea.",
+          "Desayuno incluido.",
+          "Una comida o cena en PRODUCT-O para 2 personas."
+        ],
+        "va": []
+      },
+      "precioDesde": 265,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Precio por habitación y noche para 2 personas, incluyendo alojamiento, desayuno y una comida o cena en PRODUCT-O para 2 personas.\nOferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "gastronomia"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
