@@ -829,7 +829,8 @@ async function arrancar(){
    ========================================================================== */
 const TIPOS = {
   hotel: "Hotel", apartamentos: "Apartamentos", camping: "Camping",
-  rural: "Casa rural", hostal: "Hostal", balneario: "Balneario"
+  rural: "Casa rural", hostal: "Hostal", balneario: "Balneario",
+  complementaria: "Oferta complementaria"
 };
 const PROVINCIAS = ["Alicante", "València", "Castelló"];
 const EXPERIENCIAS = {
@@ -1212,7 +1213,8 @@ function editarAlojamiento(indice){
         campo("f-tipo", "Tipo", a.tipo,
               { opciones: Object.keys(TIPOS).map(k => [k, TIPOS[k]]) }) +
         campo("f-categoria", "Estrellas o llaves", a.categoria,
-              { tipo: "number", min: 0, paso: 1, pista: "0 si no aplica." }) +
+              { tipo: "number", min: 0, paso: 1,
+                pista: "0 si no aplica. En una oferta complementaria se ignora." }) +
       '</div>' +
       '<div class="fila fila-2">' +
         campo("f-destino", "Municipio", a.destino, { lista: "municipios" }) +

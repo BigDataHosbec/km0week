@@ -31,7 +31,10 @@ import contenido  # noqa: E402
 
 RAIZ = contenido.RAIZ
 
-TIPOS = {"hotel", "apartamentos", "camping", "rural", "hostal", "balneario"}
+TIPOS = {"hotel", "apartamentos", "camping", "rural", "hostal", "balneario",
+         # No es un alojamiento: es algo que se ofrece aparte (una cena,
+         # un circuito de aguas, una visita). No lleva estrellas.
+         "complementaria"}
 PROVINCIAS = {"Alicante", "València", "Castelló"}
 EXPERIENCIAS = {"alojamiento", "bienestar", "gastronomia", "cocteleria", "ocio"}
 

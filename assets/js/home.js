@@ -13,14 +13,14 @@ window.Km0 = (function () {
   let LANG = (() => { try { return localStorage.getItem("km0v4-lang") || "es"; } catch (e) { return "es"; } })();
   const T = {
     es: {
-      tipos: { hotel: "Hotel", apartamentos: "Apartamentos", camping: "Camping", rural: "Casa rural", hostal: "Hostal", balneario: "Balneario" },
+      tipos: { hotel: "Hotel", apartamentos: "Apartamentos", camping: "Camping", rural: "Casa rural", hostal: "Hostal", balneario: "Balneario", complementaria: "Oferta complementaria" },
       exp: {
         alojamiento: "Alojamiento", bienestar: "Bienestar", gastronomia: "Gastronomía",
         cocteleria: "Coctelería", ocio: "Ocio"
       },
       desde: "desde", consultar: "A consultar", ver: "Ver oferta", aTi: "a {d} km de casa", nuevo: "Nuevo",
       compl: "Oferta complementaria", tipoOferta: "Tipo de oferta",
-      alojamientos: "alojamientos", alojamiento: "alojamiento", destinos: "destinos", destino: "destino",
+      ofertas: "ofertas", oferta: "oferta", destinos: "destinos", destino: "destino",
       elige: "— elige tu municipio —", ubic: "No hemos podido ubicarte", loc: "Buscándote…",
       seis: "Seis planes para empezar", seisCerca: "Los seis que tienes más cerca",
       nota: "cambia si nos dices dónde vives", notaOk: "ordenados desde tu casa",
@@ -41,14 +41,14 @@ window.Km0 = (function () {
       enviado: "¡Recibido! Te escribimos en 48 h.", faltan: "Revisa los campos obligatorios."
     },
     va: {
-      tipos: { hotel: "Hotel", apartamentos: "Apartaments", camping: "Càmping", rural: "Casa rural", hostal: "Hostal", balneario: "Balneari" },
+      tipos: { hotel: "Hotel", apartamentos: "Apartaments", camping: "Càmping", rural: "Casa rural", hostal: "Hostal", balneario: "Balneari", complementaria: "Oferta complementària" },
       exp: {
         alojamiento: "Allotjament", bienestar: "Benestar", gastronomia: "Gastronomia",
         cocteleria: "Cocteleria", ocio: "Oci"
       },
       desde: "des de", consultar: "A consultar", ver: "Veure oferta", aTi: "a {d} km de casa", nuevo: "Nou",
       compl: "Oferta complementària", tipoOferta: "Tipus d'oferta",
-      alojamientos: "allotjaments", alojamiento: "allotjament", destinos: "destins", destino: "destí",
+      ofertas: "ofertes", oferta: "oferta", destinos: "destins", destino: "destí",
       elige: "— tria el teu municipi —", ubic: "No hem pogut ubicar-te", loc: "Buscant-te…",
       seis: "Sis plans per a començar", seisCerca: "Els sis que tens més a prop",
       nota: "canvia si ens dius on vius", notaOk: "ordenats des de ta casa",
@@ -168,7 +168,8 @@ window.Km0 = (function () {
     // Todas las líneas de «qué incluye», no las tres primeras: las veinte
     // ofertas tienen cuatro, así que recortar solo escondía la última.
     const inc = L(a.oferta.incluye) || [];
-    const estrellas = a.categoria ? " · " + "★".repeat(a.categoria) : "";
+    const estrellas = (a.categoria && a.tipo !== "complementaria")
+      ? " · " + "★".repeat(a.categoria) : "";
     // La píldora enseña lo que DISTINGUE a esta casa. Como «alojamiento» lo
     // llevan todas, solo sale cuando no hay nada más que contar.
     const tema = a.experiencias.find(e => e !== "alojamiento") || a.experiencias[0];
@@ -182,7 +183,8 @@ window.Km0 = (function () {
           ${tema ? `<span class="pill pill-verde">${t("exp." + tema)}</span>` : ""}
           ${a.oferta.dto ? `<span class="pill pill-solida">−${a.oferta.dto}%</span>` : ""}
           ${a.nuevo ? `<span class="pill pill-arena">${t("nuevo")}</span>` : ""}
-          ${a.complementaria ? `<span class="pill pill-compl">${t("compl")}</span>` : ""}
+          ${esCompl(a) && a.tipo !== "complementaria"
+            ? `<span class="pill pill-compl">${t("compl")}</span>` : ""}
         </div>
         ${dist != null ? `<span class="ficha-dist">${IC.cercania} ${t("aTi").replace("{d}", dist.toFixed(dist < 10 ? 1 : 0))}</span>` : ""}
       </div>
@@ -292,7 +294,7 @@ window.Km0 = (function () {
   /* -------------------- cifras calculadas desde los datos ---------------- */
   function cifrasAutomaticas() {
     const v = {
-      alojamientos: D.length,
+      ofertas: D.length,
       destinos: new Set(D.map(a => a.destino)).size,
       dias: totalDias(),
       actividades: (window.KM0.AGENDA || []).length
@@ -335,6 +337,10 @@ window.Km0 = (function () {
 
   /* ------------------------ listado con filtros -------------------------- */
   const FILTRO = { provincia: "", tipo: [], experiencia: [], oferta: [], orden: "destacados" };
+  // Una oferta es complementaria por dos caminos: la casilla del panel (un
+  // hotel que además vende algo suelto) o su propia tipología (algo que no
+  // es un alojamiento). Para el filtro valen los dos.
+  const esCompl = a => !!a.complementaria || a.tipo === "complementaria";
 
   function chipsDe(cont, valores, etiqueta, multiple) {
     const grupo = cont.dataset.grupo;
@@ -365,7 +371,7 @@ window.Km0 = (function () {
       (!FILTRO.experiencia.length || FILTRO.experiencia.some(e => a.experiencias.includes(e))) &&
       // «oferta» hoy tiene un único valor: complementaria. Sin marcar,
       // salen todas; marcado, solo las complementarias.
-      (!FILTRO.oferta.length || FILTRO.oferta.includes("complementaria") === !!a.complementaria)
+      (!FILTRO.oferta.length || FILTRO.oferta.includes("complementaria") === esCompl(a))
     );
   }
 
@@ -384,7 +390,7 @@ window.Km0 = (function () {
     box.hidden = !lista.length;
     const vacio = $("#lista-vacia"); if (vacio) vacio.hidden = !!lista.length;
     const tot = $("#f-total"); if (tot) tot.textContent = lista.length;
-    const tt = $("#f-total-txt"); if (tt) tt.textContent = t(lista.length === 1 ? "alojamiento" : "alojamientos");
+    const tt = $("#f-total-txt"); if (tt) tt.textContent = t(lista.length === 1 ? "oferta" : "ofertas");
     $$("[data-grupo]").forEach(g => {
       const grupo = g.dataset.grupo;
       $$("button", g).forEach(b => {
@@ -435,7 +441,7 @@ window.Km0 = (function () {
       v => D.filter(a => a.experiencias.includes(v)).length);
     const ofertas = grupoVisible("oferta",
       ["complementaria"],
-      v => D.filter(a => (v === "complementaria") === !!a.complementaria && a.complementaria).length);
+      v => D.filter(a => v === "complementaria" && esCompl(a)).length);
     if ($("#f-provincia")) chipsDe($("#f-provincia"), provs, v => v, false);
     if ($("#f-oferta")) chipsDe($("#f-oferta"), ofertas, () => t("compl"), true);
     if ($("#f-tipo")) chipsDe($("#f-tipo"), tipos, v => t("tipos." + v), true);

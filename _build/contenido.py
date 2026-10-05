@@ -83,7 +83,9 @@ def _dias_edicion():
 # también en el HTML al compilar, para que la página no llegue nunca diciendo
 # un número viejo mientras carga el JavaScript (ni se quede con él si falla).
 CIFRAS = {
-    "alojamientos": len(ALOJAMIENTOS),
+    # Cuenta ofertas, no casas: un mismo establecimiento puede tener
+    # varias, y algunas no son alojamiento (las complementarias).
+    "ofertas": len(ALOJAMIENTOS),
     "destinos": len(DESTINOS),
     "dias": _dias_edicion(),
     "actividades": len(AGENDA),

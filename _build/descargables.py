@@ -101,7 +101,8 @@ def es_finde(n):
 
 def tipo_es(t):
     return {"hotel": "Hotel", "apartamentos": "Apartamentos", "camping": "Camping",
-            "rural": "Casa rural", "hostal": "Hostal", "balneario": "Balneario"}.get(t, t)
+            "rural": "Casa rural", "hostal": "Hostal", "balneario": "Balneario",
+            "complementaria": "Oferta complementaria"}.get(t, t)
 
 
 def exp_es(e):
