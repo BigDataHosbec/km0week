@@ -312,12 +312,13 @@
     "experiencias": [
       "gastronomia"
     ],
-    "destacado": true,
-    "nuevo": true,
+    "destacado": false,
+    "nuevo": false,
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": false
   },
   {
     "id": "terra-natura-benidorm-invierno",
