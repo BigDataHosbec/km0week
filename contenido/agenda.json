@@ -36,5 +36,24 @@
       "es": "A consultar en web",
       "va": "Gratis"
     }
+  },
+  {
+    "dia": 2,
+    "hora": "19:00",
+    "lugar": "Benidorm",
+    "enlace": "https://www.instagram.com/dominicssportsbar/",
+    "titulo": {
+      "es": "Concierto Soul R&B en Domincs (Hotel Poseidon Resort)",
+      "va": ""
+    },
+    "desc": {
+      "es": "El 14 de Noviembre tendremos un conciertazo de Soul R&B en nuestro Sport bar Dominc´s, y queremos que gente de la zona lo disfrute al máximo. Por eso, solo para los locales, haremos 2x1 en bebidas durante 1 hora (De 19:00 a 20:00 horas)\n¡Ven con tus amigos y no te lo pierdas!",
+      "va": ""
+    },
+    "tipo": "musica",
+    "precio": {
+      "es": "20 €",
+      "va": "Gratis"
+    }
   }
 ]
