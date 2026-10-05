@@ -48,11 +48,12 @@
       "gastronomia"
     ],
     "destacado": true,
-    "nuevo": true,
+    "nuevo": false,
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": false
   },
   {
     "id": "zt-peniscola-plaza-suites-pasadia",
