@@ -204,8 +204,8 @@
     "experiencias": [
       "bienestar"
     ],
-    "destacado": true,
-    "nuevo": true,
+    "destacado": false,
+    "nuevo": false,
     "plazas": {
       "es": "",
       "va": ""
