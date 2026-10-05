@@ -424,5 +424,57 @@
       "va": ""
     },
     "complementaria": false
+  },
+  {
+    "id": "poseidon-palace-concierto-soul-rnb",
+    "nombre": "Poseidón Resort",
+    "tipo": "hotel",
+    "categoria": 3,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.54035405291694,
+      -0.12463664988777318
+    ],
+    "web": "https://www.instagram.com/dominicssportsbar/",
+    "imagen": "assets/img/foto/alo-poseidon-palace-concierto-soul-rnb.webp",
+    "claim": {
+      "es": "2x1 durante 1 hora ¡solo para gente de la zona!",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Concierto Soul R&B en Domincs (14/11)",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "El 14 de Noviembre tendremos un conciertazo de Soul R&B en nuestro Sport bar Dominc´s, y queremos que gente de la zona lo disfrute al máximo. Por eso, solo para los locales, haremos 2x1 en bebidas durante 1 hora (De 19:00 a 20:00 horas)"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por concierto",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Horarios del 2 x 1 sujetos a cambios. Consultar con el camarero/a las bebidas que entran el 2x1 (no todas incluidas)",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "cocteleria",
+      "ocio"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": true,
+    "plazas": {
+      "es": "Precio de la entrada al concierto: 20€ por persona",
+      "va": ""
+    }
   }
 ]
