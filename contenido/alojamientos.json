@@ -365,5 +365,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "hoteles-poseidon",
+    "nombre": "Hoteles Poseidón",
+    "tipo": "hotel",
+    "categoria": 3,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53923391154523,
+      -0.12480691704433189
+    ],
+    "web": "https://hotelesposeidon.com/",
+    "imagen": "assets/img/foto/alo-hoteles-poseidon.webp",
+    "claim": {
+      "es": "MÁS CERCA, MEJOR PRECIO",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "10% DE DESCUENTO EN HOTELES POSEIDON",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Introduce el código descuento: KM0POSEIDON y tendrás un 10% de descuento en todos los hoteles Poseidon. Para reservas hechas a través de nuestra web www.hotelesposeidon.com.",
+          "Introduce el código en \"Promoción\" y obtendrás el mejor precio para tu estancia."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Trabajamos con precios dinámicos. Por lo que tanto los precios como las mínimas estancias pueden ir variando.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
