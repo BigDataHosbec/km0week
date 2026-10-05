@@ -1,14 +1,36 @@
 {
-  "_ayuda": "Qué filtros se ven en la web. Lo edita el panel: /admin/ → Filtros. Una lista de valores vacía significa «automático»: salen todos los que haya en los alojamientos, en el orden de siempre. Con valores, salen solo esos y en ese orden. En los dos casos se descartan los que no tengan ningún alojamiento detrás, para no ofrecer un filtro que no lleva a ninguna parte. «mostrar: false» esconde el grupo entero.",
+  "_ayuda": "Qué filtros se ven en la web. Lo edita el panel: /admin/ → Filtros. Una lista de valores vacía significa «automático»: salen todos los que haya en los alojamientos, en el orden de siempre. Con valores, salen solo esos y en ese orden. En los dos casos se descartan los que no tengan ningún alojamiento detrás, para no ofrecer un filtro que no lleva a ninguna parte. «mostrar: false» esconde el grupo entero. El grupo «oferta» marca las ofertas complementarias: desaparece solo si no hay ninguna.",
   "listado": {
-    "provincia": { "mostrar": true, "valores": [] },
-    "tipo": { "mostrar": false, "valores": [] },
+    "provincia": {
+      "mostrar": true,
+      "valores": []
+    },
+    "tipo": {
+      "mostrar": false,
+      "valores": []
+    },
     "experiencia": {
       "mostrar": true,
-      "valores": ["alojamiento", "bienestar", "gastronomia", "cocteleria", "ocio"]
+      "valores": [
+        "alojamiento",
+        "bienestar",
+        "gastronomia",
+        "cocteleria",
+        "ocio"
+      ]
+    },
+    "oferta": {
+      "mostrar": true,
+      "valores": [
+        "complementaria"
+      ]
     }
   },
   "portada": {
-    "experiencias": { "mostrar": true, "valores": [], "maximo": 0 }
+    "experiencias": {
+      "mostrar": true,
+      "valores": [],
+      "maximo": 0
+    }
   }
 }

@@ -19,6 +19,7 @@ window.Km0 = (function () {
         cocteleria: "Coctelería", ocio: "Ocio"
       },
       desde: "desde", consultar: "A consultar", ver: "Ver oferta", aTi: "a {d} km de casa", nuevo: "Nuevo",
+      compl: "Oferta complementaria", tipoOferta: "Tipo de oferta",
       alojamientos: "alojamientos", alojamiento: "alojamiento", destinos: "destinos", destino: "destino",
       elige: "— elige tu municipio —", ubic: "No hemos podido ubicarte", loc: "Buscándote…",
       seis: "Seis planes para empezar", seisCerca: "Los seis que tienes más cerca",
@@ -46,6 +47,7 @@ window.Km0 = (function () {
         cocteleria: "Cocteleria", ocio: "Oci"
       },
       desde: "des de", consultar: "A consultar", ver: "Veure oferta", aTi: "a {d} km de casa", nuevo: "Nou",
+      compl: "Oferta complementària", tipoOferta: "Tipus d'oferta",
       alojamientos: "allotjaments", alojamiento: "allotjament", destinos: "destins", destino: "destí",
       elige: "— tria el teu municipi —", ubic: "No hem pogut ubicar-te", loc: "Buscant-te…",
       seis: "Sis plans per a començar", seisCerca: "Els sis que tens més a prop",
@@ -180,6 +182,7 @@ window.Km0 = (function () {
           ${tema ? `<span class="pill pill-verde">${t("exp." + tema)}</span>` : ""}
           ${a.oferta.dto ? `<span class="pill pill-solida">−${a.oferta.dto}%</span>` : ""}
           ${a.nuevo ? `<span class="pill pill-arena">${t("nuevo")}</span>` : ""}
+          ${a.complementaria ? `<span class="pill pill-compl">${t("compl")}</span>` : ""}
         </div>
         ${dist != null ? `<span class="ficha-dist">${IC.cercania} ${t("aTi").replace("{d}", dist.toFixed(dist < 10 ? 1 : 0))}</span>` : ""}
       </div>
@@ -331,7 +334,7 @@ window.Km0 = (function () {
      ========================================================================= */
 
   /* ------------------------ listado con filtros -------------------------- */
-  const FILTRO = { provincia: "", tipo: [], experiencia: [], orden: "destacados" };
+  const FILTRO = { provincia: "", tipo: [], experiencia: [], oferta: [], orden: "destacados" };
 
   function chipsDe(cont, valores, etiqueta, multiple) {
     const grupo = cont.dataset.grupo;
@@ -340,7 +343,7 @@ window.Km0 = (function () {
     const html = [];
     if (!multiple) html.push(`<button class="chip" type="button" data-v="" aria-pressed="${FILTRO[grupo] === ""}">${t("todo")}</button>`);
     valores.forEach(v => {
-      html.push(`<button class="chip${grupo === "experiencia" ? " verde" : grupo === "tipo" ? " terra" : ""}" type="button" data-v="${v}" aria-pressed="${marca(v)}">${etiqueta(v)}</button>`);
+      html.push(`<button class="chip${grupo === "experiencia" ? " verde" : grupo === "tipo" || grupo === "oferta" ? " terra" : ""}" type="button" data-v="${v}" aria-pressed="${marca(v)}">${etiqueta(v)}</button>`);
     });
     cont.insertAdjacentHTML("beforeend", html.join(""));
     $$("button", cont).forEach(b => b.addEventListener("click", () => {
@@ -359,7 +362,10 @@ window.Km0 = (function () {
     return D.filter(a =>
       (!FILTRO.provincia || a.provincia === FILTRO.provincia) &&
       (!FILTRO.tipo.length || FILTRO.tipo.includes(a.tipo)) &&
-      (!FILTRO.experiencia.length || FILTRO.experiencia.some(e => a.experiencias.includes(e)))
+      (!FILTRO.experiencia.length || FILTRO.experiencia.some(e => a.experiencias.includes(e))) &&
+      // «oferta» hoy tiene un único valor: complementaria. Sin marcar,
+      // salen todas; marcado, solo las complementarias.
+      (!FILTRO.oferta.length || FILTRO.oferta.includes("complementaria") === !!a.complementaria)
     );
   }
 
@@ -387,7 +393,7 @@ window.Km0 = (function () {
       });
     });
     // contador del botón «Filtros» de móvil
-    const act = (FILTRO.provincia ? 1 : 0) + FILTRO.tipo.length + FILTRO.experiencia.length;
+    const act = (FILTRO.provincia ? 1 : 0) + FILTRO.tipo.length + FILTRO.experiencia.length + FILTRO.oferta.length;
     const ba = $("#f-activos");
     if (ba) { ba.textContent = act; ba.hidden = !act; }
 
@@ -427,7 +433,11 @@ window.Km0 = (function () {
       [...new Set(D.flatMap(a => a.experiencias))]
         .sort((a, b) => t("exp." + a).localeCompare(t("exp." + b), "es")),
       v => D.filter(a => a.experiencias.includes(v)).length);
+    const ofertas = grupoVisible("oferta",
+      ["complementaria"],
+      v => D.filter(a => (v === "complementaria") === !!a.complementaria && a.complementaria).length);
     if ($("#f-provincia")) chipsDe($("#f-provincia"), provs, v => v, false);
+    if ($("#f-oferta")) chipsDe($("#f-oferta"), ofertas, () => t("compl"), true);
     if ($("#f-tipo")) chipsDe($("#f-tipo"), tipos, v => t("tipos." + v), true);
     if ($("#f-exp")) chipsDe($("#f-exp"), exps, v => t("exp." + v), true);
 
@@ -450,7 +460,7 @@ window.Km0 = (function () {
     }
 
     const limpiar = () => {
-      FILTRO.provincia = ""; FILTRO.tipo = []; FILTRO.experiencia = [];
+      FILTRO.provincia = ""; FILTRO.tipo = []; FILTRO.experiencia = []; FILTRO.oferta = [];
       FILTRO.orden = "destacados";
       if (sel) sel.value = "destacados";
       pintarListado();
@@ -465,6 +475,7 @@ window.Km0 = (function () {
     const lista = v => v.split(",").map(x => x.trim()).filter(Boolean);
     if (q.get("tipo")) FILTRO.tipo = lista(q.get("tipo"));
     if (q.get("experiencia")) FILTRO.experiencia = lista(q.get("experiencia"));
+    if (q.get("oferta")) FILTRO.oferta = lista(q.get("oferta"));
     pintarListado();
   }
 

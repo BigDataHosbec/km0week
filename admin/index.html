@@ -154,6 +154,7 @@ main{max-width:1180px;margin:0 auto;padding:clamp(1rem,3vw,1.8rem)}
   letter-spacing:.04em;padding:.1rem .4rem;border-radius:4px;margin-left:.4rem;vertical-align:2px}
 .etiq-des{background:var(--arena-p);color:#7A5A16}
 .etiq-nue{background:var(--verde-p);color:#3F5C29}
+.etiq-com{background:#E4E9E4;color:#394642}
 .etiq-mal{background:var(--terra-p);color:#8F3D18}
 .vacio{padding:2.2rem 1rem;text-align:center;color:var(--suave)}
 
@@ -1165,6 +1166,7 @@ function pintarAlojamientos(){
           '<span><span class="nom">' + escapar(a.nombre) +
             (a.destacado ? '<span class="etiq etiq-des">Portada</span>' : '') +
             (a.nuevo ? '<span class="etiq etiq-nue">Nuevo</span>' : '') +
+            (a.complementaria ? '<span class="etiq etiq-com">Complementaria</span>' : '') +
             (v.errores.length ? '<span class="etiq etiq-mal">' + v.errores.length + ' error' +
               (v.errores.length > 1 ? 'es' : '') + '</span>' : '') +
           '</span><span class="det">' + escapar(TIPOS[a.tipo] || a.tipo) + " · " +
@@ -1189,7 +1191,7 @@ function alojamientoEnBlanco(){
     oferta: { titulo: { es: "", va: "" }, incluye: { es: [], va: [] },
               precioDesde: 0, precioOriginal: 0, unidad: { es: "por noche", va: "per nit" },
               dto: 0, condiciones: { es: "", va: "" } },
-    experiencias: [], destacado: false, nuevo: true,
+    experiencias: [], destacado: false, nuevo: true, complementaria: false,
     plazas: { es: "", va: "" }
   };
 }
@@ -1289,7 +1291,13 @@ function editarAlojamiento(indice){
           (a.destacado ? " checked" : "") + '> Sale en la portada</label>' +
         '<label class="check"><input type="checkbox" id="f-nuevo"' +
           (a.nuevo ? " checked" : "") + '> Lleva la etiqueta «Nuevo»</label>' +
+        '<label class="check"><input type="checkbox" id="f-complementaria"' +
+          (a.complementaria ? " checked" : "") + '> Es una oferta complementaria</label>' +
       '</div>' +
+      '<p class="pista" style="margin:-.2rem 0 .6rem">Marca «complementaria» cuando ' +
+        'no sea una estancia con descuento sino algo que la casa ofrece aparte ' +
+        '(una cena, un circuito de aguas, una visita). Sale con su propia ' +
+        'etiqueta en la ficha y se puede filtrar en Experiencias.</p>' +
       campoBi("f-plazas", "Nota sobre disponibilidad", a.plazas,
               { pista: "Opcional. Ej.: «Últimas 3 habitaciones»." }) +
     '</fieldset>';
@@ -1357,6 +1365,7 @@ function recogerAlojamiento(base){
   a.experiencias = marcadas("exp");
   a.destacado = $("#f-destacado").checked;
   a.nuevo = $("#f-nuevo").checked;
+  a.complementaria = $("#f-complementaria").checked;
   a.plazas = bi("f-plazas");
   return a;
 }

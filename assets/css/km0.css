@@ -323,6 +323,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .pill-verde { background: var(--verde-p); color: var(--verde-d); }
 .pill-arena { background: var(--arena-p); color: #7E6039; }
 .pill-solida { background: var(--terra-h); color: #fff; }
+/* Oferta complementaria: no es un alojamiento con descuento, así que no
+   compite con la píldora de experiencia ni con la del descuento. */
+.pill-compl { background: var(--verde-tinta); color: #fff; }
 
 /* Icono en círculo, como en el manual */
 .ico {

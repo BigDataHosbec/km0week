@@ -128,6 +128,12 @@ def revisar_alojamientos():
             error(donde, "la web debe empezar por https:// (ahora: «%s»)" % web)
 
 
+        # Marca de «oferta complementaria»: no es un alojamiento con
+        # descuento, es algo que la casa ofrece aparte. Solo sí o no.
+        comp = a.get("complementaria")
+        if comp is not None and not isinstance(comp, bool):
+            error(donde, "«complementaria» debe ser verdadero o falso (ahora: «%s»)" % comp)
+
         for exp in a.get("experiencias") or []:
             if exp not in EXPERIENCIAS:
                 aviso(donde, "la experiencia «%s» no existe: no saldrá en ese filtro" % exp)
