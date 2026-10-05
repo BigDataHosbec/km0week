@@ -899,5 +899,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-colon",
+    "nombre": "SH Colón",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Valencia",
+    "provincia": "València",
+    "coords": [
+      39.46730835414067,
+      -0.3743110021629564
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-colon.webp",
+    "claim": {
+      "es": "Una noche de arte en el corazón de Valencia",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Valencia, una noche entre arte y cultura",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Colón.",
+          "Desayuno incluido.",
+          "Entradas para 2 personas al Centro de Arte Hortensia Herrero."
+        ],
+        "va": []
+      },
+      "precioDesde": 204,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel. No disponibles a través de agencias, intermediarios ni portales de reserva online.\nEl alojamiento está disponible únicamente del 13 al 26 de noviembre.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "ocio"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
