@@ -953,5 +953,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-villa-gadea-gastro",
+    "nombre": "SH Villa Gadea",
+    "tipo": "hotel",
+    "categoria": 5,
+    "destino": "Altea",
+    "provincia": "Alicante",
+    "coords": [
+      38.62016437179094,
+      -0.026966061726337292
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-villa-gadea-gastro.webp",
+    "claim": {
+      "es": "Una noche y un viaje a Oriente en SH Villa Gadea",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Descubre Oriente sin salir de Altea",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Villa Gadea.",
+          "Desayuno incluido.",
+          "Menú en Kitsume para 2 personas, nuestro restaurante de cocina fusión asiática."
+        ],
+        "va": []
+      },
+      "precioDesde": 265,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel. No disponibles a través de agencias, intermediarios ni portales de reserva online.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
