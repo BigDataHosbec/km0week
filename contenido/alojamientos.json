@@ -257,12 +257,13 @@
     "experiencias": [
       "gastronomia"
     ],
-    "destacado": true,
-    "nuevo": true,
+    "destacado": false,
+    "nuevo": false,
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": false
   },
   {
     "id": "hotel-meridional-gastro-2",
