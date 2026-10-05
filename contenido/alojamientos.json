@@ -476,5 +476,56 @@
       "es": "Precio de la entrada al concierto: 20€ por persona",
       "va": ""
     }
+  },
+  {
+    "id": "port-benidorm-desayuno",
+    "nombre": "Port Benidorm",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53401069351906,
+      -0.10651601123568202
+    ],
+    "web": "https://landings.porthotels.es/landings/desayuno-sabrosamente-mediterraneo-pb?_gl=1*1ww3x4l*_gcl_aw*R0NMLjE3OTExODgyNTQuQ2p3S0NBandsWTNXQmhBTkVpd0Fwc05yTFgxRE4zQlprM0lMNENzeWc5X0hWalN4d2w3RlVyOWFkaHQ4enAycHdfVk5oMnBJMUxyZmZ4b0NoMFVRQXZEX0J3RQ..*_gcl_au*OTAyNDUxNTU2LjE3OTA3Njk2NjY.*_ga*MjAwMzU5OTk4MS4xNzkwNzY5NjYz*_ga_2K12V1V4XH*czE3OTExODMzODYkbzIkZzEkdDE3OTExODgyNjkkajUkbDAkaDE1MzgzMzEwMjA.",
+    "imagen": "assets/img/foto/alo-port-benidorm-desayuno.webp",
+    "claim": {
+      "es": "Sabrosamente Mediterráneo",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Desayuno Mediterráneo by Fran Segura",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Descubre la creatividad de Fran Segura, uno de los mejores pasteleros de Europa, en una experiencia pensada para disfrutar de los sabores que más gustan"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "",
+        "va": ""
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "gastronomia"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": true,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
