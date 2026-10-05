@@ -845,5 +845,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-suite-palace",
+    "nombre": "SH Suite Palace",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Valencia",
+    "provincia": "València",
+    "coords": [
+      39.47334371240588,
+      -0.37495247767285844
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-suite-palace.webp",
+    "claim": {
+      "es": "Una noche de arte en el corazón de Valencia",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Valencia cultural: alojamiento + cultura",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Suite Palace.",
+          "Desayuno incluido.",
+          "Entradas para 2 personas al Centro de Arte Hortensia Herrero."
+        ],
+        "va": []
+      },
+      "precioDesde": 214,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel. No disponibles a través de agencias, intermediarios ni portales de reserva online.\nEl alojamiento está disponible únicamente del 13 al 26 de noviembre.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "ocio"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
