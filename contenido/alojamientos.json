@@ -99,8 +99,8 @@
       "bienestar",
       "gastronomia"
     ],
-    "destacado": true,
-    "nuevo": true,
+    "destacado": false,
+    "nuevo": false,
     "plazas": {
       "es": "Contacto y reservas: 964 010 724 / minospps@zthotels.com",
       "va": ""
