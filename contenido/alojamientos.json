@@ -1169,5 +1169,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "asa-hotel-la-marina-by-sh-hoteles",
+    "nombre": "ASA Hotel La Marina by SH Hoteles",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Ondara",
+    "provincia": "Alicante",
+    "coords": [
+      38.81609385025348,
+      0.02052480944780851
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-asa-hotel-la-marina-by-sh-hoteles.webp",
+    "claim": {
+      "es": "Pedalea la Costa Blanca",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "La Marina sobre dos ruedas",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en ASA La Marina.",
+          "Alquiler de bicicleta durante 1 día para 2 personas.",
+          "Una forma diferente y activa de descubrir el entorno de la Costa Blanca."
+        ],
+        "va": []
+      },
+      "precioDesde": 115,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel. No disponibles a través de agencias, intermediarios ni portales de reserva online.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.\n\nReservas: reservas.hotellamarina@asahoteles.com · 965 479 333",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "ocio"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
