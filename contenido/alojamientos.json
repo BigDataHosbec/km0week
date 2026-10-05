@@ -527,5 +527,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "port-benidorm-cocteleria",
+    "nombre": "Port Benidorm",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53401489451448,
+      -0.10651959155508124
+    ],
+    "web": "https://www.porthotels.es/la-terrasse.html",
+    "imagen": "assets/img/foto/alo-port-benidorm-cocteleria.webp",
+    "claim": {
+      "es": "Déjate seducir por al coctelería de La Terrasse",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Cócteleria de autor a la venta en La Terrasse",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Creaciones exclusivas elaboradas con destilados seleccionados, ingredientes de calidad y combinaciones pensadas para quienes buscan una experiencia más sofisticada"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "cocteleria"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
