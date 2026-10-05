@@ -320,7 +320,7 @@
   {
     "id": "terra-natura-benidorm-invierno",
     "nombre": "Terra Natura Benidorm",
-    "tipo": "hotel",
+    "tipo": "complementaria",
     "categoria": 4,
     "destino": "Benidorm",
     "provincia": "Alicante",
@@ -366,7 +366,8 @@
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": false
   },
   {
     "id": "hoteles-poseidon",
