@@ -578,5 +578,57 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "magic-villa-espana",
+    "nombre": "Magic Villa España",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53706691994109,
+      -0.13260151252728067
+    ],
+    "web": "https://www.magichotelgroup.com/es/landing/kmceroweek",
+    "imagen": "assets/img/foto/alo-magic-villa-espana.webp",
+    "claim": {
+      "es": "10% de descuento",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Descuento en alojamiento en Villa España",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "10% de descuento para estancias entre el 13/11/26 hasta el 31/03/27.",
+          "Válido para todas las tipologías en régimen Media Pensión y Alojamiento y Desayuno."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "Se debe acceder indicando el promocode KMCEROWEEK. El resto de condiciones se indican en nuestra web.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
