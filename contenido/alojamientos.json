@@ -573,7 +573,7 @@
     ],
     "destacado": false,
     "nuevo": true,
-    "complementaria": false,
+    "complementaria": true,
     "plazas": {
       "es": "",
       "va": ""
