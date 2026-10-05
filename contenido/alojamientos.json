@@ -1276,5 +1276,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "villa-del-mar",
+    "nombre": "Villa del Mar",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53727792940102,
+      -0.13854345215527306
+    ],
+    "web": "https://www.hotelvilladelmar.com.es/ofertas/kmceroweek/",
+    "imagen": "assets/img/foto/alo-villa-del-mar.webp",
+    "claim": {
+      "es": "Tu escapada frente al Mediterráneo con un 10% extra",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Tu escapada frente al Mediterráneo con un 10% extra",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "10% de descuento adicional sobre la estancia."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "Valido para regímenes de Pensión Completa, Todo Incluido y Ultra todo incluido.\n10% de descuento adicional sobre la estancia reservada.\n1er niño gratis en régimen de Todo Incluido y Ultra Todo Incluido.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
