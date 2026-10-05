@@ -208,7 +208,8 @@
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": true
   },
   {
     "id": "hotel-meridional-gastro-1",
