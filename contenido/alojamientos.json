@@ -1223,5 +1223,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "villa-venecia-hotel-boutique",
+    "nombre": "Villa Venecia Hotel Boutique",
+    "tipo": "hotel",
+    "categoria": 5,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.534003793818506,
+      -0.13062791034296403
+    ],
+    "web": "https://www.hotelvillavenecia.com/ofertas/kmceroweek/",
+    "imagen": "assets/img/foto/alo-villa-venecia-hotel-boutique.webp",
+    "claim": {
+      "es": "Tu escapada con vistas al mar Mediterráneo con un descuento especial",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "10% de descuento",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Alojamiento en habitación Supreme Sea View en el balcón del Mediterráneo. Elige entre Alojamiento y Desayuno o Media Pensión para poder disfrutar de nuestro Restaurante Gourmet con vistar panorámicas al mar. Además, solo por alojarse tendrás 45mint de acceso a nuestro spa, donde relajarte y reconectar."
+        ],
+        "va": []
+      },
+      "precioDesde": 108,
+      "precioOriginal": 120,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "10% de descuento en habitacion Supreme Standard Sea View en regimen de Alojamiento y Desayuno o Media Pensión para estancias entre el 15/11/2026 y el 05/12/2026.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
