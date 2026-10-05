@@ -791,5 +791,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-ingles",
+    "nombre": "SH Inglés",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Valencia",
+    "provincia": "València",
+    "coords": [
+      39.472987447106696,
+      -0.37454944582263494
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-ingles.webp",
+    "claim": {
+      "es": "Una noche de arte en el corazón de Valencia",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Alojamiento y Arte en Valencia",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Inglés.",
+          "Desayuno incluido.",
+          "Entradas para 2 personas al Centro de Arte Hortensia Herrero."
+        ],
+        "va": []
+      },
+      "precioDesde": 234,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel.\nEl alojamiento está disponible únicamente del 13 al 26 de noviembre.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "ocio"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
