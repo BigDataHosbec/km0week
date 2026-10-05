@@ -1061,5 +1061,59 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "sh-javea-wellness",
+    "nombre": "SH Jávea",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Jávea",
+    "provincia": "Alicante",
+    "coords": [
+      38.78984329691686,
+      0.17496449410394763
+    ],
+    "web": "https://www.sh-hoteles.com/es/landing-pro/km0week-shhoteles/",
+    "imagen": "assets/img/foto/alo-sh-javea-wellness.webp",
+    "claim": {
+      "es": "Una noche de bienestar frente al Mediterráneo",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Haz una pausa, desconecta y disfruta de Jávea.",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "1 noche de alojamiento en SH Jávea.",
+          "Desayuno incluido.",
+          "Acceso al circuito spa para 2 personas"
+        ],
+        "va": []
+      },
+      "precioDesde": 200,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Oferta válida únicamente durante la KM0 Week de HOSBEC.\nLas reservas deberán realizarse exclusivamente contactando directamente con el hotel. No disponibles a través de agencias, intermediarios ni portales de reserva online.\nOferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.\nAl realizar la reserva, indica que deseas acogerte a la oferta KM0 Week para que el hotel pueda aplicarla.\nOferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales.\nLos precios incluyen IVA.\n\nReservas: reservas.javea@sh-hoteles.com · 960 059 406",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "bienestar"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
