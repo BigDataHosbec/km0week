@@ -154,11 +154,12 @@
       "bienestar"
     ],
     "destacado": true,
-    "nuevo": true,
+    "nuevo": false,
     "plazas": {
       "es": "",
       "va": ""
-    }
+    },
+    "complementaria": false
   },
   {
     "id": "hotel-meridional-wellness",
