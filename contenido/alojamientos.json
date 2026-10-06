@@ -1327,5 +1327,60 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "estimar-marina-farnals",
+    "nombre": "Estimar Marina Farnals",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Pobla de Farnals",
+    "provincia": "València",
+    "coords": [
+      39.56642756416936,
+      -0.28233047254592486
+    ],
+    "web": "https://estimarhotels.com/valencia/estimar-marina-farnals/escapada-romantica/",
+    "imagen": "assets/img/foto/alo-estimar-marina-farnals.webp",
+    "claim": {
+      "es": "Una noche para dos, con todo resuelto.",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Escapada romántica frente al mar, a 15 minutos de Valencia",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Noche en habitación",
+          "Un detalle de vino blanco para brindar en la habitación",
+          "Cena con música en vivo en Luz de LÚA",
+          "Desayuno en la habitación"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
