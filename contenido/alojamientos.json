@@ -1382,5 +1382,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "allon-mediterrania",
+    "nombre": "Allon Mediterrània",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Villajoyosa",
+    "provincia": "Alicante",
+    "coords": [
+      38.50610630904393,
+      -0.22872268725406514
+    ],
+    "web": "https://www.hotelallon.com/",
+    "imagen": "assets/img/foto/alo-allon-mediterrania.webp",
+    "claim": {
+      "es": "10% DE DESCUENTO HOTEL ALLON MEDITERRÀNIA",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "10% DE DESCUENTO HOTEL ALLON MEDITERRÀNIA",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "10% de descuento en tu estancia"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "Introduce el código descuento: KM0ALLON y tendrás un 10% de descuento en tu estancia (únicamente para reservas hechas en nuestra web www.hotelallon.com)",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "Precio a consultar por noche (en función de los días y estancias mínimas)",
+      "va": ""
+    }
   }
 ]
