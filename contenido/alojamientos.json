@@ -1339,7 +1339,7 @@
       39.56642756416936,
       -0.28233047254592486
     ],
-    "web": "https://estimarhotels.com/valencia/estimar-marina-farnals/escapada-romantica/",
+    "web": "https://estimarhotels.com/valencia/estimar-marina-farnals/escapada-romantica/?utm_medium=referral&utm_source=KM0HOSBEC&utm_campaign=campaña&utm_content=estimarmarinafarnals",
     "imagen": "assets/img/foto/alo-estimar-marina-farnals.webp",
     "claim": {
       "es": "Una noche para dos, con todo resuelto.",
@@ -1347,15 +1347,15 @@
     },
     "oferta": {
       "titulo": {
-        "es": "Escapada romántica frente al mar, a 15 minutos de Valencia",
+        "es": "Escapada romántica frente al mar, a 15 minutos del centro Valencia",
         "va": ""
       },
       "incluye": {
         "es": [
-          "Noche en habitación",
+          "Noche en habitación seleccionada",
           "Un detalle de vino blanco para brindar en la habitación",
-          "Cena con música en vivo en Luz de LÚA",
-          "Desayuno en la habitación"
+          "Cena con música en vivo en Luz de LÚA Bar & Restaurant",
+          "Desayuno en la habitación o opción buffet en el restaurante."
         ],
         "va": []
       },
