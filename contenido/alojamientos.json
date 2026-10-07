@@ -1484,5 +1484,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "primavera-park-hotel",
+    "nombre": "Primavera Park",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53950391240602,
+      -0.12768021592138756
+    ],
+    "web": "https://www.primaverapark.com/",
+    "imagen": "assets/img/foto/alo-primavera-park-hotel.webp",
+    "claim": {
+      "es": "Esta KM 0 Week, Benidorm se disfruta sin prisas.",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "20% de descuento en la segunda noche",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Disfruta de un 20% de descuento en tu segunda noche con nosotros"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 20,
+      "condiciones": {
+        "es": "20% sobre precio web en tu segunda noche. Descuentos no acumulables. Descuento válido en reservas hechas a través de email: reservas@primaverahotels.com o teléfono del hotel 965 860 022",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
