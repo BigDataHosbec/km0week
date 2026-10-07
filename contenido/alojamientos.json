@@ -1433,5 +1433,56 @@
       "es": "Precio a consultar por noche (en función de los días y estancias mínimas)",
       "va": ""
     }
+  },
+  {
+    "id": "primavera-park-exotico",
+    "nombre": "Primavera Park",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53952771622586,
+      -0.1277169141952295
+    ],
+    "web": "https://exotico.primaverapark.com/",
+    "imagen": "assets/img/foto/alo-primavera-park-exotico.webp",
+    "claim": {
+      "es": "10% de descuento en Restaurante Exótico",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "10% de descuento en Restaurante Exótico",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Disfruta de un 10% de descuento en tu próxima cena con KM 0 Week en Restaurante Exótico."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por cena",
+        "va": "per sopar"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": true,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
