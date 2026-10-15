@@ -624,7 +624,7 @@
       "alojamiento"
     ],
     "destacado": true,
-    "nuevo": true,
+    "nuevo": false,
     "complementaria": false,
     "plazas": {
       "es": "",
