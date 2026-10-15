@@ -309,6 +309,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
       <ol class="pasos">
         <li>En GitHub: foto de perfil → <b>Settings</b> → abajo del todo <b>Developer settings</b>.</li>
         <li><b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li>
+        <li>En <b>Expiration</b> elige <b>No expiration</b>. Si pones una fecha,
+            el día que llegue el panel deja de entrar sin avisar.</li>
         <li>En <b>Repository access</b>, marca <b>Only select repositories</b> y elige
             <code>BigDataHosbec/km0week</code>.</li>
         <li>En <b>Repository permissions</b>, pon <b>Contents</b> en <i>Read and write</i>.
@@ -655,6 +657,19 @@ async function mirarPublicacion(){
   } catch (e) {
     // La clave del panel solo necesita permiso de contenido. Si no llega a ver
     // las publicaciones, el panel funciona igual: se quita el indicador.
+    if (e.estado === 401) {
+      // La clave ha caducado con el panel abierto. Antes esto se tragaba como
+      // «sin conexión» y lo siguiente que pasaba era perder lo que estuvieras
+      // escribiendo al intentar guardar.
+      clearInterval(vigilando);
+      pintarEstado("mal", "clave caducada", "Entra otra vez con una clave nueva");
+      avisar("mal", "<span><b>La clave ha dejado de valer</b>" +
+        "No guardes nada todavía: no se grabaría. Copia lo que tengas a medias, " +
+        "sal y vuelve a entrar con una clave nueva. " +
+        "<button type='button' class='b-2 b-min' onclick=\"localStorage.removeItem('km0.clave');location.reload()\">" +
+        "Salir y entrar de nuevo</button></span>");
+      return null;
+    }
     if (e.estado === 403 || e.estado === 404) {
       sinEstado = true;
       $("#estado").classList.add("oculto");
@@ -801,9 +816,37 @@ async function arrancar(){
   try {
     await Promise.all(Object.keys(RUTAS).map(leerArchivo).concat([leerTraducciones()]));
   } catch (e) {
-    $("#cargando").innerHTML =
-      "<div class='nota nota-mal'><span><b>No se ha podido cargar el contenido</b>" +
-      escapar(e.message) + "</span></div>";
+    // Lo más habitual con diferencia: la clave ha caducado o la han borrado.
+    // GitHub contesta «Bad credentials», que no le dice nada a nadie.
+    const caducada = e.estado === 401 || e.estado === 403 ||
+                     /bad credentials/i.test(e.message || "");
+    // El hueco de «Cargando…» viene centrado; un aviso con instrucciones no.
+    $("#cargando").style.textAlign = "left";
+    $("#cargando").innerHTML = caducada
+      ? "<div class='nota nota-mal'><span><b>La clave ha dejado de valer</b>" +
+        "Ha caducado o alguien la ha borrado. No se ha perdido nada: el " +
+        "contenido está a salvo, solo hace falta una clave nueva.<br><br>" +
+        "<button type='button' class='b-1' id='clave-nueva'>Entrar con otra clave</button>" +
+        "</span></div>" +
+        "<div class='nota nota-inf'><span><b>Cómo se saca una</b>" +
+        "<ol class='pasos' style='margin-top:.4rem'>" +
+          "<li>En GitHub: foto de perfil → Settings → abajo del todo, " +
+            "Developer settings.</li>" +
+          "<li>Personal access tokens → Fine-grained tokens → Generate new token.</li>" +
+          "<li>En Expiration, elige «No expiration».</li>" +
+          "<li>En Repository access, marca solo <code>BigDataHosbec/km0week</code>.</li>" +
+          "<li>En Repository permissions: «Contents» en Read and write, y " +
+            "«Actions» en Read-only.</li>" +
+        "</ol></span></div>"
+      : "<div class='nota nota-mal'><span><b>No se ha podido cargar el contenido</b>" +
+        escapar(e.message) + "<br><br>" +
+        "<button type='button' class='b-2' onclick='location.reload()'>Reintentar</button>" +
+        "</span></div>";
+    const boton = $("#clave-nueva");
+    if (boton) boton.addEventListener("click", () => {
+      localStorage.removeItem("km0.clave");
+      location.reload();
+    });
     return;
   }
   $("#cargando").classList.add("oculto");
