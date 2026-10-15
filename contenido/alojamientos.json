@@ -580,8 +580,8 @@
     }
   },
   {
-    "id": "magic-villa-espana",
-    "nombre": "Magic Villa España",
+    "id": "villa-espana",
+    "nombre": "Villa España",
     "tipo": "hotel",
     "categoria": 4,
     "destino": "Benidorm",
