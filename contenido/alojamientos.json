@@ -1535,5 +1535,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "huerto-del-cura",
+    "nombre": "Huerto del Cura",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Elche",
+    "provincia": "Alicante",
+    "coords": [
+      38.263768504733214,
+      -0.6922393628793727
+    ],
+    "web": "https://www.hotelhuertodelcura.com/",
+    "imagen": "assets/img/foto/alo-huerto-del-cura.webp",
+    "claim": {
+      "es": "Finalista a Mejor Desayuno de Hotel de 4 estrellas · Madrid Fusión 2026",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Desayuno en Hotel Huerto del Cura by Fran Segura",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Empieza el día con una experiencia única donde la alta pastelería de Fran Segura se une al producto de kilómetro cero y a la esencia de Huerto del Cura. Creatividad, sabor y productos de proximidad para transformar tu desayuno en un momento extraordinario."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por desayuno",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "gastronomia"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
