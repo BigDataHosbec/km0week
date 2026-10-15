@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://bigdatahosbec.github.io/km0week/sitemap.xml

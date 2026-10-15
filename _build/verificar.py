@@ -25,6 +25,7 @@ import os
 import re
 import sys
 import unicodedata
+import urllib.parse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import contenido  # noqa: E402
@@ -210,10 +211,29 @@ def revisar_configuracion():
 
     bilingue(donde, "fechasTexto", c.get("fechasTexto"), obligatorio_va=True)
 
-    if not (c.get("dominio") or "").startswith("https://"):
+    # El dominio no es solo cosmético: de él sale el archivo CNAME que le dice
+    # a GitHub Pages en qué dirección tiene que responder la web. Un valor
+    # mal escrito aquí deja la web inaccesible en km0week.com, así que se
+    # comprueba a conciencia.
+    dom = (c.get("dominio") or "").strip()
+    if not dom.startswith("https://"):
         error(donde, "el dominio debe empezar por https://")
-    if c.get("dominio", "").endswith("/"):
+    elif dom.endswith("/"):
         error(donde, "el dominio no debe acabar en barra")
+    else:
+        trozos = urllib.parse.urlparse(dom)
+        host = trozos.hostname or ""
+        if not host:
+            error(donde, "el dominio no tiene dirección: se espera algo como "
+                         "https://km0week.com")
+        elif "." not in host:
+            error(donde, "«%s» no parece una dirección de internet" % host)
+        elif trozos.path or trozos.query or trozos.fragment:
+            error(donde, "el dominio es solo la dirección, sin nada detrás: "
+                         "escribe «https://%s» y quita el resto" % host)
+        elif c.get("dominio") != dom:
+            error(donde, "el dominio tiene espacios sobrantes al principio o "
+                         "al final")
     if "@" not in (c.get("emailContacto") or ""):
         error(donde, "el correo de contacto no parece un correo")
     if not (c.get("endpointFormularios") or "").endswith("/exec"):

@@ -14,12 +14,7 @@
   "dominio": "https://km0week.com",
   "gtm": "GTM-W8M2BK4F",
   "_ayuda_gtm": "Identificador de Google Tag Manager. Si lo dejas vacío no se carga ninguna medición y desaparece el aviso de cookies. Nada se carga hasta que el visitante acepta.",
-  "cifras": {
-    "alojamientos": 20,
-    "destinos": 17,
-    "experiencias": 14,
-    "dtoMedio": 39
-  },
+  "_ayuda_cifras": "Las cifras de la portada (alojamientos, destinos, plazas y actividades) no se escriben: se cuentan solas a partir de la lista de alojamientos y de la agenda, tanto al compilar como en el navegador. Si no cuadran, lo que hay que corregir son los alojamientos o la agenda, no este archivo.",
   "paginasOcultas": [
     "descargas.html",
     "prensa.html"

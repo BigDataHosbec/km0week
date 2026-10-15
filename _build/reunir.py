@@ -81,7 +81,16 @@ def main():
     print("Se publican %d archivos (%.1f MB), %d páginas."
           % (copiados, peso / 1048576.0, paginas))
 
-    faltan = [f for f in ("index.html", "sitemap.xml", "robots.txt")
+    # El CNAME es lo que le dice a GitHub Pages que la web va en km0week.com.
+    # Si se publicara sin él, la web seguiría funcionando —en la dirección de
+    # github.io— y el dominio propio se perdería sin que saltara ningún error.
+    # Por eso se exige igual que el index: mejor no publicar que publicar en
+    # la dirección equivocada.
+    imprescindibles = ["index.html", "sitemap.xml", "robots.txt"]
+    if not contenido.DOMINIO.split("//", 1)[-1].split("/", 1)[0].endswith("github.io"):
+        imprescindibles.append("CNAME")
+
+    faltan = [f for f in imprescindibles
               if not os.path.isfile(os.path.join(SITIO, f))]
     if faltan:
         print("FALTA: " + ", ".join(faltan))
