@@ -1586,5 +1586,57 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "huerto-del-cura-gastro",
+    "nombre": "Huerto del Cura",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Elche",
+    "provincia": "Alicante",
+    "coords": [
+      38.263792349375066,
+      -0.6922227980577073
+    ],
+    "web": "https://www.hotelhuertodelcura.com/",
+    "imagen": "assets/img/foto/alo-huerto-del-cura-gastro.webp",
+    "claim": {
+      "es": "Tradición y vanguardia",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Restaurante Els Capellans en Hotel Huerto del Cura",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Descubre la cultura gastronómica del Mediterráneo en nuestro Restaurante Els Capellans, donde la cocina tradicional se fusiona con propuestas de vanguardia de la mano de nuestro chef Jesús Gómez.",
+          "Promoción especial: 10 % de descuento."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por persona",
+        "va": ""
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "Para disfrutar de esta promoción, añade «Campaña Km0Week» en el apartado de observaciones al realizar tu reserva",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": true,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
