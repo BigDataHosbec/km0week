@@ -1638,5 +1638,57 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "hotel-bristol",
+    "nombre": "Hotel Bristol",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Benidorm",
+    "provincia": "Alicante",
+    "coords": [
+      38.53830255343496,
+      -0.1284167418143732
+    ],
+    "web": "https://www.hotelbristolbenidorm.com/",
+    "imagen": "assets/img/foto/alo-hotel-bristol.webp",
+    "claim": {
+      "es": "10% de descuento",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "10% de descuento",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "10% de descuento para estancias entre el 13/11/26 hasta el 31/03/27.",
+          "Descuento válido para cualquier tipología de habitación y régimen"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "Introduce el código descuento: KM0BRISTOL durante el proceso de reserva en nuestra página web y obtendrás un 10% de descuento (no acumulable a otras ofertas)",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
