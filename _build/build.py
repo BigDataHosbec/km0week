@@ -239,7 +239,14 @@ def scripts(p):
 
 
 def cabecera(p):
-    """Cabecera ilustrada de página interior."""
+    """Cabecera de página interior.
+
+    Con foto: la ilustrada de siempre, a sangre y con el texto encima.
+    Sin foto (`C(None, ...)`): la compacta, en texto sobre fondo arena. Lleva lo
+    mismo —miga de pan, antetítulo, h1 y entradilla—, ocupa la mitad y deja que
+    el contenido empiece arriba. Es el tratamiento por defecto mientras las
+    cabeceras sigan siendo ilustraciones de relleno.
+    """
     if not p.get("cab"):
         return ""
     foto = p["cab"]["foto"]
@@ -248,6 +255,16 @@ def cabecera(p):
     lede = p["cab"].get("lede")
     lede_html = ('\n      <p class="lede" data-va="%s">%s</p>' % (lede[1], lede[0])) if lede else ""
     migas = '<a href="index.html" data-va="Inici">Inicio</a> <i>/</i> <span data-va="%s">%s</span>' % (tit_va, tit_es)
+    if not foto:
+        return f"""
+<section class="cabecera plana">
+  <div class="wrap cabecera-in">
+    <nav class="migas" aria-label="Ruta">{migas}</nav>
+    <span class="label label-mar" data-va="{ante_va}">{ante_es}</span>
+    <h1 class="d1" data-va="{tit_va}">{tit_es}</h1>{lede_html}
+  </div>
+</section>
+"""
     return f"""
 <section class="cabecera">
   <img class="cabecera-foto" src="assets/img/foto/{foto}.webp" alt="" width="2000" height="900" fetchpriority="high">
@@ -350,7 +367,7 @@ PAGINAS = [
          titulo="La iniciativa · HOSBEC Km0 Week",
          desc="Qué es la Km0 Week, por qué la hacemos, quién está detrás y qué compromisos asume cada alojamiento adherido.",
          og="assets/img/foto/cab-iniciativa.webp",
-         cab=C("cab-iniciativa", ("La iniciativa", "La iniciativa"),
+         cab=C(None, ("La iniciativa", "La iniciativa"),
                ("Tres fines de semana para mirar de otra forma lo que tenemos al lado",
                 "Tres caps de setmana per a mirar d'una altra manera el que tenim al costat"),
                ("Km0 Week nace de una idea simple: quien vive en un destino turístico casi nunca lo disfruta como tal. Del 13 al 29 de noviembre le damos la vuelta.",
@@ -360,7 +377,7 @@ PAGINAS = [
          titulo="Experiencias y ofertas · HOSBEC Km0 Week",
          desc="Todas las experiencias y alojamientos adheridos a la Km0 Week con su oferta para residentes. Filtra por provincia, tipo, experiencia y precio.",
          og="assets/img/foto/cab-alojamientos.webp",
-         cab=C("cab-alojamientos", ("Experiencias", "Experiències"),
+         cab=C(None, ("Experiencias", "Experiències"),
                ("Todas las ofertas, en un sitio", "Totes les ofertes, en un lloc"),
                ("Cada alojamiento pone su propuesta y sus condiciones. Reservas directamente con él: aquí no hay comisiones ni intermediarios.",
                 "Cada allotjament posa la seua proposta i les seues condicions. Reserves directament amb ell: ací no hi ha comissions ni intermediaris."))),
@@ -369,7 +386,7 @@ PAGINAS = [
          titulo="Mapa y cercanía · HOSBEC Km0 Week",
          desc="Dinos dónde vives y te decimos qué alojamientos de la Km0 Week tienes a menos de media hora, una hora y dos horas de casa.",
          og="assets/img/foto/cab-mapa.webp",
-         cab=C("cab-mapa", ("Cerca de ti", "Prop de tu"),
+         cab=C(None, ("Cerca de ti", "Prop de tu"),
                ("¿Cuánto es «cerca» para ti?", "Quant és «a prop» per a tu?"),
                ("Elige tu municipio y el mapa te ordena todos los alojamientos por tiempo de viaje. Sin instalar nada y sin dar tu ubicación si no quieres.",
                 "Tria el teu municipi i el mapa t'ordena tots els allotjaments per temps de viatge. Sense instal·lar res i sense donar la teua ubicació si no vols."))),
@@ -378,7 +395,7 @@ PAGINAS = [
          titulo="Agenda de la edición · HOSBEC Km0 Week",
          desc="Programa día a día de la Km0 Week: visitas, talleres, rutas y actividades abiertas a todo el mundo, del 13 al 29 de noviembre de 2026.",
          og="assets/img/foto/cab-agenda.webp",
-         cab=C("cab-agenda", ("Programa", "Programa"),
+         cab=C(None, ("Programa", "Programa"),
                ("Diecisiete días, algo que hacer cada fin de semana", "Dèsset dies, alguna cosa a fer cada cap de setmana"),
                ("Actividades abiertas: no hace falta alojarse para venir. Algunas son gratuitas y otras tienen una aportación simbólica.",
                 "Activitats obertes: no cal allotjar-se per a vindre. Algunes són gratuïtes i altres tenen una aportació simbòlica."))),
@@ -387,7 +404,7 @@ PAGINAS = [
          titulo="Suma tu alojamiento · HOSBEC Km0 Week",
          desc="Cómo adherir tu hotel, apartamento, camping o casa rural a la Km0 Week: requisitos, plazos, qué pone HOSBEC y qué pones tú.",
          og="assets/img/foto/cab-suma.webp",
-         cab=C("cab-suma", ("Para alojamientos", "Per a allotjaments"),
+         cab=C(None, ("Para alojamientos", "Per a allotjaments"),
                ("Tu alojamiento también puede ser Km 0", "El teu allotjament també pot ser Km 0"),
                ("Sumarse es gratuito para los asociados de HOSBEC. Tú pones la oferta; nosotros ponemos la campaña, el tráfico y la comunicación.",
                 "Sumar-se és gratuït per als associats d'HOSBEC. Tu poses l'oferta; nosaltres posem la campanya, el trànsit i la comunicació."))),
@@ -396,7 +413,7 @@ PAGINAS = [
          titulo="Preguntas frecuentes · HOSBEC Km0 Week",
          desc="Dudas resueltas sobre la Km0 Week: quién puede reservar, cómo funcionan los descuentos, las actividades abiertas y las condiciones.",
          og="assets/img/foto/cab-faq.webp",
-         cab=C("cab-faq", ("Preguntas frecuentes", "Preguntes freqüents"),
+         cab=C(None, ("Preguntas frecuentes", "Preguntes freqüents"),
                ("Lo que más nos preguntáis", "El que més ens pregunteu"),
                ("Si no encuentras tu respuesta, escríbenos a km0week@hosbec.com y la añadimos aquí.",
                 "Si no trobes la teua resposta, escriu-nos a km0week@hosbec.com i l'afegim ací."))),
@@ -405,7 +422,7 @@ PAGINAS = [
          titulo="Noticias · HOSBEC Km0 Week",
          desc="Cómo avanza la Km0 Week: adhesiones, acuerdos con ayuntamientos, novedades del programa y balance de la edición.",
          og="assets/img/foto/cab-noticias.webp",
-         cab=C("cab-noticias", ("Noticias", "Notícies"),
+         cab=C(None, ("Noticias", "Notícies"),
                ("Cómo va la Km0 Week", "Com va la Km0 Week"),
                ("Vamos contando aquí lo que se mueve: adhesiones, acuerdos, programa y todo lo que os pueda interesar.",
                 "Anem contant ací el que es mou: adhesions, acords, programa i tot el que us puga interessar."))),
@@ -414,7 +431,7 @@ PAGINAS = [
          titulo="Sala de prensa · HOSBEC Km0 Week",
          desc="Material para medios: dossier, notas de prensa, cifras de la edición, logotipos y contacto de comunicación de HOSBEC.",
          og="assets/img/foto/cab-prensa.webp",
-         cab=C("cab-prensa", ("Sala de prensa", "Sala de premsa"),
+         cab=C(None, ("Sala de prensa", "Sala de premsa"),
                ("Material para medios", "Material per a mitjans"),
                ("Dossier, notas de prensa, cifras verificables y logotipos. Si necesitas algo que no está aquí, llámanos.",
                 "Dossier, notes de premsa, xifres verificables i logotips. Si necessites alguna cosa que no està ací, telefona'ns."))),
@@ -423,7 +440,7 @@ PAGINAS = [
          titulo="Materiales y kit gráfico · HOSBEC Km0 Week",
          desc="Cartelería, kit de redes sociales, manual de marca y textos preparados para los alojamientos adheridos.",
          og="assets/img/foto/cab-descargas.webp",
-         cab=C("cab-descargas", ("Descargas", "Descàrregues"),
+         cab=C(None, ("Descargas", "Descàrregues"),
                ("Todo lo que necesitas para contarlo", "Tot el que necessites per a contar-ho"),
                ("Material listo para imprimir y para redes. Descarga libre para los alojamientos adheridos, ayuntamientos y medios.",
                 "Material llest per a imprimir i per a xarxes. Descàrrega lliure per als allotjaments adherits, ajuntaments i mitjans."))),
@@ -431,22 +448,22 @@ PAGINAS = [
     dict(archivo="aviso-legal.html", cuerpo="aviso-legal.html",
          titulo="Aviso legal · HOSBEC Km0 Week",
          desc="Aviso legal e información del titular de la web de la HOSBEC Km0 Week.",
-         cab=C("cab-legal", ("Legal", "Legal"), ("Aviso legal", "Avís legal"))),
+         cab=C(None, ("Legal", "Legal"), ("Aviso legal", "Avís legal"))),
 
     dict(archivo="privacidad.html", cuerpo="privacidad.html",
          titulo="Política de privacidad · HOSBEC Km0 Week",
          desc="Cómo tratamos los datos personales en la web de la HOSBEC Km0 Week.",
-         cab=C("cab-legal", ("Legal", "Legal"), ("Política de privacidad", "Política de privacitat"))),
+         cab=C(None, ("Legal", "Legal"), ("Política de privacidad", "Política de privacitat"))),
 
     dict(archivo="cookies.html", cuerpo="cookies.html",
          titulo="Política de cookies · HOSBEC Km0 Week",
          desc="Qué se guarda en tu navegador al usar la web de la HOSBEC Km0 Week.",
-         cab=C("cab-legal", ("Legal", "Legal"), ("Política de cookies", "Política de galetes"))),
+         cab=C(None, ("Legal", "Legal"), ("Política de cookies", "Política de galetes"))),
 
     dict(archivo="404.html", cuerpo="404.html", noindex=True,
          titulo="Página no encontrada · HOSBEC Km0 Week",
          desc="La página que buscas no existe. Te dejamos los accesos a los alojamientos, el mapa, la agenda y la información de la HOSBEC Km0 Week.",
-         cab=C("cab-404", ("Error 404", "Error 404"),
+         cab=C(None, ("Error 404", "Error 404"),
                ("Esta página se ha ido de escapada", "Aquesta pàgina se n'ha anat d'escapada"),
                ("No hemos encontrado lo que buscabas. Te dejamos por dónde seguir.",
                 "No hem trobat el que buscaves. Et deixem per on continuar."))),
