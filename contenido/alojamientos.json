@@ -1690,5 +1690,57 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "hotel-boutique-calas-de-alicante",
+    "nombre": "Hotel Boutique Calas de Alicante",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Alicante",
+    "provincia": "Alicante",
+    "coords": [
+      38.357711214542675,
+      -0.43077417777281
+    ],
+    "web": "https://www.hotelcalasdealicante.com/es/",
+    "imagen": "assets/img/foto/alo-hotel-boutique-calas-de-alicante.webp",
+    "claim": {
+      "es": "Vive Alicante desde otra vista",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "¡Tu próxima escapada mediterránea tiene un 15% de descuento!",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Del 1 de noviembre de 2026 al 31 de mayo de 2027, desconecta de la rutina y disfruta de una estancia diferente en Hotel Calas Alicante.",
+          "Descansa, despierta con un delicioso desayuno y, si te apetece, completa tu experiencia con nuestra media pensión. Más descanso, más sabor, más Mediterráneo… ¡y un 15% menos!"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 15,
+      "condiciones": {
+        "es": "Introduce el código descuento: KM0CALAS durante el proceso de reserva en nuestra página web y obtendrás un 15% de descuento (no acumulable a otras ofertas)",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "Del 1 de noviembre de 2026 al 31 de mayo de 2027",
+      "va": ""
+    }
   }
 ]
