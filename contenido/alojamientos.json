@@ -1742,5 +1742,60 @@
       "es": "Del 1 de noviembre de 2026 al 31 de mayo de 2027",
       "va": ""
     }
+  },
+  {
+    "id": "casa-alberola-alicante-curio-by-hilton",
+    "nombre": "Casa Alberola Alicante Curio by Hilton",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Alicante",
+    "provincia": "Alicante",
+    "coords": [
+      38.342268943064404,
+      -0.4866001488396769
+    ],
+    "web": "https://www.hilton.com/en/hotels/alccaqq-casa-alberola-alicante/",
+    "imagen": "assets/img/foto/alo-casa-alberola-alicante-curio-by-hilton.webp",
+    "claim": {
+      "es": "Vive Alicante a bocados: arroz Km 0 y una noche para disfrutar de nuestra tierra",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Saborea Alicante: arroz de la tierra y noche de hotel con 10% de descuento",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Del 1 de noviembre de 2026 al 31 de marzo de 2027 descubre el auténtico sabor de Alicante con una experiencia Km 0:",
+          "* Habitación doble estándar en alojamiento y desayuno",
+          "* Disfruta de un delicioso arroz alicantino elaborado con productos de proximidad",
+          "¡Saborea nuestra tierra, conecta con lo local y déjate llevar por la esencia mediterránea!"
+        ],
+        "va": []
+      },
+      "precioDesde": 235,
+      "precioOriginal": 265,
+      "unidad": {
+        "es": "por oferta",
+        "va": "per oferta"
+      },
+      "dto": 11,
+      "condiciones": {
+        "es": "Reservas directas a: casa.alberola2@Hilton.com (+34 965270910), indicando \"OFERTA KM0\"\nNo disponibles a través de agencias, intermediarios ni portales de reserva online. Oferta sujeta a disponibilidad del hotel en el momento de realizar la reserva. Plazas limitadas.Oferta no acumulable con otras promociones, descuentos, códigos o tarifas especiales. Los precios incluyen IVA.",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
