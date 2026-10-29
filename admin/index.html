@@ -911,6 +911,37 @@ function esFinde(n){ const d = fechaDelDia(n).getDay(); return d === 0 || d === 
 
 function vacio(t){ return !String(t == null ? "" : t).trim(); }
 
+// Un botón de la web puede llevar a tres sitios: una página (https://), un
+// correo (mailto:) o un teléfono (tel:). Nada más. Queda fuera a propósito
+// http:// sin cifrar, que los navegadores marcan como «no seguro», y
+// cualquier otra cosa que pudiera colarse escribiendo en el campo.
+// Devuelve "" si el enlace vale, o la explicación de qué le pasa.
+function revisarEnlace(v){
+  const t = String(v == null ? "" : v).trim();
+  if (!t) return "";
+  if (/^https:\/\/[^\s]+$/i.test(t)) return "";
+  if (/^mailto:/i.test(t)) {
+    const correo = t.slice(7).split("?")[0];
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo) ? ""
+      : "El correo del enlace no es válido. Va así, sin espacios: " +
+        "mailto:km0week@hosbec.com";
+  }
+  if (/^tel:/i.test(t)) {
+    const numero = t.slice(4);
+    return /^\+?[\d\s.-]{6,}$/.test(numero) ? ""
+      : "El teléfono del enlace no es válido. Va así, mejor con el prefijo del " +
+        "país: tel:+34965855516";
+  }
+  return "El enlace tiene que empezar por https:// si va a una página, " +
+         "por mailto: si abre un correo o por tel: si llama por teléfono.";
+}
+
+// La misma explicación debajo de los dos campos de enlace del panel.
+const PISTA_ENLACE =
+  "Una página (<code>https://…</code>), un correo " +
+  "(<code>mailto:reservas@hotel.com</code>) o un teléfono " +
+  "(<code>tel:+34965855516</code>).";
+
 function revisarAlojamiento(a, todos){
   const err = [], avi = [];
   const nom = a.nombre || a.id || "sin nombre";
@@ -933,7 +964,8 @@ function revisarAlojamiento(a, todos){
       err.push("Las coordenadas están del revés: deberían ser " + c[1] + ", " + c[0] + ".");
     else err.push("Las coordenadas caen fuera de la Comunitat Valenciana.");
   }
-  if (a.web && !/^https:\/\//.test(a.web)) err.push("La web debe empezar por https://");
+  const malWeb = revisarEnlace(a.web);
+  if (malWeb) err.push(malWeb);
   (a.experiencias || []).forEach(e => { if (!EXPERIENCIAS[e])
     avi.push("La experiencia «" + e + "» no existe: no saldrá en ese filtro."); });
   // El valenciano vacío no es un problema: lo rellena Apertium al publicar y
@@ -952,7 +984,8 @@ function revisarActividad(act){
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(act.hora || "")) err.push("La hora debe ir como HH:MM.");
   if (vacio(act.lugar)) err.push("Falta el lugar.");
   const e = (act.enlace || "").replace(/\/$/, "");
-  if (e && !/^https:\/\//.test(e)) err.push("El enlace debe empezar por https://");
+  const malEnlace = revisarEnlace(e);
+  if (malEnlace) err.push(malEnlace);
   if (e === "https://hosbec.com" || e === "https://www.hosbec.com")
     avi.push("El botón «Quiero ir» todavía lleva a hosbec.com, no a la actividad.");
   if (vacio((act.precio || {}).es)) avi.push("Sin precio: pon «Gratis» si lo es.");
@@ -1279,9 +1312,10 @@ function editarAlojamiento(indice){
     '</fieldset>' +
 
     '<fieldset><legend>Contacto</legend>' +
-      campo("f-web", "Web a la que lleva el botón", a.web,
-            { tipo: "url", placeholder: "https://…",
-              pista: "Opcional. Si la dejas vacía, la ficha no lleva botón: se queda informativa." }) +
+      campo("f-web", "A dónde lleva el botón de la ficha", a.web,
+            { placeholder: "https://…  ·  mailto:…  ·  tel:…",
+              pista: "Opcional. Si lo dejas vacío, la ficha no lleva botón: se queda " +
+                     "informativa.<br>" + PISTA_ENLACE }) +
       '<div class="campo"><span class="et">Foto de la ficha</span>' +
         '<div class="foto">' +
           '<canvas id="foto-lienzo" width="480" height="320" ' +
@@ -1565,9 +1599,9 @@ function editarActividad(indice, diaSugerido){
         campo("a-tipo", "Tipo", a.tipo, { opciones: tipos.map(t =>
           [t, t.charAt(0).toUpperCase() + t.slice(1)]) }) +
         campo("a-enlace", "Enlace del botón «Quiero ir»", a.enlace, {
-          tipo: "url", placeholder: "https://…",
+          placeholder: "https://…  ·  mailto:…  ·  tel:…",
           pista: "A dónde manda el botón. Si lo dejas vacío, la web lleva al alojamiento " +
-                 "adherido de ese mismo destino." }) +
+                 "adherido de ese mismo destino.<br>" + PISTA_ENLACE }) +
       '</div>' +
       campoBi("a-precio", "Precio", a.precio,
               { pista: "Texto libre. Si pones exactamente <b>Gratis</b>, entra en el filtro " +

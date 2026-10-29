@@ -19,6 +19,7 @@ window.Km0 = (function () {
         cocteleria: "Coctelería", ocio: "Ocio"
       },
       desde: "desde", consultar: "A consultar", ver: "Ver oferta", aTi: "a {d} km de casa", nuevo: "Nuevo",
+      escribir: "Escribir", llamar: "Llamar",
       compl: "Oferta complementaria", tipoOferta: "Tipo de oferta",
       ofertas: "ofertas", oferta: "oferta", destinos: "destinos", destino: "destino",
       elige: "— elige tu municipio —", ubic: "No hemos podido ubicarte", loc: "Buscándote…",
@@ -47,6 +48,7 @@ window.Km0 = (function () {
         cocteleria: "Cocteleria", ocio: "Oci"
       },
       desde: "des de", consultar: "A consultar", ver: "Veure oferta", aTi: "a {d} km de casa", nuevo: "Nou",
+      escribir: "Escriure", llamar: "Telefonar",
       compl: "Oferta complementària", tipoOferta: "Tipus d'oferta",
       ofertas: "ofertes", oferta: "oferta", destinos: "destins", destino: "destí",
       elige: "— tria el teu municipi —", ubic: "No hem pogut ubicar-te", loc: "Buscant-te…",
@@ -77,6 +79,18 @@ window.Km0 = (function () {
   const MAL = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
   const E = v => String(v == null ? "" : v).replace(/[&<>"']/g, c => MAL[c]);
   const LE = o => E(L(o));
+
+  // Un botón puede llevar a una página, a un correo (mailto:) o a un teléfono
+  // (tel:). Solo las páginas se abren en otra pestaña: un mailto con
+  // target="_blank" abre una pestaña, se la pasa al programa de correo y deja
+  // la pestaña vacía detrás, que es justo lo que el visitante no entiende.
+  const esPagina = u => /^https?:/i.test(String(u || ""));
+  const fuera = u => esPagina(u) ? ' target="_blank" rel="noopener"' : "";
+  // Y el rótulo dice la verdad: «Ver oferta» delante de un correo engaña.
+  const rotulo = u => /^mailto:/i.test(String(u || "")) ? t("escribir")
+                    : /^tel:/i.test(String(u || "")) ? t("llamar")
+                    : t("ver");
+
   // "1 alojamiento" / "3 alojamientos"
   const pl = (n, clave) => n + " " + t(n === 1 ? clave : clave + "s");
 
@@ -206,7 +220,7 @@ window.Km0 = (function () {
             : `<b class="consultar">${t("consultar")}</b>`}
           ${L(a.oferta.unidad) ? `<span class="u">${LE(a.oferta.unidad)}</span>` : ""}
         </div>
-        ${a.web ? `<a class="btn btn-mar btn-sm" href="${E(a.web)}" target="_blank" rel="noopener">${t("ver")}</a>` : ""}
+        ${a.web ? `<a class="btn btn-mar btn-sm" href="${E(a.web)}"${fuera(a.web)}>${rotulo(a.web)}</a>` : ""}
       </div>
     </article>`;
   }
@@ -496,7 +510,7 @@ window.Km0 = (function () {
       const d = ORIGEN ? hav(ORIGEN, a.coords) : null;
       const banda = d == null ? 2 : d <= 30 ? 0 : d <= 60 ? 1 : 2;
       // Sin web no hay a dónde ir: la fila se queda informativa.
-      const ap = a.web ? `a class="cercano" href="${E(a.web)}" target="_blank" rel="noopener"`
+      const ap = a.web ? `a class="cercano" href="${E(a.web)}"${fuera(a.web)}`
                        : `div class="cercano sin-enlace"`;
       const cierra = a.web ? "a" : "div";
       return `<${ap}>
@@ -581,7 +595,7 @@ window.Km0 = (function () {
             <span class="pill ${esGratis(a) ? "pill-arena" : "pill-terra"}">${esGratis(a) ? t("gratis") : L(a.precio)}</span>
           </div>
         </div>
-        <a class="btn btn-mar btn-sm" href="${enlaceActo(a)}" target="_blank" rel="noopener" data-va="Vull anar-hi">Quiero ir</a>
+        <a class="btn btn-mar btn-sm" href="${enlaceActo(a)}"${fuera(enlaceActo(a))} data-va="Vull anar-hi">Quiero ir</a>
       </article>`;
     }).join("");
 

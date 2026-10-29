@@ -84,6 +84,39 @@ def existe_imagen(ruta):
     return os.path.isfile(os.path.join(RAIZ, ruta.replace("/", os.sep)))
 
 
+def revisar_enlace(valor):
+    """Comprueba a dónde lleva el botón de una ficha o de una actividad.
+
+    Valen tres destinos: una página (https://), un correo (mailto:) o un
+    teléfono (tel:). Queda fuera a propósito http:// sin cifrar, que los
+    navegadores marcan como «no seguro».
+
+    Esta función es gemela de `revisarEnlace()` en `admin/index.html`: si se
+    cambia una regla aquí, hay que cambiarla allí, o el panel dejará guardar
+    algo que luego tumbe la publicación.
+
+    Devuelve "" si el enlace vale, o la explicación de qué le pasa.
+    """
+    t = (valor or "").strip()
+    if not t:
+        return ""
+    if re.match(r"^https://\S+$", t, re.I):
+        return ""
+    if t.lower().startswith("mailto:"):
+        correo = t[7:].split("?")[0]
+        if re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", correo):
+            return ""
+        return ("«%s» no es un correo válido. Va así, sin espacios: "
+                "mailto:km0week@hosbec.com" % t)
+    if t.lower().startswith("tel:"):
+        if re.match(r"^\+?[\d\s.\-]{6,}$", t[4:]):
+            return ""
+        return ("«%s» no es un teléfono válido. Va así, mejor con el prefijo "
+                "del país: tel:+34965855516" % t)
+    return ("«%s» tiene que empezar por https:// si va a una página, por "
+            "mailto: si abre un correo o por tel: si llama por teléfono" % t)
+
+
 # ---------------------------------------------------------------------------
 # Alojamientos
 # ---------------------------------------------------------------------------
@@ -127,9 +160,9 @@ def revisar_alojamientos():
 
         # La web es opcional: sin ella la ficha se queda informativa, sin
         # botón. Lo que no vale es ponerla mal.
-        web = a.get("web") or ""
-        if web and not web.startswith("https://"):
-            error(donde, "la web debe empezar por https:// (ahora: «%s»)" % web)
+        mal = revisar_enlace(a.get("web"))
+        if mal:
+            error(donde, "el botón de la ficha: " + mal)
 
 
         # Marca de «oferta complementaria»: no es un alojamiento con
@@ -184,8 +217,9 @@ def revisar_agenda():
             error(donde, "no tiene lugar")
 
         enlace = act.get("enlace") or ""
-        if enlace and not enlace.startswith("https://"):
-            error(donde, "el enlace debe empezar por https:// (ahora: «%s»)" % enlace)
+        mal = revisar_enlace(enlace)
+        if mal:
+            error(donde, "el botón «Quiero ir»: " + mal)
         if enlace.rstrip("/") in ("https://hosbec.com", "https://www.hosbec.com"):
             aviso(donde, "el botón «Quiero ir» sigue apuntando a hosbec.com, "
                          "no a la actividad")
