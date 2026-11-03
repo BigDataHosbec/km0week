@@ -1848,5 +1848,56 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "estimar-calpe-suitopia",
+    "nombre": "Estimar Calpe Suitopía",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Calpe",
+    "provincia": "Alicante",
+    "coords": [
+      38.64343007961828,
+      0.05343042633542705
+    ],
+    "web": "https://reservation.mirai.com/XMAS/reservation/miraiFrontDispatcher.htm?lang=es&idchain=501359&idtokenprovider=100376420&chainSelectorValue=8691&clientCode=KM0WEEK&delay-days=2&parties=W3siYWR1bHRzIjoyLCJjaGlsZHJlbiI6W119XQ==&utm_medium=referral&utm_source=hosbec&utm_campaign=km0hosbecescapadas&utm_content=estimarcalpesuitopia#url=true",
+    "imagen": "assets/img/foto/alo-estimar-calpe-suitopia.webp",
+    "claim": {
+      "es": "Estimar Calpe Suitopía 4* · Calpe",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Estimar Calpe Suitopía 4* · Calpe",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Hotel familiar de 29 plantas a segunda línea de playa, con habitaciones de 75 m² y vistas al mar. Dispone de spa, piscinas, Kids Club para los más pequeños y Sky Bar a 110 metros de altura con vistas 360º a la bahía de Calpe."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 10,
+      "condiciones": {
+        "es": "Utilizando el código KM0WEEK, aplicable a reservas realizadas del 2 al 30 de noviembre para estancias del 13 al 30 de noviembre (mínimo 2 noches y exclusivamente a través de la web oficial)",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
