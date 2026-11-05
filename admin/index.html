@@ -127,6 +127,32 @@ main{max-width:1180px;margin:0 auto;padding:clamp(1rem,3vw,1.8rem)}
 .nota ul{margin:.35rem 0 0;padding-left:1.1rem}
 .nota li{margin:.15rem 0}
 
+
+/* ---------------------------------------------------------------- resumen -- */
+.rs-cifras{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));margin-bottom:1rem}
+.rs-cifra{background:#fff;border:1px solid var(--linea);border-radius:var(--r-m);padding:.75rem .9rem}
+.rs-cifra b{display:block;font-size:26px;line-height:1.1;color:var(--tinta);font-weight:800;
+  font-variant-numeric:tabular-nums}
+.rs-cifra span{display:block;font-size:12.5px;color:var(--suave);margin-top:.2rem}
+.rs-rejilla{display:grid;gap:1rem}
+@media(min-width:860px){.rs-rejilla{grid-template-columns:1fr 1fr}}
+.rs-rejilla .tarjeta{margin:0;min-width:0}
+.rs-t{border-collapse:collapse;width:100%;font-size:14px}
+.rs-t th,.rs-t td{text-align:left;padding:.35rem .5rem;border-bottom:1px solid var(--linea-2);vertical-align:top}
+.rs-t th{font-size:12px;color:var(--suave);font-weight:600;border-bottom-color:var(--linea)}
+.rs-t td.n,.rs-t th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rs-t tfoot td{font-weight:700;color:var(--tinta);border-top:1px solid var(--linea);border-bottom:0}
+.rs-tit{font-size:15px;margin:0 0 .6rem}
+.rs-nota{font-size:12.5px;color:var(--suave);margin:.5rem 0 0}
+.rs-envolt{overflow-x:auto}
+@media print{
+  .barra,.pestanas,.no-imprimir,#aviso-guardar{display:none !important}
+  body{background:#fff}
+  main{max-width:none;padding:0}
+  .tarjeta,.rs-cifra{box-shadow:none;break-inside:avoid}
+  .rs-rejilla{grid-template-columns:1fr 1fr}
+}
+
 /* ------------------------------------------------------------- publicación -- */
 .estado{display:flex;align-items:center;gap:.45rem;font-size:13px;font-weight:600;
   background:rgba(255,255,255,.1);padding:.3rem .7rem;border-radius:99px;color:#fff}
@@ -347,6 +373,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
     <button type="button" data-seccion="traducciones">Traducciones
       <span class="marcador oculto" id="m-traducciones"></span></button>
     <button type="button" data-seccion="filtros">Filtros</button>
+    <button type="button" data-seccion="resumen">Resumen</button>
     <button type="button" data-seccion="historial">Historial</button>
     <button type="button" data-seccion="revision">Revisión
       <span class="marcador oculto" id="m-revision"></span></button>
@@ -488,6 +515,23 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
         <button type="button" class="b-1" id="guardar-filtros">Guardar y publicar</button>
       </div>
       <div id="editor-filtros"></div>
+    </section>
+
+    <!-- ----------------------------------------------------------- RESUMEN -->
+    <section id="s-resumen" class="oculto" aria-labelledby="t-resumen">
+      <div class="cabecera-seccion">
+        <div>
+          <h2 id="t-resumen">Resumen de las ofertas publicadas</h2>
+          <p class="sub" id="rs-fecha"></p>
+        </div>
+        <span class="sep"></span>
+        <div class="no-imprimir" style="display:flex;gap:.4rem;flex-wrap:wrap">
+          <button type="button" class="b-2" id="rs-copiar">Copiar las cifras</button>
+          <button type="button" class="b-2" id="rs-imprimir">Imprimir o PDF</button>
+          <button type="button" class="b-1" id="rs-excel">Descargar Excel</button>
+        </div>
+      </div>
+      <div id="resumen"></div>
     </section>
 
     <!-- --------------------------------------------------------- HISTORIAL -->
@@ -786,7 +830,7 @@ $("#salir").addEventListener("click", () => {
    5 · Navegación
    ========================================================================== */
 const SECCIONES = ["alojamientos", "agenda", "noticias", "textos", "imagenes",
-                   "edicion", "traducciones", "filtros", "historial", "revision"];
+                   "edicion", "traducciones", "filtros", "resumen", "historial", "revision"];
 let seccionActual = "alojamientos";
 
 function irA(nombre){
@@ -802,6 +846,7 @@ function irA(nombre){
   if (nombre === "historial") pintarHistorial();
   if (nombre === "traducciones") pintarTraducciones();
   if (nombre === "filtros") pintarFiltros();
+  if (nombre === "resumen") pintarResumen();
   location.hash = nombre;
 }
 $$(".pestanas button").forEach(b =>
@@ -1060,6 +1105,241 @@ function pintarRevision(){
     bloque(r.avisos.length + " cosa(s) que conviene arreglar, pero la web funciona",
            r.avisos, "avi");
 }
+
+
+/* ==========================================================================
+   Resumen de las ofertas publicadas
+   Para evaluar resultados y para prensa. Solo lee: no guarda nada. Las cifras
+   salen de lo mismo que se publica (contenido/alojamientos.json y agenda.json)
+   y se cuentan igual que en la web: «ofertas» son las fichas, no las casas.
+   ========================================================================== */
+const fmtN = n => Number(n).toLocaleString("es-ES");
+const fmtE = n => Number(n).toLocaleString("es-ES", { maximumFractionDigits: 0 }) + " €";
+const pct = (a, b) => b ? Math.round(a * 100 / b) + " %" : "—";
+function mediana(v){
+  const o = v.slice().sort((x, y) => x - y), m = Math.floor(o.length / 2);
+  return o.length % 2 ? o[m] : (o[m - 1] + o[m]) / 2;
+}
+const esComplementaria = a => !!a.complementaria || a.tipo === "complementaria";
+const claveCasa = a => resbalar(a.nombre || "").trim();
+
+function calcularResumen(){
+  const A = D.alojamientos || [], AG = D.agenda || [];
+  const casas = new Map();          // establecimiento → { nombre, destino, provincia, categoria, ofertas }
+  A.forEach(a => {
+    const k = claveCasa(a);
+    if (!casas.has(k)) casas.set(k, { nombre: a.nombre, destino: a.destino, provincia: a.provincia,
+                                      categoria: a.categoria, ofertas: 0 });
+    casas.get(k).ofertas++;
+  });
+
+  const agrupar = (lista, clave) => {
+    const m = new Map();
+    lista.forEach(x => [].concat(clave(x)).forEach(k => {
+      if (k == null || k === "") return;
+      m.set(k, (m.get(k) || []).concat([x]));
+    }));
+    return m;
+  };
+
+  const porProvincia = PROVINCIAS.map(p => {
+    const ofs = A.filter(a => a.provincia === p);
+    return { nombre: p, ofertas: ofs.length,
+             casas: new Set(ofs.map(claveCasa)).size,
+             destinos: new Set(ofs.map(a => a.destino)).size };
+  });
+
+  const porDestino = Array.from(agrupar(A, a => a.destino)).map(([d, ofs]) => ({
+    nombre: d, provincia: ofs[0].provincia, ofertas: ofs.length,
+    casas: new Set(ofs.map(claveCasa)).size
+  })).sort((x, y) => y.ofertas - x.ofertas || x.nombre.localeCompare(y.nombre, "es"));
+
+  const porExperiencia = Object.keys(EXPERIENCIAS).map(k => ({
+    nombre: EXPERIENCIAS[k], ofertas: A.filter(a => (a.experiencias || []).indexOf(k) >= 0).length
+  })).filter(x => x.ofertas).sort((x, y) => y.ofertas - x.ofertas);
+
+  const cats = {};
+  casas.forEach(c => { const k = c.categoria ? c.categoria + "*" : "Sin categoría"; cats[k] = (cats[k] || 0) + 1; });
+  const porCategoria = Object.keys(cats).sort().reverse().map(k => ({ nombre: k, casas: cats[k] }));
+
+  const conDto = A.filter(a => +(a.oferta && a.oferta.dto) > 0).map(a => +a.oferta.dto);
+  const noche = A.filter(a => !esComplementaria(a) && +a.oferta.precioDesde > 0 &&
+                              /noche/i.test((a.oferta.unidad && a.oferta.unidad.es) || ""))
+                 .map(a => +a.oferta.precioDesde);
+  const consultar = A.filter(a => !(+a.oferta.precioDesde > 0)).length;
+  const diasAgenda = new Set(AG.map(x => x.dia)).size;
+  /* Un mismo destino en dos provincias es casi siempre una provincia mal puesta,
+     y descuadra las cifras por provincia. Se avisa antes de dar los números. */
+  const dudosos = [];
+  agrupar(A, a => a.destino).forEach((ofs, d) => {
+    const provs = Array.from(new Set(ofs.map(a => a.provincia)));
+    if (provs.length > 1) dudosos.push(d + ": " + provs.map(p =>
+      p + " (" + Array.from(new Set(ofs.filter(a => a.provincia === p).map(a => a.nombre))).join(", ") + ")").join(" · "));
+  });
+
+  return {
+    A: A, casas: Array.from(casas.values()).sort((x, y) => y.ofertas - x.ofertas || x.nombre.localeCompare(y.nombre, "es")),
+    ofertas: A.length, nCasas: casas.size,
+    destinos: new Set(A.map(a => a.destino)).size,
+    provincias: porProvincia.filter(p => p.ofertas).length,
+    alojamiento: A.filter(a => !esComplementaria(a)).length,
+    complementarias: A.filter(esComplementaria).length,
+    conDto: conDto.length, dtoMedio: conDto.length ? Math.round(conDto.reduce((s, x) => s + x, 0) / conDto.length) : 0,
+    dtoMax: conDto.length ? Math.max.apply(null, conDto) : 0,
+    noche: noche, consultar: consultar,
+    actividades: AG.length, diasAgenda: diasAgenda, dudosos: dudosos,
+    porProvincia: porProvincia, porDestino: porDestino, porExperiencia: porExperiencia, porCategoria: porCategoria
+  };
+}
+
+function fechaEdicionTexto(){
+  const c = D.configuracion || {};
+  const t = c.fechasTexto && (c.fechasTexto.es || c.fechasTexto);
+  return (typeof t === "string" && t) || (String(c.fechaInicio).slice(0, 10) + " – " + String(c.fechaFin).slice(0, 10));
+}
+
+let RESUMEN_HORA = null;
+function pintarResumen(){
+  const r = calcularResumen();
+  RESUMEN_HORA = new Date();
+  $("#rs-fecha").textContent = "Km0 Week · " + fechaEdicionTexto() + " · Datos a " +
+    RESUMEN_HORA.toLocaleDateString("es-ES") + ", " +
+    RESUMEN_HORA.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+
+  const cifra = (n, t) => "<div class='rs-cifra'><b>" + n + "</b><span>" + t + "</span></div>";
+  const tabla = (titulo, cab, filas, pie, nota) =>
+    "<div class='tarjeta'><h3 class='rs-tit'>" + titulo + "</h3><div class='rs-envolt'><table class='rs-t'><thead><tr>" +
+    cab.map((c, i) => "<th" + (i ? " class='n'" : "") + ">" + c + "</th>").join("") + "</tr></thead><tbody>" +
+    filas.map(f => "<tr>" + f.map((c, i) => "<td" + (i ? " class='n'" : "") + ">" + escapar(String(c)) + "</td>").join("") + "</tr>").join("") +
+    "</tbody>" + (pie ? "<tfoot><tr>" + pie.map((c, i) => "<td" + (i ? " class='n'" : "") + ">" + c + "</td>").join("") + "</tr></tfoot>" : "") +
+    "</table></div>" + (nota ? "<p class='rs-nota'>" + nota + "</p>" : "") + "</div>";
+
+  const precio = r.noche.length
+    ? cifra(fmtE(Math.round(mediana(r.noche))), "precio «desde» típico por noche (mediana de " + r.noche.length + " ofertas)")
+    : "";
+
+  $("#resumen").innerHTML =
+    (r.dudosos.length ? "<div class='nota nota-avi no-imprimir'><span><b>Revisa esto antes de dar las cifras por provincia</b>" +
+      "El mismo destino aparece en provincias distintas, y eso suele ser una provincia mal puesta en la ficha:<ul>" +
+      r.dudosos.map(x => "<li>" + escapar(x) + "</li>").join("") + "</ul></span></div>" : "") +
+    "<div class='rs-cifras'>" +
+      cifra(fmtN(r.ofertas), "ofertas publicadas") +
+      cifra(fmtN(r.nCasas), "establecimientos participantes") +
+      cifra(fmtN(r.destinos), "destinos (municipios)") +
+      cifra(fmtN(r.provincias) + " de 3", "provincias") +
+      cifra(fmtN(r.alojamiento), "ofertas de alojamiento") +
+      cifra(fmtN(r.complementarias), "ofertas complementarias (gastronomía, ocio…)") +
+      cifra(fmtN(r.conDto), "ofertas con descuento (" + pct(r.conDto, r.ofertas) + ")") +
+      (r.conDto ? cifra(r.dtoMedio + " %", "descuento medio · máximo " + r.dtoMax + " %") : "") +
+      precio +
+      cifra(fmtN(r.actividades), "actividades en la agenda · " + r.diasAgenda + " día(s) con actividad") +
+    "</div>" +
+    "<div class='rs-rejilla'>" +
+      tabla("Por provincia", ["Provincia", "Ofertas", "%", "Establec.", "Destinos"],
+        r.porProvincia.map(p => [p.nombre, p.ofertas, pct(p.ofertas, r.ofertas), p.casas, p.destinos]),
+        ["Total", r.ofertas, "100 %", r.nCasas, r.destinos]) +
+      tabla("Por experiencia", ["Experiencia", "Ofertas", "%"],
+        r.porExperiencia.map(e => [e.nombre, e.ofertas, pct(e.ofertas, r.ofertas)]), null,
+        "Una oferta puede tener varias experiencias, así que la suma pasa del total.") +
+      tabla("Por destino", ["Destino", "Provincia", "Ofertas", "Establec."],
+        r.porDestino.map(d => [d.nombre, d.provincia, d.ofertas, d.casas])) +
+      tabla("Establecimientos por categoría", ["Categoría", "Establec.", "%"],
+        r.porCategoria.map(c => [c.nombre, c.casas, pct(c.casas, r.nCasas)])) +
+    "</div>" +
+    "<div style='margin-top:1rem'>" +
+      tabla("Establecimientos participantes", ["Establecimiento", "Destino", "Ofertas"],
+        r.casas.map(c => [c.nombre, c.destino, c.ofertas]), ["Total", "", r.ofertas]) +
+    "</div>" +
+    "<p class='rs-nota'>Ofertas = fichas publicadas en la web; un establecimiento puede tener varias. " +
+    "Precio «desde» solo de ofertas de alojamiento con precio por noche; " + r.consultar +
+    " oferta(s) salen «A consultar». Establecimientos contados por nombre.</p>";
+}
+
+/* Las tablas, como texto plano y como HTML, para pegar en Word o en un correo. */
+$("#rs-copiar").addEventListener("click", async () => {
+  const caja = $("#resumen"), b = $("#rs-copiar");
+  const cab = "<p><b>" + escapar($("#t-resumen").textContent) + "</b><br>" + escapar($("#rs-fecha").textContent) + "</p>";
+  const html = cab + caja.innerHTML;
+  const texto = $("#t-resumen").textContent + "\n" + $("#rs-fecha").textContent + "\n\n" + caja.innerText;
+  try {
+    await navigator.clipboard.write([new ClipboardItem({
+      "text/html": new Blob([html], { type: "text/html" }),
+      "text/plain": new Blob([texto], { type: "text/plain" }) })]);
+  } catch (e) {
+    try { await navigator.clipboard.writeText(texto); }
+    catch (e2) { alert("El navegador no deja copiar. Usa «Imprimir o PDF»."); return; }
+  }
+  const t = b.textContent; b.textContent = "Copiado ✓";
+  setTimeout(() => { b.textContent = t; }, 1800);
+});
+
+$("#rs-imprimir").addEventListener("click", () => window.print());
+
+/* CSV pensado para el Excel en español: separador «;», coma decimal y BOM
+   para que respete las tildes. Arriba las cifras, debajo el listado. */
+$("#rs-excel").addEventListener("click", () => {
+  const r = calcularResumen(), filas = [];
+  const c = v => {
+    const t = v == null ? "" : String(v);
+    return /[";\n\r]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t;
+  };
+  const num = n => String(n).replace(".", ",");
+  const hora = RESUMEN_HORA || new Date();
+  filas.push(["Km0 Week · Resumen de ofertas publicadas"]);
+  filas.push(["Edición", fechaEdicionTexto()]);
+  filas.push(["Datos a", hora.toLocaleDateString("es-ES") + " " + hora.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })]);
+  filas.push([]);
+  filas.push(["CIFRAS"]);
+  filas.push(["Ofertas publicadas", r.ofertas]);
+  filas.push(["Establecimientos participantes", r.nCasas]);
+  filas.push(["Destinos (municipios)", r.destinos]);
+  filas.push(["Provincias", r.provincias]);
+  filas.push(["Ofertas de alojamiento", r.alojamiento]);
+  filas.push(["Ofertas complementarias", r.complementarias]);
+  filas.push(["Ofertas con descuento", r.conDto]);
+  filas.push(["Descuento medio (%)", r.dtoMedio]);
+  filas.push(["Descuento máximo (%)", r.dtoMax]);
+  if (r.noche.length) {
+    filas.push(["Precio desde por noche · mínimo (€)", Math.min.apply(null, r.noche)]);
+    filas.push(["Precio desde por noche · mediana (€)", num(mediana(r.noche))]);
+    filas.push(["Precio desde por noche · máximo (€)", Math.max.apply(null, r.noche)]);
+  }
+  filas.push(["Ofertas «A consultar»", r.consultar]);
+  filas.push(["Actividades en la agenda", r.actividades]);
+  filas.push([]);
+  filas.push(["POR PROVINCIA", "Ofertas", "Establecimientos", "Destinos"]);
+  r.porProvincia.forEach(p => filas.push([p.nombre, p.ofertas, p.casas, p.destinos]));
+  filas.push([]);
+  filas.push(["POR EXPERIENCIA", "Ofertas"]);
+  r.porExperiencia.forEach(e => filas.push([e.nombre, e.ofertas]));
+  filas.push([]);
+  filas.push(["POR DESTINO", "Provincia", "Ofertas", "Establecimientos"]);
+  r.porDestino.forEach(d => filas.push([d.nombre, d.provincia, d.ofertas, d.casas]));
+  filas.push([]);
+  filas.push(["POR CATEGORÍA", "Establecimientos"]);
+  r.porCategoria.forEach(x => filas.push([x.nombre, x.casas]));
+  filas.push([]);
+  filas.push(["LISTADO DE OFERTAS"]);
+  filas.push(["Establecimiento", "Oferta", "Destino", "Provincia", "Categoría", "Tipo",
+              "Experiencias", "Precio desde (€)", "Unidad", "Precio original (€)", "Descuento (%)", "Web"]);
+  r.A.forEach(a => {
+    const o = a.oferta || {};
+    filas.push([a.nombre, (o.titulo && o.titulo.es) || "", a.destino, a.provincia,
+      a.categoria ? a.categoria + "*" : "",
+      esComplementaria(a) ? "Complementaria" : "Alojamiento",
+      (a.experiencias || []).map(k => EXPERIENCIAS[k] || k).join(", "),
+      +o.precioDesde > 0 ? o.precioDesde : "A consultar",
+      (o.unidad && o.unidad.es) || "",
+      +o.precioOriginal > 0 ? o.precioOriginal : "",
+      +o.dto > 0 ? o.dto : "", a.web || ""]);
+  });
+  const csv = "﻿" + filas.map(f => f.map(c).join(";")).join("\r\n");
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  enlace.download = "km0week-resumen-ofertas-" + hora.toISOString().slice(0, 10) + ".csv";
+  document.body.appendChild(enlace); enlace.click(); enlace.remove();
+  setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
+});
 
 /* ==========================================================================
    8 · Piezas de formulario
