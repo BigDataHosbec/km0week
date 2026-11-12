@@ -1950,5 +1950,58 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "huerto-del-cura-relax",
+    "nombre": "Huerto del Cura",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Elche",
+    "provincia": "Alicante",
+    "coords": [
+      38.26376894447721,
+      -0.6922311120274056
+    ],
+    "web": "https://www.hotelhuertodelcura.com/?utm_source=bing&utm_medium=cpc&utm_campaign=es_branding_hotel_huerto_del_cura&utm_medium=cpc&utm_source=bing&utm_campaign=branding-port-alicante-es-search&utm_term=16224291773&utm_id=port-alicante&msclkid=23cb16a22dff12e0b2047c56785698ea&utm_content=Huerto%20del%20Cura",
+    "imagen": "assets/img/foto/alo-huerto-del-cura-relax.webp",
+    "claim": {
+      "es": "Pack Relax Km0Week",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Pack Relax Km0Week",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Una escapada especial para dos personas que combina descanso, gastronomía y bienestar. Disfruta de una estancia con alojamiento y desayuno, un menú degustación para descubrir nuestra propuesta gastronómica y un masaje Zen Relax para desconectar y regalarte un momento de tranquilidad."
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Deben seleccionar las fechas e introducir el promocode KM0WEEK",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "bienestar",
+      "gastronomia"
+    ],
+    "destacado": true,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
