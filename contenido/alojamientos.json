@@ -2003,5 +2003,58 @@
       "es": "",
       "va": ""
     }
+  },
+  {
+    "id": "port-jardin-milenio",
+    "nombre": "PORT Jardín Milenio",
+    "tipo": "hotel",
+    "categoria": 4,
+    "destino": "Elche",
+    "provincia": "Alicante",
+    "coords": [
+      38.258982721567946,
+      -0.693010537929431
+    ],
+    "web": "https://www.porthotels.es/port-jardin-milenio.html",
+    "imagen": "assets/img/foto/alo-port-jardin-milenio.webp",
+    "claim": {
+      "es": "Pack Escapada Km0Week",
+      "va": ""
+    },
+    "oferta": {
+      "titulo": {
+        "es": "Pack Escapada Km0Week",
+        "va": ""
+      },
+      "incluye": {
+        "es": [
+          "Una estancia especial para dos personas que invita a disfrutar sin prisas. Incluye alojamiento en media pensión y cócteles para brindar, compartir y completar una experiencia de descanso, gastronomía y buenos momentos"
+        ],
+        "va": []
+      },
+      "precioDesde": 0,
+      "precioOriginal": 0,
+      "unidad": {
+        "es": "por noche",
+        "va": "per nit"
+      },
+      "dto": 0,
+      "condiciones": {
+        "es": "Deben seleccionar las fechas e introducir el promocode KM0WEEK",
+        "va": ""
+      }
+    },
+    "experiencias": [
+      "alojamiento",
+      "gastronomia",
+      "cocteleria"
+    ],
+    "destacado": false,
+    "nuevo": true,
+    "complementaria": false,
+    "plazas": {
+      "es": "",
+      "va": ""
+    }
   }
 ]
